@@ -285,11 +285,15 @@ h1 span {
   border-radius: 22px;
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(220px, 0.9fr) minmax(240px, 1fr) auto auto auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 24px;
   max-width: 1080px;
   padding: 18px 22px;
   width: 100%;
+}
+
+.progress-panel > * {
+  min-width: 0;
 }
 
 .progress-summary {
@@ -360,7 +364,7 @@ h1 span {
   align-items: center;
   display: grid;
   gap: 8px;
-  justify-items: end;
+  justify-items: stretch;
 }
 
 .progress-actions a {
@@ -369,6 +373,7 @@ h1 span {
   color: #ffffff;
   font-weight: 900;
   padding: 10px 14px;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -383,6 +388,7 @@ h1 span {
   border-radius: 16px;
   display: flex;
   gap: 10px;
+  min-width: 0;
   padding: 10px 12px;
 }
 
@@ -398,6 +404,7 @@ h1 span {
   display: inline-flex;
   height: 42px;
   justify-content: center;
+  min-width: 42px;
   width: 42px;
 }
 
@@ -411,16 +418,20 @@ h1 span {
   display: block;
 }
 
+.streak-card div {
+  min-width: 0;
+}
+
 .streak-card strong {
   color: #123b80;
   font-size: 0.96rem;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .streak-card div > span {
   color: #315482;
   font-size: 0.82rem;
-  white-space: nowrap;
 }
 
 .progress-message {
@@ -887,7 +898,7 @@ h1 span {
   }
 
   .progress-actions {
-    justify-items: start;
+    justify-items: stretch;
   }
 
   .lesson-grid {
