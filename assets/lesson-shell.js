@@ -65,14 +65,45 @@
     }
   ];
 
-  const storageKey = "phieuhoctap.chuong1.visited";
-  const lastKey = "phieuhoctap.chuong1.lastLesson";
+  const legacyPrefix = "phieuhoctap.chuong1";
+  const currentAccountKey = "phieuhoctap.auth.current";
+
+  function getProgressPrefix() {
+    const accountKey = localStorage.getItem(currentAccountKey) || "";
+    return accountKey ? `phieuhoctap.user.${accountKey}.chuong1` : legacyPrefix;
+  }
+
+  function progressKey(name) {
+    return `${getProgressPrefix()}.${name}`;
+  }
 
   function readVisited() {
     try {
-      return new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+      return new Set(JSON.parse(localStorage.getItem(progressKey("visited")) || "[]"));
     } catch (_error) {
       return new Set();
+    }
+  }
+
+  function todayKey(date = new Date()) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  function rememberStudyDay() {
+    const key = progressKey("studyDays");
+    let days = [];
+    try {
+      days = JSON.parse(localStorage.getItem(key) || "[]");
+    } catch (_error) {
+      days = [];
+    }
+    const day = todayKey();
+    if (!days.includes(day)) {
+      days.push(day);
+      localStorage.setItem(key, JSON.stringify(days));
     }
   }
 
@@ -80,8 +111,9 @@
     if (!page || !page.trackProgress) return;
     const visited = readVisited();
     visited.add(page.id);
-    localStorage.setItem(storageKey, JSON.stringify(Array.from(visited)));
-    localStorage.setItem(lastKey, page.id);
+    localStorage.setItem(progressKey("visited"), JSON.stringify(Array.from(visited)));
+    localStorage.setItem(progressKey("lastLesson"), page.id);
+    rememberStudyDay();
   }
 
   function createLink(text, href, className) {

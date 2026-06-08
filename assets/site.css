@@ -191,7 +191,7 @@ svg {
   width: 54px;
 }
 
-.student-chip span:last-child {
+.student-chip > span:not(.student-bot) {
   color: #24497f;
   display: grid;
   font-size: 0.86rem;
@@ -201,6 +201,28 @@ svg {
 .student-chip strong {
   color: #09235a;
   font-size: 1rem;
+}
+
+.student-chip a,
+.student-chip button {
+  background: #ffffff;
+  border: 1px solid rgba(20, 104, 255, 0.22);
+  border-radius: var(--radius);
+  color: var(--blue-dark);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 900;
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+
+.student-chip button {
+  font-family: inherit;
+}
+
+.student-chip a:hover,
+.student-chip button:hover {
+  background: #eaf4ff;
 }
 
 .board-content {
@@ -263,9 +285,9 @@ h1 span {
   border-radius: 22px;
   display: grid;
   gap: 18px;
-  grid-template-columns: minmax(240px, 0.9fr) minmax(260px, 1fr) auto;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(240px, 1fr) auto auto auto;
   margin-top: 24px;
-  max-width: 980px;
+  max-width: 1080px;
   padding: 18px 22px;
   width: 100%;
 }
@@ -354,7 +376,64 @@ h1 span {
   background: var(--blue-dark);
 }
 
+.streak-card {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(20, 104, 255, 0.18);
+  border-radius: 16px;
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.streak-card--badge {
+  border-color: rgba(255, 182, 46, 0.35);
+}
+
+.streak-card__icon {
+  align-items: center;
+  background: #fff3d9;
+  border-radius: 50%;
+  color: var(--gold);
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.streak-card:not(.streak-card--badge) .streak-card__icon {
+  background: #ffe9dc;
+  color: #e95d1e;
+}
+
+.streak-card strong,
+.streak-card span {
+  display: block;
+}
+
+.streak-card strong {
+  color: #123b80;
+  font-size: 0.96rem;
+  line-height: 1.2;
+}
+
+.streak-card div > span {
+  color: #315482;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.progress-message {
+  border-top: 1px solid rgba(52, 105, 184, 0.16);
+  color: #315482;
+  font-weight: 800;
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 12px;
+}
+
 .intro-video-section,
+.auth-section,
 .course-section,
 .guide-section {
   background: rgba(255, 255, 255, 0.94);
@@ -372,14 +451,23 @@ h1 span {
   grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
 }
 
-.intro-video-copy h2 {
+.auth-section {
+  align-items: start;
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+}
+
+.intro-video-copy h2,
+.auth-copy h2 {
   color: #09235a;
   font-size: clamp(1.65rem, 2.4vw, 2.35rem);
   line-height: 1.12;
   margin: 0 0 10px;
 }
 
-.intro-video-copy p:last-child {
+.intro-video-copy p:last-child,
+.auth-copy p:last-child {
   color: #607598;
   margin: 0;
   max-width: 520px;
@@ -400,6 +488,105 @@ h1 span {
   border-radius: 12px;
   display: block;
   width: 100%;
+}
+
+.auth-card {
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  border: 1px solid #c8d8f0;
+  border-radius: 18px;
+  box-shadow: 0 16px 34px rgba(8, 47, 122, 0.12);
+  padding: 18px;
+}
+
+.auth-tabs {
+  background: #eaf3ff;
+  border: 1px solid #c8d8f0;
+  border-radius: var(--radius);
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 16px;
+  padding: 6px;
+}
+
+.auth-tabs button {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: #164a96;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 900;
+  min-height: 38px;
+}
+
+.auth-tabs button.is-active {
+  background: #ffffff;
+  box-shadow: 0 8px 18px rgba(8, 47, 122, 0.1);
+  color: var(--blue-dark);
+}
+
+.auth-form {
+  display: grid;
+  gap: 12px;
+}
+
+.auth-form[hidden] {
+  display: none;
+}
+
+.auth-form__grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.auth-form label {
+  display: grid;
+  gap: 6px;
+}
+
+.auth-form label span {
+  color: #284777;
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.auth-form input {
+  background: #ffffff;
+  border: 1px solid #c8d8f0;
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: 0.95rem;
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.auth-form button[type="submit"] {
+  background: var(--blue);
+  border: 0;
+  border-radius: var(--radius);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 900;
+  min-height: 46px;
+  padding: 0 18px;
+}
+
+.auth-form button[type="submit"]:hover {
+  background: var(--blue-dark);
+}
+
+.auth-message {
+  color: #14804d;
+  font-weight: 800;
+  margin: 12px 0 0;
+  min-height: 24px;
+}
+
+.auth-message.is-error {
+  color: #9b2f43;
 }
 
 .section-header {
@@ -691,6 +878,14 @@ h1 span {
     padding-left: 320px;
   }
 
+  .progress-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progress-actions {
+    justify-items: start;
+  }
+
   .lesson-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -720,6 +915,7 @@ h1 span {
 
   .progress-panel,
   .intro-video-section,
+  .auth-section,
   .section-header,
   .filter-bar,
   .lesson-grid {
@@ -734,6 +930,10 @@ h1 span {
 
   .progress-actions {
     justify-items: stretch;
+  }
+
+  .progress-actions a {
+    text-align: center;
   }
 }
 
@@ -775,6 +975,15 @@ h1 span {
 
   .lesson-tile {
     grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .student-chip {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .auth-form__grid {
+    grid-template-columns: 1fr;
   }
 
   .tile-badge {
