@@ -1,7 +1,11 @@
 .learning-site-bar {
+  --learning-cyan: #00788c;
+  --learning-cyan-dark: #005568;
+  --learning-cyan-soft: #e5fbff;
+  --learning-cyan-line: #bdeef6;
   background: #ffffff;
-  border-bottom: 1px solid #dbe3ea;
-  color: #17202a;
+  border-bottom: 1px solid var(--learning-cyan-line);
+  color: #173139;
   font-family: Arial, "Helvetica Neue", sans-serif;
   position: relative;
   z-index: 50;
@@ -23,7 +27,7 @@
 
 .learning-site-bar__brand {
   align-items: center;
-  color: #123b42;
+  color: var(--learning-cyan-dark);
   display: inline-flex;
   font-size: 0.95rem;
   font-weight: 900;
@@ -34,7 +38,7 @@
 
 .learning-site-bar__mark {
   align-items: center;
-  background: #236a73;
+  background: linear-gradient(135deg, #22e5ff, var(--learning-cyan));
   border-radius: 50%;
   color: #ffffff;
   display: inline-flex;
@@ -63,16 +67,16 @@
 
 .learning-site-bar__link,
 .learning-site-bar__button {
-  background: #f8fafc;
-  border: 1px solid #dbe3ea;
-  color: #243746;
+  background: #f7fdff;
+  border: 1px solid var(--learning-cyan-line);
+  color: #245766;
   cursor: pointer;
   text-decoration: none;
 }
 
 .learning-site-bar__link:hover,
 .learning-site-bar__button:hover {
-  background: #edf4f7;
+  background: var(--learning-cyan-soft);
 }
 
 .learning-site-bar__button {
@@ -80,9 +84,9 @@
 }
 
 .learning-site-bar__current {
-  background: #e8f4ee;
-  border: 1px solid #cfe7db;
-  color: #1f5f3c;
+  background: var(--learning-cyan-soft);
+  border: 1px solid var(--learning-cyan-line);
+  color: var(--learning-cyan-dark);
 }
 
 .login-required-panel {
@@ -111,7 +115,7 @@
 }
 
 .login-required-panel__button {
-  background: #1468ff;
+  background: var(--learning-cyan);
   border-radius: 8px;
   color: #ffffff;
   display: inline-flex;
@@ -123,7 +127,7 @@
 }
 
 .login-required-panel__button:hover {
-  background: #073cbd;
+  background: var(--learning-cyan-dark);
 }
 
 .tab-button.is-locked {
