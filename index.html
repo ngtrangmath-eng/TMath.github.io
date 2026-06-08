@@ -24,14 +24,6 @@
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8v9.4a.8.8 0 0 1-.8.8h-5.1v-6.2H8.9V21H3.8a.8.8 0 0 1-.8-.8v-9.4Z"/></svg>
             Trang chủ
           </a>
-          <a href="#danh-sach-bai">
-            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 3.5 7.4 12 12l8.5-4.6L12 3Zm-6 8v5.2c0 1.5 2.6 3.7 6 4.5 3.4-.8 6-3 6-4.5V11l-6 3.2L6 11Z"/></svg>
-            Lớp học
-          </a>
-          <a href="#video-mo-dau">
-            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 5h16a1.5 1.5 0 0 1 1.5 1.5v11A1.5 1.5 0 0 1 20 19H4a1.5 1.5 0 0 1-1.5-1.5v-11A1.5 1.5 0 0 1 4 5Zm6.2 4v6l5-3-5-3Z"/></svg>
-            Video
-          </a>
           <a href="Toan6-Chuong1-Bai1/Toan6-Chuong1-Bai1.html#part-b">
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 2.8h12v18.4H6V2.8Zm2.2 2.1V19h7.6V4.9H8.2Zm1.2 2.4h5.2V9H9.4V7.3Zm0 3.6h5.2v1.7H9.4v-1.7Zm0 3.6h4v1.7h-4v-1.7Z"/></svg>
             Bài tập
@@ -40,7 +32,7 @@
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M17.4 3.2h3.2v2.9a5.4 5.4 0 0 1-4.9 5.4 6.1 6.1 0 0 1-2.7 2.1V17h3.2v2H7.8v-2H11v-3.4a6.1 6.1 0 0 1-2.7-2.1 5.4 5.4 0 0 1-4.9-5.4V3.2h3.2V2.8h10.8v.4ZM5.4 5.1v1a3.4 3.4 0 0 0 1.9 3 7.1 7.1 0 0 1-.5-2.6V5.1H5.4Zm11.8 0v1.4c0 .9-.2 1.8-.5 2.6a3.4 3.4 0 0 0 1.9-3v-1h-1.4Z"/></svg>
             Thành tích
           </a>
-          <a href="#dang-nhap">
+          <a href="#dang-nhap" data-open-auth>
             <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2.5a4.8 4.8 0 0 1 4.8 4.8c0 1.7-.9 3.2-2.2 4.1 2.9.9 5 3.2 5.6 6.1.2.9-.5 1.8-1.4 1.8H5.2c-.9 0-1.6-.9-1.4-1.8.6-2.9 2.7-5.2 5.6-6.1a4.8 4.8 0 0 1-2.2-4.1A4.8 4.8 0 0 1 12 2.5Zm0 2.2a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2Zm0 8.5c-2.7 0-4.9 1.6-5.7 3.9h11.4c-.8-2.3-3-3.9-5.7-3.9Z"/></svg>
             Đăng nhập
           </a>
@@ -52,7 +44,7 @@
         <div class="student-chip">
           <span class="student-bot" aria-hidden="true">🤖</span>
           <span>Xin chào!<strong data-student-name>Học sinh</strong></span>
-          <a href="#dang-nhap" data-auth-link>Đăng nhập</a>
+          <a href="#dang-nhap" data-auth-link data-open-auth>Đăng nhập</a>
           <button type="button" data-logout hidden>Thoát</button>
         </div>
       </header>
@@ -116,9 +108,9 @@
 
     <section id="video-mo-dau" class="intro-video-section" aria-labelledby="intro-video-title">
       <div class="intro-video-copy">
-        <p class="section-kicker">Video mở đầu</p>
-        <h2 id="intro-video-title">Khởi động trước khi học</h2>
-        <p>Xem nhanh phần giới thiệu để tạo hứng thú trước khi bắt đầu các phiếu học tập Toán 6.</p>
+        <p class="section-kicker">Video giới thiệu</p>
+        <h2 id="intro-video-title">Giới thiệu trang web</h2>
+        <p>Xem video giới thiệu ngay trên trang chủ trước khi bắt đầu các phiếu học tập Toán 6.</p>
       </div>
       <div class="video-frame">
         <video controls preload="metadata" playsinline>
@@ -128,7 +120,7 @@
       </div>
     </section>
 
-    <section id="dang-nhap" class="auth-section" aria-labelledby="auth-title">
+    <section id="dang-nhap" class="auth-section" aria-labelledby="auth-title" hidden>
       <div class="auth-copy">
         <p class="section-kicker">Tài khoản học sinh</p>
         <h2 id="auth-title">Đăng nhập và đăng kí</h2>
@@ -192,7 +184,7 @@
     <section id="danh-sach-bai" class="course-section" aria-labelledby="lessons-title">
       <div class="section-header">
         <div>
-          <p class="section-kicker">Lớp học Toán 6</p>
+          <p class="section-kicker">Toán 6</p>
           <h2 id="lessons-title">Danh sách bài học</h2>
         </div>
         <div class="filter-bar">

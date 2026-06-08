@@ -458,6 +458,10 @@ h1 span {
   grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
 }
 
+.auth-section[hidden] {
+  display: none;
+}
+
 .intro-video-copy h2,
 .auth-copy h2 {
   color: #09235a;
