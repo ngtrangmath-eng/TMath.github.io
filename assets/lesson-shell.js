@@ -203,10 +203,10 @@
     const inner = document.createElement("div");
     inner.className = "learning-site-bar__inner";
 
-    const brand = createLink("Phiếu học tập Toán 6", "../index.html", "learning-site-bar__brand");
+    const brand = createLink("TMath - Nền tảng học toán trực tuyến", "../index.html", "learning-site-bar__brand");
     const mark = document.createElement("span");
     mark.className = "learning-site-bar__mark";
-    mark.textContent = "6";
+    mark.textContent = "T";
     brand.prepend(mark);
 
     const nav = document.createElement("div");
