@@ -17,8 +17,11 @@
   const streakDays = document.querySelector("[data-streak-days]");
   const badgeLabel = document.querySelector("[data-badge-label]");
   const continueLinks = Array.from(document.querySelectorAll("[data-continue-link]"));
+  const studentChip = document.querySelector(".student-chip");
   const studentName = document.querySelector("[data-student-name]");
   const authLink = document.querySelector("[data-auth-link]");
+  const authNavLinks = Array.from(document.querySelectorAll("[data-auth-nav]"));
+  const authNavLabels = Array.from(document.querySelectorAll("[data-auth-nav-label]"));
   const homeContent = document.querySelector("[data-home-content]");
   const authSection = document.querySelector("#dang-nhap");
   const openAuthLinks = Array.from(document.querySelectorAll("[data-open-auth]"));
@@ -279,11 +282,23 @@
 
   function applyUserState() {
     const account = getCurrentAccount();
+    const displayName = account ? account.username : "Học sinh";
     if (studentName) {
-      studentName.textContent = account ? account.username : "Học sinh";
+      studentName.textContent = displayName;
+      studentName.title = displayName;
     }
+    if (studentChip) {
+      studentChip.classList.toggle("is-logged-in", Boolean(account));
+    }
+    authNavLabels.forEach((label) => {
+      label.textContent = account ? "Tài khoản" : "Đăng nhập";
+    });
+    authNavLinks.forEach((link) => {
+      link.setAttribute("aria-label", account ? "Tài khoản học sinh" : "Đăng nhập");
+    });
     if (authLink) {
-      authLink.textContent = account ? "Tài khoản" : "Đăng nhập";
+      authLink.hidden = Boolean(account);
+      authLink.textContent = "Đăng nhập";
     }
     if (logoutButton) {
       logoutButton.hidden = !account;

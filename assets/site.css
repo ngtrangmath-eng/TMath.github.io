@@ -106,8 +106,8 @@ body.is-compact-view .ai-board {
   background: rgba(255, 255, 255, 0.84);
   border-bottom: 1px solid rgba(0, 174, 202, 0.24);
   display: grid;
-  gap: 20px;
-  grid-template-columns: minmax(260px, 1fr) auto minmax(180px, 0.6fr);
+  gap: 18px;
+  grid-template-columns: minmax(210px, 0.72fr) minmax(420px, 1.1fr) minmax(220px, 0.72fr);
   min-height: 98px;
   padding: 0 42px;
   position: relative;
@@ -156,8 +156,9 @@ body.is-compact-view .ai-board {
 .main-nav {
   align-items: center;
   display: flex;
-  gap: 22px;
+  gap: clamp(10px, 1.2vw, 22px);
   justify-content: center;
+  min-width: 0;
 }
 
 .main-nav a {
@@ -165,6 +166,7 @@ body.is-compact-view .ai-board {
   border-bottom: 4px solid transparent;
   color: #07566a;
   display: inline-flex;
+  font-size: clamp(0.9rem, 0.92vw, 1rem);
   font-weight: 900;
   gap: 8px;
   min-height: 98px;
@@ -183,6 +185,13 @@ body.is-compact-view .ai-board {
   display: inline-flex;
   gap: 10px;
   justify-self: end;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.student-chip.is-logged-in {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
 }
 
 .student-bot {
@@ -198,16 +207,23 @@ body.is-compact-view .ai-board {
   width: 54px;
 }
 
+.student-greeting,
 .student-chip > span:not(.student-bot) {
   color: #245766;
   display: grid;
   font-size: 0.86rem;
   line-height: 1.2;
+  min-width: 0;
 }
 
 .student-chip strong {
   color: var(--ink);
+  display: block;
   font-size: 1rem;
+  max-width: clamp(110px, 10vw, 180px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .student-chip a,
@@ -225,6 +241,11 @@ body.is-compact-view .ai-board {
 
 .student-chip button {
   font-family: inherit;
+}
+
+.student-chip a[hidden],
+.student-chip button[hidden] {
+  display: none;
 }
 
 .student-chip a:hover,
@@ -973,7 +994,12 @@ h1 span {
   }
 
   .student-chip {
+    max-width: 100%;
     justify-self: start;
+  }
+
+  .student-chip strong {
+    max-width: min(280px, 60vw);
   }
 
   .board-content {
@@ -1085,8 +1111,14 @@ h1 span {
   }
 
   .student-chip {
-    align-items: stretch;
-    flex-wrap: wrap;
+    align-items: center;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    width: 100%;
+  }
+
+  .student-chip strong {
+    max-width: 100%;
   }
 
   .auth-form__grid {
