@@ -577,6 +577,14 @@
   applyUserState();
   updateCards();
 
+  const hashTarget = window.location.hash.replace("#", "");
+  if (hashTarget === "danh-sach-bai" || hashTarget === "toan6-chapter-1" || hashTarget === "toan7-chapter-1") {
+    if (chapterSelect && hashTarget !== "danh-sach-bai") {
+      chapterSelect.value = hashTarget;
+    }
+    showCourseView();
+  }
+
   if (sessionStorage.getItem(openAuthRequestKey) === "1") {
     sessionStorage.removeItem(openAuthRequestKey);
     revealAuthSection("login");
