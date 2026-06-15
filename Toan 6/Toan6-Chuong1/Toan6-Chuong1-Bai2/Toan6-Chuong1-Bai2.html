@@ -291,6 +291,30 @@
       border: 1px solid var(--line);
     }
 
+    .resource-card {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+      margin-top: 16px;
+    }
+
+    .song-card {
+      background: var(--soft-amber);
+      border-left-color: #d09420;
+    }
+
+    audio {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    video {
+      background: #000000;
+      border-radius: var(--radius);
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
     .content-block ul,
     .content-block ol,
     .question-card ul,
@@ -765,6 +789,14 @@
         <strong>Trọng tâm:</strong> Mỗi số tự nhiên được ghi bằng các chữ số trong hệ thập phân. Giá trị của một chữ số phụ thuộc vào vị trí của chữ số đó trong số.
       </div>
 
+      <div class="content-block resource-card">
+        <h3>Video mở đầu</h3>
+        <p>Xem video ngắn trước khi bắt đầu phần kiến thức trọng tâm.</p>
+        <video controls preload="metadata" src="M%E1%BB%9F_%C4%91%E1%BA%A7u_B%C3%A0i_2-Chuong1-Toan6_202606151857.mp4">
+          Trình duyệt của em chưa hỗ trợ phát video trực tiếp. Hãy mở file Mở_đầu_Bài_2-Chuong1-Toan6_202606151857.mp4 trong thư mục bài học.
+        </video>
+      </div>
+
       <div class="content-grid">
         <article class="content-block">
           <h3>1. Kí hiệu <span class="math-text">N</span>, <span class="math-text">N*</span></h3>
@@ -978,6 +1010,14 @@
         </div>
         <div id="a-feedback-3" class="feedback-box" aria-live="polite"></div>
       </article>
+
+      <div class="content-block resource-card song-card">
+        <h3>9. Bài hát củng cố</h3>
+        <p><strong>Cách ghi số tự nhiên</strong> giúp em ôn lại nội dung bài học bằng âm nhạc.</p>
+        <audio controls preload="metadata" src="C%C3%A1ch%20ghi%20s%E1%BB%91%20t%E1%BB%B1%20nhi%C3%AAn.mp3">
+          Trình duyệt của em chưa hỗ trợ phát âm thanh trực tiếp. Hãy mở file Cách ghi số tự nhiên.mp3 trong thư mục bài học.
+        </audio>
+      </div>
 
       <div class="action-row">
         <button class="secondary-action" type="button" data-tab-jump="part-b">Sang phần luyện tập</button>
