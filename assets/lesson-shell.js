@@ -63,12 +63,14 @@
   const currentAccountKey = "phieuhoctap.auth.current";
   const openAuthRequestKey = "phieuhoctap.openAuth";
   const assessmentResultsKey = "tmath.assessmentResults";
+  const writtenImageUploadsKeyPrefix = "tmath.writtenAnswerImages";
   const teacherEmail = "ngtrang.math@gmail.com";
   const scriptUrl = document.currentScript && document.currentScript.src ? document.currentScript.src : "";
   const homeHref = getHomeHref();
   let assessmentStartedAt = null;
   let lastSavedAssessmentId = "";
   let lastAutoEmailId = "";
+  let writtenImageUploads = [];
 
   function getHomeHref() {
     if (!scriptUrl) return "../index.html";
@@ -280,6 +282,288 @@
     return value || fallback;
   }
 
+  function getWrittenImagesKey(current) {
+    return `${writtenImageUploadsKeyPrefix}.${current.id}`;
+  }
+
+  function getQuestionLabel(textarea, index) {
+    const card = textarea.closest(".question-card");
+    const title = card?.querySelector(".question-title")?.textContent.trim();
+    if (title) return title.replace(/\s+/g, " ");
+    return `Tự luận ${index + 1}`;
+  }
+
+  function estimateDataUrlBytes(dataUrl) {
+    const payload = String(dataUrl || "").split(",")[1] || "";
+    return Math.round((payload.length * 3) / 4);
+  }
+
+  function formatFileSize(bytes) {
+    if (!bytes) return "0 KB";
+    if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  }
+
+  function safeFileName(value) {
+    return String(value || "bai-lam")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9._-]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80) || "bai-lam";
+  }
+
+  function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(String(reader.result || "")));
+      reader.addEventListener("error", () => reject(reader.error || new Error("Không thể đọc ảnh.")));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function normalizeImageFile(file) {
+    const rawDataUrl = await readFileAsDataUrl(file);
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.addEventListener("load", () => {
+        try {
+          const maxSide = 1400;
+          const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+          const width = Math.max(1, Math.round(image.width * scale));
+          const height = Math.max(1, Math.round(image.height * scale));
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d");
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, width, height);
+          context.drawImage(image, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          resolve({
+            dataUrl,
+            type: "image/jpeg",
+            size: estimateDataUrlBytes(dataUrl)
+          });
+        } catch (_error) {
+          resolve({
+            dataUrl: rawDataUrl,
+            type: file.type || "image/*",
+            size: estimateDataUrlBytes(rawDataUrl)
+          });
+        }
+      });
+      image.addEventListener("error", () => {
+        resolve({
+          dataUrl: rawDataUrl,
+          type: file.type || "image/*",
+          size: estimateDataUrlBytes(rawDataUrl)
+        });
+      });
+      image.src = rawDataUrl;
+    });
+  }
+
+  function readWrittenImageUploads(current) {
+    return readJson(getWrittenImagesKey(current), []).filter((item) => item && item.fieldId && item.dataUrl);
+  }
+
+  function persistWrittenImageUploads(current) {
+    try {
+      writeJson(getWrittenImagesKey(current), writtenImageUploads);
+      return true;
+    } catch (_error) {
+      return false;
+    }
+  }
+
+  function getWrittenImage(fieldId) {
+    return writtenImageUploads.find((item) => item.fieldId === fieldId) || null;
+  }
+
+  function setWrittenImage(current, imageRecord) {
+    writtenImageUploads = writtenImageUploads.filter((item) => item.fieldId !== imageRecord.fieldId);
+    writtenImageUploads.push(imageRecord);
+    return persistWrittenImageUploads(current);
+  }
+
+  function removeWrittenImage(current, fieldId) {
+    writtenImageUploads = writtenImageUploads.filter((item) => item.fieldId !== fieldId);
+    persistWrittenImageUploads(current);
+  }
+
+  function getUploadedWrittenImages() {
+    return writtenImageUploads.filter((item) => item && item.dataUrl);
+  }
+
+  function getManualReviewItems() {
+    return getUploadedWrittenImages().map((item) => `${item.questionLabel} (${item.fileName})`);
+  }
+
+  function updateUploadPreview(control, imageRecord) {
+    const preview = control.querySelector(".written-image-upload__preview");
+    const img = control.querySelector("img");
+    const meta = control.querySelector(".written-image-upload__meta");
+    const removeButton = control.querySelector("[data-remove-written-image]");
+
+    if (!preview || !img || !meta || !removeButton) return;
+
+    if (!imageRecord) {
+      preview.hidden = true;
+      img.removeAttribute("src");
+      meta.textContent = "";
+      removeButton.hidden = true;
+      return;
+    }
+
+    img.src = imageRecord.dataUrl;
+    img.alt = `Ảnh bài làm: ${imageRecord.questionLabel}`;
+    meta.textContent = `${imageRecord.fileName} - ${formatFileSize(imageRecord.size)}`;
+    preview.hidden = false;
+    removeButton.hidden = false;
+  }
+
+  function setUploadStatus(control, message, isError = false) {
+    const status = control.querySelector(".written-image-upload__status");
+    if (!status) return;
+    status.textContent = message;
+    status.classList.toggle("is-error", Boolean(isError));
+  }
+
+  function createWrittenImageControl(current, textarea, index) {
+    if (!textarea.id) textarea.id = `written-answer-${index + 1}`;
+    const fieldId = textarea.id;
+    const control = document.createElement("div");
+    control.className = "written-image-upload";
+    control.dataset.writtenImageControl = fieldId;
+
+    const inputId = `${fieldId}-image-upload`;
+    const questionLabel = getQuestionLabel(textarea, index);
+    control.innerHTML = `
+      <div class="written-image-upload__actions">
+        <label class="written-image-upload__button" for="${inputId}">Tải ảnh bài làm</label>
+        <input id="${inputId}" type="file" accept="image/*" />
+        <button type="button" data-remove-written-image hidden>Gỡ ảnh</button>
+      </div>
+      <p class="written-image-upload__hint">Dùng khi em làm tự luận trên giấy. Hệ thống không tự chấm ảnh chữ viết tay; ảnh sẽ được báo giáo viên chấm lại.</p>
+      <div class="written-image-upload__preview" hidden>
+        <img alt="" />
+        <span class="written-image-upload__meta"></span>
+      </div>
+      <p class="written-image-upload__status" role="status"></p>
+    `;
+
+    const fileInput = control.querySelector("input[type='file']");
+    const removeButton = control.querySelector("[data-remove-written-image]");
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) {
+        setUploadStatus(control, "Em vui lòng chọn file ảnh.", true);
+        fileInput.value = "";
+        return;
+      }
+
+      setUploadStatus(control, "Đang xử lý ảnh...");
+      try {
+        const normalized = await normalizeImageFile(file);
+        const imageRecord = {
+          fieldId,
+          questionLabel,
+          fileName: file.name || `${fieldId}.jpg`,
+          type: normalized.type,
+          size: normalized.size,
+          originalSize: file.size,
+          uploadedAt: formatDateTime(new Date()),
+          dataUrl: normalized.dataUrl
+        };
+        const saved = setWrittenImage(current, imageRecord);
+        updateUploadPreview(control, imageRecord);
+        setUploadStatus(
+          control,
+          saved
+            ? "Đã lưu ảnh. Khi nộp bài, giáo viên sẽ nhận thông báo cần chấm lại câu này."
+            : "Đã nhận ảnh trong phiên hiện tại, nhưng bộ nhớ trình duyệt không đủ để lưu lâu dài.",
+          !saved
+        );
+        markAssessmentStart();
+      } catch (_error) {
+        setUploadStatus(control, "Không thể đọc ảnh này. Em hãy thử ảnh khác.", true);
+      }
+    });
+
+    removeButton.addEventListener("click", () => {
+      removeWrittenImage(current, fieldId);
+      fileInput.value = "";
+      updateUploadPreview(control, null);
+      setUploadStatus(control, "Đã gỡ ảnh bài làm.");
+    });
+
+    updateUploadPreview(control, getWrittenImage(fieldId));
+    return control;
+  }
+
+  function bindWrittenImageUploads(current) {
+    const partC = document.getElementById("part-c");
+    if (!partC) return;
+
+    writtenImageUploads = readWrittenImageUploads(current);
+    const textareas = Array.from(partC.querySelectorAll(".question-card textarea[data-save]"));
+    textareas.forEach((textarea, index) => {
+      if (textarea.nextElementSibling?.classList.contains("written-image-upload")) return;
+      const control = createWrittenImageControl(current, textarea, index);
+      textarea.insertAdjacentElement("afterend", control);
+    });
+  }
+
+  function createWrittenImageDownloadLink(imageRecord, index) {
+    const link = document.createElement("a");
+    link.className = "written-image-review__download";
+    link.href = imageRecord.dataUrl;
+    link.download = `${safeFileName(imageRecord.questionLabel)}-${index + 1}.jpg`;
+    link.textContent = "Tải ảnh";
+    return link;
+  }
+
+  function renderWrittenImageReviewList(container) {
+    const images = getUploadedWrittenImages();
+    if (!images.length) return;
+
+    const review = document.createElement("div");
+    review.className = "written-image-review";
+
+    const title = document.createElement("h4");
+    title.textContent = "Ảnh bài làm cần giáo viên chấm lại";
+
+    const note = document.createElement("p");
+    note.textContent = "Email phản hồi đã nêu các câu có ảnh. Do trình duyệt không cho tự đính kèm file vào email, em hãy tải ảnh dưới đây rồi đính kèm khi gửi cho giáo viên.";
+
+    const list = document.createElement("div");
+    list.className = "written-image-review__list";
+
+    images.forEach((imageRecord, index) => {
+      const item = document.createElement("article");
+      item.className = "written-image-review__item";
+
+      const img = document.createElement("img");
+      img.src = imageRecord.dataUrl;
+      img.alt = `Ảnh bài làm ${imageRecord.questionLabel}`;
+
+      const info = document.createElement("div");
+      const label = document.createElement("strong");
+      label.textContent = imageRecord.questionLabel;
+      const meta = document.createElement("span");
+      meta.textContent = `${imageRecord.fileName} - ${formatFileSize(imageRecord.size)}`;
+      info.append(label, meta, createWrittenImageDownloadLink(imageRecord, index));
+      item.append(img, info);
+      list.append(item);
+    });
+
+    review.append(title, note, list);
+    container.append(review);
+  }
+
   function getAssessmentRecords() {
     return readJson(assessmentResultsKey, []);
   }
@@ -303,6 +587,8 @@
     const lessonCode = getFieldValue("student-code", current.id);
     const correct = Number(score.toFixed(2));
     const wrong = Number(Math.max(0, 10 - score).toFixed(2));
+    const manualReviewItems = getManualReviewItems();
+    const needsManualReview = manualReviewItems.length > 0;
 
     return {
       id: `${lessonCode}-${submittedAt.getTime()}`,
@@ -321,7 +607,10 @@
       correct_answers: correct,
       wrong_answers: wrong,
       rank: getRank(score),
-      status: "Hoàn thành",
+      status: needsManualReview ? "Cần giáo viên chấm lại ảnh bài làm" : "Hoàn thành",
+      manual_review_required: needsManualReview ? "Có" : "Không",
+      manual_review_items: manualReviewItems.join("; "),
+      uploaded_image_count: manualReviewItems.length,
       teacher_email: teacherEmail,
       page_url: window.location.href
     };
@@ -352,6 +641,9 @@
       ["Số câu/ý sai", (record) => record.wrong_answers],
       ["Xếp loại", (record) => record.rank],
       ["Trạng thái", (record) => record.status],
+      ["Cần chấm lại ảnh", (record) => record.manual_review_required || "Không"],
+      ["Các câu có ảnh bài làm", (record) => record.manual_review_items || ""],
+      ["Số ảnh đã tải", (record) => record.uploaded_image_count || 0],
       ["Email giáo viên", (record) => record.teacher_email]
     ];
     const header = columns.map(([label]) => csvEscape(label)).join(",");
@@ -374,7 +666,7 @@
   }
 
   function buildEmailBody(record) {
-    return [
+    const lines = [
       "Kính gửi cô,",
       "",
       "Hệ thống TMath gửi cô thống kê kết quả bài kiểm tra của học sinh.",
@@ -393,15 +685,31 @@
       `Số câu/ý sai: ${record.wrong_answers}`,
       `Xếp loại: ${record.rank}`,
       `Trạng thái: ${record.status}`,
+    ];
+
+    if (record.manual_review_required === "Có") {
+      lines.push(
+        "",
+        "Phản hồi cần giáo viên chấm lại:",
+        `Học sinh đã tải ${record.uploaded_image_count} ảnh bài làm ở phần tự luận/vận dụng.`,
+        `Các câu có ảnh: ${record.manual_review_items}`,
+        "Hệ thống không tự chấm ảnh chữ viết tay. Em cần đính kèm ảnh bài làm trong email này, hoặc tải ảnh từ phần Kết quả trên trang để gửi cô chấm lại và phản hồi."
+      );
+    }
+
+    lines.push(
       "",
       "Nếu cần bảng dữ liệu, học sinh có thể bấm nút Tải file Excel trên trang kết quả rồi đính kèm vào email này.",
       "",
       "Trân trọng."
-    ].join("\n");
+    );
+
+    return lines.join("\n");
   }
 
   function openTeacherEmail(record) {
-    const subject = encodeURIComponent(`Thống kê kết quả bài kiểm tra Toán 6 - ${record.lesson}`);
+    const subjectPrefix = record.manual_review_required === "Có" ? "Cần chấm lại ảnh bài làm" : "Thống kê kết quả bài kiểm tra";
+    const subject = encodeURIComponent(`${subjectPrefix} Toán 6 - ${record.lesson}`);
     const body = encodeURIComponent(buildEmailBody(record));
     window.location.href = `mailto:${teacherEmail}?subject=${subject}&body=${body}`;
   }
@@ -456,7 +764,9 @@
     title.textContent = "Thống kê kết quả gửi giáo viên";
 
     const summary = document.createElement("p");
-    summary.textContent = `Đã tự lưu kết quả ${record.score}/10 của ${record.student_name}. Hệ thống tự mở email gửi thống kê đến ${teacherEmail}; nếu email chưa mở, bấm lại nút bên dưới.`;
+    summary.textContent = record.manual_review_required === "Có"
+      ? `Đã tự lưu kết quả ${record.score}/10 của ${record.student_name}. Có ${record.uploaded_image_count} ảnh bài làm cần giáo viên chấm lại; hệ thống tự mở email phản hồi đến ${teacherEmail}. Nếu email chưa mở, bấm lại nút bên dưới.`
+      : `Đã tự lưu kết quả ${record.score}/10 của ${record.student_name}. Hệ thống tự mở email gửi thống kê đến ${teacherEmail}; nếu email chưa mở, bấm lại nút bên dưới.`;
 
     const actions = document.createElement("div");
     actions.className = "assessment-report-actions";
@@ -473,6 +783,7 @@
 
     actions.append(downloadButton, emailButton);
     panel.append(title, summary, actions);
+    renderWrittenImageReviewList(panel);
   }
 
   function handleAssessmentSubmitted(current) {
@@ -555,6 +866,7 @@
     inner.append(brand, nav);
     bar.append(inner);
     document.body.prepend(bar);
+    bindWrittenImageUploads(current);
     lockAssessmentUntilLogin();
     bindAssessmentReporting(current);
   }
