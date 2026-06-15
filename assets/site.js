@@ -4,6 +4,7 @@
   const currentAccountKey = "phieuhoctap.auth.current";
   const openAuthRequestKey = "phieuhoctap.openAuth";
   const cards = Array.from(document.querySelectorAll("[data-lesson-card]"));
+  const chapterGroups = Array.from(document.querySelectorAll("[data-chapter-group]"));
   const searchInput = document.querySelector("[data-search]");
   const typeSelect = document.querySelector("[data-filter-type]");
   const chapterSelect = document.querySelector("[data-filter-chapter]");
@@ -203,9 +204,9 @@
 
   function getProgressMessage(viewed, total, streak) {
     if (viewed === 0) return "Hãy mở bài học đầu tiên để bắt đầu chuỗi học tập.";
-    if (viewed === total) return "Em đã mở đủ các bài trong chương. Hãy ôn tập để giữ nhịp học.";
+    if (viewed === total) return "Em đã mở đủ các bài học. Hãy ôn tập để giữ nhịp học.";
     if (streak >= 3) return `Em đang duy trì ${streak} ngày học liên tiếp. Hãy tiếp tục giữ nhịp.`;
-    return `Em đã mở ${viewed}/${total} bài. Cố gắng thêm một chút nữa để hoàn thành chương.`;
+    return `Em đã mở ${viewed}/${total} bài. Cố gắng thêm một chút nữa để hoàn thành lộ trình.`;
   }
 
   function updateCards() {
@@ -218,7 +219,7 @@
       const title = normalize(card.dataset.title || "");
       const keywords = normalize(card.dataset.keywords || "");
       const cardType = card.dataset.type || "lesson";
-      const cardChapter = card.dataset.chapter || "chapter-1";
+      const cardChapter = card.dataset.chapter || "toan6-chapter-1";
       const matchesQuery = !query || title.includes(query) || keywords.includes(query);
       const matchesType = type === "all" || type === cardType;
       const matchesChapter = chapter === "all" || chapter === cardChapter;
@@ -226,6 +227,12 @@
 
       card.classList.toggle("is-hidden", !visible);
       if (visible) shown += 1;
+    });
+
+    chapterGroups.forEach((group) => {
+      const hasVisibleCard = Array.from(group.querySelectorAll("[data-lesson-card]"))
+        .some((card) => !card.classList.contains("is-hidden"));
+      group.classList.toggle("is-hidden", !hasVisibleCard);
     });
 
     if (emptyState) {
@@ -261,9 +268,9 @@
       if (viewed.length === 0) {
         progressStatus.textContent = "Chưa mở bài học nào.";
       } else if (viewed.length === total) {
-        progressStatus.textContent = "Đã mở đủ các bài trong chương.";
+        progressStatus.textContent = "Đã mở đủ các bài học.";
       } else {
-        progressStatus.textContent = `Đang học chương 1, còn ${total - viewed.length} bài chưa mở.`;
+        progressStatus.textContent = `Đang học, còn ${total - viewed.length} bài chưa mở.`;
       }
     }
 

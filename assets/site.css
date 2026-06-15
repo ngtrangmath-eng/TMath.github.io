@@ -746,6 +746,10 @@ h1 span {
   padding: 16px;
 }
 
+.chapter-card.is-hidden {
+  display: none;
+}
+
 .chapter-heading {
   align-items: center;
   display: flex;

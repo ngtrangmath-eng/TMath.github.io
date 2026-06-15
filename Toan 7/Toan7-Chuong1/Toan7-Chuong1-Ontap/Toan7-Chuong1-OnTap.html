@@ -1,0 +1,2372 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toán 7 - Chương 1 - Ôn tập Chương I: Số hữu tỉ</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #5d667a;
+      --line: #dce2ee;
+      --soft-line: #edf1f7;
+      --primary: #165a72;
+      --primary-strong: #0e4558;
+      --primary-soft: #e7f3f6;
+      --blue: #315f9f;
+      --blue-soft: #eaf1fb;
+      --amber: #a35d05;
+      --amber-soft: #fff4df;
+      --green: #227258;
+      --green-soft: #e9f6ef;
+      --red: #b13f3f;
+      --red-soft: #fdecec;
+      --violet: #5f4a9d;
+      --violet-soft: #f1eefb;
+      --shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+      --radius: 8px;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button:disabled,
+    input:disabled,
+    textarea:disabled {
+      cursor: not-allowed;
+      opacity: 0.68;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top {
+      padding: 28px 30px 24px;
+      border-left: 8px solid var(--primary);
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.45rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 880px;
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      border-top: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .meta-item {
+      min-width: 0;
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .meta-item:last-child {
+      border-right: 0;
+    }
+
+    .meta-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      display: block;
+      margin-top: 3px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .student-panel {
+      display: grid;
+      grid-template-columns: 1.4fr 0.7fr 1fr;
+      gap: 12px;
+      margin: 18px 0;
+      padding: 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: block;
+      margin: 18px 0;
+      padding: 9px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .btn {
+      min-height: 40px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      border-color: var(--primary);
+      color: var(--primary-strong);
+      outline: none;
+    }
+
+    .btn.primary,
+    .btn.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn.ghost {
+      background: #eef1f0;
+      border-color: #eef1f0;
+      color: var(--ink);
+    }
+
+    .nav .btn {
+      min-height: 54px;
+      border-color: transparent;
+      background: transparent;
+      color: var(--primary-strong);
+      font-size: 1.02rem;
+    }
+
+    .nav .btn:hover {
+      background: var(--primary-soft);
+    }
+
+    .nav .btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    section {
+      scroll-margin-top: 90px;
+      margin: 18px 0;
+      padding: 26px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+    }
+
+    section.lesson-page {
+      display: none;
+    }
+
+    section.lesson-page.active-page {
+      display: block;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .section-tag {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .section-title {
+      flex: 1;
+      min-width: 0;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--primary-strong);
+      font-size: 1.5rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      color: var(--blue);
+      font-size: 1.18rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    h4 {
+      margin: 18px 0 8px;
+      color: var(--ink);
+      font-size: 1.02rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 14px 1.25rem;
+      padding: 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    table {
+      width: 100%;
+      margin: 12px 0 18px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border: 1px solid var(--line);
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: middle;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--blue-soft);
+      color: #203a61;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .center,
+    .score-table th:nth-child(2),
+    .score-table th:nth-child(3),
+    .score-table td:nth-child(2),
+    .score-table td:nth-child(3),
+    .answer-table th,
+    .answer-table td {
+      text-align: center;
+    }
+
+    .lead {
+      margin: 12px 0 16px;
+      padding: 14px 16px;
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      color: var(--primary-strong);
+    }
+
+    .note {
+      margin: 14px 0;
+      padding: 12px 14px;
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+      border-radius: 6px;
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 12px 0 18px;
+    }
+
+    .knowledge-card,
+    .question,
+    .summary-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .knowledge-card {
+      padding: 15px;
+    }
+
+    .knowledge-card h3 {
+      margin-top: 0;
+    }
+
+    .math-block {
+      display: block;
+      margin: 11px 0;
+      padding: 11px 12px;
+      background: #fbfcfe;
+      border: 1px solid var(--soft-line);
+      border-radius: 6px;
+      font-size: 1.06rem;
+      line-height: 1.25;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .math-inline {
+      display: inline;
+      white-space: nowrap;
+      vertical-align: baseline;
+    }
+
+    sup {
+      position: relative;
+      top: -0.48em;
+      margin-left: 0.03em;
+      font-size: 0.72em;
+      line-height: 0;
+      vertical-align: baseline;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.35em;
+      margin: 0 0.08em;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .frac > span {
+      display: block;
+    }
+
+    .frac > span:first-child {
+      padding: 0 0.16em 0.08em;
+      border-bottom: 1.5px solid currentColor;
+    }
+
+    .frac > span:last-child {
+      padding: 0.08em 0.16em 0;
+    }
+
+    .paren-frac {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.03em;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .paren-frac .paren {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.25em;
+      font-size: 1.8em;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .paren-frac .frac {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .question {
+      margin: 14px 0;
+      padding: 16px;
+      break-inside: avoid;
+    }
+
+    .sub-answer-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .sub-answer-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+      break-inside: avoid;
+    }
+
+    .sub-answer-card h5 {
+      margin: 0 0 8px;
+      color: var(--primary-strong);
+      font-size: 1rem;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .sub-answer-card label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 800;
+    }
+
+    .question-head {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .question-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .option-grid label {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .option-grid input {
+      flex: 0 0 auto;
+      margin-top: 4px;
+      accent-color: var(--primary);
+    }
+
+    .quiz-status {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .quiz-status.correct {
+      display: block;
+      color: #174e3d;
+      background: var(--green-soft);
+      border: 1px solid #bee0ce;
+    }
+
+    .quiz-status.incorrect {
+      display: block;
+      color: #7e2424;
+      background: var(--red-soft);
+      border: 1px solid #f4bcbc;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 164px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      resize: vertical;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    #phan-c textarea {
+      min-height: 190px;
+    }
+
+    .image-answer {
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px dashed #c8d2e1;
+      border-radius: 6px;
+      background: #fbfcfe;
+    }
+
+    .image-answer-control {
+      display: grid;
+      gap: 8px;
+    }
+
+    .image-answer-control span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .image-answer-control input {
+      width: 100%;
+      min-height: 40px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .image-answer-control input:disabled {
+      background: #f2f4f7;
+      color: #8b94a6;
+      cursor: not-allowed;
+    }
+
+    .image-answer-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .image-answer-note a {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .image-answer-preview {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .image-answer-preview[hidden] {
+      display: none;
+    }
+
+    .image-answer-preview img {
+      max-width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .image-answer-preview .btn {
+      justify-self: start;
+    }
+
+    details {
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 10px 12px;
+      color: var(--primary-strong);
+      font-weight: 800;
+      cursor: pointer;
+      background: #fbfcfe;
+    }
+
+    details > div {
+      padding: 12px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .answer-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .test-result {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: var(--green-soft);
+      border: 1px solid #bee0ce;
+      color: #174e3d;
+      font-weight: 800;
+    }
+
+    .test-result.show {
+      display: block;
+    }
+
+    .result-alert {
+      margin: 0 0 18px;
+      padding: 16px 18px;
+      background: var(--blue-soft);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      font-size: 1.05rem;
+    }
+
+    .result-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .result-card {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .result-card span {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .result-card strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--primary-strong);
+      font-size: 1.35rem;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .post-submit {
+      display: none;
+    }
+
+    .post-submit.show {
+      display: block;
+    }
+
+    .result-pending.hide {
+      display: none;
+    }
+
+    .timer-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      margin: 16px 0 18px;
+      padding: 16px;
+      border: 1px solid #c7dde4;
+      border-left: 5px solid var(--primary);
+      border-radius: var(--radius);
+      background: #f5fbfd;
+    }
+
+    .timer-panel.warning {
+      border-color: #e7c36f;
+      border-left-color: var(--amber);
+      background: #fff9ec;
+    }
+
+    .timer-panel.done {
+      border-color: #e7b9b9;
+      border-left-color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .timer-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .timer-display {
+      margin: 2px 0 0;
+      color: var(--primary-strong);
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer-panel.warning .timer-display {
+      color: var(--amber);
+    }
+
+    .timer-panel.done .timer-display {
+      color: var(--red);
+    }
+
+    .timer-status {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .timer-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .summary-box {
+      padding: 15px;
+      background: #fbfcfe;
+    }
+
+    .math-symbol-fab {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 72px;
+      height: 72px;
+      border: 6px solid #fff;
+      border-radius: 50%;
+      background: var(--violet);
+      color: #fff;
+      box-shadow: 0 18px 35px rgba(42, 30, 90, 0.28);
+      cursor: pointer;
+    }
+
+    .math-symbol-fab:hover,
+    .math-symbol-fab:focus {
+      background: #4b397f;
+      outline: 3px solid rgba(95, 74, 157, 0.22);
+    }
+
+    .math-symbol-fab span {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .math-symbol-panel {
+      position: fixed;
+      right: 24px;
+      bottom: 108px;
+      z-index: 49;
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100vh - 136px);
+      overflow: auto;
+      padding: 18px;
+      border: 1px solid #c8bdf0;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 24px 60px rgba(37, 34, 66, 0.18);
+    }
+
+    .math-symbol-panel[hidden] {
+      display: none;
+    }
+
+    .math-symbol-header {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .math-symbol-title {
+      margin: 0;
+      color: #40279a;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .math-symbol-close {
+      width: 42px;
+      height: 42px;
+      border: 1px solid #d7ccf4;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--violet);
+      font-size: 1.35rem;
+      cursor: pointer;
+    }
+
+    .math-symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(64px, 1fr));
+      gap: 10px;
+    }
+
+    .math-symbol-key {
+      min-height: 58px;
+      padding: 8px;
+      border: 1px solid #d7ccf4;
+      border-radius: 8px;
+      background: var(--violet-soft);
+      color: #40279a;
+      font-size: 1.12rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .math-symbol-key:hover,
+    .math-symbol-key:focus {
+      border-color: var(--violet);
+      outline: none;
+    }
+
+    .math-symbol-status {
+      margin: 12px 0 0;
+      color: #5b4ab5;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .meta-grid,
+      .knowledge-grid,
+      .answer-list {
+        grid-template-columns: 1fr;
+      }
+
+      .student-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .timer-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .timer-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero-top,
+      section {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 1.85rem;
+      }
+
+      .meta-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .meta-item:last-child {
+        border-bottom: 0;
+      }
+
+      .toolbar {
+        position: static;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-tag {
+        margin-bottom: 12px;
+      }
+
+      .math-symbol-fab {
+        right: 16px;
+        bottom: 16px;
+        width: 62px;
+        height: 62px;
+        border-width: 5px;
+      }
+
+      .math-symbol-panel {
+        right: 16px;
+        left: 16px;
+        bottom: 88px;
+        width: auto;
+        max-height: calc(100vh - 108px);
+      }
+
+      .math-symbol-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        font-size: 12pt;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero,
+      section {
+        box-shadow: none;
+      }
+
+      .toolbar,
+      .no-print {
+        display: none !important;
+      }
+
+      section.lesson-page {
+        display: block !important;
+        break-before: page;
+      }
+
+      section.lesson-page:first-of-type {
+        break-before: auto;
+      }
+
+      textarea {
+        min-height: 140px;
+      }
+
+      .image-answer-control,
+      .image-answer-preview .btn {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <p class="kicker">Phiếu học tập Toán 7</p>
+        <h1>Ôn tập Chương I - Số hữu tỉ</h1>
+        <p class="subtitle">Hệ thống kiến thức trọng tâm, luyện tập các phép tính với số hữu tỉ, lũy thừa, thứ tự thực hiện phép tính và quy tắc chuyển vế.</p>
+      </div>
+      <div class="meta-grid" aria-label="Thông tin bài học">
+        <div class="meta-item">
+          <span class="meta-label">Môn</span>
+          <span class="meta-value">Toán</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Lớp</span>
+          <span class="meta-value">7</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Chương</span>
+          <span class="meta-value">I</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bài</span>
+          <span class="meta-value">Ôn tập chương</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="student-panel" aria-label="Thông tin học sinh">
+      <div class="field">
+        <label for="student-name">Họ và tên</label>
+        <input id="student-name" type="text" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="student-class">Lớp</label>
+        <input id="student-class" type="text">
+      </div>
+      <div class="field">
+        <label for="student-date">Ngày làm bài</label>
+        <input id="student-date" type="text">
+      </div>
+    </div>
+
+    <nav class="toolbar no-print" aria-label="Điều hướng phiếu học tập">
+      <div class="nav" role="tablist">
+        <button class="btn active" type="button" data-target="phan-a">A. Kiến thức</button>
+        <button class="btn" type="button" data-target="phan-b">B. Luyện tập</button>
+        <button class="btn" type="button" data-target="phan-c">C. Kiểm tra</button>
+        <button class="btn" type="button" data-target="phan-ket-qua">Kết quả</button>
+        <button class="btn ghost" type="button" id="print-page">In phiếu</button>
+      </div>
+    </nav>
+
+    <main>
+      <section id="phan-a" class="lesson-page active-page">
+        <div class="section-head">
+          <div class="section-tag">A</div>
+          <div class="section-title">
+            <h2>Kiến thức trọng tâm</h2>
+            <p class="subtitle">Ôn lại các ý chính của bốn bài trong Chương I.</p>
+          </div>
+        </div>
+
+        <p class="lead">Bài ôn tập giúp học sinh hệ thống kiến thức về tập hợp số hữu tỉ, các phép tính với số hữu tỉ, lũy thừa với số mũ tự nhiên, thứ tự thực hiện phép tính và quy tắc chuyển vế.</p>
+
+        <h3>1. Mục tiêu ôn tập</h3>
+        <ol>
+          <li>Nhận biết, biểu diễn và so sánh được các số hữu tỉ.</li>
+          <li>Thực hiện được các phép cộng, trừ, nhân, chia số hữu tỉ.</li>
+          <li>Vận dụng được các quy tắc về lũy thừa.</li>
+          <li>Thực hiện đúng thứ tự các phép tính.</li>
+          <li>Vận dụng quy tắc chuyển vế để tìm <span class="math-inline">x</span>.</li>
+          <li>Giải được một số bài toán thực tế liên quan đến số hữu tỉ.</li>
+        </ol>
+
+        <h3>I. Kiến thức cần nhớ</h3>
+        <div class="knowledge-grid">
+          <article class="knowledge-card">
+            <h3>Bài 1. Tập hợp các số hữu tỉ</h3>
+            <p>Số hữu tỉ là số viết được dưới dạng <span class="math-inline"><span class="frac"><span>a</span><span>b</span></span></span> với <span class="math-inline">a,b ∈ ℤ</span>, <span class="math-inline">b ≠ 0</span>.</p>
+            <p>Tập hợp các số hữu tỉ được kí hiệu là <span class="math-inline">ℚ</span>.</p>
+            <p>Mỗi số hữu tỉ đều có một số đối. Số đối của <span class="math-inline"><span class="frac"><span>a</span><span>b</span></span></span> là <span class="math-inline">-<span class="frac"><span>a</span><span>b</span></span></span>.</p>
+            <div class="math-block"><span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>2</span><span>4</span></span> = <span class="frac"><span>3</span><span>6</span></span> = 0,5</div>
+            <p>Mỗi số hữu tỉ được biểu diễn bởi một điểm trên trục số. Trên trục số, số nằm bên trái nhỏ hơn số nằm bên phải.</p>
+            <p>Có thể so sánh hai số hữu tỉ bằng cách đưa về cùng mẫu số, đổi về số thập phân hoặc dựa vào vị trí trên trục số.</p>
+          </article>
+
+          <article class="knowledge-card">
+            <h3>Bài 2. Cộng, trừ, nhân, chia số hữu tỉ</h3>
+            <p>Muốn cộng hoặc trừ hai số hữu tỉ, ta viết chúng dưới dạng phân số rồi áp dụng quy tắc cộng, trừ phân số.</p>
+            <div class="math-block"><span class="frac"><span>a</span><span>m</span></span> + <span class="frac"><span>b</span><span>m</span></span> = <span class="frac"><span>a+b</span><span>m</span></span></div>
+            <div class="math-block"><span class="frac"><span>a</span><span>m</span></span> - <span class="frac"><span>b</span><span>m</span></span> = <span class="frac"><span>a-b</span><span>m</span></span></div>
+            <p>Muốn nhân hai số hữu tỉ:</p>
+            <div class="math-block"><span class="frac"><span>a</span><span>b</span></span> · <span class="frac"><span>c</span><span>d</span></span> = <span class="frac"><span>a · c</span><span>b · d</span></span></div>
+            <p>Muốn chia hai số hữu tỉ:</p>
+            <div class="math-block"><span class="frac"><span>a</span><span>b</span></span> : <span class="frac"><span>c</span><span>d</span></span> = <span class="frac"><span>a</span><span>b</span></span> · <span class="frac"><span>d</span><span>c</span></span></div>
+            <p>với <span class="math-inline">c ≠ 0</span>.</p>
+            <p>Các tính chất thường dùng: giao hoán, kết hợp và phân phối.</p>
+          </article>
+
+          <article class="knowledge-card">
+            <h3>Bài 3. Lũy thừa với số mũ tự nhiên của một số hữu tỉ</h3>
+            <p>Lũy thừa bậc <span class="math-inline">n</span> của số hữu tỉ <span class="math-inline">x</span> là:</p>
+            <div class="math-block">x<sup>n</sup> = x · x · x · ... · x</div>
+            <p>gồm <span class="math-inline">n</span> thừa số <span class="math-inline">x</span>.</p>
+            <div class="math-block">x<sup>1</sup> = x</div>
+            <div class="math-block">x<sup>0</sup> = 1, x ≠ 0</div>
+            <div class="math-block">x<sup>m</sup> · x<sup>n</sup> = x<sup>m+n</sup></div>
+            <div class="math-block">x<sup>m</sup> : x<sup>n</sup> = x<sup>m-n</sup>, x ≠ 0, m ≥ n</div>
+            <div class="math-block">(xy)<sup>n</sup> = x<sup>n</sup>y<sup>n</sup></div>
+            <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>x</span><span>y</span></span><span class="paren">)</span></span><sup>n</sup> = <span class="frac"><span>x<sup>n</sup></span><span>y<sup>n</sup></span></span></div>
+            <div class="math-block">(x<sup>m</sup>)<sup>n</sup> = x<sup>mn</sup></div>
+          </article>
+
+          <article class="knowledge-card">
+            <h3>Bài 4. Thứ tự thực hiện phép tính - Quy tắc chuyển vế</h3>
+            <p>Với biểu thức chỉ có phép cộng và trừ hoặc chỉ có phép nhân và chia, ta thực hiện từ trái sang phải.</p>
+            <p>Với biểu thức không có dấu ngoặc, thực hiện theo thứ tự:</p>
+            <div class="math-block">Lũy thừa → Nhân và chia → Cộng và trừ</div>
+            <p>Với biểu thức có dấu ngoặc, thực hiện trong ngoặc trước, ngoài ngoặc sau.</p>
+            <p>Khi chuyển một số hạng từ vế này sang vế kia của một đẳng thức, ta phải đổi dấu số hạng đó:</p>
+            <div class="math-block">a + b = c ⇒ a = c - b</div>
+            <div class="math-block">a - b = c ⇒ a = c + b</div>
+          </article>
+        </div>
+
+        <h3>II. Tự kiểm tra nhanh</h3>
+        <div class="question quiz" data-group="a" data-answer="B" data-point="1">
+          <div class="question-head">
+            <h4 class="question-title">Câu 1. Số hữu tỉ</h4>
+            <span class="badge">Tự kiểm tra</span>
+          </div>
+          <p>Số đối của <span class="math-inline">-<span class="frac"><span>3</span><span>5</span></span></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="a-q1" value="A"> A. <span class="math-inline">-<span class="frac"><span>5</span><span>3</span></span></span></label>
+            <label><input type="radio" name="a-q1" value="B"> B. <span class="math-inline"><span class="frac"><span>3</span><span>5</span></span></span></label>
+            <label><input type="radio" name="a-q1" value="C"> C. <span class="math-inline"><span class="frac"><span>5</span><span>3</span></span></span></label>
+            <label><input type="radio" name="a-q1" value="D"> D. <span class="math-inline">-<span class="frac"><span>3</span><span>5</span></span></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="a" data-answer="B" data-point="1">
+          <div class="question-head">
+            <h4 class="question-title">Câu 2. Phép tính với số hữu tỉ</h4>
+            <span class="badge">Tự kiểm tra</span>
+          </div>
+          <p>Kết quả của phép tính</p>
+          <div class="math-block"><span class="frac"><span>2</span><span>3</span></span> + <span class="frac"><span>1</span><span>6</span></span></div>
+          <p>là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="a-q2" value="A"> A. <span class="math-inline"><span class="frac"><span>1</span><span>2</span></span></span></label>
+            <label><input type="radio" name="a-q2" value="B"> B. <span class="math-inline"><span class="frac"><span>5</span><span>6</span></span></span></label>
+            <label><input type="radio" name="a-q2" value="C"> C. <span class="math-inline"><span class="frac"><span>3</span><span>9</span></span></span></label>
+            <label><input type="radio" name="a-q2" value="D"> D. <span class="math-inline"><span class="frac"><span>1</span><span>9</span></span></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="a" data-answer="A" data-point="1">
+          <div class="question-head">
+            <h4 class="question-title">Câu 3. Lũy thừa</h4>
+            <span class="badge">Tự kiểm tra</span>
+          </div>
+          <p>Kết quả của phép tính</p>
+          <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>3</sup> · <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>2</sup></div>
+          <p>là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="a-q3" value="A"> A. <span class="math-inline"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>5</sup></span></label>
+            <label><input type="radio" name="a-q3" value="B"> B. <span class="math-inline"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>6</sup></span></label>
+            <label><input type="radio" name="a-q3" value="C"> C. <span class="math-inline"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>1</sup></span></label>
+            <label><input type="radio" name="a-q3" value="D"> D. <span class="math-inline"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>9</sup></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="a" data-answer="A" data-point="1">
+          <div class="question-head">
+            <h4 class="question-title">Câu 4. Thứ tự thực hiện phép tính</h4>
+            <span class="badge">Tự kiểm tra</span>
+          </div>
+          <p>Kết quả của biểu thức</p>
+          <div class="math-block">2 + 3<sup>2</sup> · <span class="frac"><span>1</span><span>3</span></span></div>
+          <p>là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="a-q4" value="A"> A. 5</label>
+            <label><input type="radio" name="a-q4" value="B"> B. 9</label>
+            <label><input type="radio" name="a-q4" value="C"> C. 11</label>
+            <label><input type="radio" name="a-q4" value="D"> D. 15</label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="a" data-answer="C" data-point="1">
+          <div class="question-head">
+            <h4 class="question-title">Câu 5. Quy tắc chuyển vế</h4>
+            <span class="badge">Tự kiểm tra</span>
+          </div>
+          <p>Tìm <span class="math-inline">x</span>, biết:</p>
+          <div class="math-block">x - <span class="frac"><span>1</span><span>4</span></span> = <span class="frac"><span>1</span><span>2</span></span></div>
+          <div class="option-grid">
+            <label><input type="radio" name="a-q5" value="A"> A. <span class="math-inline">x = <span class="frac"><span>1</span><span>4</span></span></span></label>
+            <label><input type="radio" name="a-q5" value="B"> B. <span class="math-inline">x = <span class="frac"><span>1</span><span>2</span></span></span></label>
+            <label><input type="radio" name="a-q5" value="C"> C. <span class="math-inline">x = <span class="frac"><span>3</span><span>4</span></span></span></label>
+            <label><input type="radio" name="a-q5" value="D"> D. <span class="math-inline">x = 1</span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+        <button class="btn primary no-print" type="button" data-check-group="a">Kiểm tra nhanh</button>
+        <div id="a-result" class="test-result" aria-live="polite"></div>
+      </section>
+
+      <section id="phan-b" class="lesson-page">
+        <div class="section-head">
+          <div class="section-tag">B</div>
+          <div class="section-title">
+            <h2>Luyện tập</h2>
+            <p class="subtitle">Trình bày rõ các bước biến đổi và rút gọn kết quả.</p>
+          </div>
+        </div>
+
+        <p class="lead">Học sinh thực hiện lần lượt từng bài, trình bày rõ các bước biến đổi và rút gọn kết quả.</p>
+
+        <h3>Bài 1. Thực hiện phép tính</h3>
+        <div class="answer-list">
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">a)</h4>
+              <span class="badge">Tính</span>
+            </div>
+            <div class="math-block"><span class="frac"><span>3</span><span>4</span></span> + 2</div>
+            <label for="b1a">Bài làm</label>
+            <textarea id="b1a"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div><div class="math-block"><span class="frac"><span>3</span><span>4</span></span> + 2 = <span class="frac"><span>3</span><span>4</span></span> + <span class="frac"><span>8</span><span>4</span></span> = <span class="frac"><span>11</span><span>4</span></span></div></div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">b)</h4>
+              <span class="badge">Tính</span>
+            </div>
+            <div class="math-block"><span class="frac"><span>5</span><span>6</span></span> + 2 · 0,75</div>
+            <label for="b1b">Bài làm</label>
+            <textarea id="b1b"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div><div class="math-block"><span class="frac"><span>5</span><span>6</span></span> + 2 · 0,75 = <span class="frac"><span>5</span><span>6</span></span> + 1,5 = <span class="frac"><span>5</span><span>6</span></span> + <span class="frac"><span>3</span><span>2</span></span> = <span class="frac"><span>7</span><span>3</span></span></div></div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">c)</h4>
+              <span class="badge">Tính</span>
+            </div>
+            <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup> · <span class="frac"><span>5</span><span>7</span></span> + <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup> · <span class="frac"><span>2</span><span>7</span></span></div>
+            <label for="b1c">Bài làm</label>
+            <textarea id="b1c"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div>
+                <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>5</span><span>7</span></span> + <span class="frac"><span>2</span><span>7</span></span><span class="paren">)</span></span> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup> = <span class="frac"><span>4</span><span>9</span></span></div>
+              </div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">d)</h4>
+              <span class="badge">Tính</span>
+            </div>
+            <div class="math-block">3 - [<span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>2</sup> + <span class="frac"><span>3</span><span>4</span></span>] : 2</div>
+            <label for="b1d">Bài làm</label>
+            <textarea id="b1d"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div><div class="math-block">3 - <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>4</span></span> + <span class="frac"><span>3</span><span>4</span></span><span class="paren">)</span></span> : 2 = 3 - 1 : 2 = 3 - <span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>5</span><span>2</span></span></div></div>
+            </details>
+          </article>
+        </div>
+
+        <h3>Bài 2. Tìm x</h3>
+        <div class="answer-list">
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">a)</h4>
+              <span class="badge">Tìm x</span>
+            </div>
+            <div class="math-block">x + <span class="frac"><span>2</span><span>5</span></span> = 1,2</div>
+            <label for="b2a">Bài làm</label>
+            <textarea id="b2a"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div><div class="math-block">x = <span class="frac"><span>6</span><span>5</span></span> - <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>4</span><span>5</span></span></div></div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">b)</h4>
+              <span class="badge">Tìm x</span>
+            </div>
+            <div class="math-block"><span class="frac"><span>3</span><span>4</span></span>x - <span class="frac"><span>1</span><span>2</span></span> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>2</sup></div>
+            <label for="b2b">Bài làm</label>
+            <textarea id="b2b"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div>
+                <div class="math-block"><span class="frac"><span>3</span><span>4</span></span>x - <span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>1</span><span>4</span></span></div>
+                <div class="math-block"><span class="frac"><span>3</span><span>4</span></span>x = <span class="frac"><span>3</span><span>4</span></span></div>
+                <div class="math-block">x = 1</div>
+              </div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">c)</h4>
+              <span class="badge">Tìm x</span>
+            </div>
+            <div class="math-block">2<sup>x</sup> = 2<sup>5</sup></div>
+            <label for="b2c">Bài làm</label>
+            <textarea id="b2c"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div><div class="math-block">x = 5</div></div>
+            </details>
+          </article>
+
+          <article class="question">
+            <div class="question-head">
+              <h4 class="question-title">d)</h4>
+              <span class="badge">Tìm x</span>
+            </div>
+            <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>x+1</sup> · <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>7</sup></div>
+            <label for="b2d">Bài làm</label>
+            <textarea id="b2d"></textarea>
+            <details>
+              <summary>Đáp án</summary>
+              <div>
+                <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>x+3</sup> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>7</sup></div>
+                <div class="math-block">x + 3 = 7</div>
+                <div class="math-block">x = 4</div>
+              </div>
+            </details>
+          </article>
+        </div>
+
+        <h3>Bài 3. Toán thực tế</h3>
+        <article class="question">
+          <p>Một cửa hàng có 24 kg gạo. Buổi sáng cửa hàng bán được <span class="math-inline"><span class="frac"><span>3</span><span>8</span></span></span> số gạo đó. Buổi chiều cửa hàng bán thêm 4,5 kg gạo. Hỏi cửa hàng còn lại bao nhiêu ki-lô-gam gạo?</p>
+          <label for="b3">Bài giải</label>
+          <textarea id="b3"></textarea>
+          <details>
+            <summary>Bài giải</summary>
+            <div>
+              <p>Khối lượng gạo bán trong buổi sáng là:</p>
+              <div class="math-block">24 · <span class="frac"><span>3</span><span>8</span></span> = 9 kg</div>
+              <p>Tổng khối lượng gạo đã bán là:</p>
+              <div class="math-block">9 + 4,5 = 13,5 kg</div>
+              <p>Khối lượng gạo còn lại là:</p>
+              <div class="math-block">24 - 13,5 = 10,5 kg</div>
+              <p><strong>Đáp số:</strong> 10,5 kg.</p>
+            </div>
+          </details>
+        </article>
+
+        <h3>Bài 4. Nâng cao</h3>
+        <article class="question">
+          <p>Tính giá trị biểu thức:</p>
+          <div class="math-block">A = <span class="frac"><span>5<sup>6</sup> + 5<sup>5</sup></span><span>5<sup>4</sup> + 5<sup>3</sup></span></span></div>
+          <label for="b4">Bài giải</label>
+          <textarea id="b4"></textarea>
+          <details>
+            <summary>Bài giải</summary>
+            <div><div class="math-block">A = <span class="frac"><span>5<sup>5</sup>(5+1)</span><span>5<sup>3</sup>(5+1)</span></span> = <span class="frac"><span>5<sup>5</sup></span><span>5<sup>3</sup></span></span> = 5<sup>5-3</sup> = 5<sup>2</sup> = 25</div></div>
+          </details>
+        </article>
+      </section>
+
+      <section id="phan-c" class="lesson-page">
+        <div class="section-head">
+          <div class="section-tag">C</div>
+          <div class="section-title">
+            <h2>Kiểm tra đánh giá</h2>
+            <p class="subtitle">Thời gian làm bài: 45 phút. Thang điểm: 10 điểm.</p>
+          </div>
+        </div>
+
+        <p class="lead">Bài kiểm tra giúp học sinh đánh giá mức độ nắm vững kiến thức và kĩ năng của Chương I - Số hữu tỉ.</p>
+
+        <div class="timer-panel no-print" id="test-timer-panel" aria-live="polite">
+          <div>
+            <p class="timer-label">Đồng hồ làm bài</p>
+            <p class="timer-display" id="test-timer-display">45:00</p>
+            <p class="timer-status" id="test-timer-status">Em có thể nhập bài ngay. Đồng hồ sẽ tự chạy khi em bắt đầu nhập hoặc chọn đáp án.</p>
+          </div>
+          <div class="timer-actions">
+            <button class="btn primary" type="button" id="start-test-timer">Bắt đầu làm bài</button>
+            <button class="btn ghost" type="button" id="reset-test-timer">Đặt lại giờ</button>
+          </div>
+        </div>
+
+        <h3>Thang điểm</h3>
+        <table class="score-table">
+          <thead>
+            <tr>
+              <th>Phần</th>
+              <th>Số câu</th>
+              <th>Điểm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Trắc nghiệm</td>
+              <td>8 câu</td>
+              <td>4 điểm</td>
+            </tr>
+            <tr>
+              <td>Tự luận</td>
+              <td>4 bài</td>
+              <td>6 điểm</td>
+            </tr>
+            <tr>
+              <td><strong>Tổng</strong></td>
+              <td></td>
+              <td><strong>10 điểm</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>I. Trắc nghiệm</h3>
+        <p>Khoanh tròn hoặc đánh dấu vào đáp án đúng.</p>
+
+        <div class="question quiz" data-group="c" data-answer="B" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 1</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Số nào sau đây là số hữu tỉ âm?</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q1" value="A"> A. <span class="math-inline"><span class="frac"><span>2</span><span>5</span></span></span></label>
+            <label><input type="radio" name="c-q1" value="B"> B. <span class="math-inline">-<span class="frac"><span>3</span><span>7</span></span></span></label>
+            <label><input type="radio" name="c-q1" value="C"> C. 0</label>
+            <label><input type="radio" name="c-q1" value="D"> D. 4</label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="B" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 2</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Số đối của <span class="math-inline">-<span class="frac"><span>5</span><span>8</span></span></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q2" value="A"> A. <span class="math-inline">-<span class="frac"><span>8</span><span>5</span></span></span></label>
+            <label><input type="radio" name="c-q2" value="B"> B. <span class="math-inline"><span class="frac"><span>5</span><span>8</span></span></span></label>
+            <label><input type="radio" name="c-q2" value="C"> C. <span class="math-inline"><span class="frac"><span>8</span><span>5</span></span></span></label>
+            <label><input type="radio" name="c-q2" value="D"> D. <span class="math-inline">-<span class="frac"><span>5</span><span>8</span></span></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="B" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 3</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Kết quả của <span class="math-inline"><span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>1</span><span>6</span></span></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q3" value="A"> A. <span class="math-inline"><span class="frac"><span>2</span><span>9</span></span></span></label>
+            <label><input type="radio" name="c-q3" value="B"> B. <span class="math-inline"><span class="frac"><span>1</span><span>2</span></span></span></label>
+            <label><input type="radio" name="c-q3" value="C"> C. <span class="math-inline"><span class="frac"><span>2</span><span>6</span></span></span></label>
+            <label><input type="radio" name="c-q3" value="D"> D. <span class="math-inline"><span class="frac"><span>1</span><span>9</span></span></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="C" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 4</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Kết quả của <span class="math-inline"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>2</span><span>5</span></span><span class="paren">)</span></span><sup>2</sup></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q4" value="A"> A. <span class="math-inline"><span class="frac"><span>2</span><span>25</span></span></span></label>
+            <label><input type="radio" name="c-q4" value="B"> B. <span class="math-inline"><span class="frac"><span>4</span><span>10</span></span></span></label>
+            <label><input type="radio" name="c-q4" value="C"> C. <span class="math-inline"><span class="frac"><span>4</span><span>25</span></span></span></label>
+            <label><input type="radio" name="c-q4" value="D"> D. <span class="math-inline"><span class="frac"><span>2</span><span>10</span></span></span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="A" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 5</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Kết quả của <span class="math-inline">3<sup>2</sup> · 3<sup>4</sup></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q5" value="A"> A. 3<sup>6</sup></label>
+            <label><input type="radio" name="c-q5" value="B"> B. 3<sup>8</sup></label>
+            <label><input type="radio" name="c-q5" value="C"> C. 9<sup>6</sup></label>
+            <label><input type="radio" name="c-q5" value="D"> D. 3<sup>2</sup></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="B" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 6</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Kết quả của <span class="math-inline">(2<sup>3</sup>)<sup>2</sup></span> là:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q6" value="A"> A. 2<sup>5</sup></label>
+            <label><input type="radio" name="c-q6" value="B"> B. 2<sup>6</sup></label>
+            <label><input type="radio" name="c-q6" value="C"> C. 2<sup>9</sup></label>
+            <label><input type="radio" name="c-q6" value="D"> D. 4<sup>5</sup></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="C" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 7</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Trong biểu thức không có dấu ngoặc, phép tính nào được thực hiện trước?</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q7" value="A"> A. Cộng</label>
+            <label><input type="radio" name="c-q7" value="B"> B. Trừ</label>
+            <label><input type="radio" name="c-q7" value="C"> C. Lũy thừa</label>
+            <label><input type="radio" name="c-q7" value="D"> D. Phép tính viết bên trái</label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+
+        <div class="question quiz" data-group="c" data-answer="B" data-point="0.5">
+          <div class="question-head">
+            <h4 class="question-title">Câu 8</h4>
+            <span class="badge">0,5 điểm</span>
+          </div>
+          <p>Từ đẳng thức <span class="math-inline">x - <span class="frac"><span>2</span><span>3</span></span> = <span class="frac"><span>1</span><span>3</span></span></span> suy ra:</p>
+          <div class="option-grid">
+            <label><input type="radio" name="c-q8" value="A"> A. <span class="math-inline">x = <span class="frac"><span>1</span><span>3</span></span> - <span class="frac"><span>2</span><span>3</span></span></span></label>
+            <label><input type="radio" name="c-q8" value="B"> B. <span class="math-inline">x = <span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>2</span><span>3</span></span></span></label>
+            <label><input type="radio" name="c-q8" value="C"> C. <span class="math-inline">x = <span class="frac"><span>2</span><span>3</span></span> - <span class="frac"><span>1</span><span>3</span></span></span></label>
+            <label><input type="radio" name="c-q8" value="D"> D. <span class="math-inline">x = -1</span></label>
+          </div>
+          <div class="quiz-status" aria-live="polite"></div>
+        </div>
+        <h3>II. Tự luận</h3>
+        <p class="image-answer-note">Đối với bài tự luận có tải ảnh lên, nếu AI không đọc và chấm được chữ viết, bài sẽ được gửi về email cá nhân của giáo viên <a href="mailto:ngtrang.math@gmail.com">ngtrang.math@gmail.com</a> để giáo viên chấm và phản hồi.</p>
+        <article class="question">
+          <div class="question-head">
+            <h4 class="question-title">Bài 1. Thực hiện phép tính</h4>
+            <span class="badge">2 điểm</span>
+          </div>
+          <div class="sub-answer-list">
+            <div class="sub-answer-card">
+              <h5>a)</h5>
+              <div class="math-block"><span class="frac"><span>5</span><span>6</span></span> + 3</div>
+              <label for="c-essay-1a">Bài làm câu a</label>
+              <textarea id="c-essay-1a"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>b)</h5>
+              <div class="math-block"><span class="frac"><span>2</span><span>3</span></span> + 4 · 0,25</div>
+              <label for="c-essay-1b">Bài làm câu b</label>
+              <textarea id="c-essay-1b"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>c)</h5>
+              <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>3</span><span>4</span></span><span class="paren">)</span></span><sup>2</sup> · <span class="frac"><span>2</span><span>5</span></span> + <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>3</span><span>4</span></span><span class="paren">)</span></span><sup>2</sup> · <span class="frac"><span>3</span><span>5</span></span></div>
+              <label for="c-essay-1c">Bài làm câu c</label>
+              <textarea id="c-essay-1c"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>d)</h5>
+              <div class="math-block">4 - [<span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>3</sup> + <span class="frac"><span>7</span><span>8</span></span>] : 2</div>
+              <label for="c-essay-1d">Bài làm câu d</label>
+              <textarea id="c-essay-1d"></textarea>
+            </div>
+          </div>
+        </article>
+
+        <article class="question">
+          <div class="question-head">
+            <h4 class="question-title">Bài 2. Tìm x</h4>
+            <span class="badge">2 điểm</span>
+          </div>
+          <div class="sub-answer-list">
+            <div class="sub-answer-card">
+              <h5>a)</h5>
+              <div class="math-block">x + <span class="frac"><span>3</span><span>5</span></span> = 1,4</div>
+              <label for="c-essay-2a">Bài làm câu a</label>
+              <textarea id="c-essay-2a"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>b)</h5>
+              <div class="math-block"><span class="frac"><span>2</span><span>3</span></span>x - <span class="frac"><span>1</span><span>3</span></span> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>3</span></span><span class="paren">)</span></span><sup>2</sup></div>
+              <label for="c-essay-2b">Bài làm câu b</label>
+              <textarea id="c-essay-2b"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>c)</h5>
+              <div class="math-block">3<sup>x</sup> = 3<sup>4</sup></div>
+              <label for="c-essay-2c">Bài làm câu c</label>
+              <textarea id="c-essay-2c"></textarea>
+            </div>
+            <div class="sub-answer-card">
+              <h5>d)</h5>
+              <div class="math-block"><span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>x+2</sup> · <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>3</sup> = <span class="paren-frac"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span></span><sup>8</sup></div>
+              <label for="c-essay-2d">Bài làm câu d</label>
+              <textarea id="c-essay-2d"></textarea>
+            </div>
+          </div>
+        </article>
+
+        <article class="question">
+          <div class="question-head">
+            <h4 class="question-title">Bài 3. Toán thực tế</h4>
+            <span class="badge">1 điểm</span>
+          </div>
+          <p>Một lớp học có 40 học sinh. Số học sinh giỏi bằng <span class="math-inline"><span class="frac"><span>3</span><span>10</span></span></span> số học sinh cả lớp. Số học sinh khá nhiều hơn số học sinh giỏi 8 em. Tính số học sinh giỏi và số học sinh khá của lớp.</p>
+          <label for="c-essay-3">Bài giải</label>
+          <textarea id="c-essay-3"></textarea>
+        </article>
+
+        <article class="question">
+          <div class="question-head">
+            <h4 class="question-title">Bài 4. Nâng cao</h4>
+            <span class="badge">1 điểm</span>
+          </div>
+          <p>Tính giá trị biểu thức:</p>
+          <div class="math-block">B = <span class="frac"><span>2<sup>8</sup> + 2<sup>7</sup></span><span>2<sup>6</sup> + 2<sup>5</sup></span></span></div>
+          <label for="c-essay-4">Bài giải</label>
+          <textarea id="c-essay-4"></textarea>
+        </article>
+
+        <div class="question-actions no-print">
+          <button class="btn primary" type="button" id="submit-test" disabled>Nộp bài và xem kết quả</button>
+        </div>
+        <p class="test-result no-print" id="submit-status" aria-live="polite">Chưa thể nộp bài. Cần hoàn thành đủ trắc nghiệm và tự luận.</p>
+
+        <div id="answer-key-section" hidden>
+        <details>
+          <summary>Đáp án và hướng dẫn chấm</summary>
+          <div>
+            <h3>1. Đáp án trắc nghiệm</h3>
+            <table class="answer-table">
+              <thead>
+                <tr>
+                  <th>Câu</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>5</th>
+                  <th>6</th>
+                  <th>7</th>
+                  <th>8</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Đáp án</strong></td>
+                  <td>B</td>
+                  <td>B</td>
+                  <td>B</td>
+                  <td>C</td>
+                  <td>A</td>
+                  <td>B</td>
+                  <td>C</td>
+                  <td>B</td>
+                </tr>
+                <tr>
+                  <td><strong>Điểm</strong></td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>2. Đáp án tự luận</h3>
+            <h4>Bài 1: 2 điểm</h4>
+            <p>a) <span class="math-inline"><span class="frac"><span>23</span><span>6</span></span></span></p>
+            <p>b) <span class="math-inline"><span class="frac"><span>5</span><span>3</span></span></span></p>
+            <p>c) <span class="math-inline"><span class="frac"><span>9</span><span>16</span></span></span></p>
+            <p>d) <span class="math-inline"><span class="frac"><span>7</span><span>2</span></span></span></p>
+            <p>Mỗi câu đúng được 0,5 điểm.</p>
+
+            <h4>Bài 2: 2 điểm</h4>
+            <p>a) <span class="math-inline">x = <span class="frac"><span>4</span><span>5</span></span></span></p>
+            <p>b) <span class="math-inline">x = <span class="frac"><span>2</span><span>3</span></span></span></p>
+            <p>c) <span class="math-inline">x = 4</span></p>
+            <p>d) <span class="math-inline">x = 3</span></p>
+            <p>Mỗi câu đúng được 0,5 điểm.</p>
+
+            <h4>Bài 3: 1 điểm</h4>
+            <p>Số học sinh giỏi:</p>
+            <div class="math-block">40 · <span class="frac"><span>3</span><span>10</span></span> = 12</div>
+            <p>Số học sinh khá:</p>
+            <div class="math-block">12 + 8 = 20</div>
+            <p><strong>Đáp số:</strong> 12 học sinh giỏi và 20 học sinh khá.</p>
+
+            <h4>Bài 4: 1 điểm</h4>
+            <div class="math-block">B = <span class="frac"><span>2<sup>7</sup>(2+1)</span><span>2<sup>5</sup>(2+1)</span></span> = <span class="frac"><span>2<sup>7</sup></span><span>2<sup>5</sup></span></span> = 2<sup>2</sup> = 4</div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Nhận xét kết quả</summary>
+          <div>
+            <ul>
+              <li>Từ 9 đến 10 điểm: Em nắm vững kiến thức và vận dụng tốt.</li>
+              <li>Từ 7 đến dưới 9 điểm: Em hiểu bài, cần luyện thêm bài tìm <span class="math-inline">x</span> và bài tổng hợp.</li>
+              <li>Từ 5 đến dưới 7 điểm: Em cần xem lại các phép tính, lũy thừa và quy tắc chuyển vế.</li>
+              <li>Dưới 5 điểm: Em cần ôn lại kiến thức trọng tâm của từng bài và luyện thêm các bài cơ bản.</li>
+            </ul>
+          </div>
+        </details>
+        </div>
+      </section>
+
+      <section id="phan-ket-qua" class="lesson-page" aria-labelledby="title-result">
+        <div class="section-head">
+          <div class="section-tag">✓</div>
+          <div class="section-title">
+            <h2 id="title-result">Kết quả</h2>
+            <p class="subtitle">Điểm số, đáp án gợi ý và nhận xét chỉ hiển thị sau khi học sinh nộp bài.</p>
+          </div>
+        </div>
+
+        <div class="lead result-pending" id="result-pending">
+          Hãy hoàn thành phần kiểm tra, sau đó bấm <strong>Nộp bài và xem kết quả</strong> để xem điểm số và đáp án gợi ý.
+        </div>
+
+        <div class="post-submit" id="post-submit" aria-live="polite">
+          <div class="result-alert" id="result-message">Chưa có kết quả.</div>
+
+          <div class="result-cards">
+            <div class="result-card">
+              <span>Trắc nghiệm đúng</span>
+              <strong id="result-correct">0/8</strong>
+            </div>
+            <div class="result-card">
+              <span>Điểm trắc nghiệm</span>
+              <strong id="result-quiz-score">0/4</strong>
+            </div>
+            <div class="result-card">
+              <span>Điểm tự luận</span>
+              <strong id="result-written-score">0/6</strong>
+            </div>
+            <div class="result-card">
+              <span>Tổng điểm</span>
+              <strong id="result-total-score">0/10</strong>
+            </div>
+          </div>
+
+          <table class="result-table">
+            <thead>
+              <tr>
+                <th>Phần</th>
+                <th>Kết quả</th>
+                <th>Điểm</th>
+              </tr>
+            </thead>
+            <tbody id="result-detail-rows"></tbody>
+          </table>
+
+          <div id="result-answer-section"></div>
+
+          <div class="question-actions no-print">
+            <button class="btn ghost" type="button" id="back-test">Quay lại kiểm tra</button>
+            <button class="btn primary" type="button" id="print-result">In kết quả</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <p class="footer-note">Phiếu học tập Toán 7 - Chương I - Ôn tập số hữu tỉ.</p>
+  </div>
+
+  <button class="math-symbol-fab no-print" type="button" id="math-symbol-toggle" aria-label="Mở bảng kí hiệu toán học" aria-expanded="false">
+    <span>∑</span>
+  </button>
+  <div class="math-symbol-panel no-print" id="math-symbol-panel" hidden>
+    <div class="math-symbol-header">
+      <p class="math-symbol-title">Ký hiệu toán học</p>
+      <button class="math-symbol-close" type="button" id="math-symbol-close" aria-label="Đóng bảng kí hiệu">×</button>
+    </div>
+    <div class="math-symbol-grid">
+      <button class="math-symbol-key" type="button" data-insert="ℚ">ℚ</button>
+      <button class="math-symbol-key" type="button" data-insert="ℤ">ℤ</button>
+      <button class="math-symbol-key" type="button" data-insert="ℕ">ℕ</button>
+      <button class="math-symbol-key" type="button" data-insert="∈">∈</button>
+      <button class="math-symbol-key" type="button" data-insert="∉">∉</button>
+      <button class="math-symbol-key" type="button" data-insert="≠">≠</button>
+      <button class="math-symbol-key" type="button" data-insert="&lt;">&lt;</button>
+      <button class="math-symbol-key" type="button" data-insert="&gt;">&gt;</button>
+      <button class="math-symbol-key" type="button" data-insert="≤">≤</button>
+      <button class="math-symbol-key" type="button" data-insert="≥">≥</button>
+      <button class="math-symbol-key" type="button" data-insert="=">=</button>
+      <button class="math-symbol-key" type="button" data-insert="+">+</button>
+      <button class="math-symbol-key" type="button" data-insert="-">-</button>
+      <button class="math-symbol-key" type="button" data-insert="·">·</button>
+      <button class="math-symbol-key" type="button" data-insert=":">:</button>
+      <button class="math-symbol-key" type="button" data-insert="(">(</button>
+      <button class="math-symbol-key" type="button" data-insert=")">)</button>
+      <button class="math-symbol-key" type="button" data-insert="a/b">a/b</button>
+      <button class="math-symbol-key" type="button" data-insert="-a/b">-a/b</button>
+      <button class="math-symbol-key" type="button" data-insert="n a/b">n a/b</button>
+      <button class="math-symbol-key" type="button" data-insert="x²">x²</button>
+      <button class="math-symbol-key" type="button" data-insert="x³">x³</button>
+      <button class="math-symbol-key" type="button" data-insert="xⁿ">xⁿ</button>
+      <button class="math-symbol-key" type="button" data-insert="&#10;">↵</button>
+    </div>
+    <p class="math-symbol-status" id="math-symbol-status">Bấm vào ô cần điền rồi chọn ký hiệu để chèn.</p>
+  </div>
+
+  <script>
+    const pages = Array.from(document.querySelectorAll('.lesson-page'));
+    const navButtons = Array.from(document.querySelectorAll('.nav .btn[data-target]'));
+
+    function showPage(id, updateHash = true) {
+      pages.forEach((page) => {
+        page.classList.toggle('active-page', page.id === id);
+      });
+      navButtons.forEach((button) => {
+        const active = button.dataset.target === id;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      if (updateHash) history.replaceState(null, '', `#${id}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navButtons.forEach((button) => {
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', button.dataset.target);
+      button.addEventListener('click', () => showPage(button.dataset.target));
+    });
+
+    const initialPage = ['phan-a', 'phan-b', 'phan-c', 'phan-ket-qua'].includes(location.hash.slice(1))
+      ? location.hash.slice(1)
+      : 'phan-a';
+    showPage(initialPage, false);
+
+    document.getElementById('print-page')?.addEventListener('click', () => window.print());
+
+    function addImageAnswerControls() {
+      document.querySelectorAll('textarea').forEach((textarea, index) => {
+        if (textarea.dataset.imageAnswerReady === 'true') return;
+
+        const textareaId = textarea.id || `answer-${index + 1}`;
+        if (!textarea.id) textarea.id = textareaId;
+
+        textarea.dataset.imageAnswerReady = 'true';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'image-answer';
+
+        const control = document.createElement('label');
+        control.className = 'image-answer-control';
+        control.setAttribute('for', `${textareaId}-image`);
+        control.innerHTML = '<span>Tải ảnh bài làm lên</span>';
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.id = `${textareaId}-image`;
+        input.accept = 'image/*';
+
+        const preview = document.createElement('div');
+        preview.className = 'image-answer-preview';
+        preview.hidden = true;
+
+        const image = document.createElement('img');
+        image.alt = 'Ảnh bài làm đã chọn';
+
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'btn ghost no-print image-answer-clear';
+        clearButton.textContent = 'Xóa ảnh';
+
+        let objectUrl = '';
+
+        input.addEventListener('change', () => {
+          const file = input.files?.[0];
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          objectUrl = '';
+
+          if (!file) {
+            preview.hidden = true;
+            image.removeAttribute('src');
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
+            return;
+          }
+
+          objectUrl = URL.createObjectURL(file);
+          image.src = objectUrl;
+          preview.hidden = false;
+          textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
+        clearButton.addEventListener('click', () => {
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          objectUrl = '';
+          input.value = '';
+          image.removeAttribute('src');
+          preview.hidden = true;
+          textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
+        control.appendChild(input);
+        preview.append(image, clearButton);
+        wrapper.append(control, preview);
+        textarea.insertAdjacentElement('afterend', wrapper);
+      });
+    }
+
+    addImageAnswerControls();
+
+    const testDurationSeconds = 45 * 60;
+    let testRemainingSeconds = testDurationSeconds;
+    let testTimerId = null;
+    let testTimerStarted = false;
+    const testSection = document.getElementById('phan-c');
+    const testTimerPanel = document.getElementById('test-timer-panel');
+    const testTimerDisplay = document.getElementById('test-timer-display');
+    const testTimerStatus = document.getElementById('test-timer-status');
+    const startTestTimerButton = document.getElementById('start-test-timer');
+    const resetTestTimerButton = document.getElementById('reset-test-timer');
+    const testAnswerControls = Array.from(
+      testSection?.querySelectorAll('input[type="radio"], input[type="file"], textarea, .image-answer-clear') || []
+    );
+    const testCheckButton = testSection?.querySelector('[data-check-group="c"]');
+    const submitButton = document.getElementById('submit-test');
+    const submitStatus = document.getElementById('submit-status');
+    const answerKeySection = document.getElementById('answer-key-section');
+    const resultAnswerSection = document.getElementById('result-answer-section');
+    const resultPending = document.getElementById('result-pending');
+    const postSubmit = document.getElementById('post-submit');
+    const resultMessage = document.getElementById('result-message');
+    const resultCorrect = document.getElementById('result-correct');
+    const resultQuizScore = document.getElementById('result-quiz-score');
+    const resultWrittenScore = document.getElementById('result-written-score');
+    const resultTotalScore = document.getElementById('result-total-score');
+    const resultDetailRows = document.getElementById('result-detail-rows');
+    let testSubmitted = false;
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function setTestInputsDisabled(isDisabled) {
+      testAnswerControls.forEach((control) => {
+        control.disabled = isDisabled;
+      });
+      if (testCheckButton) testCheckButton.disabled = isDisabled;
+    }
+
+    function renderTestTimer() {
+      if (!testTimerDisplay || !testTimerPanel) return;
+      testTimerDisplay.textContent = formatTime(testRemainingSeconds);
+      testTimerPanel.classList.toggle('warning', testTimerStarted && testRemainingSeconds <= 5 * 60 && testRemainingSeconds > 0);
+      testTimerPanel.classList.toggle('done', testTimerRemainingIsDone());
+    }
+
+    function testTimerRemainingIsDone() {
+      return testTimerStarted && testRemainingSeconds <= 0;
+    }
+
+    function stopTestTimer() {
+      if (testTimerId) {
+        clearInterval(testTimerId);
+        testTimerId = null;
+      }
+    }
+
+    function finishTestTimer() {
+      stopTestTimer();
+      testRemainingSeconds = 0;
+      setTestInputsDisabled(true);
+      if (startTestTimerButton) startTestTimerButton.disabled = true;
+      renderTestTimer();
+      submitTest({ auto: true });
+    }
+
+    function tickTestTimer() {
+      testRemainingSeconds -= 1;
+      if (testRemainingSeconds <= 0) {
+        finishTestTimer();
+        return;
+      }
+      if (testTimerStatus) {
+        testTimerStatus.textContent = testRemainingSeconds <= 5 * 60
+          ? 'Còn 5 phút cuối. Em kiểm tra lại bài làm.'
+          : 'Đồng hồ đang chạy. Em làm bài trong thời gian còn lại.';
+      }
+      renderTestTimer();
+    }
+
+    function startTestTimer() {
+      if (testTimerStarted) return;
+      testTimerStarted = true;
+      setTestInputsDisabled(false);
+      if (startTestTimerButton) startTestTimerButton.disabled = true;
+      if (testTimerStatus) testTimerStatus.textContent = 'Đồng hồ đang chạy. Em làm bài trong thời gian còn lại.';
+      renderTestTimer();
+      updateSubmitState();
+      testTimerId = window.setInterval(tickTestTimer, 1000);
+    }
+
+    function resetTestTimer() {
+      stopTestTimer();
+      testTimerStarted = false;
+      testSubmitted = false;
+      testRemainingSeconds = testDurationSeconds;
+      setTestInputsDisabled(false);
+      if (startTestTimerButton) startTestTimerButton.disabled = false;
+      if (testCheckButton) testCheckButton.disabled = true;
+      if (testTimerStatus) testTimerStatus.textContent = 'Em có thể nhập bài ngay. Đồng hồ sẽ tự chạy khi em bắt đầu nhập hoặc chọn đáp án.';
+      if (submitButton) submitButton.disabled = true;
+      if (submitStatus) {
+        submitStatus.textContent = 'Chưa thể nộp bài. Đồng hồ sẽ bắt đầu khi em nhập bài hoặc chọn đáp án.';
+        submitStatus.classList.add('show');
+      }
+      if (answerKeySection) answerKeySection.hidden = true;
+      resultPending?.classList.remove('hide');
+      postSubmit?.classList.remove('show');
+      if (resultAnswerSection) resultAnswerSection.textContent = '';
+      renderTestTimer();
+    }
+
+    function testTextareas() {
+      return Array.from(testSection?.querySelectorAll('textarea') || []);
+    }
+
+    function answerHasContent(textarea) {
+      const imageInput = document.getElementById(`${textarea.id}-image`);
+      return textarea.value.trim().length > 0 || Boolean(imageInput?.files?.length);
+    }
+
+    function testProgress() {
+      const quizItems = Array.from(document.querySelectorAll('.quiz[data-group="c"]'));
+      const writtenItems = testTextareas();
+      const answeredQuiz = quizItems.filter((item) => item.querySelector('input[type="radio"]:checked')).length;
+      const answeredWritten = writtenItems.filter(answerHasContent).length;
+
+      return {
+        quizItems,
+        writtenItems,
+        answeredQuiz,
+        answeredWritten,
+        quizTotal: quizItems.length,
+        writtenTotal: writtenItems.length,
+        complete: answeredQuiz === quizItems.length && answeredWritten === writtenItems.length
+      };
+    }
+
+    function updateSubmitState() {
+      if (!submitButton || !submitStatus || testSubmitted) return;
+      const progress = testProgress();
+      const canSubmit = testTimerStarted && testRemainingSeconds > 0 && progress.complete;
+      submitButton.disabled = !canSubmit;
+      submitStatus.classList.add('show');
+
+      if (!testTimerStarted) {
+        submitStatus.textContent = 'Chưa thể nộp bài. Đồng hồ sẽ bắt đầu khi em nhập bài hoặc chọn đáp án.';
+      } else if (progress.complete) {
+        submitStatus.textContent = 'Bài làm đã đủ phần. Em có thể nộp bài.';
+      } else {
+        submitStatus.textContent = `Chưa thể nộp bài. Đã làm trắc nghiệm ${progress.answeredQuiz}/${progress.quizTotal}, tự luận ${progress.answeredWritten}/${progress.writtenTotal}.`;
+      }
+    }
+
+    function scoreQuizItems(quizItems) {
+      let correct = 0;
+      let score = 0;
+      let total = 0;
+
+      quizItems.forEach((item) => {
+        const answer = item.dataset.answer;
+        const point = Number(item.dataset.point || 0);
+        const selected = item.querySelector('input[type="radio"]:checked');
+        const status = item.querySelector('.quiz-status');
+        const selectedValue = selected ? selected.value : '';
+        const isCorrect = selectedValue === answer;
+
+        total += point;
+        status.className = 'quiz-status';
+        if (isCorrect) {
+          correct += 1;
+          score += point;
+          status.textContent = `Đúng. Đáp án ${answer}.`;
+          status.classList.add('correct');
+        } else if (selected) {
+          status.textContent = `Chưa đúng. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        } else {
+          status.textContent = `Chưa chọn đáp án. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        }
+      });
+
+      return { correct, score, total };
+    }
+
+    function submitTest({ auto = false } = {}) {
+      if (testSubmitted) return;
+      const progress = testProgress();
+
+      if (!auto && !progress.complete) {
+        updateSubmitState();
+        return;
+      }
+
+      testSubmitted = true;
+      stopTestTimer();
+      setTestInputsDisabled(true);
+      if (submitButton) submitButton.disabled = true;
+      if (startTestTimerButton) startTestTimerButton.disabled = true;
+      if (testTimerStatus) {
+        testTimerStatus.textContent = auto
+          ? 'Hết giờ làm bài. Bài đã được nộp tự động.'
+          : 'Bài đã được nộp. Phần trả lời đã được khóa.';
+      }
+      if (submitStatus) {
+        submitStatus.textContent = auto
+          ? 'Hết giờ. Hệ thống đã nộp bài theo nội dung hiện có.'
+          : 'Đã nộp bài. Tự luận cần giáo viên chấm theo hướng dẫn.';
+        submitStatus.classList.add('show');
+      }
+
+      const quizResult = scoreQuizItems(progress.quizItems);
+      if (resultCorrect) resultCorrect.textContent = `${quizResult.correct}/${progress.quizTotal}`;
+      if (resultQuizScore) resultQuizScore.textContent = `${quizResult.score.toLocaleString('vi-VN')}/${quizResult.total.toLocaleString('vi-VN')}`;
+      if (resultWrittenScore) resultWrittenScore.textContent = 'Chờ chấm/6';
+      if (resultTotalScore) resultTotalScore.textContent = `${quizResult.score.toLocaleString('vi-VN')}/4 + tự luận`;
+      if (resultMessage) {
+        resultMessage.textContent = auto
+          ? 'Đã hết giờ làm bài. Trắc nghiệm được chấm tự động, phần tự luận cần giáo viên chấm.'
+          : 'Đã nộp bài. Trắc nghiệm được chấm tự động, phần tự luận cần giáo viên chấm.';
+      }
+
+      if (resultDetailRows) {
+        resultDetailRows.innerHTML = `
+          <tr>
+            <td>Trắc nghiệm</td>
+            <td>Đúng ${quizResult.correct}/${progress.quizTotal} câu</td>
+            <td>${quizResult.score.toLocaleString('vi-VN')}/${quizResult.total.toLocaleString('vi-VN')}</td>
+          </tr>
+          <tr>
+            <td>Tự luận</td>
+            <td>Đã có ${progress.answeredWritten}/${progress.writtenTotal} khung làm bài</td>
+            <td>Chờ chấm/6</td>
+          </tr>
+        `;
+      }
+
+      if (answerKeySection) answerKeySection.hidden = false;
+      if (resultAnswerSection && answerKeySection) {
+        resultAnswerSection.innerHTML = answerKeySection.innerHTML;
+      }
+      resultPending?.classList.add('hide');
+      postSubmit?.classList.add('show');
+      showPage('phan-ket-qua');
+    }
+
+    function startTimerFromAnswerInteraction() {
+      if (!testSubmitted && !testTimerStarted) startTestTimer();
+    }
+
+    testSection?.querySelectorAll('input[type="radio"], textarea, input[type="file"]').forEach((control) => {
+      control.addEventListener('focus', startTimerFromAnswerInteraction);
+      control.addEventListener('click', startTimerFromAnswerInteraction);
+      control.addEventListener('input', () => {
+        startTimerFromAnswerInteraction();
+        updateSubmitState();
+      });
+      control.addEventListener('change', () => {
+        startTimerFromAnswerInteraction();
+        updateSubmitState();
+      });
+    });
+
+    submitButton?.addEventListener('click', () => submitTest());
+
+    startTestTimerButton?.addEventListener('click', startTestTimer);
+    resetTestTimerButton?.addEventListener('click', resetTestTimer);
+    resetTestTimer();
+
+    function checkGroup(group) {
+      const items = Array.from(document.querySelectorAll(`.quiz[data-group="${group}"]`));
+      let score = 0;
+      let total = 0;
+      let completed = 0;
+
+      items.forEach((item, index) => {
+        const answer = item.dataset.answer;
+        const point = Number(item.dataset.point || 1);
+        const selected = item.querySelector('input[type="radio"]:checked');
+        const status = item.querySelector('.quiz-status');
+        const selectedValue = selected ? selected.value : '';
+        const isCorrect = selectedValue === answer;
+
+        total += point;
+        if (selected) completed += 1;
+        status.className = 'quiz-status';
+
+        if (isCorrect) {
+          score += point;
+          status.textContent = `Đúng. Đáp án ${answer}.`;
+          status.classList.add('correct');
+        } else if (selected) {
+          status.textContent = `Chưa đúng. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        } else {
+          status.textContent = `Chưa chọn đáp án. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        }
+
+        item.dataset.checkedOrder = String(index + 1);
+      });
+
+      const result = document.getElementById(`${group}-result`);
+      if (result) {
+        const suffix = group === 'c' ? ' điểm trắc nghiệm' : ' câu tự kiểm tra';
+        result.textContent = `Kết quả: ${score.toLocaleString('vi-VN')}/${total.toLocaleString('vi-VN')}${suffix}. Đã chọn ${completed}/${items.length} câu.`;
+        result.classList.add('show');
+      }
+    }
+
+    document.querySelectorAll('[data-check-group]').forEach((button) => {
+      button.addEventListener('click', () => checkGroup(button.dataset.checkGroup));
+    });
+
+    let activeTextarea = null;
+    const mathSymbolToggle = document.getElementById('math-symbol-toggle');
+    const mathSymbolPanel = document.getElementById('math-symbol-panel');
+    const mathSymbolClose = document.getElementById('math-symbol-close');
+    const mathSymbolStatus = document.getElementById('math-symbol-status');
+
+    document.querySelectorAll('textarea').forEach((textarea) => {
+      textarea.addEventListener('focus', () => {
+        activeTextarea = textarea;
+        if (mathSymbolStatus) mathSymbolStatus.textContent = 'Chọn ký hiệu để chèn vào ô đang nhập.';
+      });
+      textarea.addEventListener('click', () => {
+        activeTextarea = textarea;
+        if (mathSymbolStatus) mathSymbolStatus.textContent = 'Chọn ký hiệu để chèn vào ô đang nhập.';
+      });
+    });
+
+    function setMathPanelOpen(isOpen) {
+      if (!mathSymbolPanel || !mathSymbolToggle) return;
+      mathSymbolPanel.hidden = !isOpen;
+      mathSymbolToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (isOpen) mathSymbolClose?.focus();
+    }
+
+    function insertIntoTextarea(textarea, value) {
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const end = textarea.selectionEnd ?? textarea.value.length;
+      textarea.value = textarea.value.slice(0, start) + value + textarea.value.slice(end);
+      const nextPosition = start + value.length;
+      textarea.focus();
+      textarea.setSelectionRange(nextPosition, nextPosition);
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    mathSymbolToggle?.addEventListener('click', () => {
+      setMathPanelOpen(mathSymbolPanel.hidden);
+    });
+
+    mathSymbolClose?.addEventListener('click', () => {
+      setMathPanelOpen(false);
+      mathSymbolToggle?.focus();
+    });
+
+    document.querySelectorAll('.math-symbol-key').forEach((button) => {
+      button.addEventListener('click', () => {
+        const activePage = document.querySelector('.lesson-page.active-page');
+        if (!activeTextarea || !activePage?.contains(activeTextarea)) {
+          if (mathSymbolStatus) mathSymbolStatus.textContent = 'Hãy bấm vào ô trả lời trước khi chọn ký hiệu.';
+          return;
+        }
+        insertIntoTextarea(activeTextarea, button.dataset.insert);
+        if (mathSymbolStatus) mathSymbolStatus.textContent = 'Đã chèn ký hiệu.';
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && mathSymbolPanel && !mathSymbolPanel.hidden) {
+        setMathPanelOpen(false);
+        mathSymbolToggle?.focus();
+      }
+    });
+  </script>
+</body>
+</html>

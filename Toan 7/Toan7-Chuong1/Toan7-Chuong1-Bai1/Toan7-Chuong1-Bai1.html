@@ -1,0 +1,2419 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toán 7 - Chương 1 - Bài 1: Tập hợp các số hữu tỉ</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #5d667a;
+      --line: #dce2ee;
+      --soft-line: #edf1f7;
+      --primary: #165a72;
+      --primary-strong: #0e4558;
+      --primary-soft: #e7f3f6;
+      --blue: #315f9f;
+      --blue-soft: #eaf1fb;
+      --amber: #a35d05;
+      --amber-soft: #fff4df;
+      --green: #227258;
+      --green-soft: #e9f6ef;
+      --red: #b13f3f;
+      --red-soft: #fdecec;
+      --shadow: 0 18px 45px rgba(23, 32, 51, 0.09);
+      --radius: 8px;
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-top {
+      padding: 28px 30px 24px;
+      border-left: 8px solid var(--primary);
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 4vw, 2.7rem);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 820px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      border-top: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .meta-item {
+      min-width: 0;
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .meta-item:last-child {
+      border-right: 0;
+    }
+
+    .meta-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .meta-value {
+      display: block;
+      margin-top: 3px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .student-panel {
+      display: grid;
+      grid-template-columns: 1.4fr 0.7fr 1fr;
+      gap: 12px;
+      margin: 18px 0;
+      padding: 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .field label {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: block;
+      margin: 18px 0;
+      padding: 9px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.06);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .btn {
+      min-height: 40px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .btn:hover {
+      border-color: var(--primary);
+      color: var(--primary-strong);
+    }
+
+    .btn:disabled {
+      border-color: var(--line);
+      background: #edf1f4;
+      color: #8b94a6;
+      cursor: not-allowed;
+    }
+
+    .btn.primary,
+    .btn.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn.ghost {
+      background: #eef1f0;
+      border-color: #eef1f0;
+      color: var(--ink);
+    }
+
+    .nav .btn {
+      min-height: 54px;
+      border-color: transparent;
+      background: transparent;
+      color: var(--primary-strong);
+      font-size: 1.04rem;
+    }
+
+    .nav .btn:hover {
+      background: var(--primary-soft);
+    }
+
+    .nav .btn.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    section {
+      scroll-margin-top: 90px;
+      margin: 18px 0;
+      padding: 26px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+    }
+
+    section.lesson-page {
+      display: none;
+    }
+
+    section.lesson-page.active-page {
+      display: block;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .section-tag {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .section-title {
+      flex: 1;
+      min-width: 0;
+    }
+
+    h2 {
+      margin: 0;
+      color: var(--primary-strong);
+      font-size: 1.5rem;
+      line-height: 1.25;
+    }
+
+    h3 {
+      margin: 26px 0 10px;
+      color: var(--blue);
+      font-size: 1.18rem;
+      line-height: 1.3;
+    }
+
+    h4 {
+      margin: 18px 0 8px;
+      color: var(--ink);
+      font-size: 1.02rem;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul,
+    ol {
+      margin: 8px 0 14px 1.25rem;
+      padding: 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .lead {
+      padding: 14px 16px;
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      border-radius: 6px;
+      color: var(--primary-strong);
+    }
+
+    .note {
+      margin: 14px 0;
+      padding: 12px 14px;
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+      border-radius: 6px;
+    }
+
+    .math-line {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      margin: 12px 0;
+      padding: 11px 12px;
+      background: #fbfcfe;
+      border: 1px solid var(--soft-line);
+      border-radius: 6px;
+      font-size: 1.06rem;
+      line-height: 1.25;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.35em;
+      margin: 0 0.08em;
+      vertical-align: middle;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .frac > span {
+      display: block;
+    }
+
+    .frac > span:first-child {
+      padding: 0 0.16em 0.08em;
+      border-bottom: 1.5px solid currentColor;
+    }
+
+    .frac > span:last-child {
+      padding: 0.08em 0.16em 0;
+    }
+
+    .mixed {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.08em;
+      white-space: nowrap;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    .mixed > .frac {
+      margin-left: 0.02em;
+      margin-right: 0;
+    }
+
+    .symbol-table,
+    .score-table,
+    .answer-table {
+      width: 100%;
+      margin: 12px 0 18px;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      vertical-align: middle;
+      overflow-wrap: anywhere;
+    }
+
+    th {
+      background: var(--blue-soft);
+      color: #203a61;
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .score-table th:nth-child(2),
+    .score-table th:nth-child(3),
+    .score-table td:nth-child(2),
+    .score-table td:nth-child(3),
+    .answer-table th:first-child,
+    .answer-table th:last-child,
+    .answer-table td:first-child,
+    .answer-table td:last-child {
+      text-align: center;
+    }
+
+    .method-grid,
+    .mind-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 12px 0 18px;
+    }
+
+    .method,
+    .mind-item,
+    .question,
+    .quick-check {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .method,
+    .mind-item {
+      padding: 14px;
+    }
+
+    .method strong,
+    .mind-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--primary-strong);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0 18px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 42px 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .question,
+    .quick-check {
+      margin: 14px 0;
+      padding: 16px;
+    }
+
+    .quick-check h4 {
+      margin-top: 0;
+      color: var(--primary-strong);
+      font-size: 1.12rem;
+    }
+
+    .quick-answer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: end;
+      margin-top: 12px;
+    }
+
+    .quick-answer-field {
+      display: grid;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .quick-answer-field label {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .quick-answer-field select {
+      width: 100%;
+      min-height: 48px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .quick-answer-field select:focus {
+      outline: 3px solid rgba(49, 95, 159, 0.18);
+      border-color: var(--primary);
+    }
+
+    .quick-feedback {
+      display: none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .quick-feedback.show {
+      display: block;
+    }
+
+    .quick-feedback.correct {
+      color: #174e3d;
+      background: var(--green-soft);
+      border: 1px solid #bee0ce;
+    }
+
+    .quick-feedback.incorrect {
+      color: #7e2424;
+      background: var(--red-soft);
+      border: 1px solid #f4bcbc;
+    }
+
+    .question-head {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .question-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 92px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      resize: vertical;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    textarea:disabled {
+      background: #f2f4f7;
+      color: #8b94a6;
+      cursor: not-allowed;
+    }
+
+    .image-answer {
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px dashed #c8d2e1;
+      border-radius: 6px;
+      background: #fbfcfe;
+    }
+
+    .image-answer-control {
+      display: grid;
+      gap: 8px;
+    }
+
+    .image-answer-control span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .image-answer-control input {
+      width: 100%;
+      min-height: 40px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .image-answer-control input:disabled {
+      background: #f2f4f7;
+      color: #8b94a6;
+      cursor: not-allowed;
+    }
+
+    .image-answer-note {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .image-answer-note a {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+    .image-answer-preview {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .image-answer-preview[hidden] {
+      display: none;
+    }
+
+    .image-answer-preview img {
+      max-width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .image-answer-preview .btn {
+      justify-self: start;
+    }
+
+    .math-symbol-fab {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 78px;
+      height: 78px;
+      border: 7px solid #fff;
+      border-radius: 50%;
+      background: #5630b8;
+      color: #fff;
+      box-shadow: 0 18px 35px rgba(40, 27, 86, 0.32);
+      cursor: pointer;
+    }
+
+    .math-symbol-fab:hover,
+    .math-symbol-fab:focus {
+      background: #45269e;
+      outline: 3px solid rgba(86, 48, 184, 0.22);
+    }
+
+    .math-symbol-fab span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      background: #5f84bc;
+      font-size: 1.02rem;
+      font-weight: 800;
+      line-height: 1.05;
+      text-align: center;
+    }
+
+    .math-symbol-panel {
+      position: fixed;
+      right: 24px;
+      bottom: 116px;
+      z-index: 49;
+      display: none;
+      width: min(720px, calc(100vw - 32px));
+      max-height: calc(100vh - 144px);
+      overflow: auto;
+      padding: 26px 28px 24px;
+      border: 5px dashed #7b55d8;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 60px rgba(37, 34, 66, 0.18);
+    }
+
+    .math-symbol-panel.show {
+      display: block;
+    }
+
+    .math-symbol-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .math-symbol-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      color: #40279a;
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .math-symbol-title span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 9px;
+      background: #5f84bc;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.05;
+      text-align: center;
+    }
+
+    .math-symbol-close {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border: 4px solid #d7ccf4;
+      border-radius: 50%;
+      background: #fff;
+      color: #5630b8;
+      font-size: 2rem;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .math-symbol-close:hover,
+    .math-symbol-close:focus {
+      background: #f1ecfb;
+      outline: none;
+    }
+
+    .math-symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(72px, 1fr));
+      gap: 12px;
+    }
+
+    .math-symbol-btn {
+      min-width: 0;
+      min-height: 82px;
+      padding: 8px;
+      border: 4px solid #d7ccf4;
+      border-radius: 22px;
+      background: #f1ecfb;
+      color: #40279a;
+      font-size: 2.05rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .math-symbol-btn:hover,
+    .math-symbol-btn:focus {
+      border-color: #7b55d8;
+      background: #e8ddfb;
+      outline: none;
+    }
+
+    .math-symbol-help {
+      margin: 18px 0 0;
+      color: #5b4ab5;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .question-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      background: var(--green-soft);
+      border: 1px solid #bee0ce;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    details {
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 10px 12px;
+      color: var(--primary-strong);
+      font-weight: 800;
+      cursor: pointer;
+      background: #fbfcfe;
+    }
+
+    details > div {
+      padding: 12px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quiz-options label {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .quiz-options input {
+      flex: 0 0 auto;
+      margin-top: 4px;
+      accent-color: var(--primary);
+    }
+
+    .quiz-status {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .quiz-status.correct {
+      display: block;
+      color: #174e3d;
+      background: var(--green-soft);
+      border: 1px solid #bee0ce;
+    }
+
+    .quiz-status.incorrect {
+      display: block;
+      color: #7e2424;
+      background: var(--red-soft);
+      border: 1px solid #f4bcbc;
+    }
+
+    .post-submit {
+      display: none;
+      margin-top: 18px;
+      padding-top: 6px;
+      border-top: 1px solid var(--soft-line);
+    }
+
+    .post-submit.show {
+      display: block;
+    }
+
+    .result-alert {
+      margin: 0 0 18px;
+      padding: 16px 18px;
+      background: var(--blue-soft);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      font-size: 1.05rem;
+    }
+
+    .result-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .result-card {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .result-card span {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .result-card strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--primary-strong);
+      font-size: 1.35rem;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .result-table th {
+      background: #edf5f3;
+      color: var(--primary-strong);
+      font-size: 1.05rem;
+    }
+
+    .result-table th:first-child,
+    .result-table td:first-child {
+      width: 19%;
+    }
+
+    .result-table th:last-child,
+    .result-table td:last-child {
+      width: 110px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .result-lines {
+      display: grid;
+      gap: 6px;
+    }
+
+    .result-status {
+      margin: 0;
+      font-weight: 800;
+      color: var(--primary-strong);
+    }
+
+    .result-work,
+    .result-answer {
+      margin: 0;
+    }
+
+    .result-pending {
+      display: block;
+      margin-top: 14px;
+    }
+
+    .result-pending.hide {
+      display: none;
+    }
+
+    .timer-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 16px;
+      border: 1px solid #bfdae1;
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      background: var(--primary-soft);
+    }
+
+    .timer-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .timer-time {
+      display: block;
+      margin-top: 4px;
+      color: var(--primary-strong);
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .timer-status {
+      margin: 6px 0 0;
+      color: var(--primary-strong);
+      font-weight: 700;
+    }
+
+    .timer-panel.warning {
+      background: var(--amber-soft);
+      border-color: #f1cf99;
+      border-left-color: var(--amber);
+    }
+
+    .timer-panel.expired {
+      background: var(--red-soft);
+      border-color: #f4bcbc;
+      border-left-color: var(--red);
+    }
+
+    .footer-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .meta-grid,
+      .steps,
+      .result-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .method-grid,
+      .mind-grid,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .student-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page {
+        padding: 12px;
+      }
+
+      .hero-top,
+      section {
+        padding: 18px;
+      }
+
+      .meta-grid,
+      .steps,
+      .result-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-item {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .meta-item:last-child {
+        border-bottom: 0;
+      }
+
+      .toolbar {
+        position: static;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .quick-answer-row {
+        grid-template-columns: 1fr;
+      }
+
+      .math-symbol-fab {
+        right: 16px;
+        bottom: 16px;
+        width: 68px;
+        height: 68px;
+        border-width: 6px;
+      }
+
+      .math-symbol-fab span {
+        width: 36px;
+        height: 36px;
+        font-size: 0.9rem;
+      }
+
+      .math-symbol-panel {
+        right: 16px;
+        left: 16px;
+        bottom: 96px;
+        width: auto;
+        max-height: calc(100vh - 116px);
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .math-symbol-title {
+        font-size: 1.45rem;
+      }
+
+      .math-symbol-title span {
+        width: 34px;
+        height: 34px;
+        font-size: 0.82rem;
+      }
+
+      .math-symbol-close {
+        width: 50px;
+        height: 50px;
+        font-size: 1.65rem;
+      }
+
+      .math-symbol-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .math-symbol-btn {
+        min-height: 64px;
+        border-radius: 18px;
+        font-size: 1.65rem;
+      }
+
+      .section-tag {
+        margin-bottom: 10px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+        font-size: 12pt;
+      }
+
+      .page {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero,
+      section {
+        box-shadow: none;
+      }
+
+      .toolbar,
+      .no-print,
+      .question-actions,
+      .image-answer-control,
+      .image-answer-preview .btn,
+      .feedback,
+      .quiz-status,
+      .footer-note {
+        display: none !important;
+      }
+
+      .hero,
+      .student-panel,
+      section,
+      .question,
+      .quick-check,
+      .method,
+      .mind-item,
+      .step {
+        border-color: #bbb;
+        break-inside: avoid;
+      }
+
+      section {
+        margin: 14px 0;
+        padding: 16px 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+      }
+
+      textarea {
+        min-height: 86px;
+        border: 1px solid #bbb;
+      }
+
+      details {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <p class="kicker">Phiếu học tập Toán 7</p>
+        <h1>Bài 1. Tập hợp các số hữu tỉ</h1>
+        <p class="subtitle">Nhận biết số hữu tỉ, số đối, biểu diễn số hữu tỉ trên trục số và so sánh số hữu tỉ.</p>
+      </div>
+      <div class="meta-grid" aria-label="Thông tin bài học">
+        <div class="meta-item">
+          <span class="meta-label">Môn</span>
+          <span class="meta-value">Toán</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Lớp</span>
+          <span class="meta-value">7</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Chương</span>
+          <span class="meta-value">1</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Bài</span>
+          <span class="meta-value">1</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="toolbar no-print" aria-label="Điều hướng phiếu học tập">
+      <nav class="nav" role="tablist" aria-label="Các phần của phiếu học tập">
+        <button class="btn active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
+        <button class="btn" type="button" data-target="phan-b">B. Luyện tập</button>
+        <button class="btn" type="button" data-target="phan-c">C. Kiểm tra</button>
+        <button class="btn" type="button" data-target="phan-ket-qua">Kết quả</button>
+      </nav>
+    </div>
+
+    <section id="phan-a" class="lesson-page active-page" aria-labelledby="title-a">
+      <div class="section-head">
+        <div class="section-tag">A</div>
+        <div class="section-title">
+          <h2 id="title-a">Kiến thức trọng tâm</h2>
+          <p class="subtitle">Đọc nhanh lý thuyết, xem ví dụ mẫu và tự kiểm tra trước khi chuyển sang luyện tập.</p>
+        </div>
+      </div>
+
+      <div class="lead">
+        Bài học giúp học sinh nhận biết <strong>tập hợp các số hữu tỉ ℚ</strong>, biết các cách viết một số hữu tỉ, biểu diễn được số hữu tỉ trên trục số và xác định được số đối của một số hữu tỉ.
+      </div>
+
+      <h3>1. Mục tiêu bài học</h3>
+      <ol>
+        <li>Nhận biết được <strong>số hữu tỉ</strong> là số viết được dưới dạng phân số.</li>
+        <li>Xác định được <strong>số đối</strong> của một số hữu tỉ.</li>
+        <li>Biểu diễn được một số hữu tỉ trên trục số.</li>
+        <li>So sánh được hai số hữu tỉ thông qua dạng phân số, số thập phân hoặc vị trí trên trục số.</li>
+      </ol>
+
+      <h3>2. Ghi nhớ cốt lõi</h3>
+      <p><strong>Số hữu tỉ</strong> là số viết được dưới dạng phân số <span class="frac"><span>a</span><span>b</span></span>, với a, b thuộc ℤ, b &ne; 0. Tập hợp các số hữu tỉ được kí hiệu là <strong>ℚ</strong>.</p>
+      <div class="math-line">3 = <span class="frac"><span>3</span><span>1</span></span>; &nbsp; -2 = <span class="frac"><span>-2</span><span>1</span></span>; &nbsp; 0,5 = <span class="frac"><span>1</span><span>2</span></span></div>
+      <p>Mỗi số hữu tỉ đều có <strong>một số đối</strong>. Số đối của <span class="frac"><span>a</span><span>b</span></span> là -<span class="frac"><span>a</span><span>b</span></span>.</p>
+      <div class="math-line"><span class="frac"><span>3</span><span>5</span></span> có số đối là -<span class="frac"><span>3</span><span>5</span></span>; &nbsp; -2 có số đối là 2.</div>
+      <p>Một số hữu tỉ có thể có <strong>nhiều cách viết khác nhau</strong>. Các phân số bằng nhau là những cách viết khác nhau của cùng một số hữu tỉ.</p>
+      <div class="math-line">1,5 = <span class="frac"><span>3</span><span>2</span></span> = <span class="frac"><span>6</span><span>4</span></span> = <span class="frac"><span>9</span><span>6</span></span></div>
+      <p><strong>Hai số hữu tỉ bất kì luôn so sánh được với nhau.</strong> Có thể so sánh hai số hữu tỉ bằng 3 cách:</p>
+      <div class="method-grid">
+        <div class="method">
+          <strong>Cách 1</strong>
+          Đưa hai số hữu tỉ về cùng mẫu số rồi so sánh tử số.
+        </div>
+        <div class="method">
+          <strong>Cách 2</strong>
+          Đổi hai số hữu tỉ về số thập phân rồi so sánh.
+        </div>
+        <div class="method">
+          <strong>Cách 3</strong>
+          Dựa vào vị trí trên trục số: số nằm bên trái nhỏ hơn số nằm bên phải.
+        </div>
+      </div>
+
+      <h3>3. Kí hiệu cần nhớ</h3>
+      <table class="symbol-table">
+        <thead>
+          <tr>
+            <th style="width: 20%">Kí hiệu</th>
+            <th>Ý nghĩa</th>
+            <th>Ví dụ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ℚ</strong></td>
+            <td>Tập hợp các số hữu tỉ</td>
+            <td><span class="frac"><span>2</span><span>3</span></span> thuộc ℚ</td>
+          </tr>
+          <tr>
+            <td><span class="frac"><span>a</span><span>b</span></span></td>
+            <td>Dạng phân số của số hữu tỉ</td>
+            <td>0,5 = <span class="frac"><span>1</span><span>2</span></span></td>
+          </tr>
+          <tr>
+            <td>-<span class="frac"><span>a</span><span>b</span></span></td>
+            <td>Số đối của <span class="frac"><span>a</span><span>b</span></span></td>
+            <td>Số đối của <span class="frac"><span>4</span><span>5</span></span> là -<span class="frac"><span>4</span><span>5</span></span></td>
+          </tr>
+          <tr>
+            <td>&lt;, &gt;, =</td>
+            <td>So sánh hai số hữu tỉ</td>
+            <td>-1 &lt; <span class="frac"><span>1</span><span>2</span></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>4. Kĩ năng giải toán</h3>
+      <h4>4.1. So sánh hai số hữu tỉ</h4>
+      <p>Để so sánh hai số hữu tỉ, ta có thể thực hiện theo một trong ba cách sau:</p>
+      <div class="two-col">
+        <div>
+          <h4>Cách 1. Đưa về cùng mẫu số</h4>
+          <p>Quy đồng mẫu số hai phân số, sau đó so sánh tử số. Phân số nào có tử số lớn hơn thì lớn hơn.</p>
+          <div class="math-line"><span class="frac"><span>2</span><span>3</span></span> và <span class="frac"><span>3</span><span>4</span></span></div>
+          <div class="math-line"><span class="frac"><span>2</span><span>3</span></span> = <span class="frac"><span>8</span><span>12</span></span>; &nbsp; <span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>9</span><span>12</span></span></div>
+          <p>Vì 8 &lt; 9 nên <span class="frac"><span>2</span><span>3</span></span> &lt; <span class="frac"><span>3</span><span>4</span></span>.</p>
+        </div>
+        <div>
+          <h4>Cách 2. Đổi về số thập phân</h4>
+          <p>Đổi hai số hữu tỉ về dạng số thập phân rồi so sánh.</p>
+          <div class="math-line"><span class="frac"><span>1</span><span>2</span></span> = 0,5; &nbsp; <span class="frac"><span>3</span><span>4</span></span> = 0,75</div>
+          <p>Vì 0,5 &lt; 0,75 nên <span class="frac"><span>1</span><span>2</span></span> &lt; <span class="frac"><span>3</span><span>4</span></span>.</p>
+          <h4>Cách 3. Dựa vào trục số</h4>
+          <p>Trên trục số, số nằm bên trái nhỏ hơn số nằm bên phải. Ví dụ: -1 &lt; <span class="frac"><span>1</span><span>2</span></span> vì -1 nằm bên trái <span class="frac"><span>1</span><span>2</span></span> trên trục số.</p>
+        </div>
+      </div>
+
+      <h4>4.2. Biểu diễn số hữu tỉ trên trục số</h4>
+      <div class="steps">
+        <div class="step">Viết số hữu tỉ dưới dạng phân số tối giản.</div>
+        <div class="step">Nếu biểu diễn nhiều số hữu tỉ, quy đồng mẫu số để các phân số có cùng mẫu.</div>
+        <div class="step">Chia mỗi đoạn đơn vị trên trục số thành các phần bằng nhau theo mẫu số chung.</div>
+        <div class="step">Xác định vị trí điểm biểu diễn theo tử số.</div>
+      </div>
+      <ul>
+        <li>Nếu số hữu tỉ dương, lấy điểm về bên phải số 0.</li>
+        <li>Nếu số hữu tỉ âm, lấy điểm về bên trái số 0.</li>
+      </ul>
+      <div class="note">
+        Ví dụ: Biểu diễn <span class="frac"><span>1</span><span>2</span></span> và <span class="frac"><span>3</span><span>4</span></span>. Ta có <span class="frac"><span>1</span><span>2</span></span> = <span class="frac"><span>2</span><span>4</span></span>. Mẫu số chung là 4, nên chia mỗi đoạn đơn vị thành 4 phần bằng nhau. Điểm biểu diễn <span class="frac"><span>1</span><span>2</span></span> nằm ở vạch thứ 2 bên phải 0; điểm biểu diễn <span class="frac"><span>3</span><span>4</span></span> nằm ở vạch thứ 3 bên phải 0.
+      </div>
+
+      <h3>5. Ví dụ mẫu có hướng dẫn</h3>
+      <p><strong>Đề bài:</strong> Cho các số:</p>
+      <div class="math-line">-3; &nbsp; 0,5; &nbsp; <span class="frac"><span>4</span><span>7</span></span>; &nbsp; -<span class="mixed">1<span class="frac"><span>2</span><span>3</span></span></span>; &nbsp; 0</div>
+      <p>a) Các số trên có phải là số hữu tỉ không?</p>
+      <p>b) Tìm số đối của mỗi số.</p>
+      <h4>Cách làm</h4>
+      <div class="math-line">-3 = <span class="frac"><span>-3</span><span>1</span></span>; &nbsp; 0,5 = <span class="frac"><span>1</span><span>2</span></span>; &nbsp; <span class="frac"><span>4</span><span>7</span></span>; &nbsp; -<span class="mixed">1<span class="frac"><span>2</span><span>3</span></span></span> = -<span class="frac"><span>5</span><span>3</span></span>; &nbsp; 0 = <span class="frac"><span>0</span><span>1</span></span></div>
+      <p>Vậy các số trên đều là số hữu tỉ.</p>
+      <p>Số đối của các số lần lượt là:</p>
+      <div class="math-line">3; &nbsp; -0,5; &nbsp; -<span class="frac"><span>4</span><span>7</span></span>; &nbsp; <span class="mixed">1<span class="frac"><span>2</span><span>3</span></span></span>; &nbsp; 0</div>
+
+      <h3>6. Sơ đồ tư duy mini</h3>
+      <div class="mind-grid">
+        <div class="mind-item"><strong>Số hữu tỉ</strong>Viết được dưới dạng <span class="frac"><span>a</span><span>b</span></span>, với a, b thuộc ℤ, b &ne; 0.</div>
+        <div class="mind-item"><strong>Kí hiệu</strong>Tập hợp số hữu tỉ là ℚ.</div>
+        <div class="mind-item"><strong>Số đối</strong>Đổi dấu của số đã cho.</div>
+        <div class="mind-item"><strong>Nhiều cách viết</strong>Các phân số bằng nhau biểu diễn cùng một số hữu tỉ.</div>
+        <div class="mind-item"><strong>So sánh</strong>Cùng mẫu, đổi ra thập phân hoặc dựa vào trục số.</div>
+        <div class="mind-item"><strong>Trục số</strong>Số âm bên trái 0, số dương bên phải 0.</div>
+      </div>
+
+      <h3>7. Tự kiểm tra nhanh</h3>
+      <div class="quick-check">
+        <h4>Câu 1. Số nào sau đây là số hữu tỉ?</h4>
+        <div class="math-line">-5; &nbsp; 0,75; &nbsp; <span class="frac"><span>2</span><span>9</span></span>; &nbsp; <span class="mixed">1<span class="frac"><span>1</span><span>3</span></span></span></div>
+        <div class="quick-answer-row">
+          <div class="quick-answer-field">
+            <label for="quick-a1">Chọn đáp án</label>
+            <select id="quick-a1" data-answer="all">
+              <option value="">Chọn</option>
+              <option value="negative-five">-5</option>
+              <option value="decimal">0,75</option>
+              <option value="fraction">2/9</option>
+              <option value="mixed">1 1/3</option>
+              <option value="all">Cả bốn số</option>
+            </select>
+          </div>
+          <button class="btn primary" type="button" data-quick-check="quick-a1">Kiểm tra</button>
+        </div>
+        <div class="quick-feedback" id="quick-a1-feedback" data-success="Đúng. Cả bốn số đều là số hữu tỉ vì đều viết được dưới dạng phân số." data-error="Chưa đúng. Số nguyên, số thập phân hữu hạn, phân số và hỗn số đều là số hữu tỉ."></div>
+      </div>
+      <div class="quick-check">
+        <h4>Câu 2. Tìm số đối của các số sau:</h4>
+        <div class="math-line"><span class="frac"><span>5</span><span>6</span></span>; &nbsp; -2,5; &nbsp; 0; &nbsp; -<span class="frac"><span>3</span><span>4</span></span></div>
+        <div class="quick-answer-row">
+          <div class="quick-answer-field">
+            <label for="quick-a2">Chọn đáp án</label>
+            <select id="quick-a2" data-answer="correct">
+              <option value="">Chọn</option>
+              <option value="same">5/6; -2,5; 0; -3/4</option>
+              <option value="wrong-zero">-5/6; 2,5; 1; 3/4</option>
+              <option value="correct">-5/6; 2,5; 0; 3/4</option>
+              <option value="wrong-sign">5/6; 2,5; 0; 3/4</option>
+            </select>
+          </div>
+          <button class="btn primary" type="button" data-quick-check="quick-a2">Kiểm tra</button>
+        </div>
+        <div class="quick-feedback" id="quick-a2-feedback" data-success="Đúng. Số đối lần lượt là -5/6; 2,5; 0; 3/4." data-error="Chưa đúng. Muốn tìm số đối, em đổi dấu từng số; riêng số 0 có số đối là 0."></div>
+      </div>
+      <div class="quick-check">
+        <h4>Câu 3. So sánh hai số hữu tỉ:</h4>
+        <div class="math-line">-<span class="frac"><span>2</span><span>3</span></span> và <span class="frac"><span>1</span><span>3</span></span></div>
+        <div class="quick-answer-row">
+          <div class="quick-answer-field">
+            <label for="quick-a3">Chọn đáp án</label>
+            <select id="quick-a3" data-answer="less">
+              <option value="">Chọn</option>
+              <option value="greater">-2/3 &gt; 1/3</option>
+              <option value="equal">-2/3 = 1/3</option>
+              <option value="less">-2/3 &lt; 1/3</option>
+              <option value="unknown">Không so sánh được</option>
+            </select>
+          </div>
+          <button class="btn primary" type="button" data-quick-check="quick-a3">Kiểm tra</button>
+        </div>
+        <div class="quick-feedback" id="quick-a3-feedback" data-success="Đúng. -2/3 nhỏ hơn 1/3 vì số hữu tỉ âm nhỏ hơn số hữu tỉ dương." data-error="Chưa đúng. Em cần chú ý: số âm luôn nhỏ hơn số dương."></div>
+      </div>
+      <div class="question-actions no-print">
+        <button class="btn ghost" type="button" id="go-practice">Sang phần luyện tập</button>
+      </div>
+
+      <h3>8. Những lỗi học sinh dễ mắc</h3>
+      <ul>
+        <li>Nhầm lẫn giữa số hữu tỉ và phân số; cần nhớ phân số chỉ là một cách biểu diễn số hữu tỉ.</li>
+        <li>Quên điều kiện mẫu số phải khác 0.</li>
+        <li>Quên đổi hỗn số hoặc số thập phân về phân số khi nhận biết số hữu tỉ.</li>
+        <li>Biểu diễn sai vị trí của số âm trên trục số.</li>
+      </ul>
+    </section>
+
+    <section id="phan-b" class="lesson-page" aria-labelledby="title-b">
+      <div class="section-head">
+        <div class="section-tag">B</div>
+        <div class="section-title">
+          <h2 id="title-b">Luyện tập</h2>
+          <p class="subtitle">Làm lần lượt từng câu, sau đó xem gợi ý hoặc đối chiếu đáp án.</p>
+        </div>
+      </div>
+
+      <div class="lead">
+        Học sinh làm lần lượt từng câu. Mỗi câu có chỗ nhập đáp án, gợi ý và phản hồi khi làm sai.
+      </div>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 1</h3>
+          <span class="badge">Nhận biết số hữu tỉ</span>
+        </div>
+        <p><strong>Đề bài:</strong> Trong các số sau, số nào là số hữu tỉ?</p>
+        <div class="math-line">-5; &nbsp; 0; &nbsp; <span class="frac"><span>3</span><span>7</span></span>; &nbsp; 1,25; &nbsp; -2,4; &nbsp; <span class="mixed">1<span class="frac"><span>2</span><span>3</span></span></span></div>
+        <textarea aria-label="Bài làm câu 1"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b1">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b1">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b1"><strong>Gợi ý:</strong> Một số là số hữu tỉ nếu viết được dưới dạng phân số <span class="frac"><span>a</span><span>b</span></span>, với a, b thuộc ℤ, b &ne; 0.</div>
+        <div class="feedback" id="answer-b1"><strong>Đáp án đúng:</strong> Tất cả các số đã cho đều là số hữu tỉ.<br><strong>Phản hồi khi sai:</strong> Em cần kiểm tra từng số xem có viết được dưới dạng phân số hay không. Số nguyên, phân số, hỗn số và số thập phân hữu hạn đều là số hữu tỉ.</div>
+      </article>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 2</h3>
+          <span class="badge">Số đối</span>
+        </div>
+        <p><strong>Đề bài:</strong> Tìm số đối của các số hữu tỉ sau:</p>
+        <div class="math-line"><span class="frac"><span>4</span><span>9</span></span>; &nbsp; -<span class="frac"><span>5</span><span>6</span></span>; &nbsp; 2; &nbsp; -3,5; &nbsp; 0</div>
+        <textarea aria-label="Bài làm câu 2"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b2">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b2">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b2"><strong>Gợi ý:</strong> Muốn tìm số đối của một số hữu tỉ, ta đổi dấu của số đó.</div>
+        <div class="feedback" id="answer-b2"><strong>Đáp án đúng:</strong> -<span class="frac"><span>4</span><span>9</span></span>; <span class="frac"><span>5</span><span>6</span></span>; -2; 3,5; 0.<br><strong>Phản hồi khi sai:</strong> Em hãy xem lại dấu của từng số. Số dương có số đối là số âm, số âm có số đối là số dương, riêng số 0 có số đối là 0.</div>
+      </article>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 3</h3>
+          <span class="badge">Viết dạng phân số</span>
+        </div>
+        <p><strong>Đề bài:</strong> Viết các số hữu tỉ sau dưới dạng phân số:</p>
+        <div class="math-line">7; &nbsp; -4; &nbsp; 0,6; &nbsp; -1,25; &nbsp; <span class="mixed">2<span class="frac"><span>1</span><span>3</span></span></span>; &nbsp; -<span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span></div>
+        <textarea aria-label="Bài làm câu 3"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b3">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b3">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b3"><strong>Gợi ý:</strong> Số nguyên viết được dưới dạng phân số có mẫu là 1. Số thập phân hữu hạn viết thành phân số thập phân rồi rút gọn. Hỗn số đổi về phân số bằng cách lấy phần nguyên nhân với mẫu rồi cộng tử.</div>
+        <div class="feedback" id="answer-b3">
+          <strong>Đáp án đúng:</strong>
+          <div class="math-line">7 = <span class="frac"><span>7</span><span>1</span></span>; &nbsp; -4 = <span class="frac"><span>-4</span><span>1</span></span>; &nbsp; 0,6 = <span class="frac"><span>6</span><span>10</span></span> = <span class="frac"><span>3</span><span>5</span></span>; &nbsp; -1,25 = <span class="frac"><span>-125</span><span>100</span></span> = <span class="frac"><span>-5</span><span>4</span></span>; &nbsp; <span class="mixed">2<span class="frac"><span>1</span><span>3</span></span></span> = <span class="frac"><span>7</span><span>3</span></span>; &nbsp; -<span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span> = -<span class="frac"><span>17</span><span>5</span></span></div>
+          <strong>Phản hồi khi sai:</strong> Em cần chú ý dấu âm và cách đổi hỗn số về phân số. Với hỗn số, hãy đổi phần số trước rồi giữ nguyên dấu của số đã cho.
+        </div>
+      </article>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 4</h3>
+          <span class="badge">Cùng mẫu</span>
+        </div>
+        <p><strong>Đề bài:</strong> So sánh hai số hữu tỉ sau:</p>
+        <div class="math-line"><span class="frac"><span>3</span><span>8</span></span> và <span class="frac"><span>5</span><span>8</span></span></div>
+        <textarea aria-label="Bài làm câu 4"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b4">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b4">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b4"><strong>Gợi ý:</strong> Hai phân số có cùng mẫu số, ta so sánh tử số.</div>
+        <div class="feedback" id="answer-b4"><strong>Đáp án đúng:</strong> <span class="frac"><span>3</span><span>8</span></span> &lt; <span class="frac"><span>5</span><span>8</span></span>.<br><strong>Phản hồi khi sai:</strong> Em hãy quan sát mẫu số của hai phân số. Vì hai mẫu số bằng nhau nên phân số nào có tử số lớn hơn thì phân số đó lớn hơn.</div>
+      </article>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 5</h3>
+          <span class="badge">Phân số và số thập phân</span>
+        </div>
+        <p><strong>Đề bài:</strong> So sánh hai số hữu tỉ sau:</p>
+        <div class="math-line"><span class="frac"><span>3</span><span>4</span></span> và 0,8</div>
+        <textarea aria-label="Bài làm câu 5"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b5">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b5">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b5"><strong>Gợi ý:</strong> Có thể đổi <span class="frac"><span>3</span><span>4</span></span> về số thập phân rồi so sánh với 0,8.</div>
+        <div class="feedback" id="answer-b5"><strong>Đáp án đúng:</strong> <span class="frac"><span>3</span><span>4</span></span> &lt; 0,8.<br><strong>Phản hồi khi sai:</strong> Em hãy đổi <span class="frac"><span>3</span><span>4</span></span> thành 0,75. Sau đó so sánh 0,75 với 0,8.</div>
+      </article>
+
+      <article class="question practice">
+        <div class="question-head">
+          <h3 class="question-title">Câu 6</h3>
+          <span class="badge">Phân số và hỗn số</span>
+        </div>
+        <p><strong>Đề bài:</strong> So sánh hai số hữu tỉ sau:</p>
+        <div class="math-line"><span class="frac"><span>7</span><span>3</span></span> và <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span></div>
+        <textarea aria-label="Bài làm câu 6"></textarea>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" data-hint="hint-b6">Gợi ý</button>
+          <button class="btn" type="button" data-check="answer-b6">Kiểm tra đáp án</button>
+        </div>
+        <div class="feedback" id="hint-b6"><strong>Gợi ý:</strong> Trước hết, hãy đổi hỗn số <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span> về phân số rồi quy đồng mẫu số để so sánh.</div>
+        <div class="feedback" id="answer-b6"><strong>Đáp án đúng:</strong> <span class="frac"><span>7</span><span>3</span></span> &lt; <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span>.<br><strong>Phản hồi khi sai:</strong> Em cần đổi <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span> = <span class="frac"><span>5</span><span>2</span></span>. Sau đó so sánh <span class="frac"><span>7</span><span>3</span></span> và <span class="frac"><span>5</span><span>2</span></span> bằng cách quy đồng mẫu số.</div>
+      </article>
+
+      <details>
+        <summary>Đáp án gợi ý phần luyện tập</summary>
+        <div>
+          <table class="answer-table">
+            <thead>
+              <tr>
+                <th style="width: 64px">Câu</th>
+                <th>Đáp án</th>
+                <th>Ghi chú</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Tất cả các số đã cho đều là số hữu tỉ</td>
+                <td>Nhận biết số hữu tỉ</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>-<span class="frac"><span>4</span><span>9</span></span>; <span class="frac"><span>5</span><span>6</span></span>; -2; 3,5; 0</td>
+                <td>Tìm số đối bằng cách đổi dấu</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><span class="frac"><span>7</span><span>1</span></span>; <span class="frac"><span>-4</span><span>1</span></span>; <span class="frac"><span>3</span><span>5</span></span>; <span class="frac"><span>-5</span><span>4</span></span>; <span class="frac"><span>7</span><span>3</span></span>; -<span class="frac"><span>17</span><span>5</span></span></td>
+                <td>Viết số hữu tỉ dưới dạng phân số</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td><span class="frac"><span>3</span><span>8</span></span> &lt; <span class="frac"><span>5</span><span>8</span></span></td>
+                <td>Hai phân số cùng mẫu</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td><span class="frac"><span>3</span><span>4</span></span> &lt; 0,8</td>
+                <td>Đổi phân số về số thập phân</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td><span class="frac"><span>7</span><span>3</span></span> &lt; <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span></td>
+                <td>Đổi hỗn số về phân số rồi so sánh</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <div class="question-actions no-print">
+        <button class="btn primary" type="button" id="go-test">Sang phần kiểm tra</button>
+      </div>
+    </section>
+
+    <section id="phan-c" class="lesson-page" aria-labelledby="title-c">
+      <div class="section-head">
+        <div class="section-tag">C</div>
+        <div class="section-title">
+          <h2 id="title-c">Kiểm tra đánh giá</h2>
+          <p class="subtitle">Bài kiểm tra cuối bài gồm trắc nghiệm, tự luận ngắn và vận dụng. Thời gian làm bài: 30 phút.</p>
+        </div>
+      </div>
+
+      <div class="timer-panel no-print" id="timer-panel" aria-live="polite">
+        <div>
+          <span class="timer-label">Thời gian còn lại</span>
+          <strong class="timer-time" id="timer-display">30:00</strong>
+          <p class="timer-status" id="timer-status">Bấm bắt đầu khi học sinh sẵn sàng làm bài.</p>
+        </div>
+        <button class="btn primary" type="button" id="start-timer">Bắt đầu làm bài</button>
+      </div>
+
+      <h3>Thang điểm</h3>
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Phần</th>
+            <th style="width: 120px">Số câu</th>
+            <th style="width: 120px">Điểm</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Trắc nghiệm</td>
+            <td>5 câu</td>
+            <td>5 điểm</td>
+          </tr>
+          <tr>
+            <td>Tự luận</td>
+            <td>2 câu</td>
+            <td>4 điểm</td>
+          </tr>
+          <tr>
+            <td>Vận dụng</td>
+            <td>1 câu</td>
+            <td>1 điểm</td>
+          </tr>
+          <tr>
+            <th>Tổng</th>
+            <th>8 câu</th>
+            <th>10 điểm</th>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>1. Thông tin học sinh</h3>
+      <div class="student-panel">
+        <div class="field">
+          <label for="student-name">Họ và tên</label>
+          <input id="student-name" type="text" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="student-class">Lớp</label>
+          <input id="student-class" type="text">
+        </div>
+        <div class="field">
+          <label for="student-code">Mã bài/lần kiểm tra</label>
+          <input id="student-code" type="text">
+        </div>
+      </div>
+
+      <h3>2. Trắc nghiệm</h3>
+      <p>Khoanh tròn hoặc đánh dấu vào đáp án đúng.</p>
+
+      <article class="question quiz" data-question="q1" data-answer="A">
+        <div class="question-head">
+          <h4 class="question-title">Câu 1. Số hữu tỉ là số viết được dưới dạng nào?</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <div class="quiz-options">
+          <label><input type="radio" name="q1" value="A">A. <span class="frac"><span>a</span><span>b</span></span>, với a, b thuộc ℤ, b &ne; 0</label>
+          <label><input type="radio" name="q1" value="B">B. <span class="frac"><span>a</span><span>0</span></span>, với a thuộc ℤ</label>
+          <label><input type="radio" name="q1" value="C">C. Chỉ là số nguyên dương</label>
+          <label><input type="radio" name="q1" value="D">D. Chỉ là số thập phân</label>
+        </div>
+        <div class="quiz-status"></div>
+      </article>
+
+      <article class="question quiz" data-question="q2" data-answer="C">
+        <div class="question-head">
+          <h4 class="question-title">Câu 2. Tập hợp các số hữu tỉ được kí hiệu là:</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <div class="quiz-options">
+          <label><input type="radio" name="q2" value="A">A. ℕ</label>
+          <label><input type="radio" name="q2" value="B">B. ℤ</label>
+          <label><input type="radio" name="q2" value="C">C. ℚ</label>
+          <label><input type="radio" name="q2" value="D">D. ℝ</label>
+        </div>
+        <div class="quiz-status"></div>
+      </article>
+
+      <article class="question quiz" data-question="q3" data-answer="B">
+        <div class="question-head">
+          <h4 class="question-title">Câu 3. Số đối của <span class="frac"><span>4</span><span>7</span></span> là:</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <div class="quiz-options">
+          <label><input type="radio" name="q3" value="A">A. <span class="frac"><span>7</span><span>4</span></span></label>
+          <label><input type="radio" name="q3" value="B">B. -<span class="frac"><span>4</span><span>7</span></span></label>
+          <label><input type="radio" name="q3" value="C">C. <span class="frac"><span>4</span><span>7</span></span></label>
+          <label><input type="radio" name="q3" value="D">D. -<span class="frac"><span>7</span><span>4</span></span></label>
+        </div>
+        <div class="quiz-status"></div>
+      </article>
+
+      <article class="question quiz" data-question="q4" data-answer="C">
+        <div class="question-head">
+          <h4 class="question-title">Câu 4. Số 0,75 viết dưới dạng phân số tối giản là:</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <div class="quiz-options">
+          <label><input type="radio" name="q4" value="A">A. <span class="frac"><span>75</span><span>10</span></span></label>
+          <label><input type="radio" name="q4" value="B">B. <span class="frac"><span>15</span><span>20</span></span></label>
+          <label><input type="radio" name="q4" value="C">C. <span class="frac"><span>3</span><span>4</span></span></label>
+          <label><input type="radio" name="q4" value="D">D. <span class="frac"><span>7</span><span>5</span></span></label>
+        </div>
+        <div class="quiz-status"></div>
+      </article>
+
+      <article class="question quiz" data-question="q5" data-answer="B">
+        <div class="question-head">
+          <h4 class="question-title">Câu 5. Kết quả so sánh nào sau đây đúng?</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <div class="quiz-options">
+          <label><input type="radio" name="q5" value="A">A. <span class="frac"><span>2</span><span>5</span></span> &gt; <span class="frac"><span>3</span><span>5</span></span></label>
+          <label><input type="radio" name="q5" value="B">B. <span class="frac"><span>2</span><span>5</span></span> &lt; <span class="frac"><span>3</span><span>5</span></span></label>
+          <label><input type="radio" name="q5" value="C">C. <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>3</span><span>5</span></span></label>
+          <label><input type="radio" name="q5" value="D">D. <span class="frac"><span>2</span><span>5</span></span> &ge; <span class="frac"><span>3</span><span>5</span></span></label>
+        </div>
+        <div class="quiz-status"></div>
+      </article>
+
+      <h3>3. Tự luận và vận dụng</h3>
+      <p class="image-answer-note">Đối với bài tự luận có tải ảnh lên, nếu AI không đọc và chấm được chữ viết, bài sẽ được gửi về email cá nhân của giáo viên <a href="mailto:ngtrang.math@gmail.com">ngtrang.math@gmail.com</a> để giáo viên chấm và phản hồi.</p>
+      <article class="question">
+        <div class="question-head">
+          <h4 class="question-title">Tự luận 1</h4>
+          <span class="badge">2 điểm</span>
+        </div>
+        <p>Trong các số sau, số nào là số hữu tỉ?</p>
+        <div class="math-line">-6; &nbsp; 0; &nbsp; <span class="frac"><span>5</span><span>8</span></span>; &nbsp; 1,2; &nbsp; -3,75; &nbsp; <span class="mixed">2<span class="frac"><span>1</span><span>4</span></span></span></div>
+        <textarea id="essay-1" aria-label="Bài làm tự luận 1"></textarea>
+      </article>
+
+      <article class="question">
+        <div class="question-head">
+          <h4 class="question-title">Tự luận 2</h4>
+          <span class="badge">2 điểm</span>
+        </div>
+        <p>Tìm số đối của các số hữu tỉ sau:</p>
+        <div class="math-line"><span class="frac"><span>7</span><span>9</span></span>; &nbsp; -<span class="frac"><span>4</span><span>5</span></span>; &nbsp; -2; &nbsp; 0; &nbsp; 3,6</div>
+        <textarea id="essay-2" aria-label="Bài làm tự luận 2"></textarea>
+      </article>
+
+      <article class="question">
+        <div class="question-head">
+          <h4 class="question-title">Vận dụng</h4>
+          <span class="badge">1 điểm</span>
+        </div>
+        <p>So sánh các cặp số hữu tỉ sau:</p>
+        <ol type="a">
+          <li><span class="frac"><span>2</span><span>7</span></span> và <span class="frac"><span>5</span><span>7</span></span></li>
+          <li><span class="frac"><span>3</span><span>5</span></span> và 0,7</li>
+          <li><span class="frac"><span>8</span><span>3</span></span> và <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span></li>
+        </ol>
+        <textarea id="application-answer" aria-label="Bài làm vận dụng"></textarea>
+      </article>
+
+      <div class="question-actions no-print">
+        <button class="btn primary" type="button" id="submit-test">Nộp bài và xem kết quả</button>
+        <button class="btn ghost" type="button" id="print-page">In phiếu</button>
+      </div>
+    </section>
+
+    <section id="phan-ket-qua" class="lesson-page" aria-labelledby="title-result">
+      <div class="section-head">
+        <div class="section-tag">✓</div>
+        <div class="section-title">
+          <h2 id="title-result">Kết quả</h2>
+          <p class="subtitle">Điểm trắc nghiệm, đáp án và nhận xét chỉ hiển thị sau khi học sinh nộp bài.</p>
+        </div>
+      </div>
+
+      <div class="lead result-pending" id="result-pending">
+        Hãy hoàn thành phần kiểm tra, sau đó bấm <strong>Nộp bài và xem kết quả</strong> để xem đáp án và nhận xét.
+      </div>
+
+      <div class="post-submit" id="post-submit" aria-live="polite">
+        <div class="result-alert">
+          <strong>Nhận xét:</strong> <span id="result-comment">Chưa có kết quả.</span>
+        </div>
+
+        <div class="result-cards">
+          <div class="result-card">
+            <span>Học sinh</span>
+            <strong id="result-student">Chưa nhập</strong>
+          </div>
+          <div class="result-card">
+            <span>Lớp</span>
+            <strong id="result-class">Chưa nhập</strong>
+          </div>
+          <div class="result-card">
+            <span>Mã bài</span>
+            <strong id="result-code">Toan7-Chuong1-Bai1</strong>
+          </div>
+          <div class="result-card">
+            <span>Tổng điểm</span>
+            <strong id="result-total">0/10</strong>
+          </div>
+        </div>
+
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>Phần</th>
+              <th>Kết quả</th>
+              <th>Điểm</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Trắc nghiệm</td>
+              <td><div class="result-lines" id="result-quiz-lines"></div></td>
+              <td id="result-quiz-score">0/5</td>
+            </tr>
+            <tr>
+              <td>Tự luận 1</td>
+              <td>
+                <div class="result-lines">
+                  <p class="result-status" id="result-essay1-status">Cần xem lại</p>
+                  <p class="result-work">Bài làm: <span id="result-essay1-work">Chưa làm</span></p>
+                  <p class="result-answer">Đáp án gợi ý: Tất cả các số đã cho đều là số hữu tỉ.</p>
+                </div>
+              </td>
+              <td id="result-essay1-score">0/2</td>
+            </tr>
+            <tr>
+              <td>Tự luận 2</td>
+              <td>
+                <div class="result-lines">
+                  <p class="result-status" id="result-essay2-status">Cần xem lại</p>
+                  <p class="result-work">Bài làm: <span id="result-essay2-work">Chưa làm</span></p>
+                  <p class="result-answer">Đáp án gợi ý: -<span class="frac"><span>7</span><span>9</span></span>; <span class="frac"><span>4</span><span>5</span></span>; 2; 0; -3,6.</p>
+                </div>
+              </td>
+              <td id="result-essay2-score">0/2</td>
+            </tr>
+            <tr>
+              <td>Vận dụng</td>
+              <td>
+                <div class="result-lines">
+                  <p class="result-status" id="result-application-status">Cần xem lại</p>
+                  <p class="result-work">Bài làm: <span id="result-application-work">Chưa làm</span></p>
+                  <p class="result-answer">Đáp án gợi ý: a) <span class="frac"><span>2</span><span>7</span></span> &lt; <span class="frac"><span>5</span><span>7</span></span>; b) <span class="frac"><span>3</span><span>5</span></span> &lt; 0,7; c) <span class="frac"><span>8</span><span>3</span></span> &gt; <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span>.</p>
+                </div>
+              </td>
+              <td id="result-application-score">0/1</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="question-actions no-print">
+          <button class="btn ghost" type="button" id="back-test">Quay lại kiểm tra</button>
+          <button class="btn primary" type="button" id="print-result">In phiếu</button>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer-note">Phiếu học tập Toan7-Chuong1-Bai1</p>
+  </main>
+
+  <script>
+    const navButtons = document.querySelectorAll('[data-target]');
+    const sections = document.querySelectorAll('.lesson-page');
+
+    function showPage(pageId, updateHash = true) {
+      const target = document.getElementById(pageId);
+      if (!target) return;
+
+      sections.forEach((section) => {
+        section.classList.toggle('active-page', section.id === pageId);
+        section.hidden = section.id !== pageId;
+      });
+
+      navButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.target === pageId);
+        button.setAttribute('aria-selected', button.dataset.target === pageId ? 'true' : 'false');
+      });
+
+      if (updateHash) {
+        history.replaceState(null, '', `#${pageId}`);
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navButtons.forEach((button) => {
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', button.dataset.target);
+      button.addEventListener('click', () => showPage(button.dataset.target));
+    });
+
+    const pageIds = ['phan-a', 'phan-b', 'phan-c', 'phan-ket-qua'];
+    const initialPage = pageIds.includes(location.hash.slice(1))
+      ? location.hash.slice(1)
+      : 'phan-a';
+    showPage(initialPage, false);
+
+    document.getElementById('print-page').addEventListener('click', () => window.print());
+
+    function addImageAnswerControls() {
+      document.querySelectorAll('textarea').forEach((textarea, index) => {
+        if (textarea.dataset.imageAnswerReady === 'true') return;
+
+        const textareaId = textarea.id || `answer-${index + 1}`;
+        if (!textarea.id) textarea.id = textareaId;
+
+        const inputId = `${textareaId}-image`;
+        textarea.dataset.imageAnswerInputId = inputId;
+        textarea.dataset.imageAnswerReady = 'true';
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'image-answer';
+
+        const control = document.createElement('label');
+        control.className = 'image-answer-control';
+        control.setAttribute('for', inputId);
+        control.innerHTML = '<span>Tải ảnh bài làm lên</span>';
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.id = inputId;
+        input.accept = 'image/*';
+
+        const preview = document.createElement('div');
+        preview.className = 'image-answer-preview';
+        preview.hidden = true;
+
+        const image = document.createElement('img');
+        image.alt = 'Ảnh bài làm đã chọn';
+
+        const clearButton = document.createElement('button');
+        clearButton.type = 'button';
+        clearButton.className = 'btn ghost no-print image-answer-clear';
+        clearButton.textContent = 'Xóa ảnh';
+
+        let objectUrl = '';
+
+        input.addEventListener('change', () => {
+          const file = input.files?.[0];
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          objectUrl = '';
+
+          if (!file) {
+            preview.hidden = true;
+            image.removeAttribute('src');
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
+            return;
+          }
+
+          objectUrl = URL.createObjectURL(file);
+          image.src = objectUrl;
+          preview.hidden = false;
+          textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
+        clearButton.addEventListener('click', () => {
+          if (objectUrl) URL.revokeObjectURL(objectUrl);
+          objectUrl = '';
+          input.value = '';
+          image.removeAttribute('src');
+          preview.hidden = true;
+          textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+
+        control.appendChild(input);
+        preview.append(image, clearButton);
+        wrapper.append(control, preview);
+        textarea.insertAdjacentElement('afterend', wrapper);
+      });
+    }
+
+    function hasUploadedImageFor(textareaOrId) {
+      const textarea = typeof textareaOrId === 'string' ? document.getElementById(textareaOrId) : textareaOrId;
+      const inputId = textarea?.dataset.imageAnswerInputId;
+      const input = inputId ? document.getElementById(inputId) : null;
+      return Boolean(input?.files?.length);
+    }
+
+    addImageAnswerControls();
+
+    const mathSymbols = [
+      { label: 'ℚ', value: 'ℚ', title: 'Tập hợp số hữu tỉ' },
+      { label: 'ℤ', value: 'ℤ', title: 'Tập hợp số nguyên' },
+      { label: 'ℕ', value: 'ℕ', title: 'Tập hợp số tự nhiên' },
+      { label: 'ℝ', value: 'ℝ', title: 'Tập hợp số thực' },
+      { label: '∈', value: '∈', title: 'Thuộc' },
+      { label: '∉', value: '∉', title: 'Không thuộc' },
+      { label: '⊂', value: '⊂', title: 'Tập con' },
+      { label: '⊃', value: '⊃', title: 'Chứa' },
+      { label: '⊆', value: '⊆', title: 'Tập con hoặc bằng' },
+      { label: '⊇', value: '⊇', title: 'Chứa hoặc bằng' },
+      { label: '∪', value: '∪', title: 'Hợp' },
+      { label: '∩', value: '∩', title: 'Giao' },
+      { label: '∅', value: '∅', title: 'Tập rỗng' },
+      { label: '{', value: '{', title: 'Mở ngoặc nhọn' },
+      { label: '}', value: '}', title: 'Đóng ngoặc nhọn' },
+      { label: '≠', value: '≠', title: 'Khác' },
+      { label: '≤', value: '≤', title: 'Nhỏ hơn hoặc bằng' },
+      { label: '≥', value: '≥', title: 'Lớn hơn hoặc bằng' },
+      { label: '<', value: '<', title: 'Nhỏ hơn' },
+      { label: '>', value: '>', title: 'Lớn hơn' },
+      { label: '=', value: '=', title: 'Bằng' },
+      { label: '…', value: '…', title: 'Dấu ba chấm' },
+      { label: '+', value: '+', title: 'Cộng' },
+      { label: '−', value: '-', title: 'Dấu âm' },
+      { label: '·', value: '·', title: 'Nhân' },
+      { label: '×', value: '×', title: 'Nhân' },
+      { label: '÷', value: '÷', title: 'Chia' },
+      { label: '²', value: '²', title: 'Mũ hai' },
+      { label: '³', value: '³', title: 'Mũ ba' },
+      { label: '√', value: '√', title: 'Căn bậc hai' },
+      { label: '±', value: '±', title: 'Cộng trừ' },
+      { label: ':', value: ':', title: 'Chia' },
+      { label: '(', value: '(', title: 'Mở ngoặc' },
+      { label: ')', value: ')', title: 'Đóng ngoặc' },
+      { label: 'x', value: 'x', title: 'Ẩn x' },
+      { label: '□/□', html: '<span class="frac"><span>□</span><span>□</span></span>', value: 'a/b', title: 'Mẫu phân số' },
+      { label: '-□/□', html: '-<span class="frac"><span>□</span><span>□</span></span>', value: '-a/b', title: 'Mẫu phân số âm' },
+      { label: '□ □/□', html: '□<span class="frac"><span>□</span><span>□</span></span>', value: 'm a/b', title: 'Mẫu hỗn số' },
+      { label: 'x²', value: 'x²', title: 'Bình phương' },
+      { label: 'x³', value: 'x³', title: 'Lập phương' },
+      { label: 'xⁿ', value: 'xⁿ', title: 'Số mũ n' },
+      { label: '^n', value: '^n', title: 'Kí hiệu số mũ dạng ^n' },
+      { label: ';', value: '; ', title: 'Dấu phân cách đáp án' },
+      { label: '↵', value: '\n', title: 'Xuống dòng' }
+    ];
+
+    function insertAtCursor(textarea, value) {
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const end = textarea.selectionEnd ?? textarea.value.length;
+      textarea.value = `${textarea.value.slice(0, start)}${value}${textarea.value.slice(end)}`;
+      const nextPosition = start + value.length;
+      textarea.focus();
+      textarea.setSelectionRange(nextPosition, nextPosition);
+      textarea.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    let activeTextarea = null;
+    document.querySelectorAll('textarea').forEach((textarea) => {
+      textarea.addEventListener('focus', () => {
+        activeTextarea = textarea;
+      });
+      textarea.addEventListener('click', () => {
+        activeTextarea = textarea;
+      });
+    });
+
+    const symbolToggle = document.createElement('button');
+    symbolToggle.type = 'button';
+    symbolToggle.className = 'math-symbol-fab no-print';
+    symbolToggle.setAttribute('aria-label', 'Mở bảng kí hiệu toán học');
+    symbolToggle.setAttribute('aria-expanded', 'false');
+    symbolToggle.innerHTML = '<span>∑♪<br>&amp;%</span>';
+
+    const symbolPanel = document.createElement('div');
+    symbolPanel.className = 'math-symbol-panel no-print';
+    symbolPanel.setAttribute('aria-label', 'Bảng kí hiệu toán học');
+
+    const symbolHeader = document.createElement('div');
+    symbolHeader.className = 'math-symbol-header';
+
+    const symbolTitle = document.createElement('p');
+    symbolTitle.className = 'math-symbol-title';
+    symbolTitle.innerHTML = '<span>∑♪<br>&amp;%</span> Ký hiệu toán';
+
+    const symbolClose = document.createElement('button');
+    symbolClose.type = 'button';
+    symbolClose.className = 'math-symbol-close';
+    symbolClose.setAttribute('aria-label', 'Đóng bảng kí hiệu');
+    symbolClose.textContent = '×';
+
+    const symbolGrid = document.createElement('div');
+    symbolGrid.className = 'math-symbol-grid';
+
+    const symbolHelp = document.createElement('p');
+    symbolHelp.className = 'math-symbol-help';
+    symbolHelp.textContent = 'Bấm vào ô cần điền rồi chọn ký hiệu để chèn.';
+
+    function currentTextarea() {
+      const activePage = document.querySelector('.lesson-page.active-page');
+      if (activeTextarea && activePage?.contains(activeTextarea)) return activeTextarea;
+      return null;
+    }
+
+    mathSymbols.forEach((symbol) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'math-symbol-btn';
+      if (symbol.html) {
+        button.innerHTML = symbol.html;
+      } else {
+        button.textContent = symbol.label;
+      }
+      button.title = symbol.title;
+      button.addEventListener('click', () => {
+        const target = currentTextarea();
+        if (!target) {
+          symbolHelp.textContent = 'Hãy bấm vào ô cần điền trước khi chọn ký hiệu.';
+          return;
+        }
+        symbolHelp.textContent = 'Bấm vào ô cần điền rồi chọn ký hiệu để chèn.';
+        insertAtCursor(target, symbol.value);
+      });
+      symbolGrid.appendChild(button);
+    });
+
+    symbolHeader.append(symbolTitle, symbolClose);
+    symbolPanel.append(symbolHeader, symbolGrid, symbolHelp);
+    document.body.append(symbolToggle, symbolPanel);
+
+    function setSymbolPanel(open) {
+      symbolPanel.classList.toggle('show', open);
+      symbolToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    symbolToggle.addEventListener('click', () => {
+      setSymbolPanel(!symbolPanel.classList.contains('show'));
+    });
+
+    symbolClose.addEventListener('click', () => setSymbolPanel(false));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setSymbolPanel(false);
+    });
+
+    document.querySelectorAll('[data-hint], [data-check]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.hint || button.dataset.check;
+        const box = document.getElementById(id);
+        if (!box) return;
+        box.classList.toggle('show');
+      });
+    });
+
+    document.querySelectorAll('[data-quick-check]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const select = document.getElementById(button.dataset.quickCheck);
+        const feedback = document.getElementById(`${button.dataset.quickCheck}-feedback`);
+        if (!select || !feedback) return;
+
+        const isCorrect = select.value === select.dataset.answer;
+        feedback.className = 'quick-feedback show';
+        feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+        if (!select.value) {
+          feedback.textContent = 'Em cần chọn một đáp án trước khi kiểm tra.';
+          return;
+        }
+        feedback.textContent = isCorrect ? feedback.dataset.success : feedback.dataset.error;
+      });
+    });
+
+    document.getElementById('go-practice')?.addEventListener('click', () => showPage('phan-b'));
+    document.getElementById('go-test')?.addEventListener('click', () => showPage('phan-c'));
+    document.getElementById('back-test')?.addEventListener('click', () => showPage('phan-c'));
+    document.getElementById('print-result')?.addEventListener('click', () => window.print());
+
+    const submitButton = document.getElementById('submit-test');
+    const quizItems = document.querySelectorAll('.quiz');
+    const postSubmit = document.getElementById('post-submit');
+    const resultPending = document.getElementById('result-pending');
+    const timerPanel = document.getElementById('timer-panel');
+    const timerDisplay = document.getElementById('timer-display');
+    const timerStatus = document.getElementById('timer-status');
+    const startTimerButton = document.getElementById('start-timer');
+    const timedTestControls = document.querySelectorAll('#phan-c .quiz input, #phan-c textarea, #phan-c input[type="file"], #phan-c .image-answer-clear, #submit-test');
+    const testDurationSeconds = 30 * 60;
+    let remainingSeconds = testDurationSeconds;
+    let timerId = null;
+
+    function setTimedTestEnabled(enabled) {
+      timedTestControls.forEach((control) => {
+        control.disabled = !enabled;
+      });
+    }
+
+    setTimedTestEnabled(false);
+
+    function formatTime(totalSeconds) {
+      const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+      const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+      return `${minutes}:${seconds}`;
+    }
+
+    function updateTimerDisplay() {
+      timerDisplay.textContent = formatTime(remainingSeconds);
+      timerPanel.classList.toggle('warning', remainingSeconds > 0 && remainingSeconds <= 5 * 60);
+      timerPanel.classList.toggle('expired', remainingSeconds === 0);
+    }
+
+    function stopTimer() {
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+    }
+
+    startTimerButton.addEventListener('click', () => {
+      if (timerId) return;
+      remainingSeconds = testDurationSeconds;
+      updateTimerDisplay();
+      timerStatus.textContent = 'Đồng hồ đang chạy. Hãy hoàn thành bài trước khi hết giờ.';
+      startTimerButton.disabled = true;
+      startTimerButton.textContent = 'Đang tính giờ';
+      setTimedTestEnabled(true);
+      timerId = setInterval(() => {
+        remainingSeconds = Math.max(remainingSeconds - 1, 0);
+        updateTimerDisplay();
+        if (remainingSeconds === 5 * 60) {
+          timerStatus.textContent = 'Còn 5 phút. Hãy kiểm tra lại bài làm.';
+        }
+        if (remainingSeconds === 0) {
+          stopTimer();
+          timerStatus.textContent = 'Hết giờ. Bài đã được nộp tự động.';
+          submitTest(true);
+        }
+      }, 1000);
+    });
+
+    function plainValue(id, fallback = 'Chưa nhập') {
+      const value = document.getElementById(id)?.value.trim();
+      return value || fallback;
+    }
+
+    function normalizeAnswer(value) {
+      return value
+        .toLowerCase()
+        .replace(/đ/g, 'd')
+        .replace(/[−–—]/g, '-')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\./g, ',')
+        .replace(/\s+/g, '');
+    }
+
+    function writtenResult(rawValue, maxScore, checker, hasImage = false) {
+      const value = rawValue.trim();
+      if (!value) {
+        if (hasImage) {
+          return { score: 0, status: 'Cần chấm tay', work: 'Đã tải ảnh bài làm', maxScore };
+        }
+        return { score: 0, status: 'Chưa làm', work: 'Chưa làm', maxScore };
+      }
+      const score = checker(normalizeAnswer(value)) ? maxScore : 0;
+      return {
+        score,
+        status: score === maxScore ? 'Đạt' : 'Cần xem lại',
+        work: hasImage ? `${value} (có kèm ảnh bài làm)` : value,
+        maxScore
+      };
+    }
+
+    function commentForScore(score) {
+      if (score >= 9) return 'Em nắm bài rất tốt.';
+      if (score >= 7) return 'Em hiểu bài, cần luyện thêm một số dạng so sánh số hữu tỉ.';
+      if (score >= 5) return 'Em cần xem lại cách nhận biết số hữu tỉ, tìm số đối và viết số hữu tỉ dưới dạng phân số.';
+      return 'Em cần ôn lại kiến thức trọng tâm và luyện thêm các dạng bài cơ bản về số hữu tỉ.';
+    }
+
+    function setText(id, value) {
+      const element = document.getElementById(id);
+      if (element) element.textContent = value;
+    }
+
+    function submitTest(autoSubmit = false) {
+      stopTimer();
+      if (!autoSubmit) {
+        timerStatus.textContent = 'Bài đã được nộp. Đồng hồ đã dừng.';
+      }
+      startTimerButton.disabled = true;
+      startTimerButton.textContent = autoSubmit ? 'Hết giờ' : 'Đã nộp bài';
+      setTimedTestEnabled(false);
+
+      let quizScore = 0;
+      const quizLines = document.getElementById('result-quiz-lines');
+      quizLines.textContent = '';
+
+      quizItems.forEach((item, index) => {
+        const question = item.dataset.question;
+        const answer = item.dataset.answer;
+        const selected = item.querySelector(`input[name="${question}"]:checked`);
+        const status = item.querySelector('.quiz-status');
+        const selectedValue = selected ? selected.value : '';
+        const isCorrect = selectedValue === answer;
+
+        status.className = 'quiz-status';
+        if (isCorrect) {
+          quizScore += 1;
+          status.textContent = 'Đúng. Em được 1 điểm cho câu này.';
+          status.classList.add('correct');
+        } else if (selected) {
+          status.textContent = `Chưa đúng. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        } else {
+          status.textContent = `Chưa chọn đáp án. Đáp án đúng là ${answer}.`;
+          status.classList.add('incorrect');
+        }
+
+        const line = document.createElement('p');
+        line.className = 'result-work';
+        if (isCorrect) {
+          line.textContent = `Câu ${index + 1}: đúng (đáp án ${answer})`;
+        } else if (selected) {
+          line.textContent = `Câu ${index + 1}: chọn ${selectedValue}, đáp án đúng ${answer}`;
+        } else {
+          line.textContent = `Câu ${index + 1}: chưa chọn (đáp án ${answer})`;
+        }
+        quizLines.appendChild(line);
+      });
+
+      const essay1 = writtenResult(
+        document.getElementById('essay-1').value,
+        2,
+        (value) => value.includes('tatca') || value.includes('deulasohuuti'),
+        hasUploadedImageFor('essay-1')
+      );
+      const essay2 = writtenResult(
+        document.getElementById('essay-2').value,
+        2,
+        (value) => ['-7/9', '4/5', '2', '0', '-3,6'].every((part) => value.includes(part)),
+        hasUploadedImageFor('essay-2')
+      );
+      const application = writtenResult(
+        document.getElementById('application-answer').value,
+        1,
+        (value) => value.includes('2/7<5/7') && value.includes('3/5<0,7') && (value.includes('8/3>2') || value.includes('8/3>5/2')),
+        hasUploadedImageFor('application-answer')
+      );
+      const totalScore = quizScore + essay1.score + essay2.score + application.score;
+
+      setText('result-student', plainValue('student-name'));
+      setText('result-class', plainValue('student-class'));
+      setText('result-code', plainValue('student-code', 'Toan7-Chuong1-Bai1'));
+      setText('result-total', `${totalScore}/10`);
+      setText('result-comment', commentForScore(totalScore));
+      setText('result-quiz-score', `${quizScore}/5`);
+      setText('result-essay1-status', essay1.status);
+      setText('result-essay1-work', essay1.work);
+      setText('result-essay1-score', `${essay1.score}/2`);
+      setText('result-essay2-status', essay2.status);
+      setText('result-essay2-work', essay2.work);
+      setText('result-essay2-score', `${essay2.score}/2`);
+      setText('result-application-status', application.status);
+      setText('result-application-work', application.work);
+      setText('result-application-score', `${application.score}/1`);
+      resultPending.classList.add('hide');
+      postSubmit.classList.add('show');
+      showPage('phan-ket-qua');
+    }
+
+    submitButton.addEventListener('click', () => submitTest(false));
+  </script>
+</body>
+</html>

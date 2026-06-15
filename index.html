@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="TMath là nền tảng học toán trực tuyến với kiến thức trọng tâm, luyện tập và kiểm tra đánh giá cho học sinh Toán 6." />
+  <meta name="description" content="TMath là nền tảng học toán trực tuyến với kiến thức trọng tâm, luyện tập và kiểm tra đánh giá cho học sinh Toán 6 và Toán 7." />
   <title>TMath - Nền tảng học toán trực tuyến</title>
   <link rel="stylesheet" href="assets/site.css" />
   <link rel="stylesheet" href="assets/math-symbols.css" />
@@ -61,7 +61,7 @@
           <div class="intro-video-copy">
             <p class="section-kicker">Video giới thiệu</p>
             <h2 id="intro-video-title">Giới thiệu trang web</h2>
-            <p>Xem video giới thiệu ngay trên trang chủ trước khi bắt đầu học Toán 6 trên TMath.</p>
+            <p>Xem video giới thiệu ngay trên trang chủ trước khi bắt đầu học Toán 6 hoặc Toán 7 trên TMath.</p>
           </div>
           <div class="video-frame">
             <video controls preload="metadata" playsinline>
@@ -85,12 +85,12 @@
               <p data-progress-status>Chưa mở bài học nào.</p>
             </div>
           </div>
-          <div class="progress-meter" aria-label="Tiến độ hoàn thành chương 1">
+          <div class="progress-meter" aria-label="Tiến độ mở bài học">
             <div class="progress-meter__track">
               <span data-progress-bar style="width: 0%"></span>
             </div>
             <div class="progress-meter__meta">
-              <strong data-progress>0/8 bài đã mở</strong>
+              <strong data-progress>0/13 bài đã mở</strong>
               <span data-progress-percent>0%</span>
             </div>
           </div>
@@ -154,7 +154,7 @@
             </label>
             <label>
               <span>Lớp</span>
-              <input name="className" required placeholder="Ví dụ: 6/1" />
+              <input name="className" required placeholder="Ví dụ: 6/1 hoặc 7/1" />
             </label>
           </div>
           <label>
@@ -185,7 +185,7 @@
     <section id="danh-sach-bai" class="course-section" aria-labelledby="lessons-title" hidden>
       <div class="section-header">
         <div>
-          <p class="section-kicker">Toán 6</p>
+          <p class="section-kicker">Toán 6 và Toán 7</p>
           <h2 id="lessons-title">Danh sách bài học</h2>
         </div>
         <button class="section-back" type="button" data-show-home>Quay lại trang chủ</button>
@@ -198,23 +198,24 @@
             <span>Chọn chương</span>
             <select id="chapter-filter" data-filter-chapter>
               <option value="all">Tất cả chương</option>
-              <option value="chapter-1">Chương 1</option>
+              <option value="toan6-chapter-1">Toán 6 - Chương 1</option>
+              <option value="toan7-chapter-1">Toán 7 - Chương 1</option>
             </select>
           </label>
         </div>
       </div>
 
-      <div class="chapter-card">
+      <div class="chapter-card" data-chapter-group>
         <header class="chapter-heading">
-          <span>1</span>
+          <span>6</span>
           <div>
-            <h3>Chương 1. Số học</h3>
+            <h3>Toán 6 - Chương 1. Số học</h3>
             <p>Tập hợp, ghi số, so sánh, phép tính và lũy thừa.</p>
           </div>
         </header>
 
         <div class="lesson-grid">
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-1" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 1 Tập hợp" data-keywords="tap hop phan tu ky hieu thuoc khong thuoc">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-1" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 1 Tập hợp" data-keywords="toan 6 tap hop phan tu ky hieu thuoc khong thuoc">
             <span class="tile-number">1</span>
             <div>
               <h4>Bài 1. Tập hợp</h4>
@@ -223,7 +224,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-2" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 2 Cách ghi số tự nhiên" data-keywords="ghi so tu nhien chu so hang lop so la ma">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-2" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 2 Cách ghi số tự nhiên" data-keywords="toan 6 ghi so tu nhien chu so hang lop so la ma">
             <span class="tile-number">2</span>
             <div>
               <h4>Bài 2. Cách ghi số tự nhiên</h4>
@@ -232,7 +233,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-3" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 3 Thứ tự trong tập hợp các số tự nhiên" data-keywords="thu tu so sanh tia so lon hon nho hon">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-3" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 3 Thứ tự trong tập hợp các số tự nhiên" data-keywords="toan 6 thu tu so sanh tia so lon hon nho hon">
             <span class="tile-number">3</span>
             <div>
               <h4>Bài 3. Thứ tự trong tập hợp các số tự nhiên</h4>
@@ -241,7 +242,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-4" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 4 Phép cộng và phép trừ số tự nhiên" data-keywords="phep cong phep tru so tu nhien tinh nhanh">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-4" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 4 Phép cộng và phép trừ số tự nhiên" data-keywords="toan 6 phep cong phep tru so tu nhien tinh nhanh">
             <span class="tile-number">4</span>
             <div>
               <h4>Bài 4. Phép cộng và phép trừ số tự nhiên</h4>
@@ -250,7 +251,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-5" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 5 Phép nhân và phép chia số tự nhiên" data-keywords="phep nhan phep chia so tu nhien uoc boi">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-5" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 5 Phép nhân và phép chia số tự nhiên" data-keywords="toan 6 phep nhan phep chia so tu nhien uoc boi">
             <span class="tile-number">5</span>
             <div>
               <h4>Bài 5. Phép nhân và phép chia số tự nhiên</h4>
@@ -259,7 +260,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-6" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 6 Lũy thừa với số mũ tự nhiên" data-keywords="luy thua so mu co so binh phuong lap phuong">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-6" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 6 Lũy thừa với số mũ tự nhiên" data-keywords="toan 6 luy thua so mu co so binh phuong lap phuong">
             <span class="tile-number">6</span>
             <div>
               <h4>Bài 6. Lũy thừa với số mũ tự nhiên</h4>
@@ -268,7 +269,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-7" data-track-progress="true" data-type="lesson" data-chapter="chapter-1" data-title="Bài 7 Thứ tự thực hiện các phép tính" data-keywords="thu tu thuc hien phep tinh ngoac luy thua nhan chia cong tru">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="bai-7" data-track-progress="true" data-type="lesson" data-chapter="toan6-chapter-1" data-title="Toán 6 Bài 7 Thứ tự thực hiện các phép tính" data-keywords="toan 6 thu tu thuc hien phep tinh ngoac luy thua nhan chia cong tru">
             <span class="tile-number">7</span>
             <div>
               <h4>Bài 7. Thứ tự thực hiện các phép tính</h4>
@@ -277,7 +278,7 @@
             <span class="tile-badge">Bài học</span>
           </article>
 
-          <article class="lesson-tile lesson-tile--review" data-lesson-card data-lesson-id="on-tap" data-track-progress="true" data-type="review" data-chapter="chapter-1" data-title="Ôn tập Chương 1" data-keywords="on tap tong ket chuong tap hop so tu nhien">
+          <article class="lesson-tile lesson-tile--review" data-lesson-card data-lesson-id="on-tap" data-track-progress="true" data-type="review" data-chapter="toan6-chapter-1" data-title="Toán 6 Ôn tập Chương 1" data-keywords="toan 6 on tap tong ket chuong tap hop so tu nhien">
             <span class="tile-icon">★</span>
             <div>
               <h4>Ôn tập chương 1</h4>
@@ -286,8 +287,66 @@
             <span class="tile-badge tile-badge--review">Ôn tập</span>
           </article>
         </div>
-        <div class="empty-state" data-empty-state>Không có bài phù hợp.</div>
       </div>
+
+      <div class="chapter-card" data-chapter-group>
+        <header class="chapter-heading">
+          <span>7</span>
+          <div>
+            <h3>Toán 7 - Chương 1. Số hữu tỉ</h3>
+            <p>Số hữu tỉ, phép tính, lũy thừa và quy tắc chuyển vế.</p>
+          </div>
+        </header>
+
+        <div class="lesson-grid">
+          <article class="lesson-tile" data-lesson-card data-lesson-id="toan7-bai-1" data-track-progress="true" data-type="lesson" data-chapter="toan7-chapter-1" data-title="Toán 7 Bài 1 Tập hợp các số hữu tỉ" data-keywords="toan 7 tap hop so huu ti so doi phan so truc so q">
+            <span class="tile-number">1</span>
+            <div>
+              <h4>Bài 1. Tập hợp các số hữu tỉ</h4>
+              <a href="Toan%207/Toan7-Chuong1/Toan7-Chuong1-Bai1/Toan7-Chuong1-Bai1.html">Vào học</a>
+            </div>
+            <span class="tile-badge">Bài học</span>
+          </article>
+
+          <article class="lesson-tile" data-lesson-card data-lesson-id="toan7-bai-2" data-track-progress="true" data-type="lesson" data-chapter="toan7-chapter-1" data-title="Toán 7 Bài 2 Cộng trừ nhân chia số hữu tỉ" data-keywords="toan 7 cong tru nhan chia so huu ti tinh hop li dau ngoac">
+            <span class="tile-number">2</span>
+            <div>
+              <h4>Bài 2. Cộng, trừ, nhân, chia số hữu tỉ</h4>
+              <a href="Toan%207/Toan7-Chuong1/Toan7-Chuong1-Bai2/Toan7-Chuong1-Bai2.html">Vào học</a>
+            </div>
+            <span class="tile-badge">Bài học</span>
+          </article>
+
+          <article class="lesson-tile" data-lesson-card data-lesson-id="toan7-bai-3" data-track-progress="true" data-type="lesson" data-chapter="toan7-chapter-1" data-title="Toán 7 Bài 3 Lũy thừa với số mũ tự nhiên của một số hữu tỉ" data-keywords="toan 7 luy thua so mu tu nhien so huu ti co so quy tac luy thua">
+            <span class="tile-number">3</span>
+            <div>
+              <h4>Bài 3. Lũy thừa với số mũ tự nhiên của một số hữu tỉ</h4>
+              <a href="Toan%207/Toan7-Chuong1/Toan7-Chuong1-Bai3/Toan7-Chuong1-Bai3.html">Vào học</a>
+            </div>
+            <span class="tile-badge">Bài học</span>
+          </article>
+
+          <article class="lesson-tile" data-lesson-card data-lesson-id="toan7-bai-4" data-track-progress="true" data-type="lesson" data-chapter="toan7-chapter-1" data-title="Toán 7 Bài 4 Thứ tự thực hiện các phép tính Quy tắc chuyển vế" data-keywords="toan 7 thu tu thuc hien phep tinh quy tac chuyen ve tim x so huu ti">
+            <span class="tile-number">4</span>
+            <div>
+              <h4>Bài 4. Thứ tự thực hiện các phép tính. Quy tắc chuyển vế</h4>
+              <a href="Toan%207/Toan7-Chuong1/Toan%207-Chuong1-Bai4/Toan7-Chuong1-Bai4.html">Vào học</a>
+            </div>
+            <span class="tile-badge">Bài học</span>
+          </article>
+
+          <article class="lesson-tile lesson-tile--review" data-lesson-card data-lesson-id="toan7-on-tap" data-track-progress="true" data-type="review" data-chapter="toan7-chapter-1" data-title="Toán 7 Ôn tập Chương 1 Số hữu tỉ" data-keywords="toan 7 on tap tong ket chuong so huu ti">
+            <span class="tile-icon">★</span>
+            <div>
+              <h4>Ôn tập chương 1. Số hữu tỉ</h4>
+              <a href="Toan%207/Toan7-Chuong1/Toan7-Chuong1-Ontap/Toan7-Chuong1-OnTap.html">Vào học</a>
+            </div>
+            <span class="tile-badge tile-badge--review">Ôn tập</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="empty-state" data-empty-state>Không có bài phù hợp.</div>
     </section>
 
     <section id="huong-dan" class="guide-section" aria-labelledby="guide-title" hidden>
@@ -305,7 +364,7 @@
         <article>
           <span>2</span>
           <strong>Học theo thứ tự</strong>
-          <p>Bắt đầu từ Bài 1 đến Bài 7, sau đó hoàn thành Ôn tập Chương 1.</p>
+          <p>Chọn Toán 6 hoặc Toán 7, học lần lượt từ Bài 1 rồi hoàn thành phần ôn tập chương.</p>
         </article>
         <article>
           <span>3</span>
