@@ -5,6 +5,9 @@
       label: "Bài 1",
       title: "Tập hợp",
       href: "../Toan6-Chuong1-Bai1/Toan6-Chuong1-Bai1.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -12,6 +15,9 @@
       label: "Bài 2",
       title: "Cách ghi số tự nhiên",
       href: "../Toan6-Chuong1-Bai2/Toan6-Chuong1-Bai2.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -19,6 +25,9 @@
       label: "Bài 3",
       title: "Thứ tự trong tập hợp các số tự nhiên",
       href: "../Toan6-Chuong1-Bai3/Toan6-Chuong1-Bai3.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -26,6 +35,9 @@
       label: "Bài 4",
       title: "Phép cộng và phép trừ số tự nhiên",
       href: "../Toan6-Chuong1-Bai4/Toan6-Chuong1-Bai4.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -33,6 +45,9 @@
       label: "Bài 5",
       title: "Phép nhân và phép chia số tự nhiên",
       href: "../Toan6-Chuong1-Bai5/Toan6-Chuong1-Bai5.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -40,6 +55,9 @@
       label: "Bài 6",
       title: "Lũy thừa với số mũ tự nhiên",
       href: "../Toan6-Chuong1-Bai6/Toan6-Chuong1-Bai6.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -47,6 +65,9 @@
       label: "Bài 7",
       title: "Thứ tự thực hiện các phép tính",
       href: "../Toan6-Chuong1-Bai7/Toan6-Chuong1-Bai7.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     },
     {
@@ -54,6 +75,9 @@
       label: "Ôn tập",
       title: "Ôn tập Chương 1",
       href: "../Toan6-Chuong1-OnTap/Toan6-Chuong1-OnTap.html",
+      gradeLabel: "Lớp 6",
+      chapterLabel: "Chương 1",
+      chapterHash: "toan6-chapter-1",
       trackProgress: true
     }
   ];
@@ -72,12 +96,15 @@
   let lastAutoEmailId = "";
   let writtenImageUploads = [];
 
-  function getHomeHref() {
-    if (!scriptUrl) return "../index.html";
+  function getHomeHref(hash = "") {
+    if (!scriptUrl) return `../index.html?guest=1${hash ? `#${hash}` : ""}`;
     try {
-      return new URL("../index.html", scriptUrl).href;
+      const url = new URL("../index.html", scriptUrl);
+      url.searchParams.set("guest", "1");
+      if (hash) url.hash = hash;
+      return url.href;
     } catch (_error) {
-      return "../index.html";
+      return `../index.html?guest=1${hash ? `#${hash}` : ""}`;
     }
   }
 
@@ -826,7 +853,6 @@
     if (currentIndex === -1 || document.querySelector(".learning-site-bar")) return;
 
     const current = pages[currentIndex];
-    const previous = pages[currentIndex - 1];
     const next = pages[currentIndex + 1];
     remember(current);
 
@@ -846,12 +872,16 @@
     const nav = document.createElement("div");
     nav.className = "learning-site-bar__nav";
 
+    const chapterHref = getHomeHref(current.chapterHash || "danh-sach-bai");
+
     nav.append(createLink("Trang chủ", homeHref, "learning-site-bar__link"));
-    if (previous) nav.append(createLink("Bài trước", previous.href, "learning-site-bar__link"));
+    nav.append(createLink(current.gradeLabel || "Lớp", chapterHref, "learning-site-bar__link"));
+    nav.append(createLink(current.chapterLabel || "Chương", chapterHref, "learning-site-bar__link"));
 
     const currentLabel = document.createElement("span");
     currentLabel.className = "learning-site-bar__current";
     currentLabel.textContent = current.label;
+    currentLabel.setAttribute("aria-current", "page");
     nav.append(currentLabel);
 
     if (next) nav.append(createLink("Bài sau", next.href, "learning-site-bar__link"));
