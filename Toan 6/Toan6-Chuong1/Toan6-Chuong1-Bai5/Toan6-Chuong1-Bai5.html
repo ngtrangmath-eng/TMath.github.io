@@ -305,6 +305,30 @@
       border: 1px solid var(--line);
     }
 
+    .resource-card {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+      margin: 16px 0;
+    }
+
+    .song-card {
+      background: var(--soft-amber);
+      border-left-color: #d09420;
+    }
+
+    audio {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    video {
+      background: #000000;
+      border-radius: var(--radius);
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
     .content-block ul,
     .content-block ol,
     .question-card ul,
@@ -764,6 +788,14 @@
         <strong>Trọng tâm:</strong> Trong phép nhân <span class="math-text">a · b = c</span>, <span class="math-text">a</span>, <span class="math-text">b</span> là thừa số và <span class="math-text">c</span> là tích. Trong phép chia, số chia phải khác <span class="math-text">0</span>. Với phép chia có dư, số dư luôn thỏa mãn <span class="math-text">0 ≤ r &lt; b</span>.
       </div>
 
+      <div class="content-block resource-card">
+        <h3>Video mở đầu</h3>
+        <p>Xem video ngắn trước khi bắt đầu phần kiến thức trọng tâm.</p>
+        <video controls preload="metadata" src="Toan6-Bai5-Chuong1.mp4">
+          Trình duyệt của em chưa hỗ trợ phát video trực tiếp. Hãy mở file Toan6-Bai5-Chuong1.mp4 trong thư mục bài học.
+        </video>
+      </div>
+
       <div class="content-grid">
         <article class="content-block">
           <h3>1. Mục tiêu bài học</h3>
@@ -950,6 +982,14 @@
           <li>Nhầm phép chia hết với phép chia có dư.</li>
         </ul>
       </article>
+
+      <div class="content-block resource-card song-card">
+        <h3>11. Bài hát củng cố</h3>
+        <p><strong>Nhân Trước Chia Sau</strong> giúp em ôn lại nội dung bài học bằng âm nhạc.</p>
+        <audio controls preload="metadata" src="Nh%C3%A2n%20Tr%C6%B0%E1%BB%9Bc%20Chia%20Sau.mp3">
+          Trình duyệt của em chưa hỗ trợ phát âm thanh trực tiếp. Hãy mở file Nhân Trước Chia Sau.mp3 trong thư mục bài học.
+        </audio>
+      </div>
 
       <div class="action-row">
         <button class="primary-action" type="button" data-tab-jump="part-b">Sang phần luyện tập</button>

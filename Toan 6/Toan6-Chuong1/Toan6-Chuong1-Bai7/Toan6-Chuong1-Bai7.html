@@ -305,6 +305,30 @@
       border: 1px solid var(--line);
     }
 
+    .resource-card {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+      margin: 16px 0;
+    }
+
+    .song-card {
+      background: var(--soft-amber);
+      border-left-color: #d09420;
+    }
+
+    audio {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    video {
+      background: #000000;
+      border-radius: var(--radius);
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
     .content-block ul,
     .content-block ol,
     .question-card ul,
@@ -768,6 +792,14 @@
         <strong>Trọng tâm:</strong> Khi tính một biểu thức, cần xét dấu ngoặc trước. Nếu không có dấu ngoặc thì thực hiện theo thứ tự <span class="math-text">Lũy thừa → Nhân, chia → Cộng, trừ</span>; riêng các phép cùng mức ưu tiên được tính từ trái sang phải.
       </div>
 
+      <div class="content-block resource-card">
+        <h3>Video mở đầu</h3>
+        <p>Xem video ngắn trước khi bắt đầu phần kiến thức trọng tâm.</p>
+        <video controls preload="metadata" src="Bai7-Toan6-Chuong1_202606160952.mp4">
+          Trình duyệt của em chưa hỗ trợ phát video trực tiếp. Hãy mở file Bai7-Toan6-Chuong1_202606160952.mp4 trong thư mục bài học.
+        </video>
+      </div>
+
       <div class="content-grid">
         <article class="content-block">
           <h3>1. Mục tiêu bài học</h3>
@@ -915,6 +947,14 @@
           <li>Tính từ trái sang phải trong mọi trường hợp mà không xét thứ tự ưu tiên.</li>
         </ul>
       </article>
+
+      <div class="content-block resource-card song-card">
+        <h3>10. Bài hát củng cố</h3>
+        <p><strong>Thứ tự thực hiện phép tính</strong> giúp em ôn lại nội dung bài học bằng âm nhạc.</p>
+        <audio controls preload="metadata" src="Th%E1%BB%A9%20t%E1%BB%B1%20th%E1%BB%B1c%20hi%E1%BB%87n%20ph%C3%A9p%20t%C3%ADnh.mp3">
+          Trình duyệt của em chưa hỗ trợ phát âm thanh trực tiếp. Hãy mở file Thứ tự thực hiện phép tính.mp3 trong thư mục bài học.
+        </audio>
+      </div>
 
       <div class="action-row">
         <button class="primary-action" type="button" data-tab-jump="part-b">Sang phần luyện tập</button>

@@ -308,6 +308,30 @@
       border: 1px solid var(--line);
     }
 
+    .resource-card {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+      margin: 16px 0;
+    }
+
+    .song-card {
+      background: var(--soft-amber);
+      border-left-color: #d09420;
+    }
+
+    audio {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    video {
+      background: #000000;
+      border-radius: var(--radius);
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
     .content-block ul,
     .content-block ol,
     .question-card ul,
@@ -767,6 +791,14 @@
         <strong>Trọng tâm:</strong> Lũy thừa <span class="math-text">a^n</span> là tích của <span class="math-text">n</span> thừa số bằng nhau, mỗi thừa số bằng <span class="math-text">a</span>. Khi nhân hai lũy thừa cùng cơ số thì cộng số mũ; khi chia hai lũy thừa cùng cơ số khác <span class="math-text">0</span> thì trừ số mũ.
       </div>
 
+      <div class="content-block resource-card">
+        <h3>Video mở đầu</h3>
+        <p>Xem video ngắn trước khi bắt đầu phần kiến thức trọng tâm.</p>
+        <video controls preload="metadata" src="Toan6-Bai6-Chuong1_202606160855.mp4">
+          Trình duyệt của em chưa hỗ trợ phát video trực tiếp. Hãy mở file Toan6-Bai6-Chuong1_202606160855.mp4 trong thư mục bài học.
+        </video>
+      </div>
+
       <div class="content-grid">
         <article class="content-block">
           <h3>1. Mục tiêu bài học</h3>
@@ -946,6 +978,14 @@
           <li>Quên điều kiện <span class="math-text">a ≠ 0, m ≥ n</span> khi chia hai lũy thừa cùng cơ số.</li>
         </ul>
       </article>
+
+      <div class="content-block resource-card song-card">
+        <h3>10. Bài hát củng cố</h3>
+        <p><strong>Luỹ thừa số tự nhiên</strong> giúp em ôn lại nội dung bài học bằng âm nhạc.</p>
+        <audio controls preload="metadata" src="Lu%E1%BB%B9%20th%E1%BB%ABa%20s%E1%BB%91%20t%E1%BB%B1%20nhi%C3%AAn.mp3">
+          Trình duyệt của em chưa hỗ trợ phát âm thanh trực tiếp. Hãy mở file Luỹ thừa số tự nhiên.mp3 trong thư mục bài học.
+        </audio>
+      </div>
 
       <div class="action-row">
         <button class="primary-action" type="button" data-tab-jump="part-b">Sang phần luyện tập</button>
