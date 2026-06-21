@@ -17,6 +17,7 @@ File phải nằm trong chính thư mục bài học.
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tên bài học</title>
+  <script src="../../../assets/mathjax-loader.js" defer></script>
   <style>
     /* CSS đặt trực tiếp trong file */
   </style>
@@ -99,6 +100,8 @@ Hiển thị:
 ## Nguyên tắc kỹ thuật
 
 - HTML, CSS và JavaScript nằm trong một file.
+- Nhúng `assets/mathjax-loader.js` trong `<head>` để MathJax hiển thị công thức; điều chỉnh đường dẫn tương đối theo vị trí file HTML.
+- Công thức ngắn nên bọc bằng `.math-text`; dòng công thức nên bọc bằng `.math-line`; cũng có thể dùng trực tiếp `\(...\)` hoặc `\[...\]`.
 - Không phụ thuộc server riêng.
 - Không hard-code thông tin riêng của học sinh.
 - Không làm mất dữ liệu đã nhập khi chuyển giữa các phần.

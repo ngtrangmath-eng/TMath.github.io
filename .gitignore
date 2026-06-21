@@ -3,3 +3,6 @@ Thumbs.db
 node_modules/
 .vite/
 dist/
+__pycache__/
+*.pyc
+~$*

@@ -1,0 +1,460 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong1-Bai1",
+    "bodyLessonId": "bai-1",
+    "storageKey": "toan6-chuong1-bai1-worksheet",
+    "output": "output/Toan6-Chuong1-Bai1.html",
+    "title": "Toán 6 - Chương 1 - Bài 1: Tập hợp",
+    "summary": "Nhận biết tập hợp, phần tử của tập hợp, sử dụng kí hiệu thuộc - không thuộc và viết tập hợp bằng dấu ngoặc nhọn.",
+    "meta": {
+      "Môn": "Toán",
+      "Lớp": "6",
+      "Chương": "1",
+      "Bài": "1",
+      "Mã bài": "Toan6-Chuong1-Bai1"
+    },
+    "sources": [
+      "Bai1-PhanA.md",
+      "Bai1-PhanB.md",
+      "Bai1-PhanC.md"
+    ]
+  },
+  "partA": {
+    "title": "Phần A - Kiến thức trọng tâm",
+    "lead": "Bài học giúp học sinh nhận biết tập hợp, gọi tên phần tử, sử dụng đúng kí hiệu <span class='math-text'>∈</span>, <span class='math-text'>∉</span> và viết tập hợp bằng dấu ngoặc nhọn <span class='math-text'>{ }</span>.",
+    "blocks": [
+      {
+        "title": "1. Mục tiêu bài học",
+        "listType": "ol",
+        "items": [
+          "Nhận biết được một nhóm đối tượng được xác định rõ ràng là một tập hợp.",
+          "Xác định được phần tử thuộc hoặc không thuộc một tập hợp.",
+          "Viết được tập hợp bằng cách liệt kê phần tử và dùng đúng dấu <span class='math-text'>{ }</span>, dấu <span class='math-text'>;</span>.",
+          "Diễn đạt được bằng lời và bằng kí hiệu các quan hệ <span class='math-text'>∈</span>, <span class='math-text'>∉</span>."
+        ]
+      },
+      {
+        "title": "2. Khái niệm cần nhớ",
+        "paragraphs": [
+          "Ta thường dùng chữ cái in hoa để đặt tên tập hợp, ví dụ: <span class='math-text'>A</span>, <span class='math-text'>B</span>, <span class='math-text'>C</span>, <span class='math-text'>M</span>.",
+          "Ví dụ: <span class='math-text'>A = {0; 1; 2; 3}</span>. Các số 0, 1, 2, 3 là phần tử của tập hợp <span class='math-text'>A</span>."
+        ]
+      }
+    ],
+    "note": {
+      "title": "Ghi nhớ",
+      "text": "Nếu một đối tượng nằm trong tập hợp, ta dùng kí hiệu <span class='math-text'>∈</span>. Nếu không nằm trong tập hợp, ta dùng kí hiệu <span class='math-text'>∉</span>."
+    },
+    "symbolTable": {
+      "headers": [
+        "Kí hiệu",
+        "Cách đọc",
+        "Ví dụ"
+      ],
+      "rows": [
+        [
+          "<span class='math-text'>∈</span>",
+          "Thuộc",
+          "<span class='math-text'>2 ∈ {0; 1; 2; 3}</span>"
+        ],
+        [
+          "<span class='math-text'>∉</span>",
+          "Không thuộc",
+          "<span class='math-text'>5 ∉ {0; 1; 2; 3}</span>"
+        ],
+        [
+          "<span class='math-text'>{ }</span>",
+          "Dùng để viết tập hợp",
+          "<span class='math-text'>B = {a; b; c}</span>"
+        ]
+      ]
+    },
+    "example": {
+      "title": "Ví dụ mẫu",
+      "html": "<p><strong>Đề bài:</strong> Viết tập hợp <span class='math-text'>A</span> gồm các số tự nhiên nhỏ hơn 5.</p><ol class='example-steps'><li>Liệt kê các số thỏa mãn điều kiện: <span class='math-text'>0, 1, 2, 3, 4</span>.</li><li>Viết tập hợp: <span class='math-text'>A = {0; 1; 2; 3; 4}</span>.</li><li>Kết luận: <span class='math-text'>3 ∈ A</span>, <span class='math-text'>5 ∉ A</span>.</li></ol>"
+    },
+    "mindMap": [
+      "Tập hợp",
+      "Phần tử",
+      "Kí hiệu ∈, ∉",
+      "Liệt kê bằng { }"
+    ],
+    "quickChecks": [
+      {
+        "type": "symbol",
+        "id": "a-check-1",
+        "feedbackId": "a-feedback-1",
+        "title": "Câu 1. Điền kí hiệu thích hợp",
+        "prompt": "<span class='math-text'>4 ... {1; 2; 3; 4; 5}</span>",
+        "answer": "∈",
+        "explain": "Vì 4 có trong tập hợp đã cho nên dùng kí hiệu ∈."
+      },
+      {
+        "type": "set",
+        "id": "a-check-2",
+        "feedbackId": "a-feedback-2",
+        "title": "Câu 2. Viết tập hợp C gồm các chữ cái trong từ “HOC”",
+        "placeholder": "Viết theo mẫu: C = {...; ...; ...}",
+        "expectedName": "C",
+        "expectedItems": [
+          "H",
+          "O",
+          "C"
+        ],
+        "practicePoints": 0,
+        "guideOnly": true,
+        "partialGuide": "Em đã xác định đúng các chữ cái. Hãy kiểm tra lại tên tập hợp, dấu = và dấu ngoặc nhọn.",
+        "guide": "Gợi ý: đọc từng chữ cái trong từ HOC, viết mỗi chữ một lần và đặt trong dấu ngoặc nhọn sau C =."
+      }
+    ],
+    "mistakes": [
+      "Nhầm kí hiệu <span class='math-text'>∈</span> và <span class='math-text'>∉</span>.",
+      "Viết các phần tử nhưng quên tên tập hợp hoặc dấu bằng.",
+      "Bỏ sót số <span class='math-text'>0</span> khi viết tập hợp các số tự nhiên nhỏ hơn một số đã cho."
+    ]
+  },
+  "partB": {
+    "title": "Phần B - Luyện tập",
+    "lead": "Hoàn thành các bài luyện tập để củng cố cách dùng kí hiệu thuộc, không thuộc và cách viết tập hợp.",
+    "referenceTable": {
+      "headers": [
+        "Kí hiệu",
+        "Ý nghĩa"
+      ],
+      "rows": [
+        [
+          "<span class='math-text'>∈</span>",
+          "Thuộc"
+        ],
+        [
+          "<span class='math-text'>∉</span>",
+          "Không thuộc"
+        ],
+        [
+          "<span class='math-text'>{ }</span>",
+          "Dùng để viết tập hợp bằng cách liệt kê phần tử"
+        ],
+        [
+          "<span class='math-text'>;</span>",
+          "Dùng để ngăn cách các phần tử trong tập hợp"
+        ],
+        [
+          "<span class='math-text'>A, B, C, M</span>",
+          "Thường dùng để đặt tên tập hợp"
+        ]
+      ]
+    },
+    "symbolGroup": {
+      "title": "Điền kí hiệu ∈ hoặc ∉ vào chỗ trống.",
+      "feedbackId": "b-symbol-feedback",
+      "successMessage": "Đúng cả 3 câu. Em đã phân biệt tốt thuộc và không thuộc.",
+      "partialTemplate": "Em đúng {correct}/{total} câu. Hãy kiểm tra lại xem phần tử có xuất hiện trong tập hợp không.",
+      "items": [
+        {
+          "id": "b-symbol-1",
+          "label": "1. <span class='math-text'>3 ... {1; 2; 3; 4}</span>",
+          "answer": "∈"
+        },
+        {
+          "id": "b-symbol-2",
+          "label": "2. <span class='math-text'>7 ... {0; 2; 4; 6; 8}</span>",
+          "answer": "∉"
+        },
+        {
+          "id": "b-symbol-3",
+          "label": "3. <span class='math-text'>a ... {a; b; c}</span>",
+          "answer": "∈"
+        }
+      ],
+      "answerKey": [
+        "<span class='math-text'>3 ∈ {1; 2; 3; 4}</span> vì 3 thuộc tập hợp đã cho.",
+        "<span class='math-text'>7 ∉ {0; 2; 4; 6; 8}</span> vì 7 không có trong tập hợp đã cho.",
+        "<span class='math-text'>a ∈ {a; b; c}</span> vì a thuộc tập hợp đã cho."
+      ]
+    },
+    "setQuestions": [
+      {
+        "id": "b-set-1",
+        "feedbackId": "b-set-feedback-1",
+        "title": "1. Viết tập hợp A gồm các số tự nhiên nhỏ hơn 6.",
+        "placeholder": "A = {0; 1; 2; 3; 4; 5}",
+        "expectedName": "A",
+        "expectedItems": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "practicePoints": 0,
+        "hint": "Gợi ý: Số tự nhiên nhỏ hơn 6 bắt đầu từ 0 và dừng ở 5."
+      },
+      {
+        "id": "b-set-2",
+        "feedbackId": "b-set-feedback-2",
+        "title": "2. Viết tập hợp B gồm các chữ cái trong từ “TOAN”.",
+        "placeholder": "B = {T; O; A; N}",
+        "expectedName": "B",
+        "expectedItems": [
+          "T",
+          "O",
+          "A",
+          "N"
+        ],
+        "practicePoints": 0,
+        "hint": "Gợi ý: Mỗi chữ cái chỉ cần ghi một lần."
+      },
+      {
+        "id": "b-set-3",
+        "feedbackId": "b-set-feedback-3",
+        "title": "3. Viết tập hợp C gồm các số chẵn nhỏ hơn 10.",
+        "placeholder": "C = {0; 2; 4; 6; 8}",
+        "expectedName": "C",
+        "expectedItems": [
+          "0",
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "practicePoints": 0,
+        "hint": "Gợi ý: Số chẵn chia hết cho 2; đề yêu cầu nhỏ hơn 10."
+      }
+    ],
+    "checkboxGame": {
+      "id": "game-m",
+      "prompt": "Cho tập hợp: <span class='math-text'>M = {0; 2; 4; 6; 8}</span>. Hãy chọn các số thuộc <span class='math-text'>M</span> trong các số sau:",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "8",
+        "9"
+      ],
+      "answers": [
+        "0",
+        "2",
+        "4",
+        "6",
+        "8"
+      ],
+      "feedbackId": "game-feedback",
+      "correctMessage": "Đúng. Các số thuộc M là 0, 2, 4, 6, 8.",
+      "partialTemplate": "Em đã chọn đúng {correct}/{total} số thuộc M. Hãy bỏ các số không có trong M và chọn đủ {answers}.",
+      "answerKey": "Các số thuộc <span class='math-text'>M</span> là: <span class='math-text'>0, 2, 4, 6, 8</span>."
+    },
+    "challenge": {
+      "id": "b-challenge",
+      "feedbackId": "b-challenge-feedback",
+      "title": "Vận dụng. Lớp em có các bạn tham gia câu lạc bộ Toán: An, Bình, Chi. Hãy viết tập hợp T gồm tên các bạn đó.",
+      "placeholder": "T = {An; Bình; Chi}",
+      "expectedName": "T",
+      "expectedItems": [
+        "An",
+        "Bình",
+        "Chi"
+      ],
+      "practicePoints": 0
+    },
+    "tips": [
+      "Khi gặp bài “nhỏ hơn”, hãy liệt kê từ số tự nhiên đầu tiên là <span class='math-text'>0</span> nếu đề nói số tự nhiên.",
+      "Sau khi viết tập hợp, tự kiểm tra đủ 3 phần: tên tập hợp, dấu bằng, dấu ngoặc nhọn.",
+      "Mỗi phần tử chỉ cần viết một lần."
+    ]
+  },
+  "test": {
+    "title": "Phần C - Kiểm tra đánh giá",
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "Làm bài trong 15 phút. Phần trắc nghiệm chọn một đáp án đúng, phần tự luận viết rõ tập hợp cần tìm.",
+    "rubric": [
+      {
+        "part": "Trắc nghiệm",
+        "description": "5 câu, mỗi câu 1 điểm",
+        "points": 5
+      },
+      {
+        "part": "Tự luận",
+        "description": "2 câu viết tập hợp",
+        "points": 4
+      },
+      {
+        "part": "Vận dụng",
+        "description": "1 câu gắn với tình huống thực tế",
+        "points": 1
+      }
+    ],
+    "multipleChoice": [
+      {
+        "id": "q1",
+        "prompt": "Tập hợp là:",
+        "points": 1,
+        "answer": "B",
+        "choices": [
+          {
+            "value": "A",
+            "text": "Một phép tính cộng."
+          },
+          {
+            "value": "B",
+            "text": "Một nhóm đối tượng được xác định rõ ràng."
+          },
+          {
+            "value": "C",
+            "text": "Một hình vẽ bất kì."
+          },
+          {
+            "value": "D",
+            "text": "Một số tự nhiên."
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "prompt": "Trong <span class='math-text'>A = {1; 2; 3}</span>, khẳng định nào đúng?",
+        "points": 1,
+        "answer": "B",
+        "choices": [
+          {
+            "value": "A",
+            "text": "<span class='math-text'>4 ∈ A</span>"
+          },
+          {
+            "value": "B",
+            "text": "<span class='math-text'>2 ∈ A</span>"
+          },
+          {
+            "value": "C",
+            "text": "<span class='math-text'>5 ∈ A</span>"
+          },
+          {
+            "value": "D",
+            "text": "<span class='math-text'>0 ∈ A</span>"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "prompt": "Kí hiệu <span class='math-text'>∉</span> đọc là:",
+        "points": 1,
+        "answer": "C",
+        "choices": [
+          {
+            "value": "A",
+            "text": "Thuộc"
+          },
+          {
+            "value": "B",
+            "text": "Bằng"
+          },
+          {
+            "value": "C",
+            "text": "Không thuộc"
+          },
+          {
+            "value": "D",
+            "text": "Lớn hơn"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "prompt": "Cách viết nào đúng cho tập hợp các chữ cái trong từ “TOAN”?",
+        "points": 1,
+        "answer": "A",
+        "choices": [
+          {
+            "value": "A",
+            "text": "<span class='math-text'>{T; O; A; N}</span>"
+          },
+          {
+            "value": "B",
+            "text": "<span class='math-text'>T + O + A + N</span>"
+          },
+          {
+            "value": "C",
+            "text": "<span class='math-text'>(T; O; A; N)</span>"
+          },
+          {
+            "value": "D",
+            "text": "<span class='math-text'>[T; O; A; N]</span>"
+          }
+        ]
+      },
+      {
+        "id": "q5",
+        "prompt": "Với <span class='math-text'>M = {0; 2; 4; 6; 8}</span>, số nào không thuộc <span class='math-text'>M</span>?",
+        "points": 1,
+        "answer": "D",
+        "choices": [
+          {
+            "value": "A",
+            "text": "<span class='math-text'>0</span>"
+          },
+          {
+            "value": "B",
+            "text": "<span class='math-text'>2</span>"
+          },
+          {
+            "value": "C",
+            "text": "<span class='math-text'>6</span>"
+          },
+          {
+            "value": "D",
+            "text": "<span class='math-text'>9</span>"
+          }
+        ]
+      }
+    ],
+    "written": [
+      {
+        "id": "w1",
+        "title": "Tự luận 1. Viết tập hợp A gồm các số tự nhiên nhỏ hơn 6.",
+        "expectedName": "A",
+        "expectedItems": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "points": 2,
+        "answerLabel": "Tự luận 1",
+        "expectedText": "<span class='math-text'>A = {0; 1; 2; 3; 4; 5}</span>"
+      },
+      {
+        "id": "w2",
+        "title": "Tự luận 2. Viết tập hợp B gồm các chữ cái trong từ “TOAN”.",
+        "expectedName": "B",
+        "expectedItems": [
+          "T",
+          "O",
+          "A",
+          "N"
+        ],
+        "points": 2,
+        "answerLabel": "Tự luận 2",
+        "expectedText": "<span class='math-text'>B = {T; O; A; N}</span>"
+      },
+      {
+        "id": "w3",
+        "title": "Vận dụng. Tổ trực nhật gồm Mai, Nam, Lan. Hãy viết tập hợp T gồm tên các bạn trong tổ trực nhật.",
+        "expectedName": "T",
+        "expectedItems": [
+          "Mai",
+          "Nam",
+          "Lan"
+        ],
+        "points": 1,
+        "answerLabel": "Vận dụng",
+        "expectedText": "<span class='math-text'>T = {Mai; Nam; Lan}</span>"
+      }
+    ]
+  }
+}

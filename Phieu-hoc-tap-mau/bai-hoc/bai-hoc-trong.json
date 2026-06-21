@@ -1,0 +1,253 @@
+{
+  "lesson": {
+    "code": "TODO-Ma-Bai",
+    "bodyLessonId": "todo-bai",
+    "storageKey": "todo-ma-bai-worksheet",
+    "output": "output/TODO-Ma-Bai.html",
+    "title": "TODO - Tên bài học",
+    "summary": "TODO - Tóm tắt mục tiêu chính của bài học.",
+    "meta": {
+      "Môn": "Toán",
+      "Lớp": "TODO",
+      "Chương": "TODO",
+      "Bài": "TODO",
+      "Mã bài": "TODO-Ma-Bai"
+    },
+    "sources": [
+      "TODO-PhanA.md",
+      "TODO-PhanB.md",
+      "TODO-PhanC.md"
+    ]
+  },
+  "partA": {
+    "title": "Phần A - Kiến thức trọng tâm",
+    "lead": "TODO - Giới thiệu bài học.",
+    "blocks": [
+      {
+        "title": "1. Mục tiêu bài học",
+        "listType": "ol",
+        "items": [
+          "TODO - Mục tiêu 1.",
+          "TODO - Mục tiêu 2.",
+          "TODO - Mục tiêu 3."
+        ]
+      },
+      {
+        "title": "2. Kiến thức cần nhớ",
+        "paragraphs": [
+          "TODO - Khái niệm hoặc quy tắc chính.",
+          "TODO - Ví dụ/kí hiệu quan trọng."
+        ]
+      }
+    ],
+    "note": {
+      "title": "Ghi nhớ",
+      "text": "TODO - Ghi nhớ ngắn gọn nhất của bài."
+    },
+    "symbolTable": {
+      "headers": [
+        "Kí hiệu",
+        "Ý nghĩa",
+        "Ví dụ"
+      ],
+      "rows": [
+        [
+          "<span class='math-text'>TODO</span>",
+          "TODO",
+          "<span class='math-text'>TODO</span>"
+        ]
+      ]
+    },
+    "example": {
+      "title": "Ví dụ mẫu",
+      "html": "<p><strong>Đề bài:</strong> TODO.</p><ol class='example-steps'><li>TODO - Bước 1.</li><li>TODO - Bước 2.</li><li>TODO - Kết luận.</li></ol>"
+    },
+    "mindMap": [
+      "TODO 1",
+      "TODO 2",
+      "TODO 3",
+      "TODO 4"
+    ],
+    "quickChecks": [
+      {
+        "type": "symbol",
+        "id": "a-check-1",
+        "feedbackId": "a-feedback-1",
+        "title": "Câu 1. TODO - Tự kiểm tra nhanh",
+        "prompt": "TODO - Nội dung câu hỏi.",
+        "answer": "TODO",
+        "options": [
+          "TODO",
+          "TODO"
+        ],
+        "explain": "TODO - Giải thích đáp án."
+      }
+    ],
+    "mistakes": [
+      "TODO - Lỗi thường gặp 1.",
+      "TODO - Lỗi thường gặp 2."
+    ]
+  },
+  "partB": {
+    "title": "Phần B - Luyện tập",
+    "lead": "TODO - Nhiệm vụ luyện tập.",
+    "referenceTable": {
+      "headers": [
+        "Nội dung",
+        "Ghi nhớ"
+      ],
+      "rows": [
+        [
+          "TODO",
+          "TODO"
+        ]
+      ]
+    },
+    "symbolGroup": {
+      "title": "TODO - Điền/chọn đáp án thích hợp.",
+      "feedbackId": "b-symbol-feedback",
+      "successMessage": "Đúng cả nhóm câu.",
+      "partialTemplate": "Em đúng {correct}/{total} câu. Hãy kiểm tra lại.",
+      "items": [
+        {
+          "id": "b-symbol-1",
+          "label": "1. TODO",
+          "answer": "TODO",
+          "options": [
+            "TODO",
+            "TODO"
+          ]
+        }
+      ],
+      "answerKey": [
+        "TODO - Đáp án gợi ý."
+      ]
+    },
+    "setQuestions": [
+      {
+        "id": "b-set-1",
+        "feedbackId": "b-set-feedback-1",
+        "title": "1. TODO - Câu luyện tập dạng viết tập hợp.",
+        "placeholder": "A = {...}",
+        "expectedName": "A",
+        "expectedItems": [
+          "TODO"
+        ],
+        "practicePoints": 0,
+        "hint": "TODO - Gợi ý."
+      }
+    ],
+    "checkboxGame": {
+      "id": "game-todo",
+      "prompt": "TODO - Câu chọn nhiều đáp án.",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answers": [
+        "A",
+        "C"
+      ],
+      "feedbackId": "game-feedback",
+      "correctMessage": "Đúng.",
+      "partialTemplate": "Em đã chọn đúng {correct}/{total}. Đáp án đúng là {answers}.",
+      "answerKey": "TODO - Đáp án gợi ý."
+    },
+    "challenge": {
+      "id": "b-challenge",
+      "feedbackId": "b-challenge-feedback",
+      "title": "Vận dụng. TODO - Câu vận dụng ngắn.",
+      "placeholder": "TODO",
+      "expectedName": "T",
+      "expectedItems": [
+        "TODO"
+      ],
+      "practicePoints": 0
+    },
+    "tips": [
+      "TODO - Mẹo 1.",
+      "TODO - Mẹo 2."
+    ]
+  },
+  "test": {
+    "title": "Phần C - Kiểm tra đánh giá",
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "TODO - Yêu cầu làm bài.",
+    "rubric": [
+      {
+        "part": "Trắc nghiệm",
+        "description": "TODO",
+        "points": 5
+      },
+      {
+        "part": "Tự luận/Vận dụng",
+        "description": "TODO",
+        "points": 5
+      }
+    ],
+    "multipleChoice": [
+      {
+        "id": "q1",
+        "prompt": "TODO - Câu hỏi trắc nghiệm?",
+        "points": 1,
+        "answer": "A",
+        "choices": [
+          {
+            "value": "A",
+            "text": "TODO - Đáp án A"
+          },
+          {
+            "value": "B",
+            "text": "TODO - Đáp án B"
+          },
+          {
+            "value": "C",
+            "text": "TODO - Đáp án C"
+          },
+          {
+            "value": "D",
+            "text": "TODO - Đáp án D"
+          }
+        ]
+      }
+    ],
+    "written": [
+      {
+        "type": "set",
+        "id": "w1",
+        "title": "Tự luận 1. TODO - Câu tự luận dạng tập hợp.",
+        "expectedName": "A",
+        "expectedItems": [
+          "TODO"
+        ],
+        "points": 2,
+        "answerLabel": "Tự luận 1"
+      },
+      {
+        "type": "keywords",
+        "id": "w2",
+        "title": "Tự luận 2. TODO - Câu tự luận theo ý chính.",
+        "keywords": [
+          "TODO ý 1",
+          "TODO ý 2",
+          "TODO ý 3"
+        ],
+        "minKeywords": 2,
+        "points": 2,
+        "answerLabel": "Tự luận 2",
+        "expectedText": "TODO - Đáp án cần có các ý chính."
+      },
+      {
+        "type": "manual",
+        "id": "w3",
+        "title": "Vận dụng. TODO - Câu giáo viên chấm.",
+        "points": 1,
+        "answerLabel": "Vận dụng",
+        "expectedText": "TODO - Giáo viên chấm theo hướng dẫn."
+      }
+    ]
+  }
+}
