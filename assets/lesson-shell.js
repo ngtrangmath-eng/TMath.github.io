@@ -320,6 +320,142 @@
     return `Tự luận ${index + 1}`;
   }
 
+  function compactText(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  function splitCsv(value) {
+    return String(value || "")
+      .split(",")
+      .map(compactText)
+      .filter(Boolean);
+  }
+
+  function formatExpectedSet(name, items) {
+    const setName = compactText(name);
+    const body = items.map(compactText).filter(Boolean).join("; ");
+    return setName ? `${setName} = {${body}}` : `{${body}}`;
+  }
+
+  function cleanAnswerText(value) {
+    return compactText(value)
+      .replace(/\s*-\s*\d+(?:[,.]\d+)?\s*điểm\.?$/i, "")
+      .trim();
+  }
+
+  function normalizeAnswerGroup(value) {
+    const text = compactText(value);
+    const lessonMatch = /\bBài\s*(\d+)/i.exec(text);
+    return lessonMatch ? `Bài ${lessonMatch[1]}` : text;
+  }
+
+  function getAssessmentAnswerEntries() {
+    const source = getAssessmentAnswerKeySource();
+    if (!source) return [];
+
+    const entries = [];
+    let group = "";
+    Array.from(source.querySelectorAll("h4, tr, li")).forEach((node) => {
+      if (node.matches("h4")) {
+        group = normalizeAnswerGroup(node.textContent);
+        return;
+      }
+
+      if (node.matches("tr")) {
+        const cells = Array.from(node.querySelectorAll("td"));
+        if (cells.length < 2) return;
+        const label = compactText(cells[0].textContent);
+        const text = cleanAnswerText(cells[1].textContent);
+        if (label && text) entries.push({ group, label, text });
+        return;
+      }
+
+      const rawText = compactText(node.textContent);
+      if (!rawText) return;
+
+      const letterMatch = /^([a-z])\)\s*(.+)$/i.exec(rawText);
+      if (letterMatch) {
+        entries.push({
+          group,
+          label: `${letterMatch[1].toLowerCase()})`,
+          text: cleanAnswerText(letterMatch[2])
+        });
+        return;
+      }
+
+      const colonMatch = /^([^:：]{1,60})[:：]\s*(.+)$/.exec(rawText);
+      if (colonMatch) {
+        entries.push({
+          group,
+          label: compactText(colonMatch[1]),
+          text: cleanAnswerText(colonMatch[2])
+        });
+      }
+    });
+
+    return entries;
+  }
+
+  function joinAnswerEntries(entries) {
+    return entries.map((entry) => entry.text).filter(Boolean).join("\n");
+  }
+
+  function findAnswerByLabel(entries, label) {
+    const target = compactText(label).toLowerCase();
+    return joinAnswerEntries(entries.filter((entry) => compactText(entry.label).toLowerCase().startsWith(target)));
+  }
+
+  function getExpectedAnswerForTextarea(textarea, entries) {
+    const card = textarea.closest(".question-card");
+    if (!card) return "";
+
+    if (card.dataset.expectedText) return card.dataset.expectedText;
+    if (card.dataset.expected) return card.dataset.expected;
+    if (card.dataset.name || card.dataset.items) {
+      return formatExpectedSet(card.dataset.name, splitCsv(card.dataset.items));
+    }
+    if (card.dataset.answer) return card.dataset.answer;
+
+    const title = compactText(card.querySelector(".question-title")?.textContent || "");
+    const writtenMatch = /Tự luận\s*(\d+)/i.exec(title);
+    if (writtenMatch) {
+      const answer = findAnswerByLabel(entries, `Tự luận ${writtenMatch[1]}`);
+      if (answer) return answer;
+    }
+
+    if (/vận dụng/i.test(title) || textarea.id === "test-application") {
+      const answer = findAnswerByLabel(entries, "Vận dụng");
+      if (answer) return answer;
+    }
+
+    const reviewMatch = /^test-b(\d)([a-z]?)-work$/i.exec(textarea.id || "");
+    if (reviewMatch) {
+      const group = `Bài ${reviewMatch[1]}`;
+      const groupEntries = entries.filter((entry) => entry.group === group);
+      const letter = reviewMatch[2]?.toLowerCase();
+      if (letter) {
+        const answer = joinAnswerEntries(groupEntries.filter((entry) => compactText(entry.label).toLowerCase().startsWith(`${letter})`)));
+        if (answer) return answer;
+      }
+      return joinAnswerEntries(groupEntries);
+    }
+
+    return "";
+  }
+
+  function ensureWrittenAnswerPlaceholders() {
+    const entries = getAssessmentAnswerEntries();
+    const genericPlaceholders = new Set(["", "Bài làm", "Bài làm..."]);
+
+    document.querySelectorAll("#part-c .question-card textarea").forEach((textarea) => {
+      if (!genericPlaceholders.has(textarea.getAttribute("placeholder") || "")) return;
+      const answer = getExpectedAnswerForTextarea(textarea, entries);
+      if (!answer) return;
+      textarea.placeholder = answer;
+      textarea.classList.add("has-answer-placeholder");
+    });
+  }
+
   function estimateDataUrlBytes(dataUrl) {
     const payload = String(dataUrl || "").split(",")[1] || "";
     return Math.round((payload.length * 3) / 4);
@@ -791,9 +927,7 @@
     title.textContent = "Thống kê kết quả gửi giáo viên";
 
     const summary = document.createElement("p");
-    summary.textContent = record.manual_review_required === "Có"
-      ? `Đã tự lưu kết quả ${record.score}/10 của ${record.student_name}. Có ${record.uploaded_image_count} ảnh bài làm cần giáo viên chấm lại; hệ thống tự mở email phản hồi đến ${teacherEmail}. Nếu email chưa mở, bấm lại nút bên dưới.`
-      : `Đã tự lưu kết quả ${record.score}/10 của ${record.student_name}. Hệ thống tự mở email gửi thống kê đến ${teacherEmail}; nếu email chưa mở, bấm lại nút bên dưới.`;
+    summary.textContent = `Kết quả bài làm đã được lưu lại và gửi cho giáo viên. Hệ thống tự động cập nhật vào trang tính gửi vào tài khoản ${teacherEmail}.`;
 
     const actions = document.createElement("div");
     actions.className = "assessment-report-actions";
@@ -896,6 +1030,7 @@
     inner.append(brand, nav);
     bar.append(inner);
     document.body.prepend(bar);
+    ensureWrittenAnswerPlaceholders();
     bindWrittenImageUploads(current);
     lockAssessmentUntilLogin();
     bindAssessmentReporting(current);

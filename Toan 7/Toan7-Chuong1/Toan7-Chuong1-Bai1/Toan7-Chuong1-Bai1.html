@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toán 7 - Chương 1 - Bài 1: Tập hợp các số hữu tỉ</title>
   <link rel="stylesheet" href="../../../assets/lesson-shell.css">
+  <script src="../../../assets/mathjax-loader.js" defer></script>
+  <script src="../../../assets/answer-placeholders.js" defer></script>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -1283,6 +1285,89 @@
         display: none;
       }
     }
+
+    .lesson-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tab-button {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+      color: var(--primary-strong);
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 48px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .tab-button:hover,
+    .tab-button.active,
+    .tab-button[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .chapter-navigation {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 22px 0;
+      padding: 20px;
+    }
+
+    .chapter-navigation-title {
+      color: var(--primary-strong);
+      font-size: 1.2rem;
+      margin: 0 0 14px;
+    }
+
+    .chapter-link-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .chapter-link {
+      align-items: center;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--primary-strong);
+      display: flex;
+      font-weight: 900;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      text-decoration: none;
+    }
+
+    .chapter-link:hover,
+    .chapter-link.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+    @media (max-width: 760px) {
+      .lesson-nav,
+      .chapter-link-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media print {
+      .lesson-nav,
+      .chapter-navigation {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1328,15 +1413,12 @@
         </div>
       </div>
     </header>
-
-    <div class="toolbar no-print" aria-label="Điều hướng phiếu học tập">
-      <nav class="nav" role="tablist" aria-label="Các phần của phiếu học tập">
-        <button class="btn active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
-        <button class="btn" type="button" data-target="phan-b">B. Luyện tập</button>
-        <button class="btn" type="button" data-target="phan-c">C. Kiểm tra</button>
-        <button class="btn" type="button" data-target="phan-ket-qua">Kết quả</button>
-      </nav>
-    </div>
+    <nav id="lesson-nav" class="lesson-nav no-print" aria-label="Điều hướng phiếu học tập">
+      <button class="tab-button active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
+      <button class="tab-button" type="button" data-target="phan-b" aria-selected="false">B. Luyện tập</button>
+      <button class="tab-button" type="button" data-target="phan-c" aria-selected="false">C. Kiểm tra</button>
+      <button class="tab-button" type="button" data-target="phan-ket-qua" aria-selected="false">Kết quả</button>
+    </nav>
 
     <section id="phan-a" class="lesson-page active-page" aria-labelledby="title-a">
       <div class="section-head">
@@ -1546,12 +1628,12 @@
         <div class="section-tag">B</div>
         <div class="section-title">
           <h2 id="title-b">Luyện tập</h2>
-          <p class="subtitle">Làm lần lượt từng câu, sau đó xem gợi ý hoặc đối chiếu đáp án.</p>
+          <p class="subtitle">Làm lần lượt từng câu, viết rõ cách làm rồi chuyển sang phần kiểm tra khi hoàn thành.</p>
         </div>
       </div>
 
       <div class="lead">
-        Học sinh làm lần lượt từng câu. Mỗi câu có chỗ nhập đáp án, gợi ý và phản hồi khi làm sai.
+        Học sinh làm lần lượt từng câu. Mỗi câu có chỗ nhập bài làm để tự luyện theo cấu trúc giống Toán 6.
       </div>
 
       <article class="question practice">
@@ -1563,11 +1645,10 @@
         <div class="math-line">-5; &nbsp; 0; &nbsp; <span class="frac"><span>3</span><span>7</span></span>; &nbsp; 1,25; &nbsp; -2,4; &nbsp; <span class="mixed">1<span class="frac"><span>2</span><span>3</span></span></span></div>
         <textarea aria-label="Bài làm câu 1"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b1">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b1">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b1">Ghi nhận câu 1</button>
         </div>
-        <div class="feedback" id="hint-b1"><strong>Gợi ý:</strong> Một số là số hữu tỉ nếu viết được dưới dạng phân số <span class="frac"><span>a</span><span>b</span></span>, với a, b thuộc ℤ, b &ne; 0.</div>
-        <div class="feedback" id="answer-b1"><strong>Đáp án đúng:</strong> Tất cả các số đã cho đều là số hữu tỉ.<br><strong>Phản hồi khi sai:</strong> Em cần kiểm tra từng số xem có viết được dưới dạng phân số hay không. Số nguyên, phân số, hỗn số và số thập phân hữu hạn đều là số hữu tỉ.</div>
+
+
       </article>
 
       <article class="question practice">
@@ -1579,11 +1660,10 @@
         <div class="math-line"><span class="frac"><span>4</span><span>9</span></span>; &nbsp; -<span class="frac"><span>5</span><span>6</span></span>; &nbsp; 2; &nbsp; -3,5; &nbsp; 0</div>
         <textarea aria-label="Bài làm câu 2"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b2">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b2">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b2">Ghi nhận câu 2</button>
         </div>
-        <div class="feedback" id="hint-b2"><strong>Gợi ý:</strong> Muốn tìm số đối của một số hữu tỉ, ta đổi dấu của số đó.</div>
-        <div class="feedback" id="answer-b2"><strong>Đáp án đúng:</strong> -<span class="frac"><span>4</span><span>9</span></span>; <span class="frac"><span>5</span><span>6</span></span>; -2; 3,5; 0.<br><strong>Phản hồi khi sai:</strong> Em hãy xem lại dấu của từng số. Số dương có số đối là số âm, số âm có số đối là số dương, riêng số 0 có số đối là 0.</div>
+
+
       </article>
 
       <article class="question practice">
@@ -1595,15 +1675,10 @@
         <div class="math-line">7; &nbsp; -4; &nbsp; 0,6; &nbsp; -1,25; &nbsp; <span class="mixed">2<span class="frac"><span>1</span><span>3</span></span></span>; &nbsp; -<span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span></div>
         <textarea aria-label="Bài làm câu 3"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b3">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b3">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b3">Ghi nhận câu 3</button>
         </div>
-        <div class="feedback" id="hint-b3"><strong>Gợi ý:</strong> Số nguyên viết được dưới dạng phân số có mẫu là 1. Số thập phân hữu hạn viết thành phân số thập phân rồi rút gọn. Hỗn số đổi về phân số bằng cách lấy phần nguyên nhân với mẫu rồi cộng tử.</div>
-        <div class="feedback" id="answer-b3">
-          <strong>Đáp án đúng:</strong>
-          <div class="math-line">7 = <span class="frac"><span>7</span><span>1</span></span>; &nbsp; -4 = <span class="frac"><span>-4</span><span>1</span></span>; &nbsp; 0,6 = <span class="frac"><span>6</span><span>10</span></span> = <span class="frac"><span>3</span><span>5</span></span>; &nbsp; -1,25 = <span class="frac"><span>-125</span><span>100</span></span> = <span class="frac"><span>-5</span><span>4</span></span>; &nbsp; <span class="mixed">2<span class="frac"><span>1</span><span>3</span></span></span> = <span class="frac"><span>7</span><span>3</span></span>; &nbsp; -<span class="mixed">3<span class="frac"><span>2</span><span>5</span></span></span> = -<span class="frac"><span>17</span><span>5</span></span></div>
-          <strong>Phản hồi khi sai:</strong> Em cần chú ý dấu âm và cách đổi hỗn số về phân số. Với hỗn số, hãy đổi phần số trước rồi giữ nguyên dấu của số đã cho.
-        </div>
+
+
       </article>
 
       <article class="question practice">
@@ -1615,11 +1690,10 @@
         <div class="math-line"><span class="frac"><span>3</span><span>8</span></span> và <span class="frac"><span>5</span><span>8</span></span></div>
         <textarea aria-label="Bài làm câu 4"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b4">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b4">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b4">Ghi nhận câu 4</button>
         </div>
-        <div class="feedback" id="hint-b4"><strong>Gợi ý:</strong> Hai phân số có cùng mẫu số, ta so sánh tử số.</div>
-        <div class="feedback" id="answer-b4"><strong>Đáp án đúng:</strong> <span class="frac"><span>3</span><span>8</span></span> &lt; <span class="frac"><span>5</span><span>8</span></span>.<br><strong>Phản hồi khi sai:</strong> Em hãy quan sát mẫu số của hai phân số. Vì hai mẫu số bằng nhau nên phân số nào có tử số lớn hơn thì phân số đó lớn hơn.</div>
+
+
       </article>
 
       <article class="question practice">
@@ -1631,11 +1705,10 @@
         <div class="math-line"><span class="frac"><span>3</span><span>4</span></span> và 0,8</div>
         <textarea aria-label="Bài làm câu 5"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b5">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b5">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b5">Ghi nhận câu 5</button>
         </div>
-        <div class="feedback" id="hint-b5"><strong>Gợi ý:</strong> Có thể đổi <span class="frac"><span>3</span><span>4</span></span> về số thập phân rồi so sánh với 0,8.</div>
-        <div class="feedback" id="answer-b5"><strong>Đáp án đúng:</strong> <span class="frac"><span>3</span><span>4</span></span> &lt; 0,8.<br><strong>Phản hồi khi sai:</strong> Em hãy đổi <span class="frac"><span>3</span><span>4</span></span> thành 0,75. Sau đó so sánh 0,75 với 0,8.</div>
+
+
       </article>
 
       <article class="question practice">
@@ -1647,59 +1720,13 @@
         <div class="math-line"><span class="frac"><span>7</span><span>3</span></span> và <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span></div>
         <textarea aria-label="Bài làm câu 6"></textarea>
         <div class="question-actions no-print">
-          <button class="btn ghost" type="button" data-hint="hint-b6">Gợi ý</button>
-          <button class="btn" type="button" data-check="answer-b6">Kiểm tra đáp án</button>
+          <button class="btn primary" type="button" data-practice-save="b6">Ghi nhận câu 6</button>
         </div>
-        <div class="feedback" id="hint-b6"><strong>Gợi ý:</strong> Trước hết, hãy đổi hỗn số <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span> về phân số rồi quy đồng mẫu số để so sánh.</div>
-        <div class="feedback" id="answer-b6"><strong>Đáp án đúng:</strong> <span class="frac"><span>7</span><span>3</span></span> &lt; <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span>.<br><strong>Phản hồi khi sai:</strong> Em cần đổi <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span> = <span class="frac"><span>5</span><span>2</span></span>. Sau đó so sánh <span class="frac"><span>7</span><span>3</span></span> và <span class="frac"><span>5</span><span>2</span></span> bằng cách quy đồng mẫu số.</div>
+
+
       </article>
 
-      <details>
-        <summary>Đáp án gợi ý phần luyện tập</summary>
-        <div>
-          <table class="answer-table">
-            <thead>
-              <tr>
-                <th style="width: 64px">Câu</th>
-                <th>Đáp án</th>
-                <th>Ghi chú</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Tất cả các số đã cho đều là số hữu tỉ</td>
-                <td>Nhận biết số hữu tỉ</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>-<span class="frac"><span>4</span><span>9</span></span>; <span class="frac"><span>5</span><span>6</span></span>; -2; 3,5; 0</td>
-                <td>Tìm số đối bằng cách đổi dấu</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td><span class="frac"><span>7</span><span>1</span></span>; <span class="frac"><span>-4</span><span>1</span></span>; <span class="frac"><span>3</span><span>5</span></span>; <span class="frac"><span>-5</span><span>4</span></span>; <span class="frac"><span>7</span><span>3</span></span>; -<span class="frac"><span>17</span><span>5</span></span></td>
-                <td>Viết số hữu tỉ dưới dạng phân số</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td><span class="frac"><span>3</span><span>8</span></span> &lt; <span class="frac"><span>5</span><span>8</span></span></td>
-                <td>Hai phân số cùng mẫu</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td><span class="frac"><span>3</span><span>4</span></span> &lt; 0,8</td>
-                <td>Đổi phân số về số thập phân</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td><span class="frac"><span>7</span><span>3</span></span> &lt; <span class="mixed">2<span class="frac"><span>1</span><span>2</span></span></span></td>
-                <td>Đổi hỗn số về phân số rồi so sánh</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
+
       <div class="question-actions no-print">
         <button class="btn primary" type="button" id="go-test">Sang phần kiểm tra</button>
       </div>
@@ -1979,6 +2006,16 @@
         </div>
       </div>
     </section>
+    <section class="chapter-navigation no-print" aria-labelledby="chapter-navigation-title">
+      <h2 id="chapter-navigation-title" class="chapter-navigation-title">Điều hướng Chương 1</h2>
+      <div class="chapter-link-grid">
+        <a class="chapter-link active" href="../Toan7-Chuong1-Bai1/Toan7-Chuong1-Bai1.html" aria-current="page">Bài 1</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai2/Toan7-Chuong1-Bai2.html">Bài 2</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai3/Toan7-Chuong1-Bai3.html">Bài 3</a>
+        <a class="chapter-link" href="../Toan%207-Chuong1-Bai4/Toan7-Chuong1-Bai4.html">Bài 4</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Ontap/Toan7-Chuong1-OnTap.html">Ôn tập</a>
+      </div>
+    </section>
 
     <p class="footer-note">Phiếu học tập Toan7-Chuong1-Bai1</p>
   </main>
@@ -2102,6 +2139,38 @@
     }
 
     addImageAnswerControls();
+
+    function bindPracticeSaveButtons() {
+      document.querySelectorAll('[data-practice-save]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.subquestion, .question, .practice');
+          const textarea = card?.querySelector('textarea');
+          let feedback = card?.querySelector('.practice-save-feedback');
+          if (!feedback && card) {
+            feedback = document.createElement('div');
+            feedback.className = 'practice-save-feedback feedback';
+            feedback.setAttribute('aria-live', 'polite');
+            card.appendChild(feedback);
+          }
+          if (!feedback) return;
+
+          const hasTypedWork = Boolean(textarea?.value.trim());
+          const hasImageWork = typeof hasUploadedImageFor === 'function' && hasUploadedImageFor(textarea);
+          feedback.className = 'practice-save-feedback feedback show';
+          if (hasTypedWork || hasImageWork) {
+            feedback.classList.add('correct');
+            feedback.textContent = 'Đã ghi nhận bài làm. Em tiếp tục làm các câu còn lại.';
+            return;
+          }
+
+          feedback.classList.add('incorrect');
+          feedback.textContent = 'Em hãy nhập bài làm hoặc tải ảnh bài làm trước khi ghi nhận.';
+          textarea?.focus();
+        });
+      });
+    }
+
+    bindPracticeSaveButtons();
 
     const mathSymbols = [
       { label: 'ℚ', value: 'ℚ', title: 'Tập hợp số hữu tỉ' },
@@ -2245,15 +2314,6 @@
     symbolClose.addEventListener('click', () => setSymbolPanel(false));
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') setSymbolPanel(false);
-    });
-
-    document.querySelectorAll('[data-hint], [data-check]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const id = button.dataset.hint || button.dataset.check;
-        const box = document.getElementById(id);
-        if (!box) return;
-        box.classList.toggle('show');
-      });
     });
 
     document.querySelectorAll('[data-quick-check]').forEach((button) => {

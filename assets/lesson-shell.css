@@ -191,6 +191,24 @@ details.answer-key {
   margin: 0 0 12px;
 }
 
+#part-c textarea.has-answer-placeholder::placeholder {
+  color: #52666d;
+  opacity: 0.78;
+}
+
+#part-c textarea.has-answer-placeholder:focus::placeholder {
+  opacity: 0.55;
+}
+
+textarea.has-answer-placeholder::placeholder {
+  color: #52666d;
+  opacity: 0.78;
+}
+
+textarea.has-answer-placeholder:focus::placeholder {
+  opacity: 0.55;
+}
+
 .assessment-report-actions {
   display: flex;
   flex-wrap: wrap;

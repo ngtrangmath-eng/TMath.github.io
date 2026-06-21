@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toán 7 - Chương 1 - Bài 4: Thứ tự thực hiện các phép tính. Quy tắc chuyển vế</title>
   <link rel="stylesheet" href="../../../assets/lesson-shell.css">
+  <script src="../../../assets/mathjax-loader.js" defer></script>
+  <script src="../../../assets/answer-placeholders.js" defer></script>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -1277,6 +1279,89 @@
         display: none;
       }
     }
+
+    .lesson-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tab-button {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+      color: var(--primary-strong);
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 48px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .tab-button:hover,
+    .tab-button.active,
+    .tab-button[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .chapter-navigation {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 22px 0;
+      padding: 20px;
+    }
+
+    .chapter-navigation-title {
+      color: var(--primary-strong);
+      font-size: 1.2rem;
+      margin: 0 0 14px;
+    }
+
+    .chapter-link-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .chapter-link {
+      align-items: center;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--primary-strong);
+      display: flex;
+      font-weight: 900;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      text-decoration: none;
+    }
+
+    .chapter-link:hover,
+    .chapter-link.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+    @media (max-width: 760px) {
+      .lesson-nav,
+      .chapter-link-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media print {
+      .lesson-nav,
+      .chapter-navigation {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1337,16 +1422,12 @@
         <input id="student-date" type="text">
       </div>
     </div>
-
-    <div class="toolbar no-print" aria-label="Điều hướng phiếu học tập">
-      <nav class="nav" role="tablist" aria-label="Các phần của phiếu học tập">
-        <button class="btn active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
-        <button class="btn" type="button" data-target="phan-b">B. Luyện tập</button>
-        <button class="btn" type="button" data-target="phan-c">C. Kiểm tra</button>
-        <button class="btn" type="button" data-target="phan-ket-qua">Kết quả</button>
-        <button class="btn" type="button" data-print>In phiếu</button>
-      </nav>
-    </div>
+    <nav id="lesson-nav" class="lesson-nav no-print" aria-label="Điều hướng phiếu học tập">
+      <button class="tab-button active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
+      <button class="tab-button" type="button" data-target="phan-b" aria-selected="false">B. Luyện tập</button>
+      <button class="tab-button" type="button" data-target="phan-c" aria-selected="false">C. Kiểm tra</button>
+      <button class="tab-button" type="button" data-target="phan-ket-qua" aria-selected="false">Kết quả</button>
+    </nav>
 
     <section id="phan-a" class="lesson-page active-page" aria-labelledby="title-a">
       <div class="section-head">
@@ -1587,7 +1668,7 @@
             <div class="math-line">2,4 - 3<sup>2</sup> + 6 : 2</div>
             <textarea aria-label="Bài làm câu 1a" placeholder="Nhập bài làm câu 1a..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1a">Kiểm tra câu a</button>
+              <button class="btn primary" type="button" data-practice-save="b1a">Ghi nhận câu a</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1595,7 +1676,7 @@
             <div class="math-line"><span class="frac"><span>5</span><span>6</span></span> - (<span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>1</span><span>2</span></span>) : 2</div>
             <textarea aria-label="Bài làm câu 1b" placeholder="Nhập bài làm câu 1b..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1b">Kiểm tra câu b</button>
+              <button class="btn primary" type="button" data-practice-save="b1b">Ghi nhận câu b</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1603,7 +1684,7 @@
             <div class="math-line">(<span class="frac"><span>2</span><span>3</span></span> + <span class="frac"><span>1</span><span>6</span></span>) : <span class="frac"><span>5</span><span>4</span></span></div>
             <textarea aria-label="Bài làm câu 1c" placeholder="Nhập bài làm câu 1c..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1c">Kiểm tra câu c</button>
+              <button class="btn primary" type="button" data-practice-save="b1c">Ghi nhận câu c</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1611,7 +1692,7 @@
             <div class="math-line">1,5 · 4 + (7,2 - 3,6) : 2</div>
             <textarea aria-label="Bài làm câu 1d" placeholder="Nhập bài làm câu 1d..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1d">Kiểm tra câu d</button>
+              <button class="btn primary" type="button" data-practice-save="b1d">Ghi nhận câu d</button>
             </div>
           </div>
         </div>
@@ -1621,18 +1702,7 @@
         <div id="feedback-b1" class="feedback">
           Em cần xem lại thứ tự thực hiện phép tính. Không thực hiện cộng trừ trước khi tính lũy thừa, nhân và chia.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Thực hiện trong ngoặc trước; sau đó tính lũy thừa, nhân chia, cuối cùng cộng trừ.</p>
-            <div class="math-stack">
-              <div class="math-line">a) 2,4 - 3<sup>2</sup> + 6 : 2 = 2,4 - 9 + 3 = -6,6 + 3 = -3,6</div>
-              <div class="math-line">b) <span class="frac"><span>5</span><span>6</span></span> - (<span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>1</span><span>2</span></span>) : 2 = <span class="frac"><span>5</span><span>6</span></span> - <span class="frac"><span>5</span><span>6</span></span> : 2 = <span class="frac"><span>5</span><span>12</span></span></div>
-              <div class="math-line">c) (<span class="frac"><span>2</span><span>3</span></span> + <span class="frac"><span>1</span><span>6</span></span>) : <span class="frac"><span>5</span><span>4</span></span> = <span class="frac"><span>5</span><span>6</span></span> · <span class="frac"><span>4</span><span>5</span></span> = <span class="frac"><span>2</span><span>3</span></span></div>
-              <div class="math-line">d) 1,5 · 4 + (7,2 - 3,6) : 2 = 6 + 3,6 : 2 = 6 + 1,8 = 7,8</div>
-            </div>
-          </div>
-        </details>
+
       </div>
 
       <div class="question">
@@ -1647,7 +1717,7 @@
             <div class="math-line">x + <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>7</span><span>10</span></span></div>
             <textarea aria-label="Bài làm câu 2a" placeholder="Nhập bài làm câu 2a..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2a">Kiểm tra câu a</button>
+              <button class="btn primary" type="button" data-practice-save="b2a">Ghi nhận câu a</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1655,7 +1725,7 @@
             <div class="math-line">x - <span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>5</span><span>8</span></span></div>
             <textarea aria-label="Bài làm câu 2b" placeholder="Nhập bài làm câu 2b..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2b">Kiểm tra câu b</button>
+              <button class="btn primary" type="button" data-practice-save="b2b">Ghi nhận câu b</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1663,7 +1733,7 @@
             <div class="math-line">x + 6,25 = 10,75</div>
             <textarea aria-label="Bài làm câu 2c" placeholder="Nhập bài làm câu 2c..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2c">Kiểm tra câu c</button>
+              <button class="btn primary" type="button" data-practice-save="b2c">Ghi nhận câu c</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1671,7 +1741,7 @@
             <div class="math-line"><span class="frac"><span>2</span><span>3</span></span> + x = -<span class="frac"><span>1</span><span>6</span></span></div>
             <textarea aria-label="Bài làm câu 2d" placeholder="Nhập bài làm câu 2d..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2d">Kiểm tra câu d</button>
+              <button class="btn primary" type="button" data-practice-save="b2d">Ghi nhận câu d</button>
             </div>
           </div>
         </div>
@@ -1681,18 +1751,7 @@
         <div id="feedback-b2" class="feedback">
           Em cần kiểm tra lại dấu sau khi chuyển vế. Dấu “+” chuyển sang vế kia thành dấu “−”, dấu “−” chuyển sang vế kia thành dấu “+”.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Khi chuyển một số hạng sang vế kia, cần đổi dấu số hạng đó.</p>
-            <div class="math-stack">
-              <div class="math-line">a) x = <span class="frac"><span>7</span><span>10</span></span> - <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>7</span><span>10</span></span> - <span class="frac"><span>4</span><span>10</span></span> = <span class="frac"><span>3</span><span>10</span></span></div>
-              <div class="math-line">b) x = <span class="frac"><span>5</span><span>8</span></span> + <span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>5</span><span>8</span></span> + <span class="frac"><span>6</span><span>8</span></span> = <span class="frac"><span>11</span><span>8</span></span></div>
-              <div class="math-line">c) x = 10,75 - 6,25 = 4,5</div>
-              <div class="math-line">d) x = -<span class="frac"><span>1</span><span>6</span></span> - <span class="frac"><span>2</span><span>3</span></span> = -<span class="frac"><span>1</span><span>6</span></span> - <span class="frac"><span>4</span><span>6</span></span> = -<span class="frac"><span>5</span><span>6</span></span></div>
-            </div>
-          </div>
-        </details>
+
       </div>
 
       <div class="question">
@@ -1703,46 +1762,14 @@
         <p><strong>Đề bài:</strong> Một cái bánh chưng nặng 0,8 kg. Trong đó có 0,5 kg gạo nếp, 0,125 kg đậu xanh, 0,04 kg lá dong, còn lại là thịt. Hỏi khối lượng thịt trong mỗi cái bánh là bao nhiêu ki-lô-gam?</p>
         <textarea aria-label="Bài làm câu 3" placeholder="Nhập bài làm câu 3..."></textarea>
         <div class="question-actions">
-          <button class="btn primary" type="button" data-check-practice="b3">Kiểm tra câu 3</button>
+          <button class="btn primary" type="button" data-practice-save="b3">Ghi nhận câu 3</button>
           <button class="btn primary" type="button" data-show-feedback="feedback-b3">Xem phản hồi</button>
         </div>
         <div id="feedback-b3" class="feedback">
           Em cần cộng đúng khối lượng các nguyên liệu đã biết trước, sau đó lấy khối lượng cả cái bánh trừ đi kết quả vừa tìm được.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Lấy khối lượng cả cái bánh trừ đi tổng khối lượng gạo nếp, đậu xanh và lá dong.</p>
-            <div class="math-stack">
-              <div class="math-line">0,5 + 0,125 + 0,04 = 0,665 kg</div>
-              <div class="math-line">0,8 - 0,665 = 0,135 kg</div>
-              <div class="math-line">Vậy khối lượng thịt trong mỗi cái bánh là 0,135 kg.</div>
-            </div>
-          </div>
-        </details>
-      </div>
 
-      <h3>Đáp án gợi ý</h3>
-      <table class="answer-table">
-        <thead>
-          <tr>
-            <th style="width: 12%">Câu</th>
-            <th>Đáp án</th>
-            <th style="width: 34%">Ghi chú</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1a</td><td>-3,6</td><td>Biểu thức có lũy thừa, chia, cộng trừ</td></tr>
-          <tr><td>1b</td><td><span class="frac"><span>5</span><span>12</span></span></td><td>Biểu thức có dấu ngoặc và phép chia</td></tr>
-          <tr><td>1c</td><td><span class="frac"><span>2</span><span>3</span></span></td><td>Thực hiện trong ngoặc trước</td></tr>
-          <tr><td>1d</td><td>7,8</td><td>Biểu thức có số thập phân và dấu ngoặc</td></tr>
-          <tr><td>2a</td><td><span class="frac"><span>3</span><span>10</span></span></td><td>Chuyển vế để tìm x</td></tr>
-          <tr><td>2b</td><td><span class="frac"><span>11</span><span>8</span></span></td><td>Chuyển vế với phép trừ</td></tr>
-          <tr><td>2c</td><td>4,5</td><td>Tìm x với số thập phân</td></tr>
-          <tr><td>2d</td><td>-<span class="frac"><span>5</span><span>6</span></span></td><td>Chuyển vế với phân số âm</td></tr>
-          <tr><td>3</td><td>0,135 kg</td><td>Bài toán thực tế</td></tr>
-        </tbody>
-      </table>
+      </div>
     </section>
 
     <section id="phan-c" class="lesson-page" aria-labelledby="title-c">
@@ -2088,6 +2115,17 @@
         </div>
       </div>
     </section>
+    <section class="chapter-navigation no-print" aria-labelledby="chapter-navigation-title">
+      <h2 id="chapter-navigation-title" class="chapter-navigation-title">Điều hướng Chương 1</h2>
+      <div class="chapter-link-grid">
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai1/Toan7-Chuong1-Bai1.html">Bài 1</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai2/Toan7-Chuong1-Bai2.html">Bài 2</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai3/Toan7-Chuong1-Bai3.html">Bài 3</a>
+        <a class="chapter-link active" href="../Toan%207-Chuong1-Bai4/Toan7-Chuong1-Bai4.html" aria-current="page">Bài 4</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Ontap/Toan7-Chuong1-OnTap.html">Ôn tập</a>
+      </div>
+    </section>
+
 
     <p class="footer-note no-print">Phiếu học tập mở trực tiếp bằng trình duyệt, không cần kết nối Internet.</p>
   </main>
@@ -2147,7 +2185,7 @@
       button.addEventListener('click', () => showPage(button.dataset.target));
     });
 
-    document.querySelector('[data-print]').addEventListener('click', () => window.print());
+    document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
 
     const testDurationSeconds = 30 * 60;
     const timerBox = document.getElementById('test-timer');
@@ -2294,6 +2332,38 @@
 
     addImageAnswerControls();
 
+    function bindPracticeSaveButtons() {
+      document.querySelectorAll('[data-practice-save]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.subquestion, .question, .practice');
+          const textarea = card?.querySelector('textarea');
+          let feedback = card?.querySelector('.practice-save-feedback');
+          if (!feedback && card) {
+            feedback = document.createElement('div');
+            feedback.className = 'practice-save-feedback feedback';
+            feedback.setAttribute('aria-live', 'polite');
+            card.appendChild(feedback);
+          }
+          if (!feedback) return;
+
+          const hasTypedWork = Boolean(textarea?.value.trim());
+          const hasImageWork = typeof hasUploadedImageFor === 'function' && hasUploadedImageFor(textarea);
+          feedback.className = 'practice-save-feedback feedback show';
+          if (hasTypedWork || hasImageWork) {
+            feedback.classList.add('correct');
+            feedback.textContent = 'Đã ghi nhận bài làm. Em tiếp tục làm các câu còn lại.';
+            return;
+          }
+
+          feedback.classList.add('incorrect');
+          feedback.textContent = 'Em hãy nhập bài làm hoặc tải ảnh bài làm trước khi ghi nhận.';
+          textarea?.focus();
+        });
+      });
+    }
+
+    bindPracticeSaveButtons();
+
     document.querySelectorAll('[data-check-quick]').forEach((button) => {
       button.addEventListener('click', () => {
         const card = button.closest('.quick-check');
@@ -2313,45 +2383,6 @@
           feedback.classList.add('incorrect');
           feedback.textContent = `Chưa đúng. Đáp án đúng là ${correctAnswer}. Em hãy xem lại quy tắc trong phần kiến thức.`;
         }
-      });
-    });
-
-    const practiceAnswers = {
-      b1a: '<div class="math-line">2,4 - 3<sup>2</sup> + 6 : 2 = 2,4 - 9 + 3 = -6,6 + 3 = -3,6</div>',
-      b1b: '<div class="math-line"><span class="frac"><span>5</span><span>6</span></span> - (<span class="frac"><span>1</span><span>3</span></span> + <span class="frac"><span>1</span><span>2</span></span>) : 2 = <span class="frac"><span>5</span><span>6</span></span> - <span class="frac"><span>5</span><span>12</span></span> = <span class="frac"><span>5</span><span>12</span></span></div>',
-      b1c: '<div class="math-line">(<span class="frac"><span>2</span><span>3</span></span> + <span class="frac"><span>1</span><span>6</span></span>) : <span class="frac"><span>5</span><span>4</span></span> = <span class="frac"><span>5</span><span>6</span></span> · <span class="frac"><span>4</span><span>5</span></span> = <span class="frac"><span>2</span><span>3</span></span></div>',
-      b1d: '<div class="math-line">1,5 · 4 + (7,2 - 3,6) : 2 = 6 + 3,6 : 2 = 6 + 1,8 = 7,8</div>',
-      b2a: '<div class="math-line">x = <span class="frac"><span>7</span><span>10</span></span> - <span class="frac"><span>2</span><span>5</span></span> = <span class="frac"><span>3</span><span>10</span></span></div>',
-      b2b: '<div class="math-line">x = <span class="frac"><span>5</span><span>8</span></span> + <span class="frac"><span>3</span><span>4</span></span> = <span class="frac"><span>11</span><span>8</span></span></div>',
-      b2c: '<div class="math-line">x = 10,75 - 6,25 = 4,5</div>',
-      b2d: '<div class="math-line">x = -<span class="frac"><span>1</span><span>6</span></span> - <span class="frac"><span>2</span><span>3</span></span> = -<span class="frac"><span>5</span><span>6</span></span></div>',
-      b3: '<div class="math-line">0,5 + 0,125 + 0,04 = 0,665 kg</div><div class="math-line">0,8 - 0,665 = 0,135 kg</div><div class="math-line">Vậy khối lượng thịt trong mỗi cái bánh là 0,135 kg.</div>'
-    };
-
-    document.querySelectorAll('[data-check-practice]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const card = button.closest('.subquestion, .question');
-        const textarea = card.querySelector('textarea');
-        let feedback = card.querySelector('.practice-feedback');
-
-        if (!feedback) {
-          feedback = document.createElement('div');
-          feedback.className = 'practice-feedback';
-          feedback.setAttribute('aria-live', 'polite');
-          card.appendChild(feedback);
-        }
-
-        feedback.className = 'practice-feedback show';
-        const hasImageAnswer = Boolean(card.querySelector('input[type="file"]')?.files?.length);
-        if (!textarea.value.trim() && !hasImageAnswer) {
-          feedback.classList.add('incorrect');
-          feedback.innerHTML = '<strong>Em hãy nhập bài làm hoặc tải ảnh bài làm trước khi kiểm tra.</strong>';
-          textarea.focus();
-          return;
-        }
-
-        feedback.classList.add('correct');
-        feedback.innerHTML = `<strong>Đối chiếu bài làm của em với đáp án gợi ý:</strong><div class="practice-answer">${practiceAnswers[button.dataset.checkPractice]}</div>`;
       });
     });
 

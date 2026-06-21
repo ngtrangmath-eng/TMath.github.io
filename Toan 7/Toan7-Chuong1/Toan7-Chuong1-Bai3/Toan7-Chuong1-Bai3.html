@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Toán 7 - Chương 1 - Bài 3: Lũy thừa với số mũ tự nhiên của một số hữu tỉ</title>
   <link rel="stylesheet" href="../../../assets/lesson-shell.css">
+  <script src="../../../assets/mathjax-loader.js" defer></script>
+  <script src="../../../assets/answer-placeholders.js" defer></script>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -1339,6 +1341,89 @@
         display: none;
       }
     }
+
+    .lesson-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .tab-button {
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(23, 32, 51, 0.06);
+      color: var(--primary-strong);
+      cursor: pointer;
+      font-weight: 800;
+      min-height: 48px;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .tab-button:hover,
+    .tab-button.active,
+    .tab-button[aria-selected="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .chapter-navigation {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 22px 0;
+      padding: 20px;
+    }
+
+    .chapter-navigation-title {
+      color: var(--primary-strong);
+      font-size: 1.2rem;
+      margin: 0 0 14px;
+    }
+
+    .chapter-link-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .chapter-link {
+      align-items: center;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--primary-strong);
+      display: flex;
+      font-weight: 900;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 12px;
+      text-decoration: none;
+    }
+
+    .chapter-link:hover,
+    .chapter-link.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+    @media (max-width: 760px) {
+      .lesson-nav,
+      .chapter-link-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media print {
+      .lesson-nav,
+      .chapter-navigation {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1399,16 +1484,12 @@
         <input id="student-date" type="text">
       </div>
     </div>
-
-    <div class="toolbar no-print" aria-label="Điều hướng phiếu học tập">
-      <nav class="nav" role="tablist" aria-label="Các phần của phiếu học tập">
-        <button class="btn active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
-        <button class="btn" type="button" data-target="phan-b">B. Luyện tập</button>
-        <button class="btn" type="button" data-target="phan-c">C. Kiểm tra</button>
-        <button class="btn" type="button" data-target="phan-ket-qua">Kết quả</button>
-        <button class="btn" type="button" data-print>In phiếu</button>
-      </nav>
-    </div>
+    <nav id="lesson-nav" class="lesson-nav no-print" aria-label="Điều hướng phiếu học tập">
+      <button class="tab-button active" type="button" data-target="phan-a" aria-selected="true">A. Kiến thức</button>
+      <button class="tab-button" type="button" data-target="phan-b" aria-selected="false">B. Luyện tập</button>
+      <button class="tab-button" type="button" data-target="phan-c" aria-selected="false">C. Kiểm tra</button>
+      <button class="tab-button" type="button" data-target="phan-ket-qua" aria-selected="false">Kết quả</button>
+    </nav>
 
     <section id="phan-a" class="lesson-page active-page" aria-labelledby="title-a">
       <div class="section-head">
@@ -1653,7 +1734,7 @@
             <div class="math-line">(-3)<sup>3</sup></div>
             <textarea aria-label="Bài làm câu 1a" placeholder="Nhập bài làm câu 1a..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1a">Kiểm tra câu a</button>
+              <button class="btn primary" type="button" data-practice-save="b1a">Ghi nhận câu a</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1661,7 +1742,7 @@
             <div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span></div>
             <textarea aria-label="Bài làm câu 1b" placeholder="Nhập bài làm câu 1b..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1b">Kiểm tra câu b</button>
+              <button class="btn primary" type="button" data-practice-save="b1b">Ghi nhận câu b</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1669,7 +1750,7 @@
             <div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>4</sup></span> · <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>3</sup></span></div>
             <textarea aria-label="Bài làm câu 1c" placeholder="Nhập bài làm câu 1c..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1c">Kiểm tra câu c</button>
+              <button class="btn primary" type="button" data-practice-save="b1c">Ghi nhận câu c</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1677,7 +1758,7 @@
             <div class="math-line">(-4)<sup>6</sup> : (-4)<sup>2</sup></div>
             <textarea aria-label="Bài làm câu 1d" placeholder="Nhập bài làm câu 1d..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b1d">Kiểm tra câu d</button>
+              <button class="btn primary" type="button" data-practice-save="b1d">Ghi nhận câu d</button>
             </div>
           </div>
         </div>
@@ -1687,18 +1768,7 @@
         <div id="feedback-b1" class="feedback">
           Em cần xem lại cơ số và số mũ. Nếu cơ số là số âm, cần đặt trong dấu ngoặc. Khi nhân hoặc chia hai lũy thừa cùng cơ số, không nhân hoặc chia số mũ.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Với lũy thừa cùng cơ số: nhân thì cộng số mũ, chia thì trừ số mũ. Khi tính giá trị lũy thừa, cần chú ý dấu của cơ số.</p>
-            <div class="math-stack">
-              <div class="math-line">a) (-3)<sup>3</sup> = (-3) · (-3) · (-3) = -27</div>
-              <div class="math-line">b) <span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span> = <span class="frac"><span>2<sup>3</sup></span><span>5<sup>3</sup></span></span> = <span class="frac"><span>8</span><span>125</span></span></div>
-              <div class="math-line">c) <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>4</sup></span> · <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>3</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>4+3</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>7</sup></span></div>
-              <div class="math-line">d) (-4)<sup>6</sup> : (-4)<sup>2</sup> = (-4)<sup>6-2</sup> = (-4)<sup>4</sup></div>
-            </div>
-          </div>
-        </details>
+
       </div>
 
       <div class="question">
@@ -1713,7 +1783,7 @@
             <div class="math-line">x = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span><sup>2</sup></span></div>
             <textarea aria-label="Bài làm câu 2a" placeholder="Nhập bài làm câu 2a..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2a">Kiểm tra câu a</button>
+              <button class="btn primary" type="button" data-practice-save="b2a">Ghi nhận câu a</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1721,7 +1791,7 @@
             <div class="math-line">x<sup>2</sup> = <span class="frac"><span>9</span><span>16</span></span>, &nbsp; x &gt; 0</div>
             <textarea aria-label="Bài làm câu 2b" placeholder="Nhập bài làm câu 2b..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2b">Kiểm tra câu b</button>
+              <button class="btn primary" type="button" data-practice-save="b2b">Ghi nhận câu b</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1729,7 +1799,7 @@
             <div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>x</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span></div>
             <textarea aria-label="Bài làm câu 2c" placeholder="Nhập bài làm câu 2c..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2c">Kiểm tra câu c</button>
+              <button class="btn primary" type="button" data-practice-save="b2c">Ghi nhận câu c</button>
             </div>
           </div>
           <div class="subquestion">
@@ -1737,7 +1807,7 @@
             <div class="math-line">2<sup>x</sup> · 2<sup>3</sup> = 2<sup>7</sup></div>
             <textarea aria-label="Bài làm câu 2d" placeholder="Nhập bài làm câu 2d..."></textarea>
             <div class="question-actions">
-              <button class="btn primary" type="button" data-check-practice="b2d">Kiểm tra câu d</button>
+              <button class="btn primary" type="button" data-practice-save="b2d">Ghi nhận câu d</button>
             </div>
           </div>
         </div>
@@ -1747,18 +1817,7 @@
         <div id="feedback-b2" class="feedback">
           Em cần đưa hai vế về cùng cơ số nếu có thể. Khi đã cùng cơ số, hãy so sánh số mũ. Với dạng x<sup>2</sup> = <span class="frac"><span>9</span><span>16</span></span>, cần tìm số hữu tỉ dương có bình phương bằng <span class="frac"><span>9</span><span>16</span></span>.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Nếu hai lũy thừa có cùng cơ số khác 0 và khác 1, thì hai số mũ bằng nhau. Với tích hai lũy thừa cùng cơ số, giữ nguyên cơ số và cộng số mũ.</p>
-            <div class="math-stack">
-              <div class="math-line">a) x = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span><sup>2</sup></span> = <span class="frac"><span>2<sup>2</sup></span><span>3<sup>2</sup></span></span> = <span class="frac"><span>4</span><span>9</span></span></div>
-              <div class="math-line">b) x = <span class="frac"><span>3</span><span>4</span></span>, vì <span class="frac-power"><span class="paren">(</span><span class="frac"><span>3</span><span>4</span></span><span class="paren">)</span><sup>2</sup></span> = <span class="frac"><span>9</span><span>16</span></span></div>
-              <div class="math-line">c) <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>x</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span>, suy ra x = 3</div>
-              <div class="math-line">d) 2<sup>x</sup> · 2<sup>3</sup> = 2<sup>7</sup>, 2<sup>x+3</sup> = 2<sup>7</sup>, x + 3 = 7, x = 4</div>
-            </div>
-          </div>
-        </details>
+
       </div>
 
       <div class="question">
@@ -1772,47 +1831,14 @@
         <p>trong đó <em>a</em> là độ dài cạnh.</p>
         <textarea aria-label="Bài làm câu 3" placeholder="Nhập bài làm câu 3..."></textarea>
         <div class="question-actions">
-          <button class="btn primary" type="button" data-check-practice="b3">Kiểm tra câu 3</button>
+          <button class="btn primary" type="button" data-practice-save="b3">Ghi nhận câu 3</button>
           <button class="btn primary" type="button" data-show-feedback="feedback-b3">Xem phản hồi</button>
         </div>
         <div id="feedback-b3" class="feedback">
           Em cần thay đúng độ dài cạnh vào công thức V = a<sup>3</sup>, sau đó tính lũy thừa của phân số.
         </div>
-        <details>
-          <summary>Gợi ý và đáp án đúng</summary>
-          <div>
-            <p><strong>Gợi ý:</strong> Thể tích hình lập phương bằng cạnh nhân với chính nó ba lần, tức là a<sup>3</sup>.</p>
-            <div class="math-stack">
-              <div class="math-line">V = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>3</span><span>2</span></span><span class="paren">)</span><sup>3</sup></span></div>
-              <div class="math-line">V = <span class="frac"><span>3<sup>3</sup></span><span>2<sup>3</sup></span></span></div>
-              <div class="math-line">V = <span class="frac"><span>27</span><span>8</span></span></div>
-              <div class="math-line">Vậy thể tích của bể nước là <span class="frac"><span>27</span><span>8</span></span> m<sup>3</sup>.</div>
-            </div>
-          </div>
-        </details>
-      </div>
 
-      <h3>Đáp án gợi ý</h3>
-      <table class="answer-table">
-        <thead>
-          <tr>
-            <th style="width: 12%">Câu</th>
-            <th>Đáp án</th>
-            <th style="width: 34%">Ghi chú</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1a</td><td>-27</td><td>Tính lũy thừa có cơ số âm</td></tr>
-          <tr><td>1b</td><td><span class="frac"><span>8</span><span>125</span></span></td><td>Lũy thừa của phân số</td></tr>
-          <tr><td>1c</td><td><span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>7</sup></span></td><td>Nhân hai lũy thừa cùng cơ số</td></tr>
-          <tr><td>1d</td><td>(-4)<sup>4</sup></td><td>Chia hai lũy thừa cùng cơ số</td></tr>
-          <tr><td>2a</td><td><span class="frac"><span>4</span><span>9</span></span></td><td>Tính giá trị lũy thừa</td></tr>
-          <tr><td>2b</td><td><span class="frac"><span>3</span><span>4</span></span></td><td>Tìm cơ số dương</td></tr>
-          <tr><td>2c</td><td>3</td><td>Hai lũy thừa cùng cơ số</td></tr>
-          <tr><td>2d</td><td>4</td><td>Cộng số mũ khi nhân cùng cơ số</td></tr>
-          <tr><td>3</td><td><span class="frac"><span>27</span><span>8</span></span> m<sup>3</sup></td><td>Vận dụng công thức thể tích hình lập phương</td></tr>
-        </tbody>
-      </table>
+      </div>
     </section>
 
     <section id="phan-c" class="lesson-page" aria-labelledby="title-c">
@@ -2151,6 +2177,17 @@
         </div>
       </div>
     </section>
+    <section class="chapter-navigation no-print" aria-labelledby="chapter-navigation-title">
+      <h2 id="chapter-navigation-title" class="chapter-navigation-title">Điều hướng Chương 1</h2>
+      <div class="chapter-link-grid">
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai1/Toan7-Chuong1-Bai1.html">Bài 1</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Bai2/Toan7-Chuong1-Bai2.html">Bài 2</a>
+        <a class="chapter-link active" href="../Toan7-Chuong1-Bai3/Toan7-Chuong1-Bai3.html" aria-current="page">Bài 3</a>
+        <a class="chapter-link" href="../Toan%207-Chuong1-Bai4/Toan7-Chuong1-Bai4.html">Bài 4</a>
+        <a class="chapter-link" href="../Toan7-Chuong1-Ontap/Toan7-Chuong1-OnTap.html">Ôn tập</a>
+      </div>
+    </section>
+
 
     <p class="footer-note no-print">Phiếu học tập mở trực tiếp bằng trình duyệt, không cần kết nối Internet.</p>
   </main>
@@ -2210,7 +2247,7 @@
       button.addEventListener('click', () => showPage(button.dataset.target));
     });
 
-    document.querySelector('[data-print]').addEventListener('click', () => window.print());
+    document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
 
     const TEST_DURATION_SECONDS = 30 * 60;
     const timerPanel = document.getElementById('test-timer-panel');
@@ -2342,6 +2379,38 @@
 
     addImageAnswerControls();
 
+    function bindPracticeSaveButtons() {
+      document.querySelectorAll('[data-practice-save]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.subquestion, .question, .practice');
+          const textarea = card?.querySelector('textarea');
+          let feedback = card?.querySelector('.practice-save-feedback');
+          if (!feedback && card) {
+            feedback = document.createElement('div');
+            feedback.className = 'practice-save-feedback feedback';
+            feedback.setAttribute('aria-live', 'polite');
+            card.appendChild(feedback);
+          }
+          if (!feedback) return;
+
+          const hasTypedWork = Boolean(textarea?.value.trim());
+          const hasImageWork = typeof hasUploadedImageFor === 'function' && hasUploadedImageFor(textarea);
+          feedback.className = 'practice-save-feedback feedback show';
+          if (hasTypedWork || hasImageWork) {
+            feedback.classList.add('correct');
+            feedback.textContent = 'Đã ghi nhận bài làm. Em tiếp tục làm các câu còn lại.';
+            return;
+          }
+
+          feedback.classList.add('incorrect');
+          feedback.textContent = 'Em hãy nhập bài làm hoặc tải ảnh bài làm trước khi ghi nhận.';
+          textarea?.focus();
+        });
+      });
+    }
+
+    bindPracticeSaveButtons();
+
     startTimerButton.addEventListener('click', () => {
       if (timerIntervalId || timerRemainingSeconds === 0 || testSubmitted) {
         return;
@@ -2398,45 +2467,6 @@
           feedback.classList.add('incorrect');
           feedback.textContent = `Chưa đúng. Đáp án đúng là ${correctAnswer}. Em hãy xem lại quy tắc trong phần kiến thức.`;
         }
-      });
-    });
-
-    const practiceAnswers = {
-      b1a: '<div class="math-line">(-3)<sup>3</sup> = (-3) · (-3) · (-3) = -27</div>',
-      b1b: '<div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span> = <span class="frac"><span>2<sup>3</sup></span><span>5<sup>3</sup></span></span> = <span class="frac"><span>8</span><span>125</span></span></div>',
-      b1c: '<div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>4</sup></span> · <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>3</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>4+3</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>2</span></span><span class="paren">)</span><sup>7</sup></span></div>',
-      b1d: '<div class="math-line">(-4)<sup>6</sup> : (-4)<sup>2</sup> = (-4)<sup>6-2</sup> = (-4)<sup>4</sup></div>',
-      b2a: '<div class="math-line">x = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>2</span><span>3</span></span><span class="paren">)</span><sup>2</sup></span> = <span class="frac"><span>2<sup>2</sup></span><span>3<sup>2</sup></span></span> = <span class="frac"><span>4</span><span>9</span></span></div>',
-      b2b: '<div class="math-line">x = <span class="frac"><span>3</span><span>4</span></span>, vì <span class="frac-power"><span class="paren">(</span><span class="frac"><span>3</span><span>4</span></span><span class="paren">)</span><sup>2</sup></span> = <span class="frac"><span>9</span><span>16</span></span></div>',
-      b2c: '<div class="math-line"><span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>x</sup></span> = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>1</span><span>5</span></span><span class="paren">)</span><sup>3</sup></span>, suy ra x = 3</div>',
-      b2d: '<div class="math-line">2<sup>x</sup> · 2<sup>3</sup> = 2<sup>7</sup>, 2<sup>x+3</sup> = 2<sup>7</sup>, x + 3 = 7, x = 4</div>',
-      b3: '<div class="math-line">V = <span class="frac-power"><span class="paren">(</span><span class="frac"><span>3</span><span>2</span></span><span class="paren">)</span><sup>3</sup></span> = <span class="frac"><span>27</span><span>8</span></span></div><div class="math-line">Vậy thể tích của bể nước là <span class="frac"><span>27</span><span>8</span></span> m<sup>3</sup>.</div>'
-    };
-
-    document.querySelectorAll('[data-check-practice]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const card = button.closest('.subquestion, .question');
-        const textarea = card.querySelector('textarea');
-        let feedback = card.querySelector('.practice-feedback');
-
-        if (!feedback) {
-          feedback = document.createElement('div');
-          feedback.className = 'practice-feedback';
-          feedback.setAttribute('aria-live', 'polite');
-          card.appendChild(feedback);
-        }
-
-        feedback.className = 'practice-feedback show';
-        const hasImageAnswer = Boolean(card.querySelector('input[type="file"]')?.files?.length);
-        if (!textarea.value.trim() && !hasImageAnswer) {
-          feedback.classList.add('incorrect');
-          feedback.innerHTML = '<strong>Em hãy nhập bài làm hoặc tải ảnh bài làm trước khi kiểm tra.</strong>';
-          textarea.focus();
-          return;
-        }
-
-        feedback.classList.add('correct');
-        feedback.innerHTML = `<strong>Đối chiếu bài làm của em với đáp án gợi ý:</strong><div class="practice-answer">${practiceAnswers[button.dataset.checkPractice]}</div>`;
       });
     });
 
