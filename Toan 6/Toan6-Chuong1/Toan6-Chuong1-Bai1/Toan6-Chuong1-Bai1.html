@@ -211,15 +211,6 @@
       resize: vertical;
     }
 
-    textarea.has-answer-placeholder::placeholder {
-      color: #61706a;
-      opacity: 0.78;
-    }
-
-    textarea.has-answer-placeholder:focus::placeholder {
-      opacity: 0.55;
-    }
-
     .lesson-nav {
       display: flex;
       gap: 8px;
@@ -854,7 +845,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="a-check-2" data-save type="text" placeholder="Viết theo mẫu: C = {...; ...; ...}" />
+            <input id="a-check-2" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
           <button class="primary-action" type="button" data-check-set="a-check-2" data-name="C" data-items="H,O,C" data-feedback="a-feedback-2" data-points="0" data-guide-only="true" data-partial-guide="Em đã xác định đúng các chữ cái. Hãy kiểm tra lại tên tập hợp, dấu = và dấu ngoặc nhọn." data-guide="Gợi ý: đọc từng chữ cái trong từ HOC, viết mỗi chữ một lần và đặt trong dấu ngoặc nhọn sau C =.">Kiểm tra</button>
         </div>
@@ -950,7 +941,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="b-set-1" data-save type="text" placeholder="A = {0; 1; 2; 3; 4; 5}" />
+            <input id="b-set-1" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
           <button class="primary-action" type="button" data-check-set="b-set-1" data-name="A" data-items="0,1,2,3,4,5" data-feedback="b-set-feedback-1" data-points="0">Kiểm tra</button>
         </div>
@@ -965,7 +956,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="b-set-2" data-save type="text" placeholder="B = {T; O; A; N}" />
+            <input id="b-set-2" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
           <button class="primary-action" type="button" data-check-set="b-set-2" data-name="B" data-items="T,O,A,N" data-feedback="b-set-feedback-2" data-points="0">Kiểm tra</button>
         </div>
@@ -980,7 +971,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="b-set-3" data-save type="text" placeholder="C = {0; 2; 4; 6; 8}" />
+            <input id="b-set-3" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
           <button class="primary-action" type="button" data-check-set="b-set-3" data-name="C" data-items="0,2,4,6,8" data-feedback="b-set-feedback-3" data-points="0">Kiểm tra</button>
         </div>
@@ -1019,7 +1010,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="b-challenge" data-save type="text" placeholder="T = {An; Bình; Chi}" />
+            <input id="b-challenge" data-save type="text" placeholder="Nhập đáp án" />
           </label>
           <button class="primary-action" type="button" data-check-set="b-challenge" data-name="T" data-items="An,Bình,Chi" data-feedback="b-challenge-feedback" data-points="0">Kiểm tra</button>
         </div>
@@ -1310,20 +1301,6 @@
       box.textContent = message;
     }
 
-    function formatExpected(name, items) {
-      return `${name} = {${items.join("; ")}}`;
-    }
-
-    function setWrittenAnswerPlaceholders() {
-      document.querySelectorAll("[data-written]").forEach((card) => {
-        const textarea = document.getElementById(card.dataset.written);
-        if (!textarea || textarea.getAttribute("placeholder") !== "Bài làm") return;
-        const expectedItems = card.dataset.items.split(",");
-        textarea.placeholder = formatExpected(card.dataset.name, expectedItems);
-        textarea.classList.add("has-answer-placeholder");
-      });
-    }
-
     function bindTabs() {
       const buttons = document.querySelectorAll(".tab-button");
       const panels = document.querySelectorAll(".part-panel, .result-card");
@@ -1595,7 +1572,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      setWrittenAnswerPlaceholders();
       bindStorage();
       bindTabs();
       bindPracticeChecks();

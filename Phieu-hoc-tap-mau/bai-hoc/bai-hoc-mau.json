@@ -94,7 +94,7 @@
         "id": "a-check-2",
         "feedbackId": "a-feedback-2",
         "title": "Câu 2. Viết tập hợp C gồm các chữ cái trong từ “HOC”",
-        "placeholder": "Viết theo mẫu: C = {...; ...; ...}",
+        "placeholder": "Nhập tập hợp",
         "expectedName": "C",
         "expectedItems": [
           "H",
@@ -177,7 +177,7 @@
         "id": "b-set-1",
         "feedbackId": "b-set-feedback-1",
         "title": "1. Viết tập hợp A gồm các số tự nhiên nhỏ hơn 6.",
-        "placeholder": "A = {0; 1; 2; 3; 4; 5}",
+        "placeholder": "Nhập tập hợp",
         "expectedName": "A",
         "expectedItems": [
           "0",
@@ -194,7 +194,7 @@
         "id": "b-set-2",
         "feedbackId": "b-set-feedback-2",
         "title": "2. Viết tập hợp B gồm các chữ cái trong từ “TOAN”.",
-        "placeholder": "B = {T; O; A; N}",
+        "placeholder": "Nhập tập hợp",
         "expectedName": "B",
         "expectedItems": [
           "T",
@@ -209,7 +209,7 @@
         "id": "b-set-3",
         "feedbackId": "b-set-feedback-3",
         "title": "3. Viết tập hợp C gồm các số chẵn nhỏ hơn 10.",
-        "placeholder": "C = {0; 2; 4; 6; 8}",
+        "placeholder": "Nhập tập hợp",
         "expectedName": "C",
         "expectedItems": [
           "0",
@@ -252,7 +252,7 @@
       "id": "b-challenge",
       "feedbackId": "b-challenge-feedback",
       "title": "Vận dụng. Lớp em có các bạn tham gia câu lạc bộ Toán: An, Bình, Chi. Hãy viết tập hợp T gồm tên các bạn đó.",
-      "placeholder": "T = {An; Bình; Chi}",
+      "placeholder": "Nhập đáp án",
       "expectedName": "T",
       "expectedItems": [
         "An",

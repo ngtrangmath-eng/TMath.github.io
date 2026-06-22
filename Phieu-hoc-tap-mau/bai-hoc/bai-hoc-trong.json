@@ -128,7 +128,7 @@
         "id": "b-set-1",
         "feedbackId": "b-set-feedback-1",
         "title": "1. TODO - Câu luyện tập dạng viết tập hợp.",
-        "placeholder": "A = {...}",
+        "placeholder": "Nhập tập hợp",
         "expectedName": "A",
         "expectedItems": [
           "TODO"

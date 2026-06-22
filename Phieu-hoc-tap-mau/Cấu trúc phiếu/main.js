@@ -453,7 +453,7 @@ function renderWritten(question, index) {
   const gradeType = question.type || (arrayOf(question.expectedKeywords || question.keywords).length ? "keywords" : "set");
   const expectedItems = question.expectedItems || question.items || [];
   const expectedKeywords = question.expectedKeywords || question.keywords || [];
-  const placeholder = question.placeholder || expectedAnswerPlainText(question);
+  const placeholder = question.placeholder || "Bài làm";
   return `
       <article class="question-card" data-written="${attr(id)}" data-grade-type="${attr(gradeType)}" data-name="${attr(question.expectedName || question.name || "")}" data-items="${attr(csv(expectedItems))}" data-keywords="${jsonAttr(expectedKeywords)}" data-min-keywords="${attr(question.minKeywords || "")}" data-expected-text="${attr(expectedAnswerPlainText(question))}" data-points="${attr(points)}">
         <div class="question-head">

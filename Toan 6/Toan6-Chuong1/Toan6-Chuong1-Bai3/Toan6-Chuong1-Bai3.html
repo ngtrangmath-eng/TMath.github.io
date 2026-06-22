@@ -1060,7 +1060,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Nhập tập hợp M</span>
-            <input id="practice-challenge" data-save type="text" placeholder="Ví dụ: M = { ... }" />
+            <input id="practice-challenge" data-save type="text" placeholder="Nhập đáp án" />
           </label>
           <button class="primary-action" type="button" data-check-set="practice-challenge" data-answer="4,5,6,7" data-feedback="challenge-feedback" data-correct="Đúng. M = {4; 5; 6; 7}." data-wrong="Em hãy chọn các số tự nhiên đứng sau 3 nhưng vẫn đứng trước 8 trên tia số.">Kiểm tra</button>
         </div>
@@ -1146,7 +1146,7 @@
         <textarea id="test-writing-2" data-save placeholder="Bài làm"></textarea>
         <label>
           <span class="field-label">Nhập tập hợp A để chấm điểm</span>
-          <input id="test-set-a" data-save type="text" placeholder="Ví dụ: A = { ... }" />
+          <input id="test-set-a" data-save type="text" placeholder="Nhập đáp án" />
         </label>
       </article>
 
@@ -1158,7 +1158,7 @@
         <textarea id="test-writing-3" data-save placeholder="Bài làm"></textarea>
         <label>
           <span class="field-label">Nhập tập hợp M để chấm điểm</span>
-          <input id="test-set-m" data-save type="text" placeholder="Ví dụ: M = { ... }" />
+          <input id="test-set-m" data-save type="text" placeholder="Nhập đáp án" />
         </label>
       </article>
 
@@ -1431,7 +1431,7 @@
           <div class="inline-answer">
             <label>
               <span class="field-label">Nhập tập hợp</span>
-              <input id="${item.id}" data-save type="text" placeholder="Ví dụ: {0; 1; ...}" />
+              <input id="${item.id}" data-save type="text" placeholder="Nhập đáp án" />
             </label>
             <button class="primary-action" type="button" data-check-set="${item.id}" data-answer="${escapeHtml(item.answer)}" data-feedback="${item.id}-feedback" data-correct="${escapeHtml(`Đúng. ${item.explanation}.`)}" data-wrong="Em hãy liệt kê các số tự nhiên thỏa mãn điều kiện trong đề, rồi viết trong dấu ngoặc nhọn.">Kiểm tra</button>
           </div>
