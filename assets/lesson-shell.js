@@ -82,7 +82,6 @@
     }
   ];
 
-  const legacyPrefix = "phieuhoctap.chuong1";
   const accountsKey = "phieuhoctap.accounts";
   const currentAccountKey = "phieuhoctap.auth.current";
   const openAuthRequestKey = "phieuhoctap.openAuth";
@@ -110,16 +109,19 @@
 
   function getProgressPrefix() {
     const accountKey = localStorage.getItem(currentAccountKey) || "";
-    return accountKey ? `phieuhoctap.user.${accountKey}.chuong1` : legacyPrefix;
+    return accountKey ? `phieuhoctap.user.${accountKey}.chuong1` : "";
   }
 
   function progressKey(name) {
-    return `${getProgressPrefix()}.${name}`;
+    const prefix = getProgressPrefix();
+    return prefix ? `${prefix}.${name}` : "";
   }
 
   function readVisited() {
+    const key = progressKey("visited");
+    if (!key) return new Set();
     try {
-      return new Set(JSON.parse(localStorage.getItem(progressKey("visited")) || "[]"));
+      return new Set(JSON.parse(localStorage.getItem(key) || "[]"));
     } catch (_error) {
       return new Set();
     }
@@ -134,6 +136,7 @@
 
   function rememberStudyDay() {
     const key = progressKey("studyDays");
+    if (!key) return;
     let days = [];
     try {
       days = JSON.parse(localStorage.getItem(key) || "[]");
@@ -149,10 +152,14 @@
 
   function remember(page) {
     if (!page || !page.trackProgress) return;
+    if (!getCurrentAccount()) return;
+    const visitedKey = progressKey("visited");
+    const lastLessonKey = progressKey("lastLesson");
+    if (!visitedKey || !lastLessonKey) return;
     const visited = readVisited();
     visited.add(page.id);
-    localStorage.setItem(progressKey("visited"), JSON.stringify(Array.from(visited)));
-    localStorage.setItem(progressKey("lastLesson"), page.id);
+    localStorage.setItem(visitedKey, JSON.stringify(Array.from(visited)));
+    localStorage.setItem(lastLessonKey, page.id);
     rememberStudyDay();
   }
 

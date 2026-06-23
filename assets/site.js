@@ -1,5 +1,4 @@
 (function () {
-  const legacyPrefix = "phieuhoctap.chuong1";
   const accountsKey = "phieuhoctap.accounts";
   const currentAccountKey = "phieuhoctap.auth.current";
   const openAuthRequestKey = "phieuhoctap.openAuth";
@@ -85,30 +84,44 @@
 
   function getProgressPrefix() {
     const accountKey = getCurrentAccountKey();
-    return accountKey ? `phieuhoctap.user.${accountKey}.chuong1` : legacyPrefix;
+    return accountKey ? `phieuhoctap.user.${accountKey}.chuong1` : "";
   }
 
   function progressKey(name) {
-    return `${getProgressPrefix()}.${name}`;
+    const prefix = getProgressPrefix();
+    return prefix ? `${prefix}.${name}` : "";
   }
 
-  function copyLegacyProgressToAccount(accountKey) {
-    if (!accountKey) return;
-    const targetPrefix = `phieuhoctap.user.${accountKey}.chuong1`;
-    ["visited", "lastLesson", "studyDays"].forEach((name) => {
-      const sourceKey = `${legacyPrefix}.${name}`;
-      const targetKey = `${targetPrefix}.${name}`;
-      if (localStorage.getItem(targetKey) || !localStorage.getItem(sourceKey)) return;
-      localStorage.setItem(targetKey, localStorage.getItem(sourceKey));
-    });
+  function readProgressJson(name, fallback) {
+    const key = progressKey(name);
+    return key ? readJson(key, fallback) : fallback;
+  }
+
+  function writeProgressJson(name, value) {
+    const key = progressKey(name);
+    if (!key) return false;
+    writeJson(key, value);
+    return true;
+  }
+
+  function readProgressValue(name) {
+    const key = progressKey(name);
+    return key ? localStorage.getItem(key) : null;
+  }
+
+  function writeProgressValue(name, value) {
+    const key = progressKey(name);
+    if (!key) return false;
+    localStorage.setItem(key, value);
+    return true;
   }
 
   function readVisited() {
-    return new Set(readJson(progressKey("visited"), []));
+    return new Set(readProgressJson("visited", []));
   }
 
   function writeVisited(visited) {
-    writeJson(progressKey("visited"), Array.from(visited));
+    return writeProgressJson("visited", Array.from(visited));
   }
 
   function readAccounts() {
@@ -241,12 +254,13 @@
   }
 
   function applyProgress() {
-    const visited = readVisited();
+    const account = getCurrentAccount();
+    const visited = account ? readVisited() : new Set();
     const lessonCards = cards.filter((card) => card.dataset.trackProgress === "true");
     const viewed = lessonCards.filter((card) => visited.has(card.dataset.lessonId));
     const total = lessonCards.length;
     const percent = total ? Math.round((viewed.length / total) * 100) : 0;
-    const streak = calculateStreak(readJson(progressKey("studyDays"), []));
+    const streak = account ? calculateStreak(readProgressJson("studyDays", [])) : 0;
 
     cards.forEach((card) => {
       card.classList.toggle("is-visited", visited.has(card.dataset.lessonId));
@@ -265,7 +279,9 @@
     }
 
     if (progressStatus) {
-      if (viewed.length === 0) {
+      if (!account) {
+        progressStatus.textContent = "Đăng nhập để theo dõi chuỗi học tập.";
+      } else if (viewed.length === 0) {
         progressStatus.textContent = "Chưa mở bài học nào.";
       } else if (viewed.length === total) {
         progressStatus.textContent = "Đã mở đủ các bài học.";
@@ -283,21 +299,28 @@
     }
 
     if (progressMessage) {
-      progressMessage.textContent = getProgressMessage(viewed.length, total, streak);
+      progressMessage.textContent = account
+        ? getProgressMessage(viewed.length, total, streak)
+        : "Đăng nhập tài khoản học sinh để chuỗi học tập được cập nhật riêng cho em.";
     }
 
-    const lastLessonId = localStorage.getItem(progressKey("lastLesson"));
+    const lastLessonId = account ? readProgressValue("lastLesson") : "";
     const lastCard = cards.find((card) => card.dataset.lessonId === lastLessonId);
     if (progressLast) {
-      progressLast.textContent = lastCard ? `Bài gần nhất: ${lastCard.dataset.title || "bài học"}` : "Bài gần nhất: chưa có";
+      progressLast.textContent = !account
+        ? "Bài gần nhất: đăng nhập để lưu tiến độ"
+        : lastCard
+          ? `Bài gần nhất: ${lastCard.dataset.title || "bài học"}`
+          : "Bài gần nhất: chưa có";
     }
 
-    if (continueLinks.length && lastCard) {
-      const link = lastCard.querySelector("a[href]");
+    if (continueLinks.length) {
+      const fallbackCard = lessonCards[0];
+      const link = (lastCard || fallbackCard)?.querySelector("a[href]");
       if (link) {
         continueLinks.forEach((continueLink) => {
           continueLink.href = link.getAttribute("href");
-          continueLink.textContent = "Tiếp tục học";
+          continueLink.textContent = lastCard ? "Tiếp tục học" : "Bắt đầu học";
         });
       }
     }
@@ -458,7 +481,6 @@
       createdAt: new Date().toISOString()
     };
     writeAccounts(accounts);
-    copyLegacyProgressToAccount(accountKey);
     localStorage.setItem(currentAccountKey, accountKey);
     form.reset();
     setAuthMessage("Chúc mừng em! Tài khoản đã được tạo thành công.", false);
@@ -493,7 +515,6 @@
     }
 
     localStorage.setItem(currentAccountKey, key);
-    copyLegacyProgressToAccount(key);
     form.reset();
     setAuthMessage("Đăng nhập thành công! Chào mừng em quay lại lớp học trực tuyến.", false);
     applyUserState();
@@ -504,10 +525,11 @@
     if (!link) return;
     link.addEventListener("click", () => {
       if (card.dataset.trackProgress !== "true") return;
+      if (!getCurrentAccount()) return;
       const visited = readVisited();
       visited.add(card.dataset.lessonId);
       writeVisited(visited);
-      localStorage.setItem(progressKey("lastLesson"), card.dataset.lessonId);
+      writeProgressValue("lastLesson", card.dataset.lessonId);
     });
   });
 
