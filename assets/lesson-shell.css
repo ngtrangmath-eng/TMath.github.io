@@ -378,6 +378,7 @@ details.answer-key {
 }
 
 @media print {
+  .learning-site-bar,
   .written-image-upload,
   .assessment-report-actions {
     display: none !important;

@@ -96,14 +96,13 @@
   let writtenImageUploads = [];
 
   function getHomeHref(hash = "") {
-    if (!scriptUrl) return `../index.html?guest=1${hash ? `#${hash}` : ""}`;
+    if (!scriptUrl) return `../index.html${hash ? `#${hash}` : ""}`;
     try {
       const url = new URL("../index.html", scriptUrl);
-      url.searchParams.set("guest", "1");
       if (hash) url.hash = hash;
       return url.href;
     } catch (_error) {
-      return `../index.html?guest=1${hash ? `#${hash}` : ""}`;
+      return `../index.html${hash ? `#${hash}` : ""}`;
     }
   }
 
@@ -171,6 +170,17 @@
     return link;
   }
 
+  function activateLessonPanel(tabId) {
+    const tab = document.querySelector(`[data-tab="${tabId}"]`);
+    if (tab && tab.getAttribute("aria-disabled") !== "true") {
+      tab.click();
+      return;
+    }
+
+    const target = document.getElementById(tabId);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   function readJson(key, fallback) {
     try {
       const raw = localStorage.getItem(key);
@@ -185,7 +195,7 @@
   }
 
   function isLoggedIn() {
-    return Boolean(localStorage.getItem(currentAccountKey));
+    return Boolean(getCurrentAccount());
   }
 
   function getCurrentAccount() {
@@ -888,6 +898,13 @@
     currentLabel.textContent = current.label;
     currentLabel.setAttribute("aria-current", "page");
     nav.append(currentLabel);
+
+    const lessonContentButton = document.createElement("button");
+    lessonContentButton.className = "learning-site-bar__button";
+    lessonContentButton.type = "button";
+    lessonContentButton.textContent = "Nội dung bài học";
+    lessonContentButton.addEventListener("click", () => activateLessonPanel("part-a"));
+    nav.append(lessonContentButton);
 
     if (next) nav.append(createLink("Bài sau", next.href, "learning-site-bar__link"));
 

@@ -44,7 +44,6 @@
     if (!shouldOpenAsGuest) return false;
 
     localStorage.removeItem(currentAccountKey);
-    sessionStorage.removeItem(openAuthRequestKey);
     params.delete("guest");
     params.delete("logout");
 
