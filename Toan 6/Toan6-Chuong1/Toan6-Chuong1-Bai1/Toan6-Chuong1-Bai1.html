@@ -973,11 +973,11 @@
         </div>
         <div id="b-symbol-feedback" class="feedback-box" aria-live="polite"></div>
         <details class="answer-key">
-          <summary>Đáp án gợi ý</summary>
+          <summary>Hướng dẫn tự kiểm tra</summary>
           <ol>
-            <li><span class="math-text">3 ∈ {1; 2; 3; 4}</span> vì 3 thuộc tập hợp đã cho.</li>
-            <li><span class="math-text">7 ∉ {0; 2; 4; 6; 8}</span> vì 7 không có trong tập hợp đã cho.</li>
-            <li><span class="math-text">a ∈ {a; b; c}</span> vì a thuộc tập hợp đã cho.</li>
+            <li>Với mỗi câu, em hãy nhìn xem phần tử đứng trước dấu ba chấm có xuất hiện trong tập hợp đã cho hay không.</li>
+            <li>Nếu phần tử có xuất hiện trong tập hợp thì dùng kí hiệu “thuộc”.</li>
+            <li>Nếu phần tử không xuất hiện trong tập hợp thì dùng kí hiệu “không thuộc”.</li>
           </ol>
         </details>
       </article>
@@ -1048,8 +1048,8 @@
         </div>
         <div id="game-feedback" class="feedback-box" aria-live="polite"></div>
         <details class="answer-key">
-          <summary>Đáp án</summary>
-          <p>Các số thuộc <span class="math-text">M</span> là: <span class="math-text">0, 2, 4, 6, 8</span>.</p>
+          <summary>Hướng dẫn tự kiểm tra</summary>
+          <p>Em hãy đối chiếu từng số với các phần tử đang nằm trong dấu ngoặc nhọn của tập hợp <span class="math-text">M</span>. Chỉ chọn số có xuất hiện trong tập hợp và bỏ số không có trong tập hợp.</p>
         </details>
       </article>
 
@@ -1059,7 +1059,7 @@
         <div class="inline-answer">
           <label>
             <span class="field-label">Bài làm</span>
-            <input id="b-challenge" data-save type="text" placeholder="Nhập đáp án" />
+            <input id="b-challenge" data-save type="text" placeholder="Nhập bài làm" />
           </label>
           <button class="primary-action" type="button" data-check-set="b-challenge" data-name="T" data-items="An,Bình,Chi" data-feedback="b-challenge-feedback" data-points="0" onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
@@ -1209,29 +1209,18 @@
       </div>
 
       <details class="answer-key">
-        <summary>Đáp án và hướng dẫn chấm</summary>
-        <h4>Đáp án trắc nghiệm</h4>
+        <summary>Hướng dẫn tự kiểm tra và chấm điểm</summary>
+        <h4>Hướng dẫn trắc nghiệm</h4>
+        <p>Em hãy đọc lại đề từng câu, xác định khái niệm đang hỏi, rồi so sánh với phần kiến thức trọng tâm trước khi chọn lại.</p>
+        <h4>Hướng dẫn tự luận và vận dụng</h4>
         <table class="score-table">
           <thead>
-            <tr><th>Câu</th><th>Đáp án</th><th>Điểm</th></tr>
+            <tr><th>Câu</th><th>Hướng dẫn tự kiểm tra</th><th>Điểm</th></tr>
           </thead>
           <tbody>
-            <tr><td>1</td><td>B</td><td>1</td></tr>
-            <tr><td>2</td><td>B</td><td>1</td></tr>
-            <tr><td>3</td><td>C</td><td>1</td></tr>
-            <tr><td>4</td><td>A</td><td>1</td></tr>
-            <tr><td>5</td><td>D</td><td>1</td></tr>
-          </tbody>
-        </table>
-        <h4>Đáp án tự luận và vận dụng</h4>
-        <table class="score-table">
-          <thead>
-            <tr><th>Câu</th><th>Đáp án gợi ý</th><th>Điểm</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Tự luận 1</td><td><span class="math-text">A = {0; 1; 2; 3; 4; 5}</span></td><td>2</td></tr>
-            <tr><td>Tự luận 2</td><td><span class="math-text">B = {T; O; A; N}</span></td><td>2</td></tr>
-            <tr><td>Vận dụng</td><td><span class="math-text">T = {Mai; Nam; Lan}</span></td><td>1</td></tr>
+            <tr><td>Tự luận 1</td><td>Kiểm tra xem em đã chọn đúng các số tự nhiên thỏa điều kiện “nhỏ hơn 6”, viết đúng tên tập hợp và dùng dấu ngoặc nhọn chưa.</td><td>2</td></tr>
+            <tr><td>Tự luận 2</td><td>Kiểm tra từng chữ cái trong từ đã cho, viết mỗi chữ một lần, đúng tên tập hợp và đúng kí hiệu trình bày.</td><td>2</td></tr>
+            <tr><td>Vận dụng</td><td>Kiểm tra xem em đã liệt kê đủ tên các bạn trong tình huống, không thêm tên ngoài đề và trình bày đúng dạng tập hợp chưa.</td><td>1</td></tr>
           </tbody>
         </table>
       </details>
@@ -1322,8 +1311,12 @@
       return true;
     }
 
-    function formatExpected(name, items) {
-      return `${name} = {${items.join("; ")}}`;
+    function formatSetGuidance(name) {
+      return `Hãy kiểm tra lại điều kiện của đề, liệt kê các phần tử phù hợp, viết mỗi phần tử một lần, rồi trình bày theo mẫu ${name} = { ... }.`;
+    }
+
+    function formatNotationGuidance(name) {
+      return `Em đã chọn đúng phần tử. Hãy kiểm tra lại tên tập hợp ${name}, dấu =, dấu ngoặc nhọn và cách ngăn cách các phần tử.`;
     }
 
     function gradeSetAnswer(value, expectedName, expectedItems, maxPoints) {
@@ -1384,23 +1377,22 @@
 
         const expectedItems = items.split(",");
         const result = gradeSetAnswer(input.value, setName, expectedItems, points);
-        const expected = formatExpected(setName, expectedItems);
         const guideOnly = button.getAttribute("data-guide-only") === "true";
         let message = "";
         if (result.status === "correct") {
-          message = `Đúng. Đáp án gợi ý: ${expected}.`;
+          message = "Đúng. Em đã xác định đúng các phần tử và trình bày đúng dạng tập hợp.";
         } else if (result.hasItems) {
           message = guideOnly
             ? button.getAttribute("data-partial-guide")
-            : `Em đã đúng phần tử, chỉ cần sửa cách trình bày: cần tên tập hợp ${setName} và dấu ngoặc nhọn. Đáp án gợi ý: ${expected}.`;
+            : formatNotationGuidance(setName);
         } else {
           message = guideOnly
             ? button.getAttribute("data-guide")
-            : `Em thử kiểm tra lại điều kiện của tập hợp nhé. Đáp án gợi ý: ${expected}.`;
+            : formatSetGuidance(setName);
         }
         showFeedback(feedbackId, result.status, message);
       } catch (_error) {
-        showFeedback(feedbackId, "incorrect", "Có lỗi khi kiểm tra đáp án. Em hãy tải lại trang rồi thử lại.");
+        showFeedback(feedbackId, "incorrect", "Có lỗi khi kiểm tra bài làm. Em hãy tải lại trang rồi thử lại.");
       }
     }
 
@@ -1542,7 +1534,7 @@
         const actual = selectedQuizValue(name);
         const correct = actual === expected;
         if (correct) multipleChoiceScore += 1;
-        quizDetails.push(`Câu ${index + 1}: ${actual || "chưa chọn"} (${correct ? "đúng" : `đáp án ${expected}`})`);
+        quizDetails.push(`Câu ${index + 1}: ${actual || "chưa chọn"} (${correct ? "đúng" : "cần xem lại kiến thức liên quan"})`);
       });
 
       let writtenScore = 0;
@@ -1556,7 +1548,9 @@
         writtenDetails.push({
           label: card.querySelector(".question-title").textContent,
           answer: field.value || "Chưa làm",
-          expected: formatExpected(card.dataset.name, expectedItems),
+          guidance: result.hasItems
+            ? formatNotationGuidance(card.dataset.name)
+            : formatSetGuidance(card.dataset.name),
           points: result.points,
           maxPoints,
           status: result.status,
@@ -1608,7 +1602,7 @@
 
     function formatWrittenDetail(detail) {
       const statusLabel = detail.status === "correct" ? "đúng" : detail.status === "partial" ? "đúng một phần" : "cần xem lại";
-      return `${escapeHtml(statusLabel)}<br>Bài làm: ${escapeHtml(detail.answer)}<br>Đáp án gợi ý: ${escapeHtml(detail.expected)}`;
+      return `${escapeHtml(statusLabel)}<br>Bài làm: ${escapeHtml(detail.answer)}<br>Hướng dẫn: ${escapeHtml(detail.guidance)}`;
     }
 
     function updateTimerDisplay() {
