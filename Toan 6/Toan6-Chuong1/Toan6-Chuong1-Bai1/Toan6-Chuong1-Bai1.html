@@ -896,7 +896,7 @@
             <span class="field-label">Bài làm</span>
             <input id="a-check-2" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
-          <button class="primary-action" type="button" data-check-set="a-check-2" data-name="C" data-items="H,O,C" data-feedback="a-feedback-2" data-points="0" data-guide-only="true" data-partial-guide="Em đã xác định đúng các chữ cái. Hãy kiểm tra lại tên tập hợp, dấu = và dấu ngoặc nhọn." data-guide="Gợi ý: đọc từng chữ cái trong từ HOC, viết mỗi chữ một lần và đặt trong dấu ngoặc nhọn sau C =.">Kiểm tra</button>
+          <button class="primary-action" type="button" data-check-set="a-check-2" data-name="C" data-items="H,O,C" data-feedback="a-feedback-2" data-points="0" data-guide-only="true" data-partial-guide="Em đã xác định đúng các chữ cái. Hãy kiểm tra lại tên tập hợp, dấu = và dấu ngoặc nhọn." data-guide="Gợi ý: đọc từng chữ cái trong từ HOC, viết mỗi chữ một lần và đặt trong dấu ngoặc nhọn sau C =." onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
         <div id="a-feedback-2" class="feedback-box" aria-live="polite"></div>
       </article>
@@ -992,7 +992,7 @@
             <span class="field-label">Bài làm</span>
             <input id="b-set-1" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
-          <button class="primary-action" type="button" data-check-set="b-set-1" data-name="A" data-items="0,1,2,3,4,5" data-feedback="b-set-feedback-1" data-points="0">Kiểm tra</button>
+          <button class="primary-action" type="button" data-check-set="b-set-1" data-name="A" data-items="0,1,2,3,4,5" data-feedback="b-set-feedback-1" data-points="0" onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
         <div id="b-set-feedback-1" class="feedback-box" aria-live="polite"></div>
         <p class="hint">Gợi ý: Số tự nhiên nhỏ hơn 6 bắt đầu từ 0 và dừng ở 5.</p>
@@ -1007,7 +1007,7 @@
             <span class="field-label">Bài làm</span>
             <input id="b-set-2" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
-          <button class="primary-action" type="button" data-check-set="b-set-2" data-name="B" data-items="T,O,A,N" data-feedback="b-set-feedback-2" data-points="0">Kiểm tra</button>
+          <button class="primary-action" type="button" data-check-set="b-set-2" data-name="B" data-items="T,O,A,N" data-feedback="b-set-feedback-2" data-points="0" onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
         <div id="b-set-feedback-2" class="feedback-box" aria-live="polite"></div>
         <p class="hint">Gợi ý: Mỗi chữ cái chỉ cần ghi một lần.</p>
@@ -1022,7 +1022,7 @@
             <span class="field-label">Bài làm</span>
             <input id="b-set-3" data-save type="text" placeholder="Nhập tập hợp" />
           </label>
-          <button class="primary-action" type="button" data-check-set="b-set-3" data-name="C" data-items="0,2,4,6,8" data-feedback="b-set-feedback-3" data-points="0">Kiểm tra</button>
+          <button class="primary-action" type="button" data-check-set="b-set-3" data-name="C" data-items="0,2,4,6,8" data-feedback="b-set-feedback-3" data-points="0" onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
         <div id="b-set-feedback-3" class="feedback-box" aria-live="polite"></div>
         <p class="hint">Gợi ý: Số chẵn chia hết cho 2; đề yêu cầu nhỏ hơn 10.</p>
@@ -1061,7 +1061,7 @@
             <span class="field-label">Bài làm</span>
             <input id="b-challenge" data-save type="text" placeholder="Nhập đáp án" />
           </label>
-          <button class="primary-action" type="button" data-check-set="b-challenge" data-name="T" data-items="An,Bình,Chi" data-feedback="b-challenge-feedback" data-points="0">Kiểm tra</button>
+          <button class="primary-action" type="button" data-check-set="b-challenge" data-name="T" data-items="An,Bình,Chi" data-feedback="b-challenge-feedback" data-points="0" onmousedown="checkSetAnswerFromButton(this)" onclick="checkSetAnswerFromButton(this)">Kiểm tra</button>
         </div>
         <div id="b-challenge-feedback" class="feedback-box" aria-live="polite"></div>
       </article>
@@ -1322,6 +1322,10 @@
       return true;
     }
 
+    function formatExpected(name, items) {
+      return `${name} = {${items.join("; ")}}`;
+    }
+
     function gradeSetAnswer(value, expectedName, expectedItems, maxPoints) {
       const parsed = parseSetAnswer(value);
       const expectedNameNormalized = normalizeToken(expectedName);
@@ -1364,6 +1368,43 @@
       box.className = `feedback-box show ${status}`;
       box.textContent = message;
     }
+
+    function checkSetAnswerFromButton(button) {
+      const fieldId = button.getAttribute("data-check-set");
+      const feedbackId = button.getAttribute("data-feedback");
+      try {
+        const setName = button.getAttribute("data-name") || "";
+        const items = button.getAttribute("data-items") || "";
+        const points = Number(button.getAttribute("data-points") || 0);
+        const input = document.getElementById(fieldId);
+        if (!input) {
+          showFeedback(feedbackId, "incorrect", "Chưa tìm thấy ô bài làm. Em hãy tải lại trang rồi thử lại.");
+          return;
+        }
+
+        const expectedItems = items.split(",");
+        const result = gradeSetAnswer(input.value, setName, expectedItems, points);
+        const expected = formatExpected(setName, expectedItems);
+        const guideOnly = button.getAttribute("data-guide-only") === "true";
+        let message = "";
+        if (result.status === "correct") {
+          message = `Đúng. Đáp án gợi ý: ${expected}.`;
+        } else if (result.hasItems) {
+          message = guideOnly
+            ? button.getAttribute("data-partial-guide")
+            : `Em đã đúng phần tử, chỉ cần sửa cách trình bày: cần tên tập hợp ${setName} và dấu ngoặc nhọn. Đáp án gợi ý: ${expected}.`;
+        } else {
+          message = guideOnly
+            ? button.getAttribute("data-guide")
+            : `Em thử kiểm tra lại điều kiện của tập hợp nhé. Đáp án gợi ý: ${expected}.`;
+        }
+        showFeedback(feedbackId, result.status, message);
+      } catch (_error) {
+        showFeedback(feedbackId, "incorrect", "Có lỗi khi kiểm tra đáp án. Em hãy tải lại trang rồi thử lại.");
+      }
+    }
+
+    window.checkSetAnswerFromButton = checkSetAnswerFromButton;
 
     function bindTabs() {
       const buttons = document.querySelectorAll(".tab-button");
@@ -1427,6 +1468,12 @@
     }
 
     function bindPracticeChecks() {
+      document.querySelectorAll("[data-check-set]").forEach((button) => {
+        ["pointerup", "mouseup"].forEach((eventName) => {
+          button.addEventListener(eventName, () => checkSetAnswerFromButton(button));
+        });
+      });
+
       document.querySelectorAll("[data-check-symbol]").forEach((button) => {
         button.addEventListener("click", () => {
           const field = document.getElementById(button.dataset.checkSymbol);
@@ -1450,27 +1497,14 @@
         showFeedback("b-symbol-feedback", status, message);
       });
 
-      document.querySelectorAll("[data-check-set]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const input = document.getElementById(button.dataset.checkSet);
-          const expectedItems = button.dataset.items.split(",");
-          const result = gradeSetAnswer(input.value, button.dataset.name, expectedItems, Number(button.dataset.points));
-          const expected = formatExpected(button.dataset.name, expectedItems);
-          const guideOnly = button.dataset.guideOnly === "true";
-          let message = "";
-          if (result.status === "correct") {
-            message = `Đúng. Đáp án gợi ý: ${expected}.`;
-          } else if (result.hasItems) {
-            message = guideOnly
-              ? button.dataset.partialGuide
-              : `Em đã đúng phần tử, chỉ cần sửa cách trình bày: cần tên tập hợp ${button.dataset.name} và dấu ngoặc nhọn. Đáp án gợi ý: ${expected}.`;
-          } else {
-            message = guideOnly
-              ? button.dataset.guide
-              : `Em thử kiểm tra lại điều kiện của tập hợp nhé. Đáp án gợi ý: ${expected}.`;
-          }
-          showFeedback(button.dataset.feedback, result.status, message);
-        });
+      document.addEventListener("click", (event) => {
+        const target = event.target.nodeType === Node.ELEMENT_NODE
+          ? event.target
+          : event.target.parentElement;
+        const button = target?.closest("[data-check-set]");
+        if (!button) return;
+
+        checkSetAnswerFromButton(button);
       });
 
       document.querySelector("[data-check-game]").addEventListener("click", () => {
@@ -1635,7 +1669,7 @@
       activeField.dispatchEvent(new Event("input", { bubbles: true }));
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    function initializeWorksheet() {
       bindStorage();
       bindTabs();
       bindPracticeChecks();
@@ -1645,7 +1679,13 @@
       document.getElementById("print-page").addEventListener("click", () => window.print());
       document.getElementById("print-result").addEventListener("click", () => window.print());
       updateTimerDisplay();
-    });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeWorksheet);
+    } else {
+      initializeWorksheet();
+    }
   </script>
 </body>
 </html>
