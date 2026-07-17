@@ -1,0 +1,67 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong2-Bai11",
+    "bodyLessonId": "toan6-chuong2-bai11",
+    "title": "Toán 6 - Chương 2 - Bài 11: Ước chung, ước chung lớn nhất",
+    "summary": "Nhận biết ước chung, ước chung lớn nhất; tìm ƯCLN, rút gọn phân số và vận dụng vào các bài toán chia đều.",
+    "meta": {"Môn": "Toán", "Lớp": "6", "Chương": "2", "Bài": "11", "Mã bài": "Toan6-Chuong2-Bai11"},
+    "sources": ["lesson.md", "Bai11-PhanA.md", "Bai11-PhanB.md", "Bai11-PhanC.md"]
+  },
+  "partA": {
+    "lead": "Ước chung là ước của tất cả các số đã cho. Ước chung lớn nhất là số lớn nhất trong tập hợp các ước chung.",
+    "blocks": [
+      {"title": "1. Mục tiêu bài học", "listType": "ol", "items": ["Nhận biết <strong>ước chung</strong> và <strong>ước chung lớn nhất</strong> của hai hay nhiều số tự nhiên khác 0.", "Sử dụng đúng kí hiệu <span class='math-text'>ƯC(a, b)</span> và <span class='math-text'>ƯCLN(a, b)</span>.", "Tìm ƯCLN bằng cách liệt kê ước hoặc phân tích ra thừa số nguyên tố.", "Tìm tập hợp ước chung thông qua các ước của ƯCLN.", "Nhận biết hai số nguyên tố cùng nhau, phân số tối giản và vận dụng vào bài toán thực tế."]},
+      {"title": "2. Tìm ƯCLN bằng cách liệt kê", "listType": "ol", "items": ["Viết tập hợp các ước của từng số.", "Chọn các số xuất hiện trong tất cả các tập hợp để lập tập hợp ước chung.", "Chọn số lớn nhất trong tập hợp ước chung."]},
+      {"title": "3. Tìm ƯCLN bằng phân tích thừa số nguyên tố", "listType": "ol", "items": ["Phân tích mỗi số ra thừa số nguyên tố.", "Chọn các thừa số nguyên tố chung.", "Lập tích các thừa số đã chọn, mỗi thừa số lấy với <strong>số mũ nhỏ nhất</strong>."]},
+      {"title": "4. Tìm ƯC và rút gọn phân số", "paragraphs": ["Mọi ước chung của các số đều là ước của ƯCLN. Vì vậy, sau khi tìm ƯCLN, hãy tìm các ước của số đó để có tập hợp ƯC.", "Phân số <span class='math-text'>a/b</span> tối giản khi <span class='math-text'>ƯCLN(a, b) = 1</span>. Muốn rút gọn nhanh về tối giản, chia cả tử và mẫu cho ƯCLN."]}
+    ],
+    "note": {"title": "Ghi nhớ", "text": "<span class='math-text'>ƯC(a, b)</span> là <strong>một tập hợp</strong>; <span class='math-text'>ƯCLN(a, b)</span> là <strong>một số</strong>. Hai số có ƯCLN bằng 1 được gọi là hai số nguyên tố cùng nhau."},
+    "symbolTable": {"headers": ["Kí hiệu", "Cách đọc", "Ý nghĩa"], "rows": [["ƯC(a, b)", "Ước chung của a và b", "Một tập hợp"], ["ƯCLN(a, b)", "Ước chung lớn nhất của a và b", "Một số"], ["x ∈ ƯC(a, b)", "x thuộc tập hợp ước chung", "a và b đều chia hết cho x"], ["ƯCLN(a, b) = d", "ƯCLN của a, b bằng d", "d là ước chung lớn nhất"]]},
+    "example": {"title": "Ví dụ mẫu có hướng dẫn", "html": "<h4>Ví dụ 1. Liệt kê ước</h4><p><span class='math-text'>Ư(24) = {1; 2; 3; 4; 6; 8; 12; 24}</span> và <span class='math-text'>Ư(28) = {1; 2; 4; 7; 14; 28}</span>.</p><p>Do đó <span class='math-text'>ƯC(24, 28) = {1; 2; 4}</span> và <span class='math-text'>ƯCLN(24, 28) = 4</span>.</p><h4>Ví dụ 2. Phân tích thừa số nguyên tố</h4><p><span class='math-text'>24 = 2³ · 3</span>, <span class='math-text'>60 = 2² · 3 · 5</span>. Vậy <span class='math-text'>ƯCLN(24, 60) = 2² · 3 = 12</span>.</p><h4>Ví dụ 3. Rút gọn phân số</h4><p><span class='math-text'>ƯCLN(18, 30) = 6</span>, nên <span class='math-text'>18/30 = 3/5</span>.</p><h4>Ví dụ 4. Bài toán thực tế</h4><p>Hai tấm gỗ dài 18 dm và 30 dm được cắt thành các thanh bằng nhau, dài nhất. Độ dài mỗi thanh là <span class='math-text'>ƯCLN(18, 30) = 6 dm</span>.</p>"},
+    "mindMap": ["Ước chung → ước của tất cả các số", "ƯCLN → số lớn nhất trong các ước chung", "Liệt kê ước → chọn phần chung", "Phân tích thừa số → lấy số mũ nhỏ nhất", "Tìm ƯC → tìm các ước của ƯCLN", "Nguyên tố cùng nhau → ƯCLN = 1", "Phân số tối giản → ƯCLN(tử, mẫu) = 1", "Thực tế → chia nhiều nhất, cắt dài nhất"],
+    "quickChecks": [
+      {"type": "symbol", "id": "a-check-1", "title": "Câu 1. Tìm ƯCLN(20, 30)", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["5", "10", "15", "20"], "answer": "10", "explain": "Đúng. ƯC(20, 30) = {1; 2; 5; 10}, nên ƯCLN bằng 10."},
+      {"type": "symbol", "id": "a-check-2", "title": "Câu 2. Tìm ƯCLN(36, 84)", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["6", "12", "18", "24"], "answer": "12", "explain": "Đúng. 36 = 2² · 3² và 84 = 2² · 3 · 7, nên ƯCLN = 2² · 3 = 12."},
+      {"type": "symbol", "id": "a-check-3", "title": "Câu 3. Phân số 16/10 rút gọn về tối giản", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["16/10", "8/5", "4/5", "5/8"], "answer": "8/5", "explain": "Đúng. ƯCLN(16, 10) = 2 nên 16/10 = 8/5."}
+    ],
+    "mistakes": ["Nhầm ƯC(a, b) là một số thay vì một tập hợp.", "Nhầm ƯCLN(a, b) là tập hợp thay vì một số.", "Chọn cả những thừa số nguyên tố không chung.", "Lấy số mũ lớn nhất thay vì số mũ nhỏ nhất khi tìm ƯCLN.", "Cho rằng hai số nguyên tố cùng nhau thì cả hai đều phải là số nguyên tố.", "Rút gọn phân số nhưng chưa đưa về phân số tối giản."]
+  },
+  "partB": {
+    "lead": "Luyện tìm ƯC, ƯCLN bằng nhiều phương pháp; nhận biết hai số nguyên tố cùng nhau; rút gọn phân số và giải bài toán thực tế.",
+    "referenceTable": {"headers": ["Nội dung", "Ghi nhớ"], "rows": [["Ước chung", "Ước của tất cả các số đã cho"], ["ƯCLN", "Số lớn nhất trong tập hợp các ước chung"], ["Phân tích thừa số", "Chọn thừa số chung, lấy số mũ nhỏ nhất"], ["Tìm ƯC", "Tìm các ước của ƯCLN"], ["Nguyên tố cùng nhau", "Có ƯCLN bằng 1"], ["Phân số tối giản", "Tử và mẫu có ƯCLN bằng 1"]]},
+    "symbolGroup": {"title": "1. Tính nhanh trong trường hợp đặc biệt", "prompt": "Chọn kết quả đúng cho mỗi phép tính.", "options": ["1", "6", "10", "24"], "items": [{"id": "b-fast-1", "label": "ƯCLN(6, 18)", "answer": "6"}, {"id": "b-fast-2", "label": "ƯCLN(90, 10)", "answer": "10"}, {"id": "b-fast-3", "label": "ƯCLN(35, 1)", "answer": "1"}, {"id": "b-fast-4", "label": "ƯCLN(72, 24)", "answer": "24"}], "answerKey": ["ƯCLN(6, 18) = 6.", "ƯCLN(90, 10) = 10.", "ƯCLN(35, 1) = 1.", "ƯCLN(72, 24) = 24."]},
+    "practiceQuestions": [
+      {"id": "b-practice-1", "title": "2. Tìm ước chung bằng cách liệt kê", "prompt": "<p>a) Tìm Ư(24), Ư(28), ƯC(24, 28) và ƯCLN(24, 28).</p><p>b) Tìm ƯC(18, 30) và ƯCLN(18, 30).</p>", "guide": "a) ƯC(24, 28) = {1; 2; 4}; ƯCLN(24, 28) = 4. b) ƯC(18, 30) = {1; 2; 3; 6}; ƯCLN(18, 30) = 6."},
+      {"id": "b-practice-2", "title": "3. Tìm ƯCLN bằng phân tích ra thừa số nguyên tố", "prompt": "<p>Tìm ƯCLN của: a) 36 và 84; b) 45 và 150; c) 72 và 120; d) 56, 140 và 168.</p>", "guide": "a) 12. b) 15. c) 24. d) 28. Cần phân tích từng số, chọn thừa số chung và lấy số mũ nhỏ nhất."},
+      {"id": "b-practice-3", "title": "4. Tìm ước chung từ ƯCLN", "prompt": "<p>a) Biết ƯCLN(75, 105) = 15. Tìm ƯC(75, 105).</p><p>b) Tìm ƯC(48, 72, 120).</p>", "guide": "a) {1; 3; 5; 15}. b) ƯCLN(48, 72, 120) = 24 nên ƯC = {1; 2; 3; 4; 6; 8; 12; 24}."},
+      {"id": "b-practice-4", "title": "5. Hai số nguyên tố cùng nhau", "prompt": "<p>Trong các cặp 8 và 15; 12 và 18; 14 và 25; 21 và 35, cặp nào nguyên tố cùng nhau?</p>", "guide": "8 và 15; 14 và 25 là hai cặp nguyên tố cùng nhau vì ƯCLN của mỗi cặp bằng 1."},
+      {"id": "b-practice-5", "title": "6. Rút gọn phân số về tối giản", "prompt": "<p>Rút gọn: 18/30; 42/56; 75/105; 84/126.</p>", "guide": "18/30 = 3/5; 42/56 = 3/4; 75/105 = 5/7; 84/126 = 2/3."},
+      {"id": "b-practice-6", "title": "7. Bài toán: Chia bóng", "prompt": "<p>Có 12 bóng xanh và 15 bóng đỏ. Có thể chia đều cho 3 bạn không? Chia nhiều nhất cho bao nhiêu bạn? Mỗi bạn nhận bao nhiêu bóng mỗi màu?</p>", "guide": "Có thể chia cho 3 bạn. Số bạn nhiều nhất là ƯCLN(12, 15) = 3. Mỗi bạn nhận 4 bóng xanh và 5 bóng đỏ."},
+      {"id": "b-practice-7", "title": "8. Bài toán: Chia nhóm lao động", "prompt": "<p>Lớp 6A có 40 học sinh nữ và 36 học sinh nam. Chia thành nhiều nhóm nhất, mỗi nhóm có số nữ bằng nhau và số nam bằng nhau. Tìm số nhóm và thành phần mỗi nhóm.</p>", "guide": "ƯCLN(40, 36) = 4. Chia được 4 nhóm; mỗi nhóm có 10 nữ và 9 nam."},
+      {"id": "b-practice-8", "title": "9. Bài toán: Cắt các tấm gỗ", "prompt": "<p>Hai tấm gỗ dài 18 dm và 30 dm được cắt thành các thanh bằng nhau, không thừa. Tìm độ dài lớn nhất và số thanh từ mỗi tấm.</p>", "guide": "Độ dài lớn nhất là ƯCLN(18, 30) = 6 dm. Tấm 18 dm được 3 thanh; tấm 30 dm được 5 thanh."},
+      {"id": "b-practice-9", "title": "10. Bài toán: Xếp hàng", "prompt": "<p>Ba trung đội có 24, 28 và 36 chiến sĩ, xếp cùng số hàng dọc và không lẻ. Tìm số hàng nhiều nhất và số chiến sĩ mỗi hàng của từng trung đội.</p>", "guide": "ƯCLN(24, 28, 36) = 4. Mỗi trung đội xếp 4 hàng; lần lượt có 6, 7, 9 chiến sĩ mỗi hàng."},
+      {"id": "b-practice-10", "title": "11. Sửa sai", "prompt": "<p>An viết ƯCLN(36, 84) = 2² · 3² = 36 vì lấy số mũ lớn nhất. An sai ở đâu? Sửa lại.</p>", "guide": "Khi tìm ƯCLN phải lấy số mũ nhỏ nhất. Do đó ƯCLN(36, 84) = 2² · 3 = 12."},
+      {"id": "b-practice-11", "title": "12. Thử thách nhỏ", "prompt": "<p>Tìm số tự nhiên lớn nhất x sao cho 56 ⋮ x, 84 ⋮ x và 140 ⋮ x.</p>", "guide": "x = ƯCLN(56, 84, 140) = 2² · 7 = 28."}
+    ],
+    "checkboxGame": {"id": "coprime-game", "title": "13. Chọn các cặp nguyên tố cùng nhau", "prompt": "Chọn tất cả các cặp có ƯCLN bằng 1.", "options": ["8 và 15", "12 và 18", "14 và 25", "21 và 35"], "answers": ["8 và 15", "14 và 25"], "correctMessage": "Chính xác! 8 và 15; 14 và 25 là các cặp nguyên tố cùng nhau.", "partialTemplate": "Em đã chọn đúng {correct}/{total} cặp. Đáp án đủ: {answers}.", "answerKey": "8 và 15; 14 và 25."},
+    "tipsTitle": "14. Gợi ý củng cố", "tips": ["Nếu số nhỏ nhất là ước của các số còn lại, ƯCLN chính là số nhỏ nhất.", "Khi phân tích thừa số, chỉ chọn thừa số chung và lấy số mũ nhỏ nhất.", "Muốn tìm toàn bộ ƯC, hãy tìm các ước của ƯCLN.", "Các bài toán chia nhiều nhất, xếp nhiều hàng nhất hoặc cắt đoạn dài nhất thường dùng ƯCLN.", "Muốn rút gọn phân số nhanh về tối giản, chia cả tử và mẫu cho ƯCLN."]
+  },
+  "test": {
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "Bài kiểm tra gồm 5 câu trắc nghiệm, 2 câu tự luận và 1 câu vận dụng. Thời gian làm bài: 15 phút.",
+    "rubric": [{"part": "Trắc nghiệm", "description": "5 câu", "points": 5}, {"part": "Tự luận", "description": "2 câu", "points": 4}, {"part": "Vận dụng", "description": "1 câu", "points": 1}],
+    "multipleChoice": [
+      {"id": "q1", "prompt": "Ước chung của hai hay nhiều số là:", "choices": [{"value": "A", "text": "Số lớn nhất trong các số đã cho."}, {"value": "B", "text": "Ước của ít nhất một trong các số đó."}, {"value": "C", "text": "Ước của tất cả các số đó."}, {"value": "D", "text": "Bội của tất cả các số đó."}], "answer": "C", "points": 1},
+      {"id": "q2", "prompt": "ƯC(18, 30) là:", "choices": [{"value": "A", "text": "{1; 2; 3; 6}"}, {"value": "B", "text": "{1; 2; 3; 5; 6}"}, {"value": "C", "text": "{2; 3; 6; 9}"}, {"value": "D", "text": "{1; 6; 18; 30}"}], "answer": "A", "points": 1},
+      {"id": "q3", "prompt": "ƯCLN(24, 36) bằng:", "choices": [{"value": "A", "text": "4"}, {"value": "B", "text": "6"}, {"value": "C", "text": "12"}, {"value": "D", "text": "24"}], "answer": "C", "points": 1},
+      {"id": "q4", "prompt": "Khi tìm ƯCLN bằng cách phân tích ra thừa số nguyên tố, ta:", "choices": [{"value": "A", "text": "Chọn tất cả các thừa số nguyên tố và lấy số mũ lớn nhất."}, {"value": "B", "text": "Chọn các thừa số nguyên tố chung và lấy số mũ nhỏ nhất."}, {"value": "C", "text": "Chọn các thừa số nguyên tố riêng và lấy số mũ nhỏ nhất."}, {"value": "D", "text": "Cộng các thừa số nguyên tố chung."}], "answer": "B", "points": 1},
+      {"id": "q5", "prompt": "Phân số 42/56 rút gọn về tối giản là:", "choices": [{"value": "A", "text": "21/28"}, {"value": "B", "text": "6/8"}, {"value": "C", "text": "3/4"}, {"value": "D", "text": "4/3"}], "answer": "C", "points": 1}
+    ],
+    "written": [
+      {"id": "w1", "type": "manual", "title": "Tự luận 1. Liệt kê các ước", "prompt": "Tìm <span class='math-text'>ƯC(24, 36)</span> và <span class='math-text'>ƯCLN(24, 36)</span> bằng cách liệt kê các ước.", "points": 2, "expectedText": "Ư(24) = {1; 2; 3; 4; 6; 8; 12; 24}; Ư(36) = {1; 2; 3; 4; 6; 9; 12; 18; 36}; ƯC(24, 36) = {1; 2; 3; 4; 6; 12}; ƯCLN(24, 36) = 12."},
+      {"id": "w2", "type": "manual", "title": "Tự luận 2. Phân tích, tìm ƯCLN và rút gọn", "prompt": "1. Phân tích <span class='math-text'>60, 84, 108</span> ra thừa số nguyên tố.<br>2. Tìm <span class='math-text'>ƯCLN(60, 84, 108)</span>.<br>3. Rút gọn <span class='math-text'>84/108</span> về tối giản.", "points": 2, "expectedText": "60 = 2² · 3 · 5; 84 = 2² · 3 · 7; 108 = 2² · 3³; ƯCLN(60, 84, 108) = 12; 84/108 = 7/9."},
+      {"id": "w3", "type": "manual", "title": "Vận dụng thực tế", "prompt": "Cô giáo có <span class='math-text'>24</span> bút đỏ và <span class='math-text'>36</span> bút xanh. Cô muốn chia thành nhiều phần quà giống nhau nhất. Chia được nhiều nhất bao nhiêu phần? Mỗi phần có bao nhiêu bút mỗi màu?", "points": 1, "expectedText": "ƯCLN(24, 36) = 12 nên chia được nhiều nhất 12 phần quà; mỗi phần có 2 bút đỏ và 3 bút xanh."}
+    ]
+  }
+}

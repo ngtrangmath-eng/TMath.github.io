@@ -1,0 +1,70 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong2-Bai12",
+    "bodyLessonId": "toan6-chuong2-bai12",
+    "output": "../../Toan 6/Toan6-Chuong2/Toan6-Chuong2-Bai12/Toan6-Chuong2-Bai12.html",
+    "title": "Toán 6 - Chương 2 - Bài 12: Bội chung, bội chung nhỏ nhất",
+    "summary": "Nhận biết bội chung, bội chung nhỏ nhất; tìm BCNN, quy đồng mẫu số và vận dụng vào các bài toán có tính chu kì.",
+    "meta": {"Môn": "Toán", "Lớp": "6", "Chương": "2", "Bài": "12", "Mã bài": "Toan6-Chuong2-Bai12"},
+    "sources": ["lesson.md", "Bai12-PhanA.md", "Bai12-PhanB.md", "Bai12-PhanC.md"]
+  },
+  "partA": {
+    "lead": "Bội chung là bội của tất cả các số đã cho. Bội chung nhỏ nhất là số nhỏ nhất khác 0 trong tập hợp các bội chung.",
+    "blocks": [
+      {"title": "1. Mục tiêu bài học", "listType": "ol", "items": ["Nhận biết <strong>bội chung</strong> và <strong>bội chung nhỏ nhất</strong> của hai hay nhiều số tự nhiên khác 0.", "Sử dụng đúng kí hiệu <span class='math-text'>BC(a, b)</span> và <span class='math-text'>BCNN(a, b)</span>.", "Tìm BCNN bằng cách liệt kê bội hoặc phân tích ra thừa số nguyên tố.", "Tìm các bội chung thông qua các bội của BCNN.", "Vận dụng BCNN để quy đồng mẫu số và giải bài toán thực tế có tính chu kì."]},
+      {"title": "2. Tìm BCNN bằng cách liệt kê", "listType": "ol", "items": ["Viết một số bội của từng số theo thứ tự tăng dần.", "Chọn các số xuất hiện trong tất cả các tập hợp để lập tập hợp bội chung.", "Chọn số nhỏ nhất khác 0 trong tập hợp bội chung."]},
+      {"title": "3. Trường hợp đặc biệt", "items": ["Nếu <span class='math-text'>a ⋮ b</span> thì <span class='math-text'>BCNN(a, b) = a</span>.", "Với mọi <span class='math-text'>a ≠ 0</span>: <span class='math-text'>BCNN(a, 1) = a</span>.", "Nếu các số đôi một nguyên tố cùng nhau thì BCNN bằng tích của các số đó."]},
+      {"title": "4. Tìm BCNN bằng phân tích thừa số nguyên tố", "listType": "ol", "items": ["Phân tích mỗi số ra thừa số nguyên tố.", "Chọn các thừa số nguyên tố <strong>chung và riêng</strong>.", "Lập tích các thừa số đã chọn, mỗi thừa số lấy với <strong>số mũ lớn nhất</strong>."]},
+      {"title": "5. Tìm BC và quy đồng mẫu", "paragraphs": ["Mọi bội chung của các số đều là bội của BCNN. Vì vậy, sau khi tìm BCNN, hãy tìm các bội của số đó để có tập hợp BC.", "Khi quy đồng phân số, thường chọn BCNN của các mẫu làm mẫu chung để phép tính gọn hơn."]}
+    ],
+    "note": {"title": "Ghi nhớ", "text": "<span class='math-text'>BC(a, b)</span> là <strong>một tập hợp</strong>; <span class='math-text'>BCNN(a, b)</span> là <strong>một số</strong>. Số 0 là bội chung nhưng không được chọn làm BCNN."},
+    "symbolTable": {"headers": ["Kí hiệu", "Cách đọc", "Ý nghĩa"], "rows": [["BC(a, b)", "Bội chung của a và b", "Một tập hợp"], ["BCNN(a, b)", "Bội chung nhỏ nhất của a và b", "Một số"], ["x ∈ BC(a, b)", "x thuộc tập hợp bội chung", "x chia hết cho a và b"], ["BCNN(a, b) = m", "BCNN của a, b bằng m", "m là bội chung dương nhỏ nhất"]]},
+    "example": {"title": "Ví dụ mẫu có hướng dẫn", "html": "<h4>Ví dụ 1. Liệt kê bội</h4><p><span class='math-text'>B(6) = {0; 6; 12; 18; 24; 30; 36; ...}</span>, <span class='math-text'>B(9) = {0; 9; 18; 27; 36; ...}</span>. Vậy <span class='math-text'>BCNN(6, 9) = 18</span>.</p><h4>Ví dụ 2. Phân tích thừa số nguyên tố</h4><p><span class='math-text'>75 = 3 · 5²</span>, <span class='math-text'>90 = 2 · 3² · 5</span>. Do đó <span class='math-text'>BCNN(75, 90) = 2 · 3² · 5² = 450</span>.</p><h4>Ví dụ 3. Quy đồng mẫu</h4><p><span class='math-text'>BCNN(8, 12) = 24</span>, nên <span class='math-text'>5/8 = 15/24</span> và <span class='math-text'>7/12 = 14/24</span>.</p><h4>Ví dụ 4. Bài toán thực tế</h4><p>Ba tuyến xe buýt chạy theo chu kì 15, 9 và 10 phút. Vì <span class='math-text'>BCNN(15, 9, 10) = 90</span>, sau 90 phút cả ba tuyến lại cùng xuất bến.</p>"},
+    "mindMap": ["Bội chung → bội của tất cả các số", "BCNN → bội chung dương nhỏ nhất", "Liệt kê bội → chọn phần chung", "Phân tích thừa số → lấy số mũ lớn nhất", "Tìm BC → tìm các bội của BCNN", "Trường hợp đặc biệt → số lớn nhất chia hết", "Quy đồng → chọn BCNN của mẫu", "Thực tế → cùng xảy ra sớm nhất"],
+    "quickChecks": [
+      {"type": "symbol", "id": "a-check-1", "title": "Câu 1. Tìm BCNN(8, 12)", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["12", "24", "36", "48"], "answer": "24", "explain": "Đúng. Bội chung dương nhỏ nhất của 8 và 12 là 24."},
+      {"type": "symbol", "id": "a-check-2", "title": "Câu 2. Tìm BCNN(15, 54)", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["90", "180", "270", "540"], "answer": "270", "explain": "Đúng. 15 = 3 · 5 và 54 = 2 · 3³ nên BCNN = 2 · 3³ · 5 = 270."},
+      {"type": "symbol", "id": "a-check-3", "title": "Câu 3. Mẫu chung nhỏ nhất của 7/9 và 4/15", "prompt": "Chọn kết quả đúng.", "label": "Kết quả", "options": ["30", "45", "60", "90"], "answer": "45", "explain": "Đúng. BCNN(9, 15) = 45."}
+    ],
+    "mistakes": ["Nhầm BC(a, b) là một số thay vì một tập hợp.", "Nhầm BCNN(a, b) là một tập hợp thay vì một số.", "Chọn số 0 làm BCNN.", "Chỉ chọn thừa số chung và bỏ quên thừa số riêng.", "Lấy số mũ nhỏ nhất thay vì số mũ lớn nhất.", "Tìm các ước của BCNN thay vì các bội của BCNN.", "Nhầm bài toán cần tìm ƯCLN với bài toán cần tìm BCNN.", "Chọn mẫu chung không chia hết cho tất cả các mẫu."]
+  },
+  "partB": {
+    "lead": "Luyện tìm BC, BCNN bằng nhiều phương pháp; quy đồng mẫu số, tính phân số và giải bài toán thực tế có tính chu kì.",
+    "referenceTable": {"headers": ["Nội dung", "Ghi nhớ"], "rows": [["Bội chung", "Bội của tất cả các số đã cho"], ["BCNN", "Số nhỏ nhất khác 0 trong tập hợp bội chung"], ["Phân tích thừa số", "Chọn thừa số chung và riêng, lấy số mũ lớn nhất"], ["Tìm BC", "Tìm các bội của BCNN"], ["Trường hợp đặc biệt", "Nếu a ⋮ b thì BCNN(a, b) = a"], ["Quy đồng mẫu", "Thường chọn BCNN của các mẫu"]]},
+    "symbolGroup": {"title": "1. Tính nhanh trong trường hợp đặc biệt", "prompt": "Chọn kết quả đúng cho mỗi phép tính.", "options": ["21", "25", "36", "120"], "items": [{"id": "b-fast-1", "label": "BCNN(7, 21)", "answer": "21"}, {"id": "b-fast-2", "label": "BCNN(36, 9)", "answer": "36"}, {"id": "b-fast-3", "label": "BCNN(25, 1)", "answer": "25"}, {"id": "b-fast-4", "label": "BCNN(8, 15)", "answer": "120"}], "answerKey": ["BCNN(7, 21) = 21.", "BCNN(36, 9) = 36.", "BCNN(25, 1) = 25.", "BCNN(8, 15) = 120."]},
+    "practiceQuestions": [
+      {"id": "b-practice-1", "title": "2. Tìm bội chung bằng cách liệt kê", "prompt": "<p>a) Tìm B(6), B(9), BC(6, 9) và BCNN(6, 9).</p><p>b) Tìm BC(4, 6) và BCNN(4, 6).</p>", "guide": "a) BC(6, 9) = {0; 18; 36; 54; ...}; BCNN = 18. b) BC(4, 6) = {0; 12; 24; 36; ...}; BCNN = 12."},
+      {"id": "b-practice-2", "title": "3. Tìm BCNN bằng phân tích thừa số nguyên tố", "prompt": "<p>Tìm BCNN của: a) 12 và 18; b) 15 và 54; c) 24 và 90; d) 18, 24 và 40.</p>", "guide": "a) 36. b) 270. c) 360. d) 360. Phân tích từng số, chọn thừa số chung và riêng, lấy số mũ lớn nhất."},
+      {"id": "b-practice-3", "title": "4. Tìm bội chung từ BCNN", "prompt": "<p>a) Biết BCNN(8, 6) = 24. Tìm các bội chung nhỏ hơn 100.</p><p>b) Tìm các bội chung dương nhỏ hơn 1 000 của 15 và 54.</p>", "guide": "a) 0; 24; 48; 72; 96. b) BCNN(15, 54) = 270 nên các bội chung dương là 270; 540; 810."},
+      {"id": "b-practice-4", "title": "5. Quan hệ giữa ƯCLN và BCNN", "prompt": "<p>Dùng công thức ƯCLN(a, b) · BCNN(a, b) = a · b để tính BCNN của: (24, 36), (18, 30), (35, 42), biết các ƯCLN tương ứng là 12, 6, 7.</p>", "guide": "BCNN(24, 36) = 72; BCNN(18, 30) = 90; BCNN(35, 42) = 210."},
+      {"id": "b-practice-5", "title": "6. Quy đồng mẫu số", "prompt": "<p>Quy đồng: a) 5/8 và 7/12; b) 7/9 và 4/15; c) 3/10 và 5/18.</p>", "guide": "a) 15/24 và 14/24. b) 35/45 và 12/45. c) 27/90 và 25/90."},
+      {"id": "b-practice-6", "title": "7. Tính phân số", "prompt": "<p>Tính: a) 1/4 + 1/6; b) 11/12 - 3/8; c) 5/9 + 7/15.</p>", "guide": "a) 5/12. b) 13/24. c) 46/45."},
+      {"id": "b-practice-7", "title": "8. Mua đĩa và cốc giấy", "prompt": "<p>Đĩa đóng gói 4 cái, cốc đóng gói 6 cái. Mai muốn mua cùng một số lượng mỗi loại, không mua lẻ và ít nhất. Tìm số lượng và số gói mỗi loại.</p>", "guide": "BCNN(4, 6) = 12. Mai mua 12 đĩa (3 gói) và 12 cốc (2 gói)."},
+      {"id": "b-practice-8", "title": "9. Lịch bảo dưỡng máy", "prompt": "<p>Máy A bảo dưỡng mỗi 6 tháng, máy B mỗi 9 tháng; cùng bảo dưỡng tháng 5/2026. Khi nào hai máy lại cùng bảo dưỡng?</p>", "guide": "BCNN(6, 9) = 18 tháng. Thời điểm tiếp theo là tháng 11/2027."},
+      {"id": "b-practice-9", "title": "10. Các tuyến xe buýt", "prompt": "<p>Ba tuyến xuất bến mỗi 15, 9 và 10 phút. Lúc 10 giờ 35 phút cùng xuất bến. Lần tiếp theo là lúc nào?</p>", "guide": "BCNN(15, 9, 10) = 90 phút. Lần tiếp theo là 12 giờ 05 phút."},
+      {"id": "b-practice-10", "title": "11. Đèn tín hiệu nhấp nháy", "prompt": "<p>Ba đèn nháy mỗi 8, 12 và 18 giây. Sau bao lâu cùng sáng lại? Trong 5 phút đầu, không tính ban đầu, cùng sáng bao nhiêu lần?</p>", "guide": "BCNN(8, 12, 18) = 72 giây. Trong 300 giây, cùng sáng tại 72, 144, 216, 288 giây: 4 lần."},
+      {"id": "b-practice-11", "title": "12. Sửa sai", "prompt": "<p>Bình lấy các thừa số chung với số mũ nhỏ nhất và kết luận BCNN(24, 90) = 6. Bình sai ở đâu? Sửa lại.</p>", "guide": "Phải chọn cả thừa số chung và riêng, lấy số mũ lớn nhất. BCNN(24, 90) = 2³ · 3² · 5 = 360."},
+      {"id": "b-practice-12", "title": "13. Thử thách nhỏ", "prompt": "<p>Tìm số tự nhiên nhỏ nhất khác 0 là bội của 18, 24 và 30.</p>", "guide": "Số cần tìm là BCNN(18, 24, 30) = 2³ · 3² · 5 = 360."}
+    ],
+    "checkboxGame": {"id": "common-multiples-game", "title": "14. Chọn các bội chung của 8 và 12", "prompt": "Chọn tất cả các bội chung dương nhỏ hơn 100.", "options": ["12", "24", "48", "72", "96"], "answers": ["24", "48", "72", "96"], "correctMessage": "Chính xác! 24, 48, 72, 96 là các bội chung dương nhỏ hơn 100.", "partialTemplate": "Em đã chọn đúng {correct}/{total} số. Đáp án đủ: {answers}.", "answerKey": "24; 48; 72; 96."},
+    "tipsTitle": "15. Gợi ý củng cố", "tips": ["Nếu số lớn nhất chia hết cho các số còn lại, BCNN chính là số lớn nhất.", "Khi phân tích thừa số, chọn cả thừa số chung và riêng, lấy số mũ lớn nhất.", "Muốn tìm BC, hãy tìm các bội của BCNN.", "Bài toán cùng xảy ra sớm nhất, mua số lượng ít nhất hoặc lặp lại cùng lúc thường dùng BCNN.", "Khi quy đồng mẫu, chọn BCNN của các mẫu thường giúp phép tính ngắn gọn."]
+  },
+  "test": {
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "Bài kiểm tra gồm 5 câu trắc nghiệm, 2 câu tự luận và 1 câu vận dụng. Thời gian làm bài: 15 phút.",
+    "rubric": [{"part": "Trắc nghiệm", "description": "5 câu", "points": 5}, {"part": "Tự luận", "description": "2 câu", "points": 4}, {"part": "Vận dụng", "description": "1 câu", "points": 1}],
+    "multipleChoice": [
+      {"id": "q1", "prompt": "Bội chung của hai hay nhiều số là:", "choices": [{"value": "A", "text": "Bội của tất cả các số đó."}, {"value": "B", "text": "Ước của tất cả các số đó."}, {"value": "C", "text": "Số lớn nhất trong các số đã cho."}, {"value": "D", "text": "Bội của ít nhất một trong các số đó."}], "answer": "A", "points": 1},
+      {"id": "q2", "prompt": "BCNN(6, 9) bằng:", "choices": [{"value": "A", "text": "3"}, {"value": "B", "text": "9"}, {"value": "C", "text": "18"}, {"value": "D", "text": "54"}], "answer": "C", "points": 1},
+      {"id": "q3", "prompt": "Khi tìm BCNN bằng cách phân tích ra thừa số nguyên tố, ta:", "choices": [{"value": "A", "text": "Chọn thừa số chung và lấy số mũ nhỏ nhất."}, {"value": "B", "text": "Chọn thừa số chung và riêng, lấy số mũ lớn nhất."}, {"value": "C", "text": "Chỉ chọn thừa số riêng."}, {"value": "D", "text": "Cộng tất cả các thừa số nguyên tố."}], "answer": "B", "points": 1},
+      {"id": "q4", "prompt": "Các bội chung dương nhỏ hơn 100 của 8 và 12 là:", "choices": [{"value": "A", "text": "12; 24; 36; 48"}, {"value": "B", "text": "24; 48; 72; 96"}, {"value": "C", "text": "8; 16; 24; 32"}, {"value": "D", "text": "24; 36; 48; 60"}], "answer": "B", "points": 1},
+      {"id": "q5", "prompt": "Mẫu chung nhỏ nhất của 5/8 và 7/12 là:", "choices": [{"value": "A", "text": "16"}, {"value": "B", "text": "20"}, {"value": "C", "text": "24"}, {"value": "D", "text": "48"}], "answer": "C", "points": 1}
+    ],
+    "written": [
+      {"id": "w1", "type": "manual", "title": "Tự luận 1. Liệt kê các bội", "prompt": "Tìm <span class='math-text'>BC(6, 8)</span> và <span class='math-text'>BCNN(6, 8)</span> bằng cách liệt kê; chỉ liệt kê các bội chung nhỏ hơn 100.", "points": 2, "expectedText": "B(6) = {0; 6; 12; 18; 24; 30; 36; 42; 48; 54; 60; 66; 72; 78; 84; 90; 96; ...}; B(8) = {0; 8; 16; 24; 32; 40; 48; 56; 64; 72; 80; 88; 96; ...}; các bội chung nhỏ hơn 100 là 0; 24; 48; 72; 96; BCNN(6, 8) = 24."},
+      {"id": "w2", "type": "manual", "title": "Tự luận 2. Tìm BCNN và quy đồng", "prompt": "1. Phân tích <span class='math-text'>18, 24, 30</span> ra thừa số nguyên tố.<br>2. Tìm <span class='math-text'>BCNN(18, 24, 30)</span>.<br>3. Quy đồng <span class='math-text'>5/18, 7/24, 11/30</span>.", "points": 2, "expectedText": "18 = 2 · 3²; 24 = 2³ · 3; 30 = 2 · 3 · 5; BCNN(18, 24, 30) = 2³ · 3² · 5 = 360; 5/18 = 100/360; 7/24 = 105/360; 11/30 = 132/360."},
+      {"id": "w3", "type": "manual", "title": "Vận dụng thực tế", "prompt": "Ba đèn tín hiệu nhấp nháy sau mỗi <span class='math-text'>8, 12, 18</span> giây. Lúc 19 giờ cả ba cùng sáng. Sau ít nhất bao nhiêu giây chúng lại cùng sáng và khi đó là mấy giờ?", "points": 1, "expectedText": "BCNN(8, 12, 18) = 72 giây = 1 phút 12 giây, nên cả ba đèn cùng sáng lại lúc 19 giờ 01 phút 12 giây."}
+    ]
+  }
+}

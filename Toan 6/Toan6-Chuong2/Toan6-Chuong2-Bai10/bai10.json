@@ -1,0 +1,59 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong2-Bai10",
+    "bodyLessonId": "toan6-chuong2-bai10",
+    "title": "Toán 6 - Chương 2 - Bài 10: Số nguyên tố",
+    "summary": "Nhận biết số nguyên tố, hợp số; phân tích một số ra thừa số nguyên tố và vận dụng vào các tình huống chia đều.",
+    "meta": {"Môn": "Toán", "Lớp": "6", "Chương": "2", "Bài": "10", "Mã bài": "Toan6-Chuong2-Bai10"},
+    "sources": ["lesson.md", "Bai10-PhanA.md", "Bai10-PhanB.md", "Bai10-PhanC.md"]
+  },
+  "partA": {
+    "lead": "Dựa vào <strong>số ước</strong> để phân biệt số nguyên tố, hợp số; dùng sơ đồ cây hoặc sơ đồ cột để viết một số thành tích các thừa số nguyên tố.",
+    "blocks": [
+      {"title": "1. Mục tiêu bài học", "listType": "ol", "items": ["Nhận biết khái niệm <strong>số nguyên tố</strong> và <strong>hợp số</strong>.", "Phân loại số tự nhiên lớn hơn <span class='math-text'>1</span> trong các trường hợp đơn giản.", "Biết <span class='math-text'>0</span> và <span class='math-text'>1</span> không là số nguyên tố, cũng không là hợp số.", "Phân tích số tự nhiên lớn hơn <span class='math-text'>1</span> ra thừa số nguyên tố.", "Vận dụng vào bài toán chia đều, xếp nhóm."]},
+      {"title": "2. Cách nhận biết", "listType": "ol", "items": ["Kiểm tra số đã cho có lớn hơn <span class='math-text'>1</span> không.", "Tìm các ước của số đó hoặc tìm một ước khác <span class='math-text'>1</span> và chính nó.", "Chỉ có hai ước là <span class='math-text'>1</span> và chính nó → số nguyên tố; có nhiều hơn hai ước → hợp số."]},
+      {"title": "3. Phân tích ra thừa số nguyên tố", "paragraphs": ["Là viết số tự nhiên lớn hơn <span class='math-text'>1</span> dưới dạng một tích các thừa số nguyên tố.", "Có thể dùng <strong>sơ đồ cây</strong> hoặc <strong>sơ đồ cột</strong>. Viết các thừa số từ bé đến lớn và dùng lũy thừa khi có thừa số lặp lại."]}
+    ],
+    "note": {"title": "Ghi nhớ", "text": "Số <span class='math-text'>2</span> là số nguyên tố nhỏ nhất và là số nguyên tố chẵn duy nhất. Số <span class='math-text'>0</span> và <span class='math-text'>1</span> không thuộc hai nhóm trên."},
+    "symbolTable": {"headers": ["Loại số", "Điều kiện", "Ví dụ"], "rows": [["Số nguyên tố", "Lớn hơn 1, đúng hai ước", "2; 3; 5; 7; 11"], ["Hợp số", "Lớn hơn 1, nhiều hơn hai ước", "4; 6; 8; 9; 10"], ["Không thuộc hai loại", "Số 0 và số 1", "0; 1"]]},
+    "example": {"title": "Ví dụ mẫu có hướng dẫn", "html": "<h4>Ví dụ 1. Phân loại số</h4><p><span class='math-text'>1975</span> chia hết cho <span class='math-text'>5</span> nên là hợp số. Số <span class='math-text'>17</span> chỉ có hai ước <span class='math-text'>1; 17</span> nên là số nguyên tố.</p><h4>Ví dụ 2. Sơ đồ cột</h4><pre class='math-line'>70 | 2\n35 | 5\n 7 | 7\n 1 |</pre><p>Vậy <span class='math-text'>70 = 2 · 5 · 7</span>.</p><h4>Ví dụ 3. Phân tích 945</h4><p><span class='math-text'>945 = 3 · 3 · 3 · 5 · 7 = 3³ · 5 · 7</span>.</p>"},
+    "mindMap": ["Số nguyên tố → đúng 2 ước", "Hợp số → hơn 2 ước", "0 và 1 → không thuộc hai loại", "Sơ đồ cây → tách thành tích", "Sơ đồ cột → chia cho 2, 3, 5, 7, ...", "Kết quả → chỉ còn thừa số nguyên tố"],
+    "quickChecks": [
+      {"type": "symbol", "id": "a-check-1", "title": "Câu 1. Số 23 thuộc nhóm nào?", "prompt": "Chọn kết luận đúng.", "label": "Kết luận", "options": ["Số nguyên tố", "Hợp số", "Không thuộc hai loại"], "answer": "Số nguyên tố", "explain": "Đúng. 23 chỉ có hai ước là 1 và 23."},
+      {"type": "symbol", "id": "a-check-2", "title": "Câu 2. Số 30 thuộc nhóm nào?", "prompt": "Chọn kết luận đúng.", "label": "Kết luận", "options": ["Số nguyên tố", "Hợp số", "Không thuộc hai loại"], "answer": "Hợp số", "explain": "Đúng. 30 có nhiều hơn hai ước, chẳng hạn 1; 2; 3; 5; 6; 10; 15; 30."}
+    ],
+    "mistakes": ["Cho rằng số <span class='math-text'>1</span> là số nguyên tố.", "Cho rằng mọi số lẻ đều là số nguyên tố.", "Dừng phân tích khi vẫn còn thừa số là hợp số.", "Viết <span class='math-text'>60 = 3 · 4 · 5</span> rồi kết luận đã phân tích xong, trong khi <span class='math-text'>4</span> chưa phải số nguyên tố.", "Quên viết các thừa số giống nhau dưới dạng lũy thừa."]
+  },
+  "partB": {
+    "lead": "Luyện nhận biết, phân loại, phân tích ra thừa số nguyên tố, sửa sai và giải bài toán thực tế.",
+    "referenceTable": {"headers": ["Nội dung", "Ghi nhớ"], "rows": [["Số nguyên tố", "Lớn hơn 1, chỉ có hai ước"], ["Hợp số", "Lớn hơn 1, có nhiều hơn hai ước"], ["0 và 1", "Không là số nguyên tố, không là hợp số"], ["Phân tích ra thừa số nguyên tố", "Mọi thừa số cuối cùng đều phải là số nguyên tố"]]},
+    "symbolGroup": {"title": "1. Nhận biết nhanh", "prompt": "Phân loại từng số.", "options": ["Số nguyên tố", "Hợp số", "Không thuộc hai loại"], "items": [{"id":"b-kind-1","label":"Số 0","answer":"Không thuộc hai loại"},{"id":"b-kind-2","label":"Số 1","answer":"Không thuộc hai loại"},{"id":"b-kind-3","label":"Số 2","answer":"Số nguyên tố"},{"id":"b-kind-4","label":"Số 9","answer":"Hợp số"},{"id":"b-kind-5","label":"Số 13","answer":"Số nguyên tố"},{"id":"b-kind-6","label":"Số 21","answer":"Hợp số"},{"id":"b-kind-7","label":"Số 29","answer":"Số nguyên tố"},{"id":"b-kind-8","label":"Số 35","answer":"Hợp số"}], "answerKey": ["Số nguyên tố: 2; 13; 29.", "Hợp số: 9; 21; 35.", "Không thuộc hai loại: 0; 1."]},
+    "practiceQuestions": [
+      {"id":"b-practice-1","title":"2. Lập bảng các ước","prompt":"<p>Tìm các ước, số ước và kết luận cho các số <span class='math-text'>2; 3; 4; 5; 6; 7; 8; 9; 10; 11</span>.</p>","guide":"2: 1; 2 — nguyên tố. 3: 1; 3 — nguyên tố. 4: 1; 2; 4 — hợp số. 5: 1; 5 — nguyên tố. 6: 1; 2; 3; 6 — hợp số. 7: 1; 7 — nguyên tố. 8: 1; 2; 4; 8 — hợp số. 9: 1; 3; 9 — hợp số. 10: 1; 2; 5; 10 — hợp số. 11: 1; 11 — nguyên tố."},
+      {"id":"b-practice-2","title":"3. Phân loại và giải thích","prompt":"<p>Phân loại các số <span class='math-text'>1930; 23; 41; 57</span> và giải thích.</p>","guide":"1930 là hợp số vì chia hết cho 2. 23 và 41 là số nguyên tố. 57 là hợp số vì chia hết cho 3."},
+      {"id":"b-practice-3","title":"4. Phân tích ra thừa số nguyên tố","prompt":"<p>Phân tích <span class='math-text'>24; 36; 70; 105; 48; 72; 84; 945</span>.</p>","guide":"24 = 2³ · 3; 36 = 2² · 3²; 70 = 2 · 5 · 7; 105 = 3 · 5 · 7; 48 = 2⁴ · 3; 72 = 2³ · 3²; 84 = 2² · 3 · 7; 945 = 3³ · 5 · 7."},
+      {"id":"b-practice-4","title":"5. Sửa sai","prompt":"<p>a) Việt viết <span class='math-text'>60 = 3 · 4 · 5</span>. Kết quả đúng hay sai? Sửa lại.</p><p>b) Tròn nói số <span class='math-text'>7</span> không phân tích được; Vuông nói kết quả phân tích là <span class='math-text'>7</span>. Ai đúng?</p>","guide":"a) Sai vì 4 không phải số nguyên tố; 60 = 2² · 3 · 5. b) Bạn Vuông đúng vì 7 là số nguyên tố."},
+      {"id":"b-practice-5","title":"6. Bài toán thực tế","prompt":"<p>a) Có thể cắm đều <span class='math-text'>11</span> bông hoa vào 2, 3, 4 hoặc 5 lọ không?</p><p>b) Có <span class='math-text'>30</span> quyển vở. Nêu ba cách chia đều thành các phần quà, mỗi phần nhiều hơn 1 quyển.</p>","guide":"a) Không, vì 11 không chia hết cho 2; 3; 4; 5. b) Ví dụ: 2 phần × 15 quyển; 3 phần × 10 quyển; 5 phần × 6 quyển."}
+    ],
+    "checkboxGame": {"id":"prime-game","title":"7. Trò chơi: Ai là số nguyên tố?","prompt":"Chọn tất cả các thẻ là số nguyên tố.","options":["12","13","15","17","19","21","25","29","31","33"],"answers":["13","17","19","29","31"],"correctMessage":"Chính xác! Các số nguyên tố là 13; 17; 19; 29; 31.","partialTemplate":"Em đã chọn đúng {correct}/{total} thẻ. Đáp án đủ: {answers}.","answerKey":"Các số nguyên tố là 13; 17; 19; 29; 31."},
+    "tipsTitle":"8. Gợi ý củng cố","tips":["Muốn chứng minh một số là hợp số, chỉ cần tìm một ước khác 1 và chính nó.","Muốn kết luận là số nguyên tố, phải chắc chắn số đó chỉ có hai ước.","Khi phân tích, các thừa số cuối cùng phải đều là số nguyên tố.","Với sơ đồ cột, lần lượt thử các số nguyên tố nhỏ nhất: 2; 3; 5; 7; ..."]
+  },
+  "test": {
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "Bài kiểm tra gồm 5 câu trắc nghiệm, 2 câu tự luận và 1 câu vận dụng. Thời gian làm bài: 15 phút.",
+    "rubric": [{"part":"Trắc nghiệm","description":"5 câu","points":5},{"part":"Tự luận","description":"2 câu","points":4},{"part":"Vận dụng","description":"1 câu","points":1}],
+    "multipleChoice": [
+      {"id":"q1","prompt":"Số nguyên tố là:","choices":[{"value":"A","text":"Số tự nhiên có đúng một ước."},{"value":"B","text":"Số tự nhiên lớn hơn 1, chỉ có hai ước là 1 và chính nó."},{"value":"C","text":"Số tự nhiên có nhiều hơn hai ước."},{"value":"D","text":"Số tự nhiên chia hết cho 2."}],"answer":"B","points":1},
+      {"id":"q2","prompt":"Số nào sau đây là số nguyên tố?","choices":[{"value":"A","text":"1"},{"value":"B","text":"9"},{"value":"C","text":"17"},{"value":"D","text":"21"}],"answer":"C","points":1},
+      {"id":"q3","prompt":"Số nào sau đây là hợp số?","choices":[{"value":"A","text":"2"},{"value":"B","text":"3"},{"value":"C","text":"11"},{"value":"D","text":"15"}],"answer":"D","points":1},
+      {"id":"q4","prompt":"Khẳng định nào đúng?","choices":[{"value":"A","text":"Số 1 là số nguyên tố."},{"value":"B","text":"Số 0 là hợp số."},{"value":"C","text":"Số 2 là số nguyên tố."},{"value":"D","text":"Mọi số lẻ đều là số nguyên tố."}],"answer":"C","points":1},
+      {"id":"q5","prompt":"Phân tích 36 ra thừa số nguyên tố được:","choices":[{"value":"A","text":"36 = 2 · 18"},{"value":"B","text":"36 = 3 · 12"},{"value":"C","text":"36 = 2² · 3²"},{"value":"D","text":"36 = 4 · 9"}],"answer":"C","points":1}
+    ],
+    "written": [
+      {"id":"w1","type":"manual","title":"Tự luận 1. Phân loại các số","prompt":"Trong các số <span class='math-text'>0; 1; 2; 9; 13; 17; 21; 29; 35</span>, số nào là số nguyên tố, số nào là hợp số?","points":2,"expectedText":"Số nguyên tố: 2; 13; 17; 29. Hợp số: 9; 21; 35. Số 0 và 1 không là số nguyên tố, không là hợp số."},
+      {"id":"w2","type":"manual","title":"Tự luận 2. Phân tích ra thừa số nguyên tố","prompt":"Phân tích các số <span class='math-text'>24; 70; 105; 945</span> ra thừa số nguyên tố.","points":2,"expectedText":"24 = 2³ · 3; 70 = 2 · 5 · 7; 105 = 3 · 5 · 7; 945 = 3³ · 5 · 7."},
+      {"id":"w3","type":"manual","title":"Vận dụng thực tế","prompt":"Cô giáo có <span class='math-text'>30</span> quyển vở muốn chia đều thành các phần quà. Mỗi phần có số vở như nhau và nhiều hơn 1 quyển. Nêu ba cách chia đều khác nhau.","points":1,"expectedText":"Có thể chia 2 phần, mỗi phần 15 quyển; 3 phần, mỗi phần 10 quyển; 5 phần, mỗi phần 6 quyển."}
+    ]
+  }
+}

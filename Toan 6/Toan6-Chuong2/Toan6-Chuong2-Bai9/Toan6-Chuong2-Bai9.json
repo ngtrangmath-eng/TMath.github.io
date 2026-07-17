@@ -1,0 +1,118 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong2-Bai9",
+    "bodyLessonId": "toan6-chuong2-bai9",
+    "storageKey": "toan6-chuong2-bai9-worksheet",
+    "title": "Toán 6 - Chương 2 - Bài 9: Dấu hiệu chia hết",
+    "summary": "Nhận biết dấu hiệu chia hết cho 2, 5, 9, 3; tìm chữ số còn thiếu và vận dụng vào tình huống thực tế.",
+    "meta": {"Môn": "Toán", "Lớp": "6", "Chương": "2", "Bài": "9", "Mã bài": "Toan6-Chuong2-Bai9"},
+    "sources": ["Bai9-PhanA.md", "Bai9-PhanB.md", "Bai9-PhanC.md"]
+  },
+  "partA": {
+    "title": "Phần A - Kiến thức trọng tâm",
+    "lead": "Dùng <strong>chữ số tận cùng</strong> hoặc <strong>tổng các chữ số</strong> để xét nhanh tính chia hết mà không cần thực hiện phép chia dài.",
+    "blocks": [
+      {
+        "title": "1. Mục tiêu bài học",
+        "listType": "ol",
+        "items": [
+          "Nhận biết dấu hiệu chia hết cho <span class='math-text'>2</span> và <span class='math-text'>5</span> dựa vào chữ số tận cùng.",
+          "Nhận biết dấu hiệu chia hết cho <span class='math-text'>9</span> và <span class='math-text'>3</span> dựa vào tổng các chữ số.",
+          "Xét nhanh một số có chia hết cho <span class='math-text'>2; 3; 5; 9</span> hay không.",
+          "Tìm chữ số còn thiếu và vận dụng vào bài toán chia nhóm, đóng gói, xếp hàng."
+        ]
+      },
+      {
+        "title": "2. Cách xét nhanh",
+        "listType": "ol",
+        "items": [
+          "Xác định cần xét chia hết cho số nào.",
+          "Chọn đúng dấu hiệu: chia hết cho <span class='math-text'>2, 5</span> thì xét chữ số tận cùng; chia hết cho <span class='math-text'>3, 9</span> thì xét tổng các chữ số.",
+          "Kết luận bằng kí hiệu <span class='math-text'>⋮</span> (chia hết) hoặc <span class='math-text'>∤</span> (không chia hết)."
+        ]
+      },
+      {
+        "title": "3. Tính chất thường dùng",
+        "paragraphs": [
+          "Trong một tích, nếu có một thừa số chia hết cho <span class='math-text'>m</span> thì tích đó chia hết cho <span class='math-text'>m</span>. Ví dụ: <span class='math-text'>18 · 25 ⋮ 9</span> vì <span class='math-text'>18 ⋮ 9</span>.",
+          "Khi xét một tổng hoặc hiệu, có thể xét từng số hạng. Ví dụ: <span class='math-text'>(1968 - 1930) ⋮ 2</span> vì cả <span class='math-text'>1968</span> và <span class='math-text'>1930</span> đều chia hết cho <span class='math-text'>2</span>."
+        ]
+      }
+    ],
+    "note": {"title": "Ghi nhớ", "text": "Một số chia hết cho <span class='math-text'>9</span> thì cũng chia hết cho <span class='math-text'>3</span>; chiều ngược lại không luôn đúng. Ví dụ: <span class='math-text'>123 ⋮ 3</span> nhưng <span class='math-text'>123 ∤ 9</span>."},
+    "symbolTable": {
+      "headers": ["Xét chia hết cho", "Dấu hiệu nhận biết", "Ví dụ chia hết", "Ví dụ không chia hết"],
+      "rows": [
+        ["2", "Chữ số tận cùng là 0; 2; 4; 6; 8", "248 ⋮ 2", "325 ∤ 2"],
+        ["5", "Chữ số tận cùng là 0 hoặc 5", "2025 ⋮ 5", "248 ∤ 5"],
+        ["9", "Tổng các chữ số chia hết cho 9", "234 ⋮ 9", "195 ∤ 9"],
+        ["3", "Tổng các chữ số chia hết cho 3", "123 ⋮ 3", "82 ∤ 3"]
+      ]
+    },
+    "example": {
+      "title": "Ví dụ mẫu có hướng dẫn",
+      "html": "<h4>Ví dụ 1. Xét chia hết cho 2 và 5</h4><p>Với <span class='math-text'>324; 248; 2020; 2025</span>: chia hết cho <span class='math-text'>2</span> là <span class='math-text'>324; 248; 2020</span>; chia hết cho <span class='math-text'>5</span> là <span class='math-text'>2020; 2025</span>.</p><h4>Ví dụ 2. Xét chia hết cho 3 và 9</h4><p>Với <span class='math-text'>450; 123; 2019; 2025</span>: tổng chữ số lần lượt là <span class='math-text'>9; 6; 12; 9</span>. Cả bốn số chia hết cho <span class='math-text'>3</span>; các số <span class='math-text'>450; 2025</span> chia hết cho <span class='math-text'>9</span>.</p><h4>Ví dụ 3. Tìm chữ số còn thiếu</h4><p>Để <span class='math-text'>12* ⋮ 9</span>, ta cần <span class='math-text'>1 + 2 + * = 9</span>, suy ra <span class='math-text'>* = 6</span>. Số cần tìm là <span class='math-text'>126</span>.</p>"
+    },
+    "mindMap": ["Chia hết cho 2 → tận cùng 0, 2, 4, 6, 8", "Chia hết cho 5 → tận cùng 0, 5", "Chia hết cho 3 → tổng chữ số ⋮ 3", "Chia hết cho 9 → tổng chữ số ⋮ 9", "Tìm * → lập tổng chữ số", "Thực tế → kiểm tra chia đều"],
+    "quickChecks": [
+      {"type": "symbol", "id": "a-check-1", "title": "Câu 1. Số 71001 có chia hết cho 9 không?", "prompt": "<span class='math-text'>71001 ... 9</span>", "options": ["⋮", "∤"], "answer": "⋮", "explain": "Đúng. 7 + 1 + 0 + 0 + 1 = 9 và 9 ⋮ 9."},
+      {"type": "symbol", "id": "a-check-2", "title": "Câu 2. Số 3456 có chia hết cho 5 không?", "prompt": "<span class='math-text'>3456 ... 5</span>", "options": ["⋮", "∤"], "answer": "∤", "explain": "Đúng. Chữ số tận cùng là 6, không phải 0 hoặc 5."}
+    ],
+    "mistakes": ["Nhầm dấu hiệu chia hết cho 2 với dấu hiệu chia hết cho 5.", "Quên tính tổng các chữ số khi xét chia hết cho 3 hoặc 9.", "Cho rằng số chia hết cho 3 thì luôn chia hết cho 9.", "Quên rằng * phải là một chữ số từ 0 đến 9.", "Để chữ số 0 đứng đầu khi lập số có nhiều chữ số.", "Quên kết luận chia đều được hay không chia đều được trong bài toán thực tế."]
+  },
+  "partB": {
+    "title": "Phần B - Luyện tập",
+    "lead": "Củng cố dấu hiệu chia hết cho 2, 5, 9, 3; xét nhanh, tìm chữ số còn thiếu và giải bài toán thực tế.",
+    "referenceTable": {
+      "headers": ["Xét chia hết cho", "Cần kiểm tra", "Kết luận chia hết khi"],
+      "rows": [["2", "Chữ số tận cùng", "0; 2; 4; 6; 8"], ["5", "Chữ số tận cùng", "0 hoặc 5"], ["9", "Tổng các chữ số", "Tổng chia hết cho 9"], ["3", "Tổng các chữ số", "Tổng chia hết cho 3"]]
+    },
+    "symbolGroup": {
+      "title": "1. Nhận biết nhanh: Điền kí hiệu ⋮ hoặc ∤.",
+      "options": ["⋮", "∤"],
+      "feedbackId": "b-symbol-feedback",
+      "successMessage": "Chính xác cả 8 câu!",
+      "partialTemplate": "Em đúng {correct}/{total} câu. Hãy chọn đúng dấu hiệu cho từng số.",
+      "items": [
+        {"id": "b-symbol-1", "label": "1. 324 ... 2", "answer": "⋮"}, {"id": "b-symbol-2", "label": "2. 248 ... 5", "answer": "∤"},
+        {"id": "b-symbol-3", "label": "3. 2020 ... 5", "answer": "⋮"}, {"id": "b-symbol-4", "label": "4. 2025 ... 2", "answer": "∤"},
+        {"id": "b-symbol-5", "label": "5. 450 ... 9", "answer": "⋮"}, {"id": "b-symbol-6", "label": "6. 123 ... 9", "answer": "∤"},
+        {"id": "b-symbol-7", "label": "7. 2019 ... 3", "answer": "⋮"}, {"id": "b-symbol-8", "label": "8. 82 ... 3", "answer": "∤"}
+      ],
+      "answerKey": ["324 ⋮ 2 vì tận cùng là 4.", "248 ∤ 5 vì tận cùng là 8.", "2020 ⋮ 5 vì tận cùng là 0.", "2025 ∤ 2 vì tận cùng là 5.", "450 ⋮ 9 vì 4 + 5 + 0 = 9.", "123 ∤ 9 vì 1 + 2 + 3 = 6.", "2019 ⋮ 3 vì 2 + 0 + 1 + 9 = 12.", "82 ∤ 3 vì 8 + 2 = 10."]
+    },
+    "practiceQuestions": [
+      {"id": "b-practice-1", "title": "2. Phân loại số", "prompt": "<p>a) Trong <span class='math-text'>324; 248; 2020; 2025</span>, số nào chia hết cho 2, số nào chia hết cho 5?</p><p>b) Trong <span class='math-text'>450; 123; 2019; 2025</span>, số nào chia hết cho 3, số nào chia hết cho 9?</p>", "guide": "a) Chia hết cho 2: 324; 248; 2020. Chia hết cho 5: 2020; 2025. b) Chia hết cho 3: 450; 123; 2019; 2025. Chia hết cho 9: 450; 2025."},
+      {"id": "b-practice-2", "title": "3. Xét tổng, hiệu không cần tính", "prompt": "<ol><li>1954 + 1975 có chia hết cho 2 không?</li><li>2020 - 938 có chia hết cho 2 không?</li><li>1945 + 2020 có chia hết cho 5 không?</li><li>1954 - 1930 có chia hết cho 5 không?</li></ol>", "guide": "1) Không, vì 1954 ⋮ 2 nhưng 1975 ∤ 2. 2) Có, vì 2020 và 938 đều chia hết cho 2. 3) Có, vì 1945 và 2020 đều chia hết cho 5. 4) Không, vì 1954 ∤ 5 nhưng 1930 ⋮ 5."},
+      {"id": "b-practice-3", "title": "4. Tìm chữ số còn thiếu", "prompt": "<p>a) Thay * để <span class='math-text'>12* ⋮ 9</span>.</p><p>b) Thay * để <span class='math-text'>345*</span> lần lượt chia hết cho 2, 3, 5, 9.</p>", "guide": "a) * = 6. b) Chia hết cho 2: * ∈ {0; 2; 4; 6; 8}; cho 3: * ∈ {0; 3; 6; 9}; cho 5: * ∈ {0; 5}; cho 9: * = 6."},
+      {"id": "b-practice-4", "title": "5. Lập số theo điều kiện", "prompt": "<p>a) Dùng <span class='math-text'>3; 0; 4</span>, viết các số có ba chữ số khác nhau chia hết cho 2; chia hết cho 5.</p><p>b) Từ <span class='math-text'>5; 0; 4; 2</span>, viết các số có ba chữ số khác nhau chia hết cho 3.</p>", "guide": "a) Các số lập được: 304; 340; 403; 430. Chia hết cho 2: 304; 340; 430. Chia hết cho 5: 340; 430. b) 504; 540; 405; 450; 204; 240; 402; 420."},
+      {"id": "b-practice-5", "title": "6. Bài toán thực tế", "prompt": "<p>a) Khối 6 có 290 học sinh. Có thể chia đều thành 9 nhóm không?</p><p>b) Có 162 học sinh, mỗi đội 9 học sinh. Có đội nào không đủ 9 học sinh không?</p>", "guide": "a) 2 + 9 + 0 = 11, mà 11 ∤ 9, nên không thể chia đều 290 học sinh thành 9 nhóm. b) 1 + 6 + 2 = 9, nên 162 ⋮ 9; chia đều được và không có đội nào thiếu học sinh."}
+    ],
+    "checkboxGame": {
+      "id": "game-baskets", "title": "7. Trò chơi: Chọn đúng rổ", "prompt": "Chọn tất cả các số chia hết cho <strong>9</strong>.",
+      "options": ["120", "135", "248", "315", "420", "507", "71001", "2025"], "answers": ["135", "315", "71001", "2025"],
+      "correctMessage": "Đúng. Rổ chia hết cho 9 gồm 135; 315; 71001; 2025.", "partialTemplate": "Em đã chọn đúng {correct}/{total} số. Đáp án đủ: {answers}.",
+      "answerKey": "Rổ A (chia hết cho 2): 120; 248; 420. Rổ B (chia hết cho 5): 120; 135; 315; 420; 2025. Rổ C (chia hết cho 3): 120; 135; 315; 420; 507; 71001; 2025. Rổ D (chia hết cho 9): 135; 315; 71001; 2025."
+    },
+    "tipsTitle": "8. Gợi ý củng cố",
+    "tips": ["Xét chia hết cho 2 hoặc 5: nhìn chữ số tận cùng.", "Xét chia hết cho 3 hoặc 9: tính tổng các chữ số.", "Một số chia hết cho 9 thì chắc chắn chia hết cho 3.", "Khi lập số có ba chữ số, hàng trăm không được là 0.", "Bài toán thực tế phải kết luận rõ chia đều được hay không."]
+  },
+  "test": {
+    "title": "Phần C - Kiểm tra đánh giá",
+    "lead": "Bài kiểm tra gồm 5 câu trắc nghiệm, 2 câu tự luận và 1 câu vận dụng. Thời gian làm bài: 15 phút.",
+    "durationMinutes": 15, "totalPoints": 10,
+    "rubric": [{"part": "Trắc nghiệm", "description": "5 câu", "points": 5}, {"part": "Tự luận", "description": "2 câu", "points": 4}, {"part": "Vận dụng", "description": "1 câu", "points": 1}],
+    "multipleChoice": [
+      {"id": "q1", "prompt": "Số nào sau đây chia hết cho 2?", "choices": [{"value": "A", "text": "1975"}, {"value": "B", "text": "2021"}, {"value": "C", "text": "1954"}, {"value": "D", "text": "1235"}], "answer": "C", "points": 1},
+      {"id": "q2", "prompt": "Số nào sau đây chia hết cho 5?", "choices": [{"value": "A", "text": "248"}, {"value": "B", "text": "1972"}, {"value": "C", "text": "1945"}, {"value": "D", "text": "1234"}], "answer": "C", "points": 1},
+      {"id": "q3", "prompt": "Số 2019 chia hết cho số nào dưới đây?", "choices": [{"value": "A", "text": "2"}, {"value": "B", "text": "3"}, {"value": "C", "text": "5"}, {"value": "D", "text": "9"}], "answer": "B", "points": 1},
+      {"id": "q4", "prompt": "Trong các số 450; 123; 2019; 2025, số nào chia hết cho 9?", "choices": [{"value": "A", "text": "450 và 123"}, {"value": "B", "text": "123 và 2019"}, {"value": "C", "text": "450 và 2025"}, {"value": "D", "text": "2019 và 2025"}], "answer": "C", "points": 1},
+      {"id": "q5", "prompt": "Thay * bởi chữ số nào để số 12* chia hết cho 9?", "choices": [{"value": "A", "text": "3"}, {"value": "B", "text": "4"}, {"value": "C", "text": "5"}, {"value": "D", "text": "6"}], "answer": "D", "points": 1}
+    ],
+    "written": [
+      {"id": "w1", "type": "manual", "answerLabel": "Tự luận 1", "title": "Tự luận 1. Trong 324; 248; 2020; 2025, số nào chia hết cho 2, số nào chia hết cho 5?", "points": 2, "expectedText": "Chia hết cho 2: 324; 248; 2020. Chia hết cho 5: 2020; 2025."},
+      {"id": "w2", "type": "manual", "answerLabel": "Tự luận 2", "title": "Tự luận 2. Thay * để số 345* lần lượt chia hết cho 2, 3, 5, 9.", "points": 2, "expectedText": "345* ⋮ 2 khi * ∈ {0; 2; 4; 6; 8}; 345* ⋮ 3 khi * ∈ {0; 3; 6; 9}; 345* ⋮ 5 khi * ∈ {0; 5}; 345* ⋮ 9 khi * = 6."},
+      {"id": "w3", "type": "manual", "answerLabel": "Vận dụng", "title": "Vận dụng. Có 162 học sinh, mỗi đội cần 9 học sinh. Có đội nào không đủ 9 học sinh không?", "points": 1, "expectedText": "1 + 6 + 2 = 9, mà 9 ⋮ 9, nên 162 ⋮ 9. Có thể chia đều; không có đội nào bị thiếu học sinh."}
+    ]
+  }
+}

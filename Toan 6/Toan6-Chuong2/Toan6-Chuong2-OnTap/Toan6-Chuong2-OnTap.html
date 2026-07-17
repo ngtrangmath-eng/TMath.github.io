@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Toán 6 - Chương 2 - Ôn tập</title>
+  <style>
+    :root{--ink:#14213d;--muted:#64748b;--blue:#2563eb;--sky:#eaf3ff;--green:#16a34a;--red:#dc2626;--amber:#f59e0b;--line:#dbe4f0;--paper:#fff;--bg:#f4f7fb}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}.shell{width:min(1120px,calc(100% - 28px));margin:24px auto 60px}.hero{padding:30px;border-radius:24px;background:linear-gradient(135deg,#143d8f,#2878d8);color:white;box-shadow:0 18px 45px #173b7730}.kicker{margin:0;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#bfdbfe}.hero h1{margin:6px 0;font-size:clamp(1.7rem,4vw,2.7rem);line-height:1.15}.hero p{margin:8px 0 18px}.meta,.form-grid,.cards{display:grid;gap:12px}.meta{grid-template-columns:repeat(5,1fr)}.meta div{padding:10px 12px;border:1px solid #ffffff35;border-radius:12px;background:#ffffff14}.meta span{display:block;font-size:.75rem;color:#bfdbfe}.panel{margin-top:18px;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 28px #14213d10}.form-grid{grid-template-columns:2fr 1fr 1.4fr}.field{display:grid;gap:6px;font-weight:700}.field input,.field textarea,textarea.answer{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:11px;font:inherit;background:white}.tabs{position:sticky;top:8px;z-index:5;display:flex;gap:8px;margin:18px 0;padding:8px;background:#ffffffed;border:1px solid var(--line);border-radius:16px;backdrop-filter:blur(8px)}button{border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:800;cursor:pointer}.tab{flex:1;background:#edf2f8;color:#334155}.tab.active,.primary{background:var(--blue);color:white}.secondary{background:#e2e8f0;color:#1e293b}.danger{background:#fee2e2;color:#991b1b}.part{display:none}.part.active{display:block}.section-title{margin:0 0 16px;color:#143d8f;font-size:1.55rem}.lead,.note,.feedback{padding:14px 16px;border-radius:12px}.lead{background:var(--sky);border-left:5px solid var(--blue)}.note{background:#fff7df;border-left:5px solid var(--amber)}h3{margin:28px 0 12px;color:#1d4ed8}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.card,.question{padding:17px;border:1px solid var(--line);border-radius:14px;background:#fff}.card h4,.question h4{margin:0 0 8px;color:#173b77}.formula{font-family:"Cambria Math",serif;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:2px 7px;white-space:nowrap}.map{display:flex;gap:8px;flex-wrap:wrap}.map span{padding:8px 11px;border-radius:999px;background:#e0edff;color:#174a9b;font-weight:700}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:white}th,td{padding:10px 12px;border:1px solid var(--line);vertical-align:top}th{background:#eaf3ff;text-align:left;color:#143d8f}.question{margin:12px 0}.options{display:grid;gap:8px;margin:10px 0}.options label{padding:9px 11px;border:1px solid var(--line);border-radius:10px;cursor:pointer}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.feedback{display:none;margin-top:10px;background:#eef2ff}.feedback.show{display:block}.feedback.good{background:#dcfce7;color:#166534}.feedback.bad{background:#fee2e2;color:#991b1b}.score{font-size:2.2rem;font-weight:900;color:#143d8f}.solution{margin-top:10px;padding:12px;border-radius:10px;background:#f8fafc;border:1px dashed #94a3b8}.solution[hidden]{display:none}.result-box{padding:20px;text-align:center;border-radius:16px;background:linear-gradient(135deg,#eaf3ff,#ecfdf5)}.muted{color:var(--muted)}@media(max-width:760px){.meta,.form-grid,.cards{grid-template-columns:1fr}.tabs{overflow:auto}.tab{min-width:130px}.shell{width:min(100% - 16px,1120px)}.panel{padding:16px}}
+    @media print{body{background:white}.shell{width:100%;margin:0}.hero{box-shadow:none}.tabs,.no-print{display:none!important}.part{display:block!important}.panel{box-shadow:none;break-inside:auto}.question,.card{break-inside:avoid}}
+  </style>
+</head>
+<body data-lesson-id="Toan6-Chuong2-OnTap">
+<main class="shell">
+  <header class="hero">
+    <p class="kicker">Phiếu học tập tương tác</p>
+    <h1>Toán 6 - Chương 2: Ôn tập Chương II</h1>
+    <p>Tính chia hết trong tập hợp các số tự nhiên: dấu hiệu chia hết, số nguyên tố, ƯCLN, BCNN và phân số.</p>
+    <div class="meta"><div><span>Môn</span>Toán</div><div><span>Lớp</span>6</div><div><span>Chương</span>2</div><div><span>Bài</span>Ôn tập</div><div><span>Mã bài</span>Toan6-Chuong2-OnTap</div></div>
+  </header>
+
+  <section class="panel">
+    <h2 class="section-title">Thông tin học sinh</h2>
+    <div class="form-grid"><label class="field">Họ và tên<input id="studentName" data-save placeholder="Nhập họ và tên"></label><label class="field">Lớp<input id="studentClass" data-save placeholder="Ví dụ: 6A1"></label><label class="field">Mã bài/lần kiểm tra<input id="studentCode" data-save value="Toan6-Chuong2-OnTap"></label></div>
+  </section>
+
+  <nav class="tabs no-print"><button class="tab active" data-tab="a">A. Kiến thức</button><button class="tab" data-tab="b">B. Luyện tập</button><button class="tab" data-tab="c">C. Kiểm tra</button><button class="tab" data-tab="result">Kết quả</button></nav>
+
+  <section id="a" class="part panel active">
+    <h2 class="section-title">Phần A - Kiến thức trọng tâm</h2>
+    <div class="lead"><strong>Mục tiêu:</strong> Hệ thống kiến thức Bài 8–12, chọn đúng ƯCLN hoặc BCNN, vận dụng vào bài toán thực tế và phép tính phân số.</div>
+    <h3>1. Bản đồ kiến thức</h3><div class="map"><span>Quan hệ chia hết</span><span>Dấu hiệu 2, 3, 5, 9</span><span>Số nguyên tố</span><span>Phân tích thừa số</span><span>ƯCLN</span><span>BCNN</span><span>Phân số</span></div>
+    <h3>2. Quan hệ và dấu hiệu chia hết</h3>
+    <div class="cards"><article class="card"><h4>Quan hệ chia hết</h4><p>Nếu tồn tại <span class="formula">k ∈ N</span> để <span class="formula">a = k · b</span> (<span class="formula">b ≠ 0</span>) thì <span class="formula">a ⋮ b</span>; a là bội của b, b là ước của a.</p><p>Nếu <span class="formula">a ⋮ m</span> và <span class="formula">b ⋮ m</span> thì <span class="formula">(a ± b) ⋮ m</span> (hiệu có nghĩa trong N).</p></article><article class="card"><h4>Dấu hiệu</h4><table><tr><th>Chia cho</th><th>Dấu hiệu</th></tr><tr><td>2</td><td>Tận cùng 0, 2, 4, 6, 8</td></tr><tr><td>5</td><td>Tận cùng 0 hoặc 5</td></tr><tr><td>3</td><td>Tổng chữ số chia hết cho 3</td></tr><tr><td>9</td><td>Tổng chữ số chia hết cho 9</td></tr></table></article></div>
+    <h3>3. Số nguyên tố và phân tích thừa số nguyên tố</h3>
+    <div class="cards"><article class="card"><h4>Nhận biết</h4><p>Số nguyên tố lớn hơn 1 và chỉ có hai ước: 1 và chính nó. Hợp số lớn hơn 1 và có nhiều hơn hai ước.</p><div class="note"><strong>Chú ý:</strong> 0 và 1 không là số nguyên tố, cũng không là hợp số.</div></article><article class="card"><h4>Phân tích</h4><p>Viết số thành tích các thừa số nguyên tố, theo thứ tự tăng dần và dùng lũy thừa cho thừa số lặp.</p><p><span class="formula">120 = 2³ · 3 · 5</span></p></article></div>
+    <h3>4. ƯCLN và BCNN</h3>
+    <div class="cards"><article class="card"><h4>Tìm ƯCLN</h4><ol><li>Phân tích các số ra thừa số nguyên tố.</li><li>Chọn thừa số chung.</li><li>Lấy số mũ nhỏ nhất.</li></ol><p><span class="formula">ƯCLN(36,54)=2·3²=18</span></p></article><article class="card"><h4>Tìm BCNN</h4><ol><li>Phân tích các số ra thừa số nguyên tố.</li><li>Chọn thừa số chung và riêng.</li><li>Lấy số mũ lớn nhất.</li></ol><p><span class="formula">BCNN(36,54)=2²·3³=108</span></p></article></div>
+    <div class="note"><strong>Quan hệ:</strong> Với a, b khác 0: <span class="formula">ƯCLN(a,b) · BCNN(a,b) = a · b</span>.</div>
+    <h3>5. Chọn đúng phương pháp</h3>
+    <div class="table-wrap"><table><thead><tr><th>Dấu hiệu đề bài</th><th>Dùng</th></tr></thead><tbody><tr><td>Chia thành nhiều nhóm nhất; cắt đoạn dài nhất; rút gọn tối giản</td><td><strong>ƯCLN</strong></td></tr><tr><td>Cùng lặp lại sớm nhất; số lượng ít nhất chia hết cho nhiều số; quy đồng mẫu</td><td><strong>BCNN</strong></td></tr></tbody></table></div>
+    <h3>6. Phân số</h3><article class="card"><p>Rút gọn phân số bằng cách chia tử và mẫu cho ƯCLN. Quy đồng thường chọn BCNN của các mẫu.</p><p><span class="formula">33/77 = 3/7</span> &nbsp; <span class="formula">5/12 + 3/16 = 20/48 + 9/48 = 29/48</span></p></article>
+    <h3>7. Tự kiểm tra nhanh</h3>
+    <div class="question"><h4>Câu A1. Số 2 025 chia hết cho những số nào trong 2, 3, 5, 9?</h4><input class="field" id="a1" data-save placeholder="Nhập các số, cách nhau bằng dấu phẩy"><div class="actions"><button class="primary check-short" data-input="a1" data-answer="3,5,9" data-fb="fba1">Kiểm tra</button></div><div id="fba1" class="feedback"></div></div>
+    <div class="question"><h4>Câu A2. Phân tích 120 ra thừa số nguyên tố.</h4><input class="field" id="a2" data-save placeholder="Nhập bài làm của em"><div class="actions"><button class="primary check-short" data-input="a2" data-answer="2^3*3*5|2³*3*5" data-fb="fba2">Kiểm tra</button></div><div id="fba2" class="feedback"></div></div>
+    <div class="note"><strong>Lỗi cần tránh:</strong> nhầm 0, 1 là số nguyên tố; lấy số mũ lớn nhất khi tìm ƯCLN; bỏ thừa số riêng khi tìm BCNN; chọn nhầm ƯCLN/BCNN; rút gọn phân số chưa tối giản.</div>
+    <div class="actions no-print"><button class="primary jump" data-go="b">Sang phần luyện tập</button></div>
+  </section>
+
+  <section id="b" class="part panel">
+    <h2 class="section-title">Phần B - Luyện tập</h2><div class="lead"><strong>Mục đích:</strong> Luyện tổng hợp các dạng từ Bài 2.53 đến 2.62. Hãy làm trước, sau đó mới mở đáp án.</div>
+    <h3>1. Bảng kiến thức cần dùng</h3><div class="table-wrap"><table><tr><th>Dạng</th><th>Kiến thức</th></tr><tr><td>Chia hết 2, 5</td><td>Chữ số tận cùng</td></tr><tr><td>Chia hết 3, 9</td><td>Tổng các chữ số</td></tr><tr><td>Chia nhiều nhóm nhất</td><td>ƯCLN</td></tr><tr><td>Cùng xảy ra sớm nhất</td><td>BCNN</td></tr><tr><td>Rút gọn / quy đồng</td><td>ƯCLN / BCNN</td></tr></table></div>
+    <div id="practice"></div>
+    <h3>12. Bài tập bổ sung tổng hợp</h3>
+    <div class="question"><h4>Bổ sung 1. Với 315; 420; 729; 1 250, xác định số chia hết cho 2, 3, 5, 9.</h4><textarea class="answer" data-save></textarea><button class="secondary reveal">Xem đáp án</button><div class="solution" hidden>2: 420; 1 250. 3: 315; 420; 729. 5: 315; 420; 1 250. 9: 315; 729.</div></div>
+    <div class="question"><h4>Bổ sung 2. Phân tích 180, 252 rồi tìm ƯCLN và BCNN.</h4><textarea class="answer" data-save></textarea><button class="secondary reveal">Xem đáp án</button><div class="solution" hidden>180 = 2²·3²·5; 252 = 2²·3²·7; ƯCLN = 36; BCNN = 1 260.</div></div>
+    <div class="question"><h4>Bổ sung 3. Ba chuông reo sau mỗi 12, 18, 30 phút; cùng reo lúc 7 giờ. Khi nào cùng reo lại?</h4><textarea class="answer" data-save></textarea><button class="secondary reveal">Xem đáp án</button><div class="solution" hidden>BCNN(12,18,30) = 180 phút = 3 giờ; lần tiếp theo lúc 10 giờ.</div></div>
+    <div class="question"><h4>Bổ sung 4. Lớp có 24 nam, 36 nữ. Chia nhiều nhóm nhất sao cho mỗi nhóm có số nam, nữ bằng nhau.</h4><textarea class="answer" data-save></textarea><button class="secondary reveal">Xem đáp án</button><div class="solution" hidden>ƯCLN(24,36)=12; được 12 nhóm, mỗi nhóm 2 nam và 3 nữ.</div></div>
+    <h3>13. Bài tập sửa sai</h3><div class="question"><h4>An kết luận ƯCLN(36,54)=2²·3³=108. Bạn sai ở đâu?</h4><textarea class="answer" data-save></textarea><button class="secondary reveal">Xem đáp án</button><div class="solution" hidden>Khi tìm ƯCLN phải lấy số mũ nhỏ nhất. ƯCLN(36,54)=2·3²=18; 108 là BCNN.</div></div>
+    <div class="actions no-print"><button class="primary jump" data-go="c">Sang phần kiểm tra</button></div>
+  </section>
+
+  <section id="c" class="part panel">
+    <h2 class="section-title">Phần C - Kiểm tra đánh giá</h2><div class="lead"><strong>Thời gian:</strong> 30 phút · <strong>Tổng điểm:</strong> 10 · Trắc nghiệm 5 điểm, tự luận 4 điểm, vận dụng 1 điểm.</div>
+    <h3>1. Trắc nghiệm (5 điểm)</h3><div id="quiz"></div>
+    <h3>2. Tự luận 1 (2 điểm)</h3><div class="question"><h4>Cho x ∈ {50; 108; 189; 1 234; 2 019; 2 020}. a) Tìm x để x − 12 chia hết cho 2. b) Tìm x để x + 36 chia hết cho 9.</h4><textarea id="essay1" class="answer" data-save rows="5" placeholder="Trình bày bài làm"></textarea></div>
+    <h3>3. Tự luận 2 (2 điểm)</h3><div class="question"><h4>a) Tính 400 : 5 + 40 rồi phân tích kết quả. b) Tìm ƯCLN(21,98), BCNN(21,98). c) Tính 5/12 + 3/16.</h4><textarea id="essay2" class="answer" data-save rows="6" placeholder="Trình bày bài làm"></textarea></div>
+    <h3>4. Vận dụng (1 điểm)</h3><div class="question"><h4>Có 12 cam, 18 xoài, 30 bơ. Chia vào nhiều túi giống nhau nhất. Có bao nhiêu túi và mỗi túi có bao nhiêu quả mỗi loại?</h4><textarea id="essay3" class="answer" data-save rows="5" placeholder="Trình bày bài làm"></textarea></div>
+    <div class="actions no-print"><button id="submitQuiz" class="primary">Nộp bài</button><button id="resetQuiz" class="danger">Làm lại</button><button onclick="window.print()" class="secondary">In phiếu</button></div><div id="submitFeedback" class="feedback"></div>
+  </section>
+
+  <section id="result" class="part panel">
+    <h2 class="section-title">Kết quả học tập</h2><div class="result-box"><div class="muted">Điểm tự động phần trắc nghiệm</div><div id="score" class="score">Chưa nộp bài</div><p id="remark">Hoàn thành bài kiểm tra để xem nhận xét.</p></div>
+    <h3>Đáp án và hướng dẫn tự chấm</h3><div id="answerKey" class="card"><p>Đáp án chỉ hiển thị sau khi nộp bài.</p></div>
+    <div class="note"><strong>Tự chấm tự luận:</strong> Tự luận 1: 2 điểm; Tự luận 2: 2 điểm; Vận dụng: 1 điểm. Cộng với điểm trắc nghiệm để được tổng điểm 10.</div>
+    <div class="actions no-print"><button onclick="window.print()" class="primary">In / lưu PDF</button><button class="secondary jump" data-go="c">Quay lại bài kiểm tra</button></div>
+  </section>
+</main>
+<script>
+const STORE='Toan6-Chuong2-OnTap-v1';
+const practice=[
+['2. Bài 2.53 — Tìm số thỏa điều kiện chia hết','Với x ∈ {50; 108; 189; 1 234; 2 019; 2 020}, tìm x sao cho: (1) x−12 ⋮2; (2) x−27 ⋮3; (3) x+20 ⋮5; (4) x+36 ⋮9.','(1) 50; 108; 1 234; 2 020. (2) 108; 189; 2 019. (3) 50; 2 020. (4) 108; 189.'],
+['3. Bài 2.54 — Tính và phân tích','(1) 14² + 5² + 2². (2) 400 : 5 + 40.','(1) 225 = 3²·5². (2) 120 = 2³·3·5.'],
+['4. Bài 2.55 — Tìm ƯCLN, BCNN','Tìm ƯCLN và BCNN của: (1) 21 và 98; (2) 36 và 54.','(1) ƯCLN=7, BCNN=294. (2) ƯCLN=18, BCNN=108.'],
+['5. Bài 2.56 — Rút gọn phân số','Rút gọn 27/123 và 33/77 về tối giản.','27/123=9/41; 33/77=3/7.'],
+['6. Bài 2.57 — Tính phân số','Tính: (1) 5/12 + 3/16; (2) 4/15 − 2/9.','(1) 29/48. (2) 2/45.'],
+['7. Bài 2.58 — Chia túi trái cây','Có 12 cam, 18 xoài, 30 bơ. Chia nhiều túi giống nhau nhất.','ƯCLN(12,18,30)=6. Có 6 túi; mỗi túi 2 cam, 3 xoài, 5 bơ.'],
+['8. Bài 2.59 — Lịch bảo dưỡng','Thay dầu 3 tháng/lần, xoay lốp 6 tháng/lần; cùng làm tháng 4. Khi nào cùng làm lại?','BCNN(3,6)=6 tháng; lần tiếp theo vào tháng 10 cùng năm.'],
+['9. Bài 2.60 — Hai số nguyên tố','Biết 79 và 97 là hai số nguyên tố. Tìm ƯCLN và BCNN.','ƯCLN(79,97)=1; BCNN=79·97=7 663.'],
+['10. Bài 2.61 — Tìm số mũ','Hai số 3^a·5² và 3³·5^b có ƯCLN=3³·5², BCNN=3⁴·5³. Tìm a,b.','a=4, b=3.'],
+['11. Bài 2.62 — Bài toán đàn vịt','Số vịt <200; xếp 2 không vừa; chia 3 dư 1; xếp 4 không tròn; chia 5 dư 4; chia hết cho 7. Tìm số vịt.','Số vịt là 49. Kiểm tra: chia 2 dư 1, chia 3 dư 1, chia 4 dư 1, chia 5 dư 4 và chia hết cho 7.']
+];
+const quiz=[
+['Câu 1. Số nào chia hết cho cả 3 và 9?',['2 019','2 025','1 234','1 250'],'B'],
+['Câu 2. Khẳng định nào đúng?',['Số 1 là số nguyên tố','Số 0 là hợp số','Số 17 là số nguyên tố','Số 21 là số nguyên tố'],'C'],
+['Câu 3. ƯCLN(36,54) bằng:',['6','9','18','108'],'C'],
+['Câu 4. BCNN(12,18) bằng:',['6','24','36','216'],'C'],
+['Câu 5. Phân số 33/77 tối giản thành:',['11/21','3/7','6/14','33/77'],'B']
+];
+document.querySelector('#practice').innerHTML=practice.map((x,i)=>`<div class="question"><h4>${x[0]}</h4><p>${x[1]}</p><textarea class="answer" data-save data-practice="${i}" rows="4" placeholder="Nhập bài làm"></textarea><div class="actions"><button class="secondary reveal">Xem đáp án</button></div><div class="solution" hidden>${x[2]}</div></div>`).join('');
+document.querySelector('#quiz').innerHTML=quiz.map((q,i)=>`<div class="question"><h4>${q[0]}</h4><div class="options">${q[1].map((o,j)=>`<label><input type="radio" name="q${i}" value="${'ABCD'[j]}" data-save> <strong>${'ABCD'[j]}.</strong> ${o}</label>`).join('')}</div><div id="qfb${i}" class="feedback"></div></div>`).join('');
+function openTab(id){document.querySelectorAll('.part').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.tab===id));scrollTo({top:document.querySelector('.tabs').offsetTop-8,behavior:'smooth'});}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>openTab(b.dataset.tab));document.querySelectorAll('.jump').forEach(b=>b.onclick=()=>openTab(b.dataset.go));
+document.addEventListener('click',e=>{if(e.target.classList.contains('reveal')){const s=e.target.closest('.question').querySelector('.solution');s.hidden=!s.hidden;e.target.textContent=s.hidden?'Xem đáp án':'Ẩn đáp án';}});
+const norm=s=>String(s||'').toLowerCase().replace(/\s+/g,'').replace(/[×·]/g,'*').replace(/;/g,',');
+document.querySelectorAll('.check-short').forEach(b=>b.onclick=()=>{const v=norm(document.getElementById(b.dataset.input).value);const ok=b.dataset.answer.split('|').map(norm).includes(v);const f=document.getElementById(b.dataset.fb);f.className='feedback show '+(ok?'good':'bad');f.textContent=ok?'Chính xác!':'Chưa đúng, em hãy xem lại kiến thức phía trên.';});
+function save(){const data={};document.querySelectorAll('[data-save]').forEach((x,i)=>{const k=x.id||x.name||x.dataset.practice||i;if(x.type==='radio'){if(x.checked)data[k]=x.value}else data[k]=x.value});localStorage.setItem(STORE,JSON.stringify(data));}
+function load(){let d={};try{d=JSON.parse(localStorage.getItem(STORE)||'{}')}catch{}document.querySelectorAll('[data-save]').forEach((x,i)=>{const k=x.id||x.name||x.dataset.practice||i;if(d[k]===undefined)return;if(x.type==='radio')x.checked=x.value===d[k];else x.value=d[k]});}
+document.addEventListener('input',save);document.addEventListener('change',save);load();
+document.querySelector('#submitQuiz').onclick=()=>{let pts=0;quiz.forEach((q,i)=>{const v=document.querySelector(`input[name=q${i}]:checked`)?.value;const ok=v===q[2];if(ok)pts++;const f=document.querySelector(`#qfb${i}`);f.className='feedback show '+(ok?'good':'bad');f.textContent=ok?'Đúng: +1 điểm.':`Chưa đúng. Đáp án: ${q[2]}.`;});const score=pts;document.querySelector('#score').textContent=`${score}/5 điểm trắc nghiệm`;document.querySelector('#remark').textContent=score===5?'Em nắm rất chắc phần kiến thức cơ bản.':score>=3?'Em hiểu phần lớn kiến thức; hãy xem lại các câu sai.':'Em cần ôn lại kiến thức trọng tâm trước khi làm lại.';document.querySelector('#answerKey').innerHTML=`<p><strong>Trắc nghiệm:</strong> 1-B; 2-C; 3-C; 4-C; 5-B.</p><p><strong>Tự luận 1 (2đ):</strong> a) 50; 108; 1 234; 2 020 (1đ). b) 108; 189 (1đ).</p><p><strong>Tự luận 2 (2đ):</strong> 120=2³·3·5 (0,5đ); ƯCLN=7 (0,5đ); BCNN=294 (0,5đ); 29/48 (0,5đ).</p><p><strong>Vận dụng (1đ):</strong> xác định dùng ƯCLN (0,25đ); ƯCLN=6 (0,25đ); 6 túi (0,25đ); mỗi túi 2 cam, 3 xoài, 5 bơ (0,25đ).</p>`;document.querySelector('#submitFeedback').className='feedback show good';document.querySelector('#submitFeedback').textContent='Đã chấm phần trắc nghiệm. Em hãy tự đối chiếu phần tự luận theo hướng dẫn ở trang Kết quả.';localStorage.setItem(STORE+'-score',String(score));setTimeout(()=>openTab('result'),400);};
+document.querySelector('#resetQuiz').onclick=()=>{if(!confirm('Xóa toàn bộ bài làm và làm lại từ đầu?'))return;localStorage.removeItem(STORE);localStorage.removeItem(STORE+'-score');location.reload();};
+</script>
+</body></html>
