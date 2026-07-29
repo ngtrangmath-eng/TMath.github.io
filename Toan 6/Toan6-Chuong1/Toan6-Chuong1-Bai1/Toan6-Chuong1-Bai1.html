@@ -275,6 +275,30 @@
       padding: 16px;
     }
 
+    .resource-card {
+      background: var(--soft-blue);
+      border-left: 5px solid var(--primary);
+      margin: 16px 0;
+    }
+
+    .song-card {
+      background: var(--soft-amber);
+      border-left-color: #d1921e;
+    }
+
+    audio {
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    video {
+      background: #000;
+      border-radius: var(--radius);
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+    }
+
     .content-block ul,
     .content-block ol,
     .question-card ul,
@@ -796,6 +820,14 @@
         <strong>Giới thiệu:</strong> Bài học giúp học sinh nhận biết tập hợp, gọi tên phần tử, sử dụng đúng kí hiệu <span class="math-text">∈</span>, <span class="math-text">∉</span> và viết tập hợp bằng dấu ngoặc nhọn <span class="math-text">{ }</span>.
       </div>
 
+      <div class="content-block resource-card">
+        <h3>Video mở đầu</h3>
+        <p>Xem video ngắn để làm quen với khái niệm tập hợp trước khi bắt đầu bài học.</p>
+        <video controls preload="metadata" playsinline src="videomodau.mp4">
+          Trình duyệt của em chưa hỗ trợ phát video trực tiếp. Hãy mở file videomodau.mp4 trong thư mục bài học.
+        </video>
+      </div>
+
       <div class="content-grid">
         <article class="content-block">
           <h3>1. Mục tiêu bài học</h3>
@@ -909,6 +941,14 @@
           <li>Viết lặp lại một phần tử nhiều lần.</li>
           <li>Bỏ sót số <span class="math-text">0</span> khi viết tập hợp các số tự nhiên nhỏ hơn một số đã cho.</li>
         </ul>
+      </div>
+
+      <div class="content-block resource-card song-card">
+        <h3>8. Bài hát củng cố</h3>
+        <p><strong>Tập Hợp Vui Ghê</strong> giúp em ôn lại khái niệm tập hợp và phần tử bằng âm nhạc.</p>
+        <audio controls preload="metadata" src="T%E1%BA%ADp%20H%E1%BB%A3p%20Vui%20Gh%C3%AA.mp3">
+          Trình duyệt của em chưa hỗ trợ phát âm thanh trực tiếp. Hãy mở file Tập Hợp Vui Ghê.mp3 trong thư mục bài học.
+        </audio>
       </div>
 
       <div class="action-row">
