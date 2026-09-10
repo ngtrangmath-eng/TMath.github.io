@@ -1338,6 +1338,7 @@
         hasBraces: Boolean(insideMatch),
         name: (text.match(/^\s*([A-Za-zÀ-ỹ])\s*=/) || [])[1] || "",
         items: splitItems(inside),
+        hasValidSeparators: !inside.includes(","),
       };
     }
 
@@ -1364,7 +1365,7 @@
       const expectedNameNormalized = normalizeToken(expectedName);
       const hasName = normalizeToken(parsed.name) === expectedNameNormalized;
       const hasItems = sameSet(parsed.items, expectedItems);
-      const hasNotation = parsed.hasBraces && hasName;
+      const hasNotation = parsed.hasBraces && hasName && parsed.hasValidSeparators;
 
       if (maxPoints === 0) {
         return {
@@ -1372,6 +1373,7 @@
           status: hasItems && hasNotation ? "correct" : hasItems ? "partial" : "incorrect",
           hasItems,
           hasNotation,
+          hasValidSeparators: parsed.hasValidSeparators,
         };
       }
 
@@ -1381,6 +1383,7 @@
           status: hasItems && hasNotation ? "correct" : hasItems ? "partial" : "incorrect",
           hasItems,
           hasNotation,
+          hasValidSeparators: parsed.hasValidSeparators,
         };
       }
 
@@ -1392,6 +1395,7 @@
         status: points === maxPoints ? "correct" : points > 0 ? "partial" : "incorrect",
         hasItems,
         hasNotation,
+        hasValidSeparators: parsed.hasValidSeparators,
       };
     }
 
@@ -1421,6 +1425,8 @@
         let message = "";
         if (result.status === "correct") {
           message = "Đúng. Em đã xác định đúng các phần tử và trình bày đúng dạng tập hợp.";
+        } else if (!result.hasValidSeparators) {
+          message = "Các phần tử của tập hợp phải được ngăn cách bằng dấu chấm phẩy (;), không dùng dấu phẩy (,).";
         } else if (result.hasItems) {
           message = guideOnly
             ? button.getAttribute("data-partial-guide")
@@ -1588,9 +1594,11 @@
         writtenDetails.push({
           label: card.querySelector(".question-title").textContent,
           answer: field.value || "Chưa làm",
-          guidance: result.hasItems
-            ? formatNotationGuidance(card.dataset.name)
-            : formatSetGuidance(card.dataset.name),
+          guidance: !result.hasValidSeparators
+            ? "Các phần tử của tập hợp phải được ngăn cách bằng dấu chấm phẩy (;), không dùng dấu phẩy (,)."
+            : result.hasItems
+              ? formatNotationGuidance(card.dataset.name)
+              : formatSetGuidance(card.dataset.name),
           points: result.points,
           maxPoints,
           status: result.status,
