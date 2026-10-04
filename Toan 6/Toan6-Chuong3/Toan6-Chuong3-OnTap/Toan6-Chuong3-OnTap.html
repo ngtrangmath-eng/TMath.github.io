@@ -1,0 +1,1852 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="data:," />
+  <title>Toán 6 - Chương 3 - Ôn tập Chương III</title>
+  <script src="../../../assets/mathjax-loader.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../../../js/supabase-config.js"></script>
+  <script src="../../../js/supabase-client.js"></script>
+  <script src="../../../js/progress-sync.js"></script>
+  <script src="../../../assets/assessment-auth-guard.js" defer></script>
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --surface: #ffffff;
+      --ink: #21312b;
+      --muted: #61706a;
+      --line: #d9ded7;
+      --primary: #216e6a;
+      --primary-dark: #164f4c;
+      --accent: #b04f2d;
+      --soft-green: #e5f2ee;
+      --soft-amber: #fff2d7;
+      --soft-blue: #e9f0f8;
+      --soft-red: #fde8e3;
+      --success: #1e7a44;
+      --warning: #9a5c00;
+      --danger: #b33a2f;
+      --shadow: 0 18px 45px rgba(31, 42, 35, 0.1);
+      --radius: 8px;
+      font-family: Arial, "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      border-radius: var(--radius);
+      cursor: pointer;
+      min-height: 42px;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(176, 79, 45, 0.28);
+      outline-offset: 2px;
+    }
+
+    .app-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #ffffff 0%, #edf5f3 56%, #fff4df 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .header-kicker {
+      color: var(--primary-dark);
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin: 0 0 6px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: #143b38;
+      font-size: 2rem;
+      line-height: 1.18;
+      margin: 0 0 14px;
+    }
+
+    .header-summary {
+      color: var(--muted);
+      margin: 0;
+      max-width: 760px;
+    }
+
+    .meta-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+
+    .meta-label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .student-info,
+    .lesson-nav,
+    .part-panel,
+    .result-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(31, 42, 35, 0.06);
+      margin-top: 18px;
+    }
+
+    .student-info {
+      padding: 20px;
+    }
+
+    .section-title {
+      align-items: center;
+      display: flex;
+      gap: 10px;
+      margin: 0 0 14px;
+    }
+
+    .section-title::before {
+      background: var(--accent);
+      border-radius: 999px;
+      content: "";
+      display: inline-block;
+      height: 12px;
+      width: 12px;
+    }
+
+    h2,
+    h3,
+    h4 {
+      line-height: 1.25;
+    }
+
+    h2 {
+      color: #143b38;
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      color: #214f4c;
+      font-size: 1.12rem;
+      margin: 22px 0 10px;
+    }
+
+    h4 {
+      font-size: 1rem;
+      margin: 0 0 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    label {
+      color: #293a35;
+      display: block;
+      font-weight: 700;
+    }
+
+    .field-label {
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    select,
+    textarea {
+      background: #fffefa;
+      border: 1px solid #cfd7d0;
+      border-radius: var(--radius);
+      color: var(--ink);
+      min-height: 42px;
+      padding: 10px 12px;
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    textarea::placeholder {
+      color: #60706b;
+      opacity: 0.76;
+    }
+
+    textarea:focus::placeholder {
+      opacity: 0.55;
+    }
+
+    .lesson-nav {
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .tab-button {
+      background: transparent;
+      color: var(--primary-dark);
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tab-button[aria-selected="true"] {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .part-panel {
+      display: none;
+      padding: 24px;
+    }
+
+    .part-panel.active {
+      display: block;
+    }
+
+    .lead-box,
+    .note-box,
+    .mind-map,
+    .score-summary {
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .lead-box {
+      background: var(--soft-green);
+      border-left: 5px solid var(--primary);
+      margin-bottom: 18px;
+    }
+
+    .note-box {
+      background: var(--soft-amber);
+      border-left: 5px solid #d1921e;
+      margin: 16px 0;
+    }
+
+    .content-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .content-block {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .content-block ul,
+    .content-block ol,
+    .question-card ul,
+    .question-card ol {
+      padding-left: 22px;
+    }
+
+    .content-block li,
+    .question-card li {
+      margin: 7px 0;
+    }
+
+    .symbol-table,
+    .score-table {
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      width: 100%;
+    }
+
+    .symbol-table th,
+    .symbol-table td,
+    .score-table th,
+    .score-table td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      vertical-align: middle;
+    }
+
+    .symbol-table th,
+    .score-table th {
+      background: #edf5f3;
+      color: #173f3c;
+      text-align: left;
+    }
+
+    .score-table td:last-child,
+    .score-table th:last-child {
+      text-align: center;
+      width: 100px;
+    }
+
+    code,
+    .math-text {
+      background: #f2f5f3;
+      border-radius: 6px;
+      color: #132f2d;
+      display: inline-block;
+      font-family: "Courier New", monospace;
+      padding: 2px 6px;
+    }
+
+    .example-steps {
+      background: var(--soft-blue);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+    }
+
+    .mind-map {
+      background: #fcfbf7;
+      border: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin: 12px 0 18px;
+    }
+
+    .mind-map span {
+      background: #ffffff;
+      border: 1px solid #d9ded7;
+      border-radius: var(--radius);
+      color: #253530;
+      font-weight: 700;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .question-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      margin: 14px 0;
+      padding: 16px;
+    }
+
+    .question-card:nth-of-type(odd) {
+      background: #ffffff;
+    }
+
+    .question-card:nth-of-type(even) {
+      background: #fbfcfa;
+    }
+
+    .question-head {
+      align-items: flex-start;
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .question-title {
+      color: #183d3a;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .point-badge {
+      background: #f3e5cf;
+      border-radius: 999px;
+      color: #734214;
+      flex: 0 0 auto;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 4px 10px;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .choice-list label,
+    .checkbox-grid label {
+      align-items: center;
+      background: #fffefa;
+      border: 1px solid #d9ded7;
+      border-radius: var(--radius);
+      display: flex;
+      gap: 10px;
+      padding: 10px 12px;
+    }
+
+    .choice-list input,
+    .checkbox-grid input {
+      flex: 0 0 auto;
+      height: 18px;
+      width: 18px;
+    }
+
+    .inline-answer {
+      align-items: center;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: minmax(160px, 1fr) auto;
+      margin-top: 12px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .primary-action {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .primary-action:hover {
+      background: var(--primary-dark);
+    }
+
+    .secondary-action {
+      background: #e8ece9;
+      color: #243632;
+    }
+
+    .secondary-action:hover {
+      background: #d8ded9;
+    }
+
+    .feedback-box {
+      border-radius: var(--radius);
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.correct {
+      background: #e4f4e9;
+      border-left: 5px solid var(--success);
+      color: #15482b;
+    }
+
+    .feedback-box.partial {
+      background: #fff2d7;
+      border-left: 5px solid var(--warning);
+      color: #5e3a00;
+    }
+
+    .feedback-box.incorrect {
+      background: var(--soft-red);
+      border-left: 5px solid var(--danger);
+      color: #6b231d;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-top: 8px;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .answer-key {
+      background: #f8faf8;
+      border: 1px dashed #c7d1ca;
+      border-radius: var(--radius);
+      color: #31413c;
+      margin-top: 12px;
+      padding: 10px 12px;
+    }
+
+    details.answer-key summary {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .test-toolbar {
+      align-items: center;
+      background: #f8faf8;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      margin: 16px 0;
+      padding: 14px;
+    }
+
+    .timer {
+      color: #29413b;
+      font-weight: 800;
+    }
+
+    .result-card {
+      display: none;
+      padding: 22px;
+    }
+
+    .result-card.show {
+      display: block;
+    }
+
+    .score-summary {
+      background: #e9f0f8;
+      border-left: 5px solid #456d9e;
+      margin-top: 12px;
+    }
+
+    .result-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .result-metric {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .result-metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .result-metric strong {
+      color: #183d3a;
+      font-size: 1.25rem;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      margin: 18px 0 0;
+      text-align: center;
+    }
+
+    .symbol-toggle {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 14px 30px rgba(31, 42, 35, 0.22);
+      font-size: 1.35rem;
+      padding: 0;
+    }
+
+    .symbol-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 84px;
+      z-index: 11;
+      width: min(330px, calc(100vw - 28px));
+      display: none;
+      border: 1px solid #bfd0c8;
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .symbol-panel.open {
+      display: block;
+    }
+
+    .symbol-panel h2 {
+      font-size: 1rem;
+      margin: 0 0 10px;
+    }
+
+    .symbol-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .symbol-grid button {
+      background: #f8faf8;
+      border: 1px solid var(--line);
+      min-height: 38px;
+      padding: 6px;
+    }
+
+    @media (max-width: 820px) {
+      body {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+
+      .app-shell {
+        padding: 14px;
+      }
+
+      .app-header,
+      .part-panel,
+      .student-info,
+      .result-card {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 1.55rem;
+      }
+
+      .meta-grid,
+      .form-grid,
+      .content-grid,
+      .mind-map,
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-nav {
+        overflow-x: auto;
+        position: static;
+      }
+
+      .tab-button {
+        flex: 0 0 180px;
+      }
+
+      .inline-answer {
+        grid-template-columns: 1fr;
+      }
+
+      .checkbox-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .symbol-table,
+      .score-table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .app-shell {
+        max-width: none;
+        padding: 0;
+      }
+
+      .lesson-nav,
+      .action-row,
+      button,
+      .symbol-toggle,
+      .symbol-panel {
+        display: none !important;
+      }
+
+      .app-header,
+      .student-info,
+      .part-panel,
+      .question-card,
+      .result-card {
+        box-shadow: none;
+      }
+
+      .part-panel,
+      .part-panel.active,
+      .result-card.show,
+      .result-card.has-result {
+        display: block;
+      }
+
+      .question-card,
+      .content-block,
+      .result-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body data-lesson-id="toan6-chuong3-ontap" data-timer-minutes="20" data-total-points="10">
+  <main id="app" class="app-shell">
+
+    <header id="header" class="app-header">
+      <p class="header-kicker">Phiếu học tập tương tác</p>
+      <h1>Toán 6 - Chương 3 - Ôn tập Chương III</h1>
+      <p class="header-summary">Hệ thống kiến thức về số nguyên, các phép tính trong tập hợp số nguyên, quy tắc dấu ngoặc, phép chia hết, ước và bội; luyện tập và tự đánh giá cuối chương.</p>
+      <div class="meta-grid" aria-label="Thông tin bài học">
+        <div class="meta-item"><span class="meta-label">Môn</span><span class="meta-value">Toán</span></div>
+        <div class="meta-item"><span class="meta-label">Lớp</span><span class="meta-value">6</span></div>
+        <div class="meta-item"><span class="meta-label">Chương</span><span class="meta-value">3</span></div>
+        <div class="meta-item"><span class="meta-label">Nội dung</span><span class="meta-value">Ôn tập Chương III</span></div>
+        <div class="meta-item"><span class="meta-label">Mã bài</span><span class="meta-value">Toan6-Chuong3-OnTap</span></div>
+      </div>
+    </header>
+
+    <section id="student-info" class="student-info" aria-labelledby="student-title">
+      <h2 id="student-title" class="section-title">Thông tin học sinh</h2>
+      <div class="form-grid">
+        <label>
+          <span class="field-label">Họ và tên</span>
+          <input id="student-name" data-save type="text" autocomplete="name" placeholder="Nhập họ và tên" />
+        </label>
+        <label>
+          <span class="field-label">Lớp</span>
+          <input id="student-class" data-save type="text" placeholder="Ví dụ: 6A" />
+        </label>
+        <label>
+          <span class="field-label">Mã bài/lần học</span>
+          <input id="student-code" data-save type="text" value="Toan6-Chuong3-OnTap" />
+        </label>
+      </div>
+    </section>
+
+    <nav id="lesson-nav" class="lesson-nav" aria-label="Điều hướng phiếu học tập">
+      <button class="tab-button" type="button" data-tab="part-a" aria-selected="true">A. Kiến thức</button>
+      <button class="tab-button" type="button" data-tab="part-b" aria-selected="false">B. Luyện tập</button>
+      <button class="tab-button" type="button" data-tab="part-c" aria-selected="false">C. Kiểm tra</button>
+      <button class="tab-button" type="button" data-tab="result" aria-selected="false">Kết quả</button>
+    </nav>
+
+    <section id="part-a" class="part-panel active" aria-labelledby="part-a-title">
+      <h2 id="part-a-title" class="section-title">Phần A - Kiến thức trọng tâm</h2>
+      
+      <div class="lead-box">
+        <strong>Giới thiệu:</strong> Ôn lại tập hợp số nguyên, so sánh số nguyên, cộng, trừ, nhân, quy tắc dấu ngoặc, phép chia hết, ước và bội trước khi chuyển sang luyện tập.
+      </div>
+      
+      <div class="content-grid">
+
+        <article class="content-block">
+          <h3>1. Mục tiêu ôn tập</h3>
+
+          <ol>
+            <li>Nhận biết, biểu diễn và so sánh được các số nguyên.</li>
+            <li>Thực hiện được phép cộng, trừ, nhân số nguyên và vận dụng quy tắc dấu ngoặc.</li>
+            <li>Sử dụng được tính chất giao hoán, kết hợp và phân phối để tính hợp lí.</li>
+            <li>Nhận biết phép chia hết, xác định ước và bội trong <span class='math-text'>ℤ</span>.</li>
+            <li>Vận dụng kiến thức số nguyên vào bài toán thực tế và bài toán suy luận.</li>
+          </ol>
+          
+        </article>
+
+        <article class="content-block">
+          <h3>2. Tập hợp số nguyên</h3>
+          <p>Tập hợp các số nguyên được kí hiệu là <span class='math-text'>ℤ = {...; -3; -2; -1; 0; 1; 2; 3; ...}</span>.</p>
+          <p>Số <span class='math-text'>0</span> không là số nguyên âm, cũng không là số nguyên dương. Số âm thường dùng để mô tả nhiệt độ dưới 0°C, khoản lỗ hoặc hướng ngược với chiều dương.</p>
+          
+          
+        </article>
+
+        <article class="content-block">
+          <h3>3. So sánh hai số nguyên</h3>
+
+          <ul>
+            <li>Trên trục số, số nằm bên trái nhỏ hơn số nằm bên phải.</li>
+            <li>Mọi số nguyên âm đều nhỏ hơn <span class='math-text'>0</span> và nhỏ hơn mọi số nguyên dương.</li>
+            <li>Nếu <span class='math-text'>0 &lt; n &lt; m</span> thì <span class='math-text'>-n &gt; -m</span>. Ví dụ: <span class='math-text'>-3 &gt; -5</span>.</li>
+          </ul>
+          
+        </article>
+
+        <article class="content-block">
+          <h3>4. Cộng và trừ số nguyên</h3>
+
+          <ul>
+            <li>Hai số nguyên âm: <span class='math-text'>(-n) + (-m) = -(n + m)</span>.</li>
+            <li>Hai số khác dấu: lấy phần số tự nhiên lớn trừ phần số tự nhiên nhỏ rồi đặt dấu của số có phần số tự nhiên lớn hơn.</li>
+            <li>Hai số đối nhau có tổng bằng <span class='math-text'>0</span>; <span class='math-text'>a + 0 = 0 + a = a</span>.</li>
+            <li>Phép trừ được đổi thành phép cộng với số đối: <span class='math-text'>a - b = a + (-b)</span>.</li>
+          </ul>
+          
+        </article>
+
+        <article class="content-block">
+          <h3>5. Quy tắc dấu ngoặc</h3>
+
+          <ul>
+            <li>Trước ngoặc là dấu <span class='math-text'>+</span>: giữ nguyên dấu các số hạng trong ngoặc.</li>
+            <li>Trước ngoặc là dấu <span class='math-text'>-</span>: đổi dấu tất cả số hạng trong ngoặc.</li>
+            <li>Trong một tổng đại số, có thể đổi vị trí các số hạng nhưng phải mang theo dấu của chúng.</li>
+          </ul>
+          
+        </article>
+
+        <article class="content-block">
+          <h3>6. Nhân số nguyên</h3>
+
+          <ul>
+            <li>Hai thừa số cùng dấu cho tích dương; khác dấu cho tích âm; có thừa số <span class='math-text'>0</span> thì tích bằng <span class='math-text'>0</span>.</li>
+            <li>Tích có số chẵn thừa số âm là số dương; có số lẻ thừa số âm là số âm.</li>
+            <li>Tính chất phân phối: <span class='math-text'>a·(b + c) = a·b + a·c</span>.</li>
+          </ul>
+          
+        </article>
+
+        <article class="content-block">
+          <h3>7. Phép chia hết trong ℤ</h3>
+          <p>Với <span class='math-text'>a, b ∈ ℤ</span>, <span class='math-text'>b ≠ 0</span>, nếu tồn tại <span class='math-text'>q ∈ ℤ</span> sao cho <span class='math-text'>a = bq</span> thì <span class='math-text'>a</span> chia hết cho <span class='math-text'>b</span>, kí hiệu <span class='math-text'>a ⋮ b</span>.</p>
+          <p>Thương của hai số cùng dấu là số dương; thương của hai số khác dấu là số âm.</p>
+          
+          
+        </article>
+
+        <article class="content-block">
+          <h3>8. Ước và bội trong ℤ</h3>
+
+          <ul>
+            <li>Nếu <span class='math-text'>a ⋮ b</span> thì <span class='math-text'>b</span> là một ước của <span class='math-text'>a</span>, còn <span class='math-text'>a</span> là một bội của <span class='math-text'>b</span>.</li>
+            <li>Nếu <span class='math-text'>b</span> là một ước của <span class='math-text'>a</span> thì <span class='math-text'>-b</span> cũng là một ước của <span class='math-text'>a</span>.</li>
+            <li>Muốn tìm các ước của một số nguyên, lấy các ước dương của số đó cùng với các số đối của chúng.</li>
+          </ul>
+          
+        </article>
+      </div>
+      
+      <div class="note-box">
+        <strong>Ghi nhớ quy tắc dấu:</strong> Trừ là cộng với số đối; trước ngoặc là dấu trừ thì đổi dấu; nhân hoặc chia hai số cùng dấu được kết quả dương, khác dấu được kết quả âm.
+      </div>
+      
+      <table class="symbol-table">
+        <thead><tr><th>Nội dung</th><th>Quy tắc hoặc kí hiệu</th><th>Ví dụ</th></tr></thead>
+        <tbody>
+          <tr><td>Tập hợp số nguyên</td><td><span class='math-text'>ℤ</span></td><td><span class='math-text'>-8 ∈ ℤ</span></td></tr>
+          <tr><td>Phép trừ</td><td><span class='math-text'>a - b = a + (-b)</span></td><td><span class='math-text'>5 - (-3) = 8</span></td></tr>
+          <tr><td>Phân phối</td><td><span class='math-text'>a·(b + c) = a·b + a·c</span></td><td><span class='math-text'>15·(-236) + 15·235 = -15</span></td></tr>
+          <tr><td>Chia hết</td><td><span class='math-text'>a = bq ⇔ a ⋮ b</span></td><td><span class='math-text'>18 ⋮ (-6)</span></td></tr>
+          <tr><td>Ước trong ℤ</td><td>Ước dương và các số đối</td><td>Ước của <span class='math-text'>12</span>: <span class='math-text'>±1; ±2; ±3; ±4; ±6; ±12</span></td></tr>
+        </tbody>
+      </table>
+      
+      <div class="question-card">
+        <h3>Ví dụ mẫu</h3>
+        <h4>Ví dụ 1. Bỏ dấu ngoặc</h4><p><span class='math-text'>10 - (3 - 7) = 10 - 3 + 7 = 14</span>.</p><h4>Ví dụ 2. Tính hợp lí</h4><ol class='example-steps'><li>Nhận ra nhân tử chung <span class='math-text'>15</span>.</li><li><span class='math-text'>15·(-236) + 15·235 = 15[(-236) + 235]</span>.</li><li><span class='math-text'>15·(-1) = -15</span>.</li></ol><h4>Ví dụ 3. Tìm ước trong ℤ</h4><p>Từ các ước dương của <span class='math-text'>12</span> là <span class='math-text'>1; 2; 3; 4; 6; 12</span>, suy ra các ước nguyên của <span class='math-text'>12</span> là <span class='math-text'>±1; ±2; ±3; ±4; ±6; ±12</span>.</p>
+      </div>
+      
+      <div class="mind-map" aria-label="Sơ đồ tư duy mini">
+        <span>ℤ → số âm, 0, số dương</span>
+        <span>So sánh → trái nhỏ, phải lớn</span>
+        <span>Cộng → xét dấu và phần số tự nhiên</span>
+        <span>Trừ → cộng với số đối</span>
+        <span>Dấu ngoặc → + giữ, - đổi</span>
+        <span>Nhân → cùng dấu dương</span>
+        <span>Chia hết → a = bq</span>
+        <span>Ước - bội → a ⋮ b</span>
+      </div>
+      
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Câu 1. Số 0 thuộc nhóm nào</p>
+        </div>
+        <p>Chọn khẳng định đúng.</p>
+        <div class="inline-answer">
+          <label>
+            <span class="field-label">Trả lời</span>
+            <select id="a-check-1" data-save><option value="">Chọn</option><option value="Số nguyên dương">Số nguyên dương</option><option value="Số nguyên âm">Số nguyên âm</option><option value="Là số nguyên, không dương và không âm">Là số nguyên, không dương và không âm</option></select>
+          </label>
+          <button class="primary-action" type="button" data-check-symbol="a-check-1" data-answer="Là số nguyên, không dương và không âm" data-feedback="a-check-1-feedback" data-explain="Đúng. Số 0 là số nguyên nhưng không phải số nguyên dương hay số nguyên âm.">Kiểm tra</button>
+        </div>
+        <div id="a-check-1-feedback" class="feedback-box" aria-live="polite"></div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Câu 2. So sánh -3 và -5</p>
+        </div>
+        <p>Điền dấu thích hợp: <span class='math-text'>-3 ... -5</span></p>
+        <div class="inline-answer">
+          <label>
+            <span class="field-label">Dấu</span>
+            <select id="a-check-2" data-save><option value="">Chọn</option><option value="&lt;"><</option><option value="&gt;">></option><option value="=">=</option></select>
+          </label>
+          <button class="primary-action" type="button" data-check-symbol="a-check-2" data-answer="&gt;" data-feedback="a-check-2-feedback" data-explain="Đúng. -3 nằm bên phải -5 trên trục số nên -3 &gt; -5.">Kiểm tra</button>
+        </div>
+        <div id="a-check-2-feedback" class="feedback-box" aria-live="polite"></div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Câu 3. Tính 5 - (-3)</p>
+        </div>
+        <p>Chọn kết quả đúng.</p>
+        <div class="inline-answer">
+          <label>
+            <span class="field-label">Kết quả</span>
+            <select id="a-check-3" data-save><option value="">Chọn</option><option value="2">2</option><option value="-2">-2</option><option value="8">8</option><option value="-8">-8</option></select>
+          </label>
+          <button class="primary-action" type="button" data-check-symbol="a-check-3" data-answer="8" data-feedback="a-check-3-feedback" data-explain="Đúng. 5 - (-3) = 5 + 3 = 8.">Kiểm tra</button>
+        </div>
+        <div id="a-check-3-feedback" class="feedback-box" aria-live="polite"></div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Câu 4. Dấu của tích 7 số âm</p>
+        </div>
+        <p>Chọn dấu của tích.</p>
+        <div class="inline-answer">
+          <label>
+            <span class="field-label">Dấu</span>
+            <select id="a-check-4" data-save><option value="">Chọn</option><option value="Dương">Dương</option><option value="Âm">Âm</option><option value="Bằng 0">Bằng 0</option></select>
+          </label>
+          <button class="primary-action" type="button" data-check-symbol="a-check-4" data-answer="Âm" data-feedback="a-check-4-feedback" data-explain="Đúng. Có 7 thừa số âm, là số lẻ, nên tích âm.">Kiểm tra</button>
+        </div>
+        <div id="a-check-4-feedback" class="feedback-box" aria-live="polite"></div>
+      </article>
+      
+        <article class="content-block">
+          <h3>Những lỗi học sinh dễ mắc</h3>
+
+          <ul>
+            <li>Nhầm <span class='math-text'>0</span> là số nguyên dương.</li>
+            <li>So sánh sai hai số nguyên âm.</li>
+            <li>Quên đổi dấu khi bỏ ngoặc có dấu <span class='math-text'>-</span> phía trước.</li>
+            <li>Nhầm <span class='math-text'>a - b</span> với <span class='math-text'>a + b</span>.</li>
+            <li>Kết luận tích của hai số âm là số âm.</li>
+            <li>Tìm ước của một số nguyên nhưng chỉ liệt kê các ước dương.</li>
+            <li>Nhầm giữa ước và bội.</li>
+          </ul>
+          
+        </article>
+      <div class="action-row">
+        <button class="secondary-action" type="button" data-tab-jump="part-b">Sang phần luyện tập</button>
+      </div>
+    </section>
+
+    <section id="part-b" class="part-panel" aria-labelledby="part-b-title">
+      <h2 id="part-b-title" class="section-title">Phần B - Luyện tập</h2>
+      
+      <div class="lead-box">
+        <strong>Nhiệm vụ:</strong> Làm lần lượt các bài 3.50 đến 3.56 và năm câu luyện tổng hợp. Hãy tự làm trước khi mở đáp án gợi ý.
+      </div>
+      
+      <table class="symbol-table">
+        <thead><tr><th>Dạng bài</th><th>Cách làm nhanh</th></tr></thead>
+        <tbody>
+          <tr><td>Diễn tả bằng số âm</td><td>Xác định đại lượng đối lập với mốc 0 hoặc chiều dương.</td></tr>
+          <tr><td>Liệt kê số nguyên</td><td>Đọc đúng dấu <span class='math-text'>&lt;, ≤, &gt;, ≥</span>, rồi liệt kê theo thứ tự.</td></tr>
+          <tr><td>Tính hợp lí</td><td>Ghép số đối nhau hoặc đặt nhân tử chung.</td></tr>
+          <tr><td>Thay giá trị</td><td>Đặt số âm trong ngoặc trước khi tính.</td></tr>
+          <tr><td>Dấu của tích</td><td>Đếm số thừa số âm và kiểm tra có thừa số 0 hay không.</td></tr>
+        </tbody>
+      </table>
+      
+      
+      
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.50 - Dùng số âm để diễn tả thông tin</p>
+        </div>
+        <div><p>Dùng số âm để diễn tả:</p><p>a) Nhiệt độ <span class='math-text'>60°C</span> dưới <span class='math-text'>0°C</span>.<br>b) Một công ty bị lỗ <span class='math-text'>2 triệu đồng</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-350" data-save placeholder="Viết câu trả lời cho a và b"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-350-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-350-feedback" class="feedback-box" aria-live="polite">a) <span class='math-text'>-60°C</span>.<br>b) <span class='math-text'>-2 triệu đồng</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.51 - Nhận biết số dương, số âm</p>
+        </div>
+        <div><p>Cho <span class='math-text'>a &gt; 0; b &lt; 0; c ≥ 1; d ≤ -2</span>. Số nào dương, số nào âm?</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-351" data-save placeholder="Phân loại a, b, c, d"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-351-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-351-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>a, c</span> là số dương; <span class='math-text'>b, d</span> là số âm.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.52 - Liệt kê phần tử và tính tổng</p>
+        </div>
+        <div><p>a) <span class='math-text'>S = {x ∈ ℤ | -5 &lt; x ≤ 5}</span>.<br>b) <span class='math-text'>T = {x ∈ ℤ | -7 ≤ x &lt; 1}</span>.</p><p>Liệt kê phần tử và tính tổng của mỗi tập hợp.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-352" data-save placeholder="Viết S, tổng S; viết T, tổng T"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-352-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-352-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>S = {-4; -3; -2; -1; 0; 1; 2; 3; 4; 5}</span>, tổng bằng <span class='math-text'>5</span>.<br><span class='math-text'>T = {-7; -6; -5; -4; -3; -2; -1; 0}</span>, tổng bằng <span class='math-text'>-28</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.53 - Tính một cách hợp lí</p>
+        </div>
+        <div><p>a) <span class='math-text'>15·(-236) + 15·235</span><br>b) <span class='math-text'>237·(-28) + 28·137</span><br>c) <span class='math-text'>38·(27 - 44) - 27·(38 - 44)</span></p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-353" data-save placeholder="Trình bày phép biến đổi và kết quả"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-353-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-353-feedback" class="feedback-box" aria-live="polite">a) Đặt <span class='math-text'>15</span> làm nhân tử chung, được <span class='math-text'>-15</span>.<br>b) Đặt <span class='math-text'>28</span> làm nhân tử chung, được <span class='math-text'>-2800</span>.<br>c) Tính trong ngoặc rồi thực hiện phép nhân, được <span class='math-text'>-484</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.54 - Tính giá trị biểu thức</p>
+        </div>
+        <div><p>Cho <span class='math-text'>P = (-35)·x - (-15)·37</span>. Tính <span class='math-text'>P</span> khi:</p><p>a) <span class='math-text'>x = 15</span>.<br>b) <span class='math-text'>x = -37</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-354" data-save placeholder="Thay x và tính P"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-354-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-354-feedback" class="feedback-box" aria-live="polite">Ta có <span class='math-text'>P = -35x + 555</span>.<br>a) <span class='math-text'>P = 30</span>.<br>b) <span class='math-text'>P = 1850</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.55 - Bài toán suy luận</p>
+        </div>
+        <div><p>Có hay không hai số nguyên <span class='math-text'>a, b</span> mà hiệu <span class='math-text'>a - b</span>:</p><p>a) Lớn hơn cả <span class='math-text'>a</span> và <span class='math-text'>b</span>?<br>b) Lớn hơn <span class='math-text'>a</span> nhưng nhỏ hơn <span class='math-text'>b</span>?</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-355" data-save placeholder="Nêu câu trả lời và một ví dụ cho mỗi ý"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-355-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-355-feedback" class="feedback-box" aria-live="polite">Cả hai trường hợp đều có.<br>a) Chọn <span class='math-text'>a = 1, b = -1</span>, khi đó <span class='math-text'>a - b = 2</span>.<br>b) Chọn <span class='math-text'>a = -3, b = -1</span>, khi đó <span class='math-text'>a - b = -2</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Bài 3.56 - Dấu của tích 15 số</p>
+        </div>
+        <div><p>Cho <span class='math-text'>15</span> số có tính chất: tích của <span class='math-text'>5</span> số bất kì trong chúng đều âm. Hỏi tích của cả <span class='math-text'>15</span> số mang dấu gì?</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-356" data-save placeholder="Nêu dấu của tích và giải thích"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-356-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-356-feedback" class="feedback-box" aria-live="polite">Không số nào bằng <span class='math-text'>0</span>. So sánh hai nhóm 5 số chỉ khác nhau một thừa số cho thấy mọi số đều cùng dấu. Vì tích 5 số là âm nên cả 15 số đều âm. Tích của 15 số âm có số thừa số âm là số lẻ, nên tích là <strong>số âm</strong>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Luyện thêm 1 - Sắp xếp số nguyên</p>
+        </div>
+        <div><p>Sắp xếp theo thứ tự tăng dần: <span class='math-text'>-8; 3; 0; -2; 7; -11</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-extra-1" data-save placeholder="Viết dãy số theo thứ tự tăng dần"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-extra-1-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-extra-1-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>-11; -8; -2; 0; 3; 7</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Luyện thêm 2 - Cộng và trừ số nguyên</p>
+        </div>
+        <div><p>Tính <span class='math-text'>(-15) + 8 - (-6)</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-extra-2" data-save placeholder="Trình bày phép tính"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-extra-2-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-extra-2-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>(-15) + 8 - (-6) = -15 + 8 + 6 = -1</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Luyện thêm 3 - Đặt nhân tử chung</p>
+        </div>
+        <div><p>Tính hợp lí <span class='math-text'>25·(-17) + 25·16</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-extra-3" data-save placeholder="Trình bày phép biến đổi"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-extra-3-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-extra-3-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>25·[(-17) + 16] = 25·(-1) = -25</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Luyện thêm 4 - Ước trong ℤ</p>
+        </div>
+        <div><p>Tìm tất cả các ước của <span class='math-text'>12</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-extra-4" data-save placeholder="Liệt kê các ước âm và dương"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-extra-4-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-extra-4-feedback" class="feedback-box" aria-live="polite">Các ước của <span class='math-text'>12</span> là <span class='math-text'>±1; ±2; ±3; ±4; ±6; ±12</span>.</div>
+      </article>
+
+      <article class="question-card">
+        <div class="question-head">
+          <p class="question-title">Luyện thêm 5 - Bội trong ℤ</p>
+        </div>
+        <div><p>Liệt kê các bội của <span class='math-text'>5</span> thỏa mãn <span class='math-text'>-16 &lt; x &lt; 16</span>.</p></div>
+        <label>
+          <span class="field-label">Bài làm</span>
+          <textarea id="practice-extra-5" data-save placeholder="Liệt kê theo thứ tự tăng dần"></textarea>
+        </label>
+        <div class="action-row">
+          <button class="primary-action" type="button" data-show-guide="practice-extra-5-feedback">Xem đáp án gợi ý</button>
+        </div>
+        <div id="practice-extra-5-feedback" class="feedback-box" aria-live="polite"><span class='math-text'>-15; -10; -5; 0; 5; 10; 15</span>.</div>
+      </article>
+      
+      
+      
+        <article class="content-block">
+          <h3>Gợi ý củng cố sau luyện tập</h3>
+
+          <ul>
+            <li>Tận dụng các cặp số đối nhau để tính tổng nhanh.</li>
+            <li>Với biểu thức có nhiều phép nhân, tìm nhân tử chung.</li>
+            <li>Khi thay giá trị vào biểu thức, đặt số âm trong ngoặc.</li>
+            <li>Khi xác định dấu của một tích nhiều số, xét số lượng thừa số âm và kiểm tra thừa số 0.</li>
+          </ul>
+          
+        </article>
+      <div class="action-row">
+        <button class="secondary-action" type="button" data-tab-jump="part-a">Quay lại kiến thức</button>
+        <button class="primary-action" type="button" data-tab-jump="part-c">Sang phần kiểm tra</button>
+      </div>
+    </section>
+
+    <section id="part-c" class="part-panel" aria-labelledby="part-c-title">
+      <h2 id="part-c-title" class="section-title">Phần C - Kiểm tra đánh giá</h2>
+      
+      <div class="lead-box">
+        <strong>Yêu cầu:</strong> Làm bài trong 20 phút. Phần trắc nghiệm gồm 5 câu; phần tự luận và vận dụng cần trình bày rõ kết quả.
+      </div>
+      
+      <table class="score-table">
+        <thead><tr><th>Phần</th><th>Nội dung</th><th>Điểm</th></tr></thead>
+        <tbody>
+          <tr><td>Trắc nghiệm</td><td>5 câu, mỗi câu 1 điểm</td><td>5</td></tr>
+          <tr><td>Tự luận</td><td>2 câu, mỗi câu 2 điểm</td><td>4</td></tr>
+          <tr><td>Vận dụng</td><td>1 câu suy luận</td><td>1</td></tr>
+        </tbody>
+      </table>
+      <div class="test-toolbar">
+        <span class="timer" id="timer" aria-live="polite">Thời gian: 20:00</span>
+        <div class="action-row">
+          <button class="secondary-action" type="button" id="start-timer">Bắt đầu tính giờ</button>
+          <button class="secondary-action" type="button" id="reset-timer">Đặt lại thời gian</button>
+        </div>
+      </div>
+      
+      <article class="question-card" data-quiz="q1" data-answer="C" data-points="1">
+        <div class="question-head">
+          <p class="question-title">Câu 1. Số nào sau đây là số nguyên âm?</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <div class="choice-list">
+          <label><input data-save type="radio" name="q1" value="A" /> A. 5</label>
+          <label><input data-save type="radio" name="q1" value="B" /> B. 0</label>
+          <label><input data-save type="radio" name="q1" value="C" /> C. -7</label>
+          <label><input data-save type="radio" name="q1" value="D" /> D. 12</label>
+        </div>
+      </article>
+
+      <article class="question-card" data-quiz="q2" data-answer="B" data-points="1">
+        <div class="question-head">
+          <p class="question-title">Câu 2. Kết quả của <span class='math-text'>(-8) - (-3)</span> là:</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <div class="choice-list">
+          <label><input data-save type="radio" name="q2" value="A" /> A. -11</label>
+          <label><input data-save type="radio" name="q2" value="B" /> B. -5</label>
+          <label><input data-save type="radio" name="q2" value="C" /> C. 5</label>
+          <label><input data-save type="radio" name="q2" value="D" /> D. 11</label>
+        </div>
+      </article>
+
+      <article class="question-card" data-quiz="q3" data-answer="B" data-points="1">
+        <div class="question-head">
+          <p class="question-title">Câu 3. Kết quả của <span class='math-text'>(-6)·(-4)</span> là:</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <div class="choice-list">
+          <label><input data-save type="radio" name="q3" value="A" /> A. -24</label>
+          <label><input data-save type="radio" name="q3" value="B" /> B. 24</label>
+          <label><input data-save type="radio" name="q3" value="C" /> C. -10</label>
+          <label><input data-save type="radio" name="q3" value="D" /> D. 10</label>
+        </div>
+      </article>
+
+      <article class="question-card" data-quiz="q4" data-answer="C" data-points="1">
+        <div class="question-head">
+          <p class="question-title">Câu 4. Khi bỏ ngoặc trong <span class='math-text'>10 - (3 - 7)</span>, ta được:</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <div class="choice-list">
+          <label><input data-save type="radio" name="q4" value="A" /> A. 10 - 3 - 7</label>
+          <label><input data-save type="radio" name="q4" value="B" /> B. 10 + 3 - 7</label>
+          <label><input data-save type="radio" name="q4" value="C" /> C. 10 - 3 + 7</label>
+          <label><input data-save type="radio" name="q4" value="D" /> D. 10 + 3 + 7</label>
+        </div>
+      </article>
+
+      <article class="question-card" data-quiz="q5" data-answer="B" data-points="1">
+        <div class="question-head">
+          <p class="question-title">Câu 5. Số nào sau đây là một ước của <span class='math-text'>18</span>?</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <div class="choice-list">
+          <label><input data-save type="radio" name="q5" value="A" /> A. 4</label>
+          <label><input data-save type="radio" name="q5" value="B" /> B. -6</label>
+          <label><input data-save type="radio" name="q5" value="C" /> C. 5</label>
+          <label><input data-save type="radio" name="q5" value="D" /> D. 8</label>
+        </div>
+      </article>
+      
+      <article class="question-card" data-written="w1" data-grade-type="keywords" data-name="" data-items="" data-keywords="[&quot;-15&quot;]" data-min-keywords="1" data-expected-text="15·(-236) + 15·235 = 15[(-236) + 235] = -15." data-points="2">
+        <div class="question-head">
+          <p class="question-title">Tự luận 1. Tính một cách hợp lí</p>
+          <span class="point-badge">2 điểm</span>
+        </div>
+        <p><span class='math-text'>15·(-236) + 15·235</span>.</p>
+        <textarea id="w1" data-save placeholder="Trình bày phép biến đổi và kết quả"></textarea>
+      </article>
+
+      <article class="question-card" data-written="w2" data-grade-type="keywords" data-name="" data-items="" data-keywords="[&quot;-4&quot;,&quot;-3&quot;,&quot;-2&quot;,&quot;-1&quot;,&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,&quot;4; 5&quot;,&quot;tong bang 5&quot;]" data-min-keywords="11" data-expected-text="S = {-4; -3; -2; -1; 0; 1; 2; 3; 4; 5}, tổng các phần tử bằng 5." data-points="2">
+        <div class="question-head">
+          <p class="question-title">Tự luận 2. Liệt kê phần tử và tính tổng</p>
+          <span class="point-badge">2 điểm</span>
+        </div>
+        <p>Cho <span class='math-text'>S = {x ∈ ℤ | -5 &lt; x ≤ 5}</span>. a) Liệt kê các phần tử của <span class='math-text'>S</span>. b) Tính tổng các phần tử của <span class='math-text'>S</span>.</p>
+        <textarea id="w2" data-save placeholder="Viết tập hợp S và tổng các phần tử"></textarea>
+      </article>
+
+      <article class="question-card" data-written="w3" data-grade-type="keywords" data-name="" data-items="" data-keywords="[&quot;so am&quot;,&quot;15 so deu am&quot;,&quot;so le thua so am&quot;]" data-min-keywords="1" data-expected-text="Tích của 15 số là số âm." data-points="1">
+        <div class="question-head">
+          <p class="question-title">Vận dụng. Dấu của tích 15 số</p>
+          <span class="point-badge">1 điểm</span>
+        </div>
+        <p>Cho <span class='math-text'>15</span> số nguyên có tính chất: tích của <span class='math-text'>5</span> số bất kì trong chúng đều âm. Hỏi tích của cả <span class='math-text'>15</span> số mang dấu gì? Giải thích ngắn gọn.</p>
+        <textarea id="w3" data-save placeholder="Nêu dấu của tích và giải thích"></textarea>
+      </article>
+      <div class="action-row">
+        <button class="primary-action" type="button" id="submit-test">Nộp bài và xem kết quả</button>
+        <button class="secondary-action" type="button" id="print-page">In phiếu</button>
+      </div>
+      
+      <details class="answer-key">
+        <summary>Đáp án và hướng dẫn chấm</summary>
+        
+      <table class="score-table">
+        <thead><tr><th>Câu</th><th>Đáp án</th><th>Điểm</th></tr></thead>
+        <tbody>
+          <tr><td>Câu 1</td><td>C</td><td>1</td></tr>
+          <tr><td>Câu 2</td><td>B</td><td>1</td></tr>
+          <tr><td>Câu 3</td><td>B</td><td>1</td></tr>
+          <tr><td>Câu 4</td><td>C</td><td>1</td></tr>
+          <tr><td>Câu 5</td><td>B</td><td>1</td></tr>
+        </tbody>
+      </table>
+        
+      <table class="score-table">
+        <thead><tr><th>Câu</th><th>Đáp án gợi ý</th><th>Điểm</th></tr></thead>
+        <tbody>
+          <tr><td>Tự luận 1</td><td><span class='math-text'>15·(-236) + 15·235 = 15[(-236) + 235] = -15</span>.</td><td>2</td></tr>
+          <tr><td>Tự luận 2</td><td><span class='math-text'>S = {-4; -3; -2; -1; 0; 1; 2; 3; 4; 5}</span>, tổng các phần tử bằng <span class='math-text'>5</span>.</td><td>2</td></tr>
+          <tr><td>Vận dụng</td><td>Tích của 15 số là số âm. Không số nào bằng 0; các số đều cùng dấu và tích của 5 số là âm nên cả 15 số đều âm.</td><td>1</td></tr>
+        </tbody>
+      </table>
+      </details>
+    </section>
+    <section id="result" class="result-card" aria-labelledby="result-title">
+      <h2 id="result-title" class="section-title">Kết quả sau khi nộp bài</h2>
+      <div id="result-content">
+        <p>Em hãy hoàn thành phần kiểm tra rồi bấm nộp bài để xem kết quả.</p>
+      </div>
+      <div class="action-row">
+        <button class="secondary-action" type="button" data-tab-jump="part-c">Quay lại bài kiểm tra</button>
+        <button class="primary-action" type="button" id="print-result">In kết quả</button>
+      </div>
+    </section>
+<p class="footer-note">Nguồn nội dung: lesson.md, OnTapChuong3-PhanA.md, OnTapChuong3-PhanB.md, OnTapChuong3-PhanC.md</p>
+  </main>
+
+  <button class="symbol-toggle" type="button" aria-label="Mở bảng kí hiệu" title="Bảng kí hiệu" id="symbol-toggle">∑</button>
+  <aside class="symbol-panel" id="symbol-panel" aria-label="Bảng kí hiệu toán học">
+    <h2>Bảng kí hiệu</h2>
+    <div class="symbol-grid" id="symbol-grid"></div>
+  </aside>
+
+  <script>
+    const STORAGE_KEY = "toan6-chuong3-ontap-worksheet";
+    const TEST_TOTAL_POINTS = Number(document.body.dataset.totalPoints || 10);
+    const TIMER_TOTAL_SECONDS = Number(document.body.dataset.timerMinutes || 15) * 60;
+    const savedState = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    const mathSymbols = ["ℚ", "ℤ", "ℕ", "∈", "∉", "≠", "<", ">", "≤", "≥", "=", "+", "-", "·", ":", "(", ")", "{ }", ";", "a/b", "-a/b", "m n/a", "↵"];
+    let timerSeconds = TIMER_TOTAL_SECONDS;
+    let timerId = null;
+    let activeField = null;
+
+    function splitCsv(value) {
+      return String(value || "")
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[{}]/g, "")
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+    }
+
+    function normalizeToken(value) {
+      return normalizeText(value).replace(/[.;,]/g, "").trim();
+    }
+
+    function splitItems(rawInside) {
+      return rawInside
+        .split(/[;,]/)
+        .map(normalizeToken)
+        .filter(Boolean);
+    }
+
+    function parseSetAnswer(value) {
+      const text = String(value || "");
+      const insideMatch = text.match(/\{([^}]*)\}/);
+      const nameMatch = text.match(/^\s*([^=\s]+)\s*=/);
+      const inside = insideMatch ? insideMatch[1] : text.replace(/^\s*[^=\s]+\s*=/, "");
+      return {
+        hasBraces: Boolean(insideMatch),
+        name: nameMatch ? nameMatch[1] : "",
+        items: splitItems(inside),
+        hasValidSeparators: !inside.includes(","),
+      };
+    }
+
+    function sameSet(actualItems, expectedItems) {
+      const actual = new Set(actualItems);
+      const expected = new Set(expectedItems.map(normalizeToken));
+      if (actual.size !== expected.size) return false;
+      for (const item of expected) {
+        if (!actual.has(item)) return false;
+      }
+      return true;
+    }
+
+    function gradeSetAnswer(value, expectedName, expectedItems, maxPoints) {
+      const parsed = parseSetAnswer(value);
+      const expectedNameNormalized = normalizeToken(expectedName);
+      const hasName = normalizeToken(parsed.name) === expectedNameNormalized;
+      const hasItems = sameSet(parsed.items, expectedItems);
+      const hasNotation = parsed.hasBraces && hasName && parsed.hasValidSeparators;
+
+      if (maxPoints === 0) {
+        return {
+          points: 0,
+          status: hasItems && hasNotation ? "correct" : hasItems ? "partial" : "incorrect",
+          hasItems,
+          hasNotation,
+          hasValidSeparators: parsed.hasValidSeparators,
+        };
+      }
+
+      if (maxPoints === 1) {
+        return {
+          points: hasItems && hasNotation ? 1 : 0,
+          status: hasItems && hasNotation ? "correct" : hasItems ? "partial" : "incorrect",
+          hasItems,
+          hasNotation,
+          hasValidSeparators: parsed.hasValidSeparators,
+        };
+      }
+
+      const notationPoints = 1;
+      const itemPoints = Math.max(1, maxPoints - notationPoints);
+      const points = (hasItems ? itemPoints : 0) + (hasNotation ? notationPoints : 0);
+      return {
+        points,
+        status: points === maxPoints ? "correct" : points > 0 ? "partial" : "incorrect",
+        hasItems,
+        hasNotation,
+        hasValidSeparators: parsed.hasValidSeparators,
+      };
+    }
+
+    function parseJsonArray(value) {
+      try {
+        const parsed = JSON.parse(value || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function gradeKeywordAnswer(value, keywords, minKeywords, maxPoints) {
+      const normalizedAnswer = normalizeText(value);
+      const required = keywords.map(normalizeText).filter(Boolean);
+      if (!required.length || !normalizedAnswer) {
+        return {
+          points: 0,
+          status: "incorrect",
+          matched: [],
+          missing: required,
+        };
+      }
+
+      const matched = required.filter((keyword) => normalizedAnswer.includes(keyword));
+      const minimum = Math.min(required.length, Number(minKeywords) || required.length);
+      const isCorrect = matched.length >= minimum;
+      const ratio = Math.min(1, matched.length / minimum);
+      const points = isCorrect ? maxPoints : Math.round(maxPoints * ratio * 100) / 100;
+
+      return {
+        points,
+        status: isCorrect ? "correct" : points > 0 ? "partial" : "incorrect",
+        matched,
+        missing: required.filter((keyword) => !matched.includes(keyword)),
+      };
+    }
+
+    function gradeWrittenAnswer(card, value) {
+      const maxPoints = Number(card.dataset.points || 0);
+      const gradeType = card.dataset.gradeType || "set";
+
+      if (gradeType === "keywords") {
+        const keywords = parseJsonArray(card.dataset.keywords);
+        return gradeKeywordAnswer(value, keywords, card.dataset.minKeywords, maxPoints);
+      }
+
+      if (gradeType === "manual") {
+        return {
+          points: 0,
+          status: "manual",
+        };
+      }
+
+      return gradeSetAnswer(value, card.dataset.name, splitCsv(card.dataset.items), maxPoints);
+    }
+
+    function showFeedback(id, status, message) {
+      const box = document.getElementById(id);
+      if (!box) return;
+      box.className = `feedback-box show ${status}`;
+      box.textContent = message;
+    }
+
+    function formatExpected(name, items) {
+      return `${name} = {${items.join("; ")}}`;
+    }
+
+    function bindTabs() {
+      const buttons = document.querySelectorAll(".tab-button");
+      const panels = document.querySelectorAll(".part-panel, .result-card");
+
+      function activate(tabId) {
+        buttons.forEach((button) => {
+          button.setAttribute("aria-selected", String(button.dataset.tab === tabId));
+        });
+        panels.forEach((panel) => {
+          panel.classList.toggle("active", panel.id === tabId);
+          if (panel.id === "result") {
+            panel.classList.toggle("show", panel.id === tabId);
+          }
+        });
+        const target = document.getElementById(tabId);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => activate(button.dataset.tab));
+      });
+
+      document.querySelectorAll("[data-tab-jump]").forEach((button) => {
+        button.addEventListener("click", () => activate(button.dataset.tabJump));
+      });
+    }
+
+    function bindStorage() {
+      document.querySelectorAll("[data-save]").forEach((field) => {
+        const key = field.name || field.id;
+        if (!key) return;
+
+        if (field.type === "checkbox") {
+          field.checked = savedState[field.id] === true;
+        } else if (field.type === "radio") {
+          field.checked = savedState[key] === field.value;
+        } else if (Object.prototype.hasOwnProperty.call(savedState, key)) {
+          field.value = savedState[key];
+        }
+
+        field.addEventListener("change", saveState);
+        field.addEventListener("input", saveState);
+      });
+    }
+
+    function saveState() {
+      const state = {};
+      document.querySelectorAll("[data-save]").forEach((field) => {
+        const key = field.name || field.id;
+        if (!key) return;
+        if (field.type === "radio") {
+          if (field.checked) state[key] = field.value;
+        } else if (field.type === "checkbox") {
+          state[field.id] = field.checked;
+        } else {
+          state[key] = field.value;
+        }
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function bindPracticeChecks() {
+      document.querySelectorAll("[data-show-guide]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const box = document.getElementById(button.dataset.showGuide);
+          if (!box) return;
+          box.className = "feedback-box show correct";
+        });
+      });
+
+      document.querySelectorAll("[data-check-symbol]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const field = document.getElementById(button.dataset.checkSymbol);
+          const correct = field && field.value === button.dataset.answer;
+          showFeedback(
+            button.dataset.feedback,
+            correct ? "correct" : "incorrect",
+            correct ? button.dataset.explain : "Hãy xem phần tử này có xuất hiện trong tập hợp không."
+          );
+        });
+      });
+
+      document.querySelectorAll("[data-check-symbols]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targets = splitCsv(button.dataset.targets);
+          const expected = splitCsv(button.dataset.answers);
+          const values = targets.map((id) => document.getElementById(id)?.value || "");
+          const correctCount = values.filter((value, index) => value === expected[index]).length;
+          const total = expected.length;
+          const status = correctCount === total ? "correct" : correctCount > 0 ? "partial" : "incorrect";
+          const defaultMessage = correctCount === total
+            ? `Đúng cả ${total} câu.`
+            : `Em đúng ${correctCount}/${total} câu. Hãy kiểm tra lại điều kiện của từng câu.`;
+          const template = button.dataset.partialTemplate || defaultMessage;
+          const message = correctCount === total
+            ? button.dataset.successMessage || defaultMessage
+            : template.replace("{correct}", correctCount).replace("{total}", total);
+          showFeedback(button.dataset.feedback, status, message);
+        });
+      });
+
+      document.querySelectorAll("[data-check-set]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const input = document.getElementById(button.dataset.checkSet);
+          const expectedItems = splitCsv(button.dataset.items);
+          const result = gradeSetAnswer(input ? input.value : "", button.dataset.name, expectedItems, Number(button.dataset.points));
+          const expected = formatExpected(button.dataset.name, expectedItems);
+          const guideOnly = button.dataset.guideOnly === "true";
+          let message = "";
+          if (result.status === "correct") {
+            message = `Đúng. Đáp án gợi ý: ${expected}.`;
+          } else if (!result.hasValidSeparators) {
+            message = "Các phần tử của tập hợp phải được ngăn cách bằng dấu chấm phẩy (;), không dùng dấu phẩy (,).";
+          } else if (result.hasItems) {
+            message = guideOnly
+              ? button.dataset.partialGuide
+              : `Em đã đúng phần tử, chỉ cần sửa cách trình bày: cần tên tập hợp ${button.dataset.name} và dấu ngoặc nhọn. Đáp án gợi ý: ${expected}.`;
+          } else {
+            message = guideOnly
+              ? button.dataset.guide
+              : `Em thử kiểm tra lại điều kiện của tập hợp nhé. Đáp án gợi ý: ${expected}.`;
+          }
+          showFeedback(button.dataset.feedback, result.status, message);
+        });
+      });
+
+      document.querySelectorAll("[data-check-game]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const expectedValues = splitCsv(button.dataset.answers);
+          const expected = new Set(expectedValues);
+          const group = document.getElementById(button.dataset.gameGroup);
+          const selected = Array.from(group ? group.querySelectorAll("input:checked") : []).map((input) => input.value);
+          const selectedSet = new Set(selected);
+          const isCorrect = selectedSet.size === expected.size && Array.from(expected).every((value) => selectedSet.has(value));
+          const correctSelected = selected.filter((value) => expected.has(value)).length;
+          const answerText = expectedValues.join(", ");
+          const defaultMessage = isCorrect
+            ? `Đúng. Các lựa chọn đúng là: ${answerText}.`
+            : `Em đã chọn đúng ${correctSelected}/${expected.size}. Hãy chọn đủ: ${answerText}.`;
+          const partialTemplate = button.dataset.partialTemplate || defaultMessage;
+          const message = isCorrect
+            ? button.dataset.correctMessage || defaultMessage
+            : partialTemplate
+                .replace("{correct}", correctSelected)
+                .replace("{total}", expected.size)
+                .replace("{answers}", answerText);
+          showFeedback(button.dataset.feedback, isCorrect ? "correct" : correctSelected > 0 ? "partial" : "incorrect", message);
+        });
+      });
+    }
+
+    function selectedQuizValue(name) {
+      const checked = document.querySelector(`input[name="${name}"]:checked`);
+      return checked ? checked.value : "";
+    }
+
+    function displayNumber(value) {
+      return Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+    }
+
+    function getComment(score, totalPoints) {
+      const ratio = totalPoints > 0 ? score / totalPoints : 0;
+      if (ratio >= 0.9) return "Em nắm bài rất tốt.";
+      if (ratio >= 0.7) return "Em hiểu bài, cần luyện thêm một số dạng.";
+      if (ratio >= 0.5) return "Em cần xem lại kiến thức trọng tâm và luyện thêm bài tương tự.";
+      return "Em cần ôn lại kiến thức trọng tâm và làm lại phần luyện tập.";
+    }
+
+    function submitTest() {
+      let multipleChoiceScore = 0;
+      let multipleChoiceMax = 0;
+      const quizDetails = [];
+
+      document.querySelectorAll("[data-quiz]").forEach((card, index) => {
+        const name = card.dataset.quiz;
+        const expected = card.dataset.answer;
+        const actual = selectedQuizValue(name);
+        const points = Number(card.dataset.points || 1);
+        const correct = actual === expected;
+        multipleChoiceMax += points;
+        if (correct) multipleChoiceScore += points;
+        quizDetails.push(`Câu ${index + 1}: ${actual || "chưa chọn"} (${correct ? "đúng" : `đáp án ${expected}`})`);
+      });
+
+      let writtenScore = 0;
+      let writtenMax = 0;
+      const writtenDetails = [];
+      document.querySelectorAll("[data-written]").forEach((card) => {
+        const field = document.getElementById(card.dataset.written);
+        const maxPoints = Number(card.dataset.points || 0);
+        const result = gradeWrittenAnswer(card, field ? field.value : "");
+        writtenScore += result.points;
+        writtenMax += maxPoints;
+        writtenDetails.push({
+          label: card.querySelector(".question-title")?.textContent || "Tự luận",
+          answer: field?.value || "Chưa làm",
+          expected: card.dataset.expectedText || formatExpected(card.dataset.name, splitCsv(card.dataset.items)),
+          points: result.points,
+          maxPoints,
+          status: result.status,
+        });
+      });
+
+      const total = multipleChoiceScore + writtenScore;
+      const totalMax = TEST_TOTAL_POINTS || multipleChoiceMax + writtenMax;
+      const resultSection = document.getElementById("result");
+      resultSection.classList.add("show", "has-result");
+
+      const studentName = document.getElementById("student-name").value || "Chưa nhập";
+      const studentClass = document.getElementById("student-class").value || "Chưa nhập";
+      const studentCode = document.getElementById("student-code").value || document.body.dataset.lessonId;
+      const writtenRows = writtenDetails.map((detail) => `
+            <tr><td>${escapeHtml(detail.label)}</td><td>${formatWrittenDetail(detail)}</td><td>${displayNumber(detail.points)}/${displayNumber(detail.maxPoints)}</td></tr>
+      `).join("");
+
+      document.getElementById("result-content").innerHTML = `
+        <div class="score-summary">
+          <strong>Nhận xét:</strong> ${getComment(total, totalMax)}
+        </div>
+        <div class="result-grid">
+          <div class="result-metric"><span>Học sinh</span><strong>${escapeHtml(studentName)}</strong></div>
+          <div class="result-metric"><span>Lớp</span><strong>${escapeHtml(studentClass)}</strong></div>
+          <div class="result-metric"><span>Mã bài</span><strong>${escapeHtml(studentCode)}</strong></div>
+          <div class="result-metric"><span>Tổng điểm</span><strong>${displayNumber(total)}/${displayNumber(totalMax)}</strong></div>
+        </div>
+        <table class="score-table">
+          <thead>
+            <tr><th>Phần</th><th>Kết quả</th><th>Điểm</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Trắc nghiệm</td><td>${quizDetails.map(escapeHtml).join("<br>") || "Không có"}</td><td>${displayNumber(multipleChoiceScore)}/${displayNumber(multipleChoiceMax)}</td></tr>
+            ${writtenRows}
+          </tbody>
+        </table>
+      `;
+
+      document.querySelector('[data-tab="result"]').click();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatWrittenDetail(detail) {
+      const statusLabel = detail.status === "correct" ? "đúng" : detail.status === "partial" ? "đúng một phần" : detail.status === "manual" ? "giáo viên chấm" : "cần xem lại";
+      return `${escapeHtml(statusLabel)}<br>Bài làm: ${escapeHtml(detail.answer)}<br>Đáp án gợi ý: ${escapeHtml(detail.expected)}`;
+    }
+
+    function updateTimerDisplay() {
+      const minutes = String(Math.floor(timerSeconds / 60)).padStart(2, "0");
+      const seconds = String(timerSeconds % 60).padStart(2, "0");
+      document.getElementById("timer").textContent = `Thời gian: ${minutes}:${seconds}`;
+    }
+
+    function bindTimer() {
+      const startButton = document.getElementById("start-timer");
+      const resetButton = document.getElementById("reset-timer");
+      if (!startButton || !resetButton) return;
+
+      startButton.addEventListener("click", () => {
+        if (timerId) return;
+        timerId = window.setInterval(() => {
+          timerSeconds = Math.max(0, timerSeconds - 1);
+          updateTimerDisplay();
+          if (timerSeconds === 0) {
+            window.clearInterval(timerId);
+            timerId = null;
+            document.getElementById("timer").textContent = "Đã hết thời gian";
+          }
+        }, 1000);
+      });
+
+      resetButton.addEventListener("click", () => {
+        if (timerId) window.clearInterval(timerId);
+        timerId = null;
+        timerSeconds = TIMER_TOTAL_SECONDS;
+        updateTimerDisplay();
+      });
+    }
+
+    function bindMathSymbols() {
+      document.addEventListener("focusin", (event) => {
+        if (event.target.matches("textarea, input[type='text']")) activeField = event.target;
+      });
+
+      document.getElementById("symbol-toggle").addEventListener("click", () => {
+        document.getElementById("symbol-panel").classList.toggle("open");
+      });
+
+      const symbolGrid = document.getElementById("symbol-grid");
+      mathSymbols.forEach((symbol) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = symbol;
+        button.addEventListener("click", () => insertSymbol(symbol));
+        symbolGrid.appendChild(button);
+      });
+    }
+
+    function insertSymbol(symbol) {
+      if (!activeField) return;
+      const value = symbol === "↵" ? "\n" : symbol;
+      const start = activeField.selectionStart ?? activeField.value.length;
+      const end = activeField.selectionEnd ?? activeField.value.length;
+      activeField.value = activeField.value.slice(0, start) + value + activeField.value.slice(end);
+      activeField.focus();
+      activeField.selectionStart = activeField.selectionEnd = start + value.length;
+      activeField.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      bindStorage();
+      bindTabs();
+      bindPracticeChecks();
+      bindTimer();
+      bindMathSymbols();
+      document.getElementById("submit-test")?.addEventListener("click", submitTest);
+      document.getElementById("print-page")?.addEventListener("click", () => window.print());
+      document.getElementById("print-result")?.addEventListener("click", () => window.print());
+      updateTimerDisplay();
+    });
+  </script>
+</body>
+</html>
