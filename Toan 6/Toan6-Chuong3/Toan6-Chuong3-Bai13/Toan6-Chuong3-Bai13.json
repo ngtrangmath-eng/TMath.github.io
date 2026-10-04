@@ -1,0 +1,632 @@
+{
+  "lesson": {
+    "code": "Toan6-Chuong3-Bai13",
+    "bodyLessonId": "toan6-chuong3-bai13",
+    "storageKey": "toan6-chuong3-bai13-worksheet",
+    "output": "../../Toan 6/Toan6-Chuong3/Toan6-Chuong3-Bai13/Toan6-Chuong3-Bai13.html",
+    "title": "Toán 6 - Chương 3 - Bài 13: Tập hợp các số nguyên",
+    "summary": "Nhận biết số nguyên dương, số nguyên âm và tập hợp số nguyên; biểu diễn, so sánh số nguyên trên trục số và vận dụng trong thực tế.",
+    "meta": {
+      "Môn": "Toán",
+      "Lớp": "6",
+      "Chương": "3",
+      "Bài": "13",
+      "Mã bài": "Toan6-Chuong3-Bai13"
+    },
+    "sources": [
+      "lesson.md",
+      "Bai13-PhanA.md",
+      "Bai13-PhanB.md",
+      "Bai13-PhanC.md"
+    ]
+  },
+  "partA": {
+    "title": "Phần A - Kiến thức trọng tâm",
+    "lead": "Số nguyên giúp mô tả các đại lượng đối lập như trên và dưới 0°C, cao và thấp hơn mực nước biển, tiền nhận vào và tiền chi ra.",
+    "blocks": [
+      {
+        "title": "1. Mục tiêu bài học",
+        "listType": "ol",
+        "items": [
+          "Nhận biết, đọc và viết được số nguyên dương, số nguyên âm; nhận biết tập hợp số nguyên và kí hiệu <span class='math-text'>ℤ</span>.",
+          "Hiểu ý nghĩa của số nguyên âm trong các tình huống thực tế.",
+          "Biểu diễn được số nguyên trên trục số; xác định gốc <span class='math-text'>O</span>, chiều dương và chiều âm.",
+          "So sánh được hai số nguyên và dùng đúng các kí hiệu <span class='math-text'>&lt;, &gt;, ≤, ≥</span>.",
+          "Vận dụng số nguyên vào các tình huống nhiệt độ, độ cao, tài chính và chuyển động có hướng."
+        ]
+      },
+      {
+        "title": "2. Số nguyên dương, số nguyên âm và số 0",
+        "items": [
+          "Các số <span class='math-text'>1; 2; 3; 4; ...</span> là các số nguyên dương. Có thể viết thêm dấu <span class='math-text'>+</span>, chẳng hạn <span class='math-text'>+6</span>.",
+          "Các số <span class='math-text'>-1; -2; -3; -4; ...</span> là các số nguyên âm.",
+          "Số <span class='math-text'>0</span> là số nguyên nhưng không phải số nguyên dương, cũng không phải số nguyên âm."
+        ]
+      },
+      {
+        "title": "3. Tập hợp các số nguyên",
+        "paragraphs": [
+          "Tập hợp gồm các số nguyên âm, số <span class='math-text'>0</span> và các số nguyên dương được gọi là tập hợp các số nguyên, kí hiệu là <span class='math-text'>ℤ</span>.",
+          "<span class='math-text'>ℤ = {...; -4; -3; -2; -1; 0; 1; 2; 3; 4; ...}</span>"
+        ]
+      },
+      {
+        "title": "4. Khi nào người ta dùng số âm",
+        "items": [
+          "Nhiệt độ dưới <span class='math-text'>0°C</span>, chẳng hạn <span class='math-text'>-7°C</span>.",
+          "Độ cao dưới mực nước biển, chẳng hạn <span class='math-text'>-30 m</span>.",
+          "Tiền chi ra, số tiền còn nợ hoặc khoản lỗ.",
+          "Một hướng chuyển động ngược với hướng được chọn là chiều dương."
+        ]
+      },
+      {
+        "title": "5. Trục số và thứ tự các số nguyên",
+        "paragraphs": [
+          "Điểm biểu diễn số <span class='math-text'>0</span> là gốc <span class='math-text'>O</span>. Từ trái sang phải là chiều dương; chiều ngược lại là chiều âm.",
+          "Trên trục số, điểm nằm bên trái biểu diễn số nhỏ hơn; điểm nằm bên phải biểu diễn số lớn hơn."
+        ],
+        "html": "<div role='img' aria-label='Trục số từ âm 5 đến dương 5, gốc O tại số 0' style='overflow-x:auto; margin:16px 0 4px'><svg viewBox='0 0 900 150' style='display:block; min-width:720px; width:100%; height:auto' xmlns='http://www.w3.org/2000/svg'><defs><marker id='axis-arrow-13' markerWidth='8' markerHeight='8' refX='6' refY='3' orient='auto'><path d='M0,0 L0,6 L7,3 z' fill='#216e6a'/></marker></defs><line x1='55' y1='72' x2='845' y2='72' stroke='#216e6a' stroke-width='4' marker-end='url(#axis-arrow-13)'/><g fill='#21312b' font-family='Arial, sans-serif' font-size='20' text-anchor='middle'><line x1='90' y1='60' x2='90' y2='84' stroke='#21312b' stroke-width='3'/><text x='90' y='112'>-5</text><line x1='160' y1='60' x2='160' y2='84' stroke='#21312b' stroke-width='3'/><text x='160' y='112'>-4</text><line x1='230' y1='60' x2='230' y2='84' stroke='#21312b' stroke-width='3'/><text x='230' y='112'>-3</text><line x1='300' y1='60' x2='300' y2='84' stroke='#21312b' stroke-width='3'/><text x='300' y='112'>-2</text><line x1='370' y1='60' x2='370' y2='84' stroke='#21312b' stroke-width='3'/><text x='370' y='112'>-1</text><line x1='440' y1='56' x2='440' y2='88' stroke='#b04f2d' stroke-width='4'/><text x='440' y='112' font-weight='700'>0</text><text x='440' y='40' fill='#b04f2d' font-weight='700'>O</text><line x1='510' y1='60' x2='510' y2='84' stroke='#21312b' stroke-width='3'/><text x='510' y='112'>1</text><line x1='580' y1='60' x2='580' y2='84' stroke='#21312b' stroke-width='3'/><text x='580' y='112'>2</text><line x1='650' y1='60' x2='650' y2='84' stroke='#21312b' stroke-width='3'/><text x='650' y='112'>3</text><line x1='720' y1='60' x2='720' y2='84' stroke='#21312b' stroke-width='3'/><text x='720' y='112'>4</text><line x1='790' y1='60' x2='790' y2='84' stroke='#21312b' stroke-width='3'/><text x='790' y='112'>5</text><text x='110' y='142' fill='#61706a' font-size='16'>Chiều âm</text><text x='775' y='142' fill='#61706a' font-size='16'>Chiều dương</text></g></svg></div>"
+      },
+      {
+        "title": "6. Quy tắc so sánh cần nhớ",
+        "listType": "ol",
+        "items": [
+          "Mọi số nguyên âm đều nhỏ hơn <span class='math-text'>0</span>.",
+          "Số <span class='math-text'>0</span> nhỏ hơn mọi số nguyên dương.",
+          "Mọi số nguyên âm đều nhỏ hơn mọi số nguyên dương.",
+          "Nếu <span class='math-text'>a, b</span> là hai số nguyên dương và <span class='math-text'>a &gt; b</span> thì <span class='math-text'>-a &lt; -b</span>.",
+          "<span class='math-text'>a ≤ b</span> nghĩa là <span class='math-text'>a &lt; b</span> hoặc <span class='math-text'>a = b</span>; <span class='math-text'>a ≥ b</span> nghĩa là <span class='math-text'>a &gt; b</span> hoặc <span class='math-text'>a = b</span>."
+        ]
+      }
+    ],
+    "note": {
+      "title": "Ghi nhớ",
+      "text": "Trên trục số, số nằm bên trái nhỏ hơn số nằm bên phải. Khi so sánh hai số âm, số có phần số tự nhiên lớn hơn lại là số nguyên nhỏ hơn."
+    },
+    "symbolTable": {
+      "headers": [
+        "Kí hiệu",
+        "Cách đọc hoặc ý nghĩa",
+        "Ví dụ"
+      ],
+      "rows": [
+        [
+          "<span class='math-text'>ℤ</span>",
+          "Tập hợp các số nguyên",
+          "<span class='math-text'>-3 ∈ ℤ</span>"
+        ],
+        [
+          "<span class='math-text'>O</span>",
+          "Gốc của trục số",
+          "<span class='math-text'>O</span> biểu diễn số <span class='math-text'>0</span>"
+        ],
+        [
+          "<span class='math-text'>&lt;</span>",
+          "Nhỏ hơn",
+          "<span class='math-text'>-5 &lt; -3</span>"
+        ],
+        [
+          "<span class='math-text'>&gt;</span>",
+          "Lớn hơn",
+          "<span class='math-text'>-12 &gt; -15</span>"
+        ],
+        [
+          "<span class='math-text'>≤, ≥</span>",
+          "Nhỏ hơn hoặc bằng, lớn hơn hoặc bằng",
+          "<span class='math-text'>-2 ≤ -2</span>"
+        ]
+      ]
+    },
+    "example": {
+      "title": "Ví dụ mẫu có hướng dẫn",
+      "html": "<h4>Ví dụ 1. Nhận biết số nguyên</h4><p>Trong các số <span class='math-text'>-8; 0; 5; -13; 21</span>, các số nguyên âm là <span class='math-text'>-8; -13</span>; các số nguyên dương là <span class='math-text'>5; 21</span>; số <span class='math-text'>0</span> không dương, không âm.</p><h4>Ví dụ 2. Ý nghĩa thực tế</h4><p><span class='math-text'>-7°C</span> nghĩa là nhiệt độ <span class='math-text'>7°C</span> dưới <span class='math-text'>0°C</span>. Độ cao <span class='math-text'>-30 m</span> nghĩa là vị trí thấp hơn mực nước biển <span class='math-text'>30 m</span>.</p><h4>Ví dụ 3. So sánh hai số nguyên</h4><p>Trên trục số, <span class='math-text'>-12</span> nằm bên phải <span class='math-text'>-15</span>, nên <span class='math-text'>-12 &gt; -15</span>.</p>"
+    },
+    "mindMap": [
+      "Số nguyên dương → 1; 2; 3; ...",
+      "Số nguyên âm → -1; -2; -3; ...",
+      "Số 0 → không dương, không âm",
+      "Tập hợp số nguyên → ℤ",
+      "Trục số → trái âm, phải dương",
+      "So sánh → bên trái nhỏ hơn",
+      "Số âm → đại lượng đối lập",
+      "Hai số âm → xa O hơn thì nhỏ hơn"
+    ],
+    "quickChecks": [
+      {
+        "type": "symbol",
+        "id": "a-check-1",
+        "title": "Câu 1. Chọn các số nguyên âm trong -5; 0; 8; -11; 3",
+        "prompt": "Chọn đáp án đúng.",
+        "label": "Đáp án",
+        "options": [
+          "-5; -11",
+          "0; -5; -11",
+          "8; 3",
+          "-11; 3"
+        ],
+        "answer": "-5; -11",
+        "explain": "Đúng. Các số nguyên âm là -5 và -11."
+      },
+      {
+        "type": "symbol",
+        "id": "a-check-2",
+        "title": "Câu 2. Số 0 có phải là số nguyên dương hoặc số nguyên âm không",
+        "prompt": "Chọn câu trả lời đúng.",
+        "label": "Trả lời",
+        "options": [
+          "Có",
+          "Không"
+        ],
+        "answer": "Không",
+        "explain": "Đúng. Số 0 là số nguyên nhưng không dương, không âm."
+      },
+      {
+        "type": "symbol",
+        "id": "a-check-3",
+        "title": "Câu 3. Điền số còn thiếu trong ℤ = {...; -2; -1; ...; 1; 2; ...}",
+        "prompt": "Chọn số thích hợp.",
+        "label": "Số cần điền",
+        "options": [
+          "-3",
+          "0",
+          "3"
+        ],
+        "answer": "0",
+        "explain": "Đúng. Số nằm giữa -1 và 1 là 0."
+      },
+      {
+        "type": "symbol",
+        "id": "a-check-4",
+        "title": "Câu 4. So sánh -8 và 2",
+        "prompt": "Điền dấu thích hợp: <span class='math-text'>-8 ... 2</span>",
+        "label": "Dấu",
+        "options": [
+          "<",
+          ">",
+          "="
+        ],
+        "answer": "<",
+        "explain": "Đúng. Mọi số nguyên âm đều nhỏ hơn mọi số nguyên dương."
+      },
+      {
+        "type": "symbol",
+        "id": "a-check-5",
+        "title": "Câu 5. So sánh -12 và -15",
+        "prompt": "Điền dấu thích hợp: <span class='math-text'>-12 ... -15</span>",
+        "label": "Dấu",
+        "options": [
+          "<",
+          ">",
+          "="
+        ],
+        "answer": ">",
+        "explain": "Đúng. -12 nằm bên phải -15 trên trục số nên -12 > -15."
+      }
+    ],
+    "mistakesTitle": "Những lỗi học sinh dễ mắc",
+    "mistakes": [
+      "Cho rằng <span class='math-text'>0</span> là số nguyên dương hoặc số nguyên âm.",
+      "Nhầm số nguyên âm với phép trừ và quên dấu <span class='math-text'>-</span> khi đọc, viết.",
+      "Nhầm chiều dương và chiều âm trên trục số.",
+      "Cho rằng <span class='math-text'>-15 &gt; -12</span> vì <span class='math-text'>15 &gt; 12</span>; thực tế <span class='math-text'>-15 &lt; -12</span>.",
+      "Nhầm vị trí trên trục số với khoảng cách đến gốc <span class='math-text'>O</span>.",
+      "Dùng số âm trong thực tế nhưng không nêu rõ ý nghĩa của dấu âm."
+    ]
+  },
+  "partB": {
+    "title": "Phần B - Luyện tập",
+    "lead": "Luyện đọc, viết số nguyên; diễn tả số âm trong thực tế; biểu diễn trên trục số; so sánh, sắp xếp và liệt kê các số nguyên thỏa điều kiện.",
+    "referenceTable": {
+      "headers": [
+        "Kí hiệu hoặc nội dung",
+        "Ghi nhớ"
+      ],
+      "rows": [
+        [
+          "<span class='math-text'>ℤ</span>",
+          "Tập hợp các số nguyên"
+        ],
+        [
+          "<span class='math-text'>O</span>",
+          "Gốc của trục số, biểu diễn số 0"
+        ],
+        [
+          "<span class='math-text'>&lt;, &gt;</span>",
+          "Số bên trái nhỏ hơn; số bên phải lớn hơn"
+        ],
+        [
+          "<span class='math-text'>≤, ≥</span>",
+          "Nhỏ hơn hoặc bằng; lớn hơn hoặc bằng"
+        ],
+        [
+          "Hai số âm",
+          "Số xa gốc O hơn về bên trái thì nhỏ hơn"
+        ]
+      ]
+    },
+    "symbolGroup": {
+      "title": "1. Dùng số nguyên âm để diễn tả thông tin",
+      "prompt": "Chọn số nguyên đúng cho mỗi tình huống.",
+      "items": [
+        {
+          "id": "b-negative-1",
+          "label": "a) 45 m dưới mực nước biển",
+          "options": [
+            "45 m",
+            "-45 m"
+          ],
+          "answer": "-45 m"
+        },
+        {
+          "id": "b-negative-2",
+          "label": "b) 80 m dưới mực nước biển",
+          "options": [
+            "80 m",
+            "-80 m"
+          ],
+          "answer": "-80 m"
+        },
+        {
+          "id": "b-negative-3",
+          "label": "c) 25°C dưới 0°C",
+          "options": [
+            "25°C",
+            "-25°C"
+          ],
+          "answer": "-25°C"
+        },
+        {
+          "id": "b-negative-4",
+          "label": "d) Độ sâu 700 m dưới mực nước biển",
+          "options": [
+            "700 m",
+            "-700 m"
+          ],
+          "answer": "-700 m"
+        }
+      ],
+      "successMessage": "Đúng cả 4 câu. Dấu âm cho biết vị trí dưới mốc được chọn.",
+      "partialTemplate": "Em đúng {correct}/{total} câu. Hãy kiểm tra ý nghĩa của cụm từ dưới mực nước biển hoặc dưới 0°C.",
+      "answerKey": [
+        "a) -45 m.",
+        "b) -80 m.",
+        "c) -25°C.",
+        "d) -700 m."
+      ]
+    },
+    "setQuestions": [
+      {
+        "id": "b-set-1",
+        "title": "2. Các số nguyên lớn hơn -1 trong tập hợp {x ∈ ℤ | -5 < x ≤ 2}",
+        "prompt": "Gọi tập hợp cần tìm là <span class='math-text'>S</span>. Hãy viết đủ tên tập hợp, dấu ngoặc nhọn và dùng dấu chấm phẩy giữa các phần tử.",
+        "placeholder": "Ví dụ: S = {0; 1; 2}",
+        "expectedName": "S",
+        "expectedItems": [
+          "0",
+          "1",
+          "2"
+        ],
+        "practicePoints": 0,
+        "hint": "Chỉ chọn các số vừa lớn hơn -1, vừa không vượt quá 2."
+      },
+      {
+        "id": "b-set-2",
+        "title": "3. Liệt kê A = {x ∈ ℤ | -2 ≤ x < 4}",
+        "placeholder": "A = {...}",
+        "expectedName": "A",
+        "expectedItems": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "practicePoints": 0,
+        "hint": "-2 được lấy, còn 4 không được lấy."
+      },
+      {
+        "id": "b-set-3",
+        "title": "4. Liệt kê B = {x ∈ ℤ | -2 < x ≤ 4}",
+        "placeholder": "B = {...}",
+        "expectedName": "B",
+        "expectedItems": [
+          "-1",
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "practicePoints": 0,
+        "hint": "-2 không được lấy, còn 4 được lấy."
+      }
+    ],
+    "practiceQuestions": [
+      {
+        "id": "b-practice-1",
+        "title": "5. Nhận biết, đọc và viết số nguyên",
+        "prompt": "<p>a) Viết ba số nguyên dương. b) Viết ba số nguyên âm. c) Đọc các số em vừa viết.</p>",
+        "guide": "Ví dụ: số nguyên dương 2; 7; 15. Số nguyên âm -3; -8; -20. Có nhiều đáp án đúng."
+      },
+      {
+        "id": "b-practice-2",
+        "title": "6. Diễn tả không dùng số âm",
+        "prompt": "<p>a) Nhiệt độ bên ngoài máy bay là <span class='math-text'>-50°C</span>.</p><p>b) Cá voi xanh có thể lặn đến độ cao <span class='math-text'>-2 500 m</span> so với mực nước biển.</p>",
+        "guide": "a) Nhiệt độ bên ngoài máy bay là 50°C dưới 0°C. b) Cá voi xanh có thể lặn sâu 2 500 m dưới mực nước biển."
+      },
+      {
+        "id": "b-practice-3",
+        "title": "7. Biểu diễn số nguyên trên trục số",
+        "prompt": "<p>Biểu diễn các số <span class='math-text'>3; -3; -5; 6; -4; 4</span> trên cùng một trục số.</p><p>Gợi ý: số âm ở bên trái <span class='math-text'>O</span>, số dương ở bên phải <span class='math-text'>O</span>.</p>",
+        "placeholder": "Mô tả thứ tự các điểm từ trái sang phải hoặc vẽ vào vở",
+        "guide": "Từ trái sang phải: -5; -4; -3; 3; 4; 6. Mỗi điểm cách O một số đơn vị bằng phần số tự nhiên của số đó."
+      },
+      {
+        "id": "b-practice-4",
+        "title": "8. Di chuyển từ gốc O",
+        "prompt": "<p>a) Đi 5 đơn vị theo chiều dương thì đến điểm nào?</p><p>b) Đi 5 đơn vị theo chiều âm thì đến điểm nào?</p>",
+        "guide": "a) Điểm 5. b) Điểm -5."
+      },
+      {
+        "id": "b-practice-5",
+        "title": "9. Sắp xếp số nguyên",
+        "prompt": "<p>Sắp xếp các số <span class='math-text'>2; -4; 0; 5; -11; -3; 9</span> theo thứ tự tăng dần.</p>",
+        "guide": "-11; -4; -3; 0; 2; 5; 9."
+      },
+      {
+        "id": "b-practice-6",
+        "title": "10. So sánh hai số nguyên âm",
+        "prompt": "<p>a) So sánh <span class='math-text'>-39</span> và <span class='math-text'>-54</span>.</p><p>b) So sánh <span class='math-text'>-3 179</span> và <span class='math-text'>-3 279</span>.</p>",
+        "guide": "a) -39 > -54. b) -3 179 > -3 279."
+      },
+      {
+        "id": "b-practice-7",
+        "title": "11. Giao dịch ngân hàng",
+        "prompt": "<p>Giải thích ý nghĩa của hai thông báo: <span class='math-text'>+160 000 đồng</span> và <span class='math-text'>-4 000 000 đồng</span>.</p>",
+        "guide": "+160 000 đồng: tài khoản được cộng thêm hoặc nhận vào 160 000 đồng. -4 000 000 đồng: tài khoản bị trừ hoặc chi ra 4 000 000 đồng."
+      },
+      {
+        "id": "b-practice-8",
+        "title": "12. Nhiệt độ ba thành phố",
+        "prompt": "<p>Moscow: <span class='math-text'>-9°C</span>; Saint Petersburg: <span class='math-text'>-8°C</span>; Vladivostok: <span class='math-text'>-12°C</span>.</p><p>a) Sắp xếp theo thứ tự giảm dần. b) Thành phố nào có nhiệt độ thấp nhất?</p>",
+        "guide": "-8°C > -9°C > -12°C. Vladivostok có nhiệt độ thấp nhất."
+      },
+      {
+        "id": "b-practice-9",
+        "title": "13. Thử thách tranh luận",
+        "prompt": "<p>Kiến A bò được <span class='math-text'>12</span> đơn vị; kiến B bò được <span class='math-text'>-15</span> đơn vị. Bạn An nói: Vì <span class='math-text'>12 &gt; -15</span> nên kiến A bò quãng đường dài hơn. Em có đồng ý không? Giải thích.</p>",
+        "guide": "Không đồng ý. Dấu cho biết hướng di chuyển. Kiến A đi 12 đơn vị theo chiều dương; kiến B đi 15 đơn vị theo chiều âm. Vì 15 > 12 nên quãng đường của kiến B dài hơn."
+      }
+    ],
+    "checkboxGame": {
+      "id": "integer-axis-game",
+      "title": "14. Trò chơi Đứng đúng vị trí trên trục số",
+      "prompt": "Chọn tất cả các số nằm bên trái gốc O.",
+      "options": [
+        "-8",
+        "-5",
+        "-2",
+        "0",
+        "1",
+        "4",
+        "7"
+      ],
+      "answers": [
+        "-8",
+        "-5",
+        "-2"
+      ],
+      "correctMessage": "Chính xác! -8, -5 và -2 nằm bên trái gốc O.",
+      "partialTemplate": "Em đã chọn đúng {correct}/{total} số. Đáp án đủ: {answers}.",
+      "answerKey": "Bên trái O: -8; -5; -2. Bên phải O: 1; 4; 7. Từ trái sang phải: -8; -5; -2; 0; 1; 4; 7."
+    },
+    "tipsTitle": "15. Gợi ý củng cố sau luyện tập",
+    "tips": [
+      "Số <span class='math-text'>0</span> là số nguyên nhưng không phải số nguyên dương, cũng không phải số nguyên âm.",
+      "Trên trục số, số nằm bên trái nhỏ hơn số nằm bên phải.",
+      "Mọi số nguyên âm đều nhỏ hơn <span class='math-text'>0</span> và nhỏ hơn mọi số nguyên dương.",
+      "Khi so sánh hai số nguyên âm, số có phần số tự nhiên lớn hơn thì số nguyên âm tương ứng lại nhỏ hơn.",
+      "Số âm trong thực tế thường biểu thị một hướng hoặc trạng thái đối lập với số dương."
+    ]
+  },
+  "test": {
+    "title": "Phần C - Kiểm tra đánh giá",
+    "durationMinutes": 15,
+    "totalPoints": 10,
+    "lead": "Bài kiểm tra gồm 5 câu trắc nghiệm, 2 câu tự luận và 1 câu vận dụng. Thời gian làm bài: 15 phút.",
+    "rubric": [
+      {
+        "part": "Trắc nghiệm",
+        "description": "5 câu",
+        "points": 5
+      },
+      {
+        "part": "Tự luận",
+        "description": "2 câu",
+        "points": 4
+      },
+      {
+        "part": "Vận dụng",
+        "description": "1 câu",
+        "points": 1
+      }
+    ],
+    "multipleChoice": [
+      {
+        "id": "q1",
+        "prompt": "Tập hợp nào sau đây là tập hợp các số nguyên?",
+        "choices": [
+          {
+            "value": "A",
+            "text": "{0; 1; 2; 3; ...}"
+          },
+          {
+            "value": "B",
+            "text": "{1; 2; 3; 4; ...}"
+          },
+          {
+            "value": "C",
+            "text": "{...; -2; -1; 0; 1; 2; ...}"
+          },
+          {
+            "value": "D",
+            "text": "{-1; -2; -3; ...}"
+          }
+        ],
+        "answer": "C",
+        "points": 1
+      },
+      {
+        "id": "q2",
+        "prompt": "Khẳng định nào sau đây đúng?",
+        "choices": [
+          {
+            "value": "A",
+            "text": "0 là số nguyên dương."
+          },
+          {
+            "value": "B",
+            "text": "0 là số nguyên âm."
+          },
+          {
+            "value": "C",
+            "text": "0 vừa là số nguyên dương vừa là số nguyên âm."
+          },
+          {
+            "value": "D",
+            "text": "0 là số nguyên nhưng không là số nguyên dương, cũng không là số nguyên âm."
+          }
+        ],
+        "answer": "D",
+        "points": 1
+      },
+      {
+        "id": "q3",
+        "prompt": "So sánh nào sau đây đúng?",
+        "choices": [
+          {
+            "value": "A",
+            "text": "-7 > 3"
+          },
+          {
+            "value": "B",
+            "text": "-7 < 3"
+          },
+          {
+            "value": "C",
+            "text": "-7 = 3"
+          },
+          {
+            "value": "D",
+            "text": "-7 ≥ 3"
+          }
+        ],
+        "answer": "B",
+        "points": 1
+      },
+      {
+        "id": "q4",
+        "prompt": "Số lớn nhất trong các số -8; -2; 0; 5 là:",
+        "choices": [
+          {
+            "value": "A",
+            "text": "-8"
+          },
+          {
+            "value": "B",
+            "text": "-2"
+          },
+          {
+            "value": "C",
+            "text": "0"
+          },
+          {
+            "value": "D",
+            "text": "5"
+          }
+        ],
+        "answer": "D",
+        "points": 1
+      },
+      {
+        "id": "q5",
+        "prompt": "Vì 12 > 7 nên:",
+        "choices": [
+          {
+            "value": "A",
+            "text": "-12 > -7"
+          },
+          {
+            "value": "B",
+            "text": "-12 = -7"
+          },
+          {
+            "value": "C",
+            "text": "-12 < -7"
+          },
+          {
+            "value": "D",
+            "text": "Không so sánh được."
+          }
+        ],
+        "answer": "C",
+        "points": 1
+      }
+    ],
+    "written": [
+      {
+        "id": "w1",
+        "type": "set",
+        "title": "Tự luận 1. Liệt kê các phần tử của tập hợp",
+        "prompt": "<span class='math-text'>A = {x ∈ ℤ | -3 ≤ x &lt; 2}</span>.",
+        "placeholder": "A = {...}",
+        "expectedName": "A",
+        "expectedItems": [
+          "-3",
+          "-2",
+          "-1",
+          "0",
+          "1"
+        ],
+        "points": 2,
+        "answerLabel": "Tự luận 1",
+        "expectedText": "A = {-3; -2; -1; 0; 1}."
+      },
+      {
+        "id": "w2",
+        "type": "keywords",
+        "title": "Tự luận 2. Sắp xếp theo thứ tự tăng dần",
+        "prompt": "Sắp xếp các số <span class='math-text'>4; -6; 0; -2; 9</span> theo thứ tự tăng dần.",
+        "placeholder": "Viết dãy số theo thứ tự tăng dần",
+        "keywords": [
+          "-6",
+          "-2",
+          "0",
+          "4",
+          "9"
+        ],
+        "minKeywords": 5,
+        "points": 2,
+        "answerLabel": "Tự luận 2",
+        "expectedText": "-6; -2; 0; 4; 9."
+      },
+      {
+        "id": "w3",
+        "type": "keywords",
+        "title": "Vận dụng. So sánh nhiệt độ",
+        "prompt": "Ba nhiệt độ là <span class='math-text'>-5°C; -2°C; -9°C</span>. a) Sắp xếp theo thứ tự giảm dần. b) Nhiệt độ nào thấp nhất?",
+        "placeholder": "Viết thứ tự giảm dần và nhiệt độ thấp nhất",
+        "keywords": [
+          "-2",
+          "-5",
+          "-9"
+        ],
+        "minKeywords": 3,
+        "points": 1,
+        "answerLabel": "Vận dụng",
+        "expectedText": "-2°C > -5°C > -9°C; nhiệt độ thấp nhất là -9°C."
+      }
+    ]
+  }
+}
