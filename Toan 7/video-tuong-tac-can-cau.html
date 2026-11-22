@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Tương Tác: Cần Cẩu Cân Bằng</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      background-color: #0b1120;
+      color: #f1f5f9;
+      overflow-x: hidden;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .fade-in {
+      animation: fadeIn 0.28s ease-out forwards;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.92); opacity: 0.9; }
+      70% { transform: scale(1.22); opacity: 0; }
+      100% { transform: scale(1.22); opacity: 0; }
+    }
+
+    .pulse-ring {
+      animation: pulseRing 1.6s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 9999px;
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.bottom-3{bottom:0.75rem}.bottom-4{bottom:1rem}.left-1\/2{left:50%}.left-3{left:0.75rem}.right-4{right:1rem}.top-1\/2{top:50%}.top-3{top:0.75rem}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.ml-1{margin-left:0.25rem}.mt-1{margin-top:0.25rem}.mt-1\.5{margin-top:0.375rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.line-clamp-2{overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-video{aspect-ratio:16 / 9}.h-10{height:2.5rem}.h-16{height:4rem}.h-2\.5{height:0.625rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-16{width:4rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-8{width:2rem}.w-\[92\%\]{width:92%}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.shrink-0{flex-shrink:0}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-0\.5{--tw-translate-x:0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.overflow-visible{overflow:visible}.overflow-y-auto{overflow-y:auto}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-t{border-top-width:1px}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-amber-400{--tw-border-opacity:1;border-color:rgb(251 191 36 / var(--tw-border-opacity, 1))}.border-amber-400\/40{border-color:rgb(251 191 36 / 0.4)}.border-amber-400\/50{border-color:rgb(251 191 36 / 0.5)}.border-amber-500\/30{border-color:rgb(245 158 11 / 0.3)}.border-emerald-500\/40{border-color:rgb(16 185 129 / 0.4)}.border-emerald-500\/50{border-color:rgb(16 185 129 / 0.5)}.border-sky-400\/50{border-color:rgb(56 189 248 / 0.5)}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/70{border-color:rgb(51 65 85 / 0.7)}.border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/80{border-color:rgb(30 41 59 / 0.8)}.bg-amber-400{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.bg-amber-400\/15{background-color:rgb(251 191 36 / 0.15)}.bg-amber-500\/20{background-color:rgb(245 158 11 / 0.2)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-sky-500{--tw-bg-opacity:1;background-color:rgb(14 165 233 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/90{background-color:rgb(30 41 59 / 0.9)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/80{background-color:rgb(15 23 42 / 0.8)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/60{background-color:rgb(2 6 23 / 0.6)}.bg-slate-950\/70{background-color:rgb(2 6 23 / 0.7)}.bg-slate-950\/75{background-color:rgb(2 6 23 / 0.75)}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-amber-500{--tw-gradient-from:#f59e0b var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-950{--tw-gradient-from:#020617 var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 6 23 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-slate-900{--tw-gradient-to:rgb(15 23 42 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #0f172a var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-amber-300{--tw-gradient-to:#fcd34d var(--tw-gradient-to-position)}.to-slate-950{--tw-gradient-to:#020617 var(--tw-gradient-to-position)}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.italic{font-style:italic}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.text-amber-300{--tw-text-opacity:1;color:rgb(252 211 77 / var(--tw-text-opacity, 1))}.text-amber-400{--tw-text-opacity:1;color:rgb(251 191 36 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-amber-500\/10{--tw-shadow-color:rgb(245 158 11 / 0.1);--tw-shadow:var(--tw-shadow-colored)}.shadow-amber-500\/30{--tw-shadow-color:rgb(245 158 11 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.shadow-black\/50{--tw-shadow-color:rgb(0 0 0 / 0.5);--tw-shadow:var(--tw-shadow-colored)}.shadow-emerald-500\/20{--tw-shadow-color:rgb(16 185 129 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-sky-500\/20{--tw-shadow-color:rgb(14 165 233 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.drop-shadow{--tw-drop-shadow:drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-\[2px\]{--tw-backdrop-blur:blur(2px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-opacity{transition-property:opacity;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-75{transition-duration:75ms}.selection\:bg-amber-400 *::selection{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.selection\:text-slate-950 *::selection{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.selection\:bg-amber-400::selection{--tw-bg-opacity:1;background-color:rgb(251 191 36 / var(--tw-bg-opacity, 1))}.selection\:text-slate-950::selection{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-125:hover{--tw-scale-x:1.25;--tw-scale-y:1.25;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-amber-400\/50:hover{border-color:rgb(251 191 36 / 0.5)}.hover\:bg-amber-300:hover{--tw-bg-opacity:1;background-color:rgb(252 211 77 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-400:hover{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.hover\:bg-sky-400:hover{--tw-bg-opacity:1;background-color:rgb(56 189 248 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700\/90:hover{background-color:rgb(51 65 85 / 0.9)}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:bottom-5{bottom:1.25rem}.sm\:left-4{left:1rem}.sm\:top-4{top:1rem}.sm\:inline{display:inline}.sm\:h-11{height:2.75rem}.sm\:h-20{height:5rem}.sm\:h-9{height:2.25rem}.sm\:w-11{width:2.75rem}.sm\:w-20{width:5rem}.sm\:w-9{width:2.25rem}.sm\:w-\[82\%\]{width:82%}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:gap-3{gap:0.75rem}.sm\:self-auto{align-self:auto}.sm\:p-3\.5{padding:0.875rem}.sm\:p-4{padding:1rem}.sm\:p-6{padding:1.5rem}.sm\:p-8{padding:2rem}.sm\:px-5{padding-left:1.25rem;padding-right:1.25rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.sm\:py-6{padding-top:1.5rem;padding-bottom:1.5rem}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}.sm\:text-xs{font-size:0.75rem;line-height:1rem}}@media (min-width: 768px){.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-100 selection:bg-amber-400 selection:text-slate-950">
+
+  <!-- MAIN CONTAINER -->
+  <div class="max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-6">
+
+    <a href="../index.html#toan7-chapter-1" class="inline-block mb-4 text-sm font-semibold text-amber-300 hover:text-amber-200">Về phần Toán 7</a>
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-amber-400/15 border border-amber-400/40 flex items-center justify-center text-xl sm:text-2xl shadow-lg shadow-amber-500/10" aria-hidden="true">🏗️</div>
+        <div>
+          <h1 class="text-lg sm:text-2xl font-extrabold tracking-tight text-white">Video Tương Tác: <span class="text-amber-400">Cần Cẩu Cân Bằng</span></h1>
+        </div>
+      </div>
+      <div class="px-3.5 py-2 rounded-xl bg-slate-800/90 border border-slate-700/80 flex items-center gap-2 text-xs sm:text-sm font-semibold self-start sm:self-auto" aria-live="polite">
+        <span class="text-emerald-400" aria-hidden="true">●</span>
+        <span>Hoàn thành:</span>
+        <span id="progressCount" class="text-amber-400 font-extrabold">0 / 4</span>
+      </div>
+    </header>
+
+    <!-- VIDEO PLAYER SHELL -->
+    <section class="rounded-3xl overflow-hidden bg-slate-900 border border-slate-700/80 shadow-2xl shadow-black/50">
+
+        <!-- QUESTION 2 HUD (Non-blocking so user can click directly on canvas hotspots!) -->
+        <div id="q2Hud" class="hidden flex flex-col gap-3 p-2.5 sm:p-4">
+          <!-- Top prompt bar -->
+          <div class="pointer-events-auto fade-in mx-auto max-w-2xl w-full bg-slate-900/92 backdrop-blur-md border border-amber-400/50 rounded-2xl p-3 sm:p-4 shadow-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-500/30">CÂU HỎI 2 / 4</span>
+                <span class="text-xs sm:text-sm font-bold text-white">Câu 2. Chỉ ra các bộ phận trên hình</span>
+              </div>
+              <span id="q2ProgressBadge" class="text-xs font-bold text-emerald-400">0 / 5 bộ phận</span>
+            </div>
+            <div id="q2PromptText" class="mt-2 text-xs sm:text-sm text-slate-200 flex flex-wrap items-center gap-1.5">
+              <span>👉 Hãy chạm vào chấm tròn phát sáng tương ứng với:</span>
+              <strong id="q2TargetName" class="px-2.5 py-0.5 rounded-lg bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm">Tay cần</strong>
+            </div>
+            <div id="q2Message" class="hidden mt-1.5 text-xs font-semibold"></div>
+          </div>
+
+          <!-- Bottom action bar (shows when all 5 parts are found) -->
+          <div id="q2DoneBar" class="hidden pointer-events-auto fade-in mx-auto bg-slate-900/95 border border-emerald-500/50 rounded-2xl px-4 py-2.5 shadow-2xl flex flex-wrap items-center justify-center gap-3">
+            <span class="text-xs sm:text-sm font-bold text-emerald-300">✅ Tuyệt vời! Bạn đã chỉ đúng cả 5 bộ phận của cần cẩu.</span>
+            <button onclick="resumeFromCheckpoint(2)" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs sm:text-sm transition flex items-center gap-1.5">
+              Tiếp tục xem video <span>▶</span>
+            </button>
+          </div>
+        </div>
+
+
+      <!-- 16:9 VIDEO STAGE -->
+      <div id="stageContainer" class="relative w-full aspect-video bg-slate-950 select-none overflow-hidden">
+        <!-- Animated Canvas -->
+        <canvas id="videoCanvas" class="block w-full h-full cursor-pointer"></canvas>
+
+        <!-- Top Scene Badge -->
+        <div class="pointer-events-none absolute top-3 left-3 sm:top-4 sm:left-4 z-10 flex items-center gap-2">
+          <span id="sceneBadge" class="px-3 py-1 rounded-full bg-slate-950/75 backdrop-blur-md border border-slate-700/80 text-[11px] sm:text-xs font-bold text-amber-300 shadow">
+            PHẦN 1 • THỰC TẾ CÔNG TRƯỜNG
+          </span>
+        </div>
+
+        <!-- Subtitle Overlay (Hidden when quiz modal is open) -->
+        <div id="subtitleWrap" class="pointer-events-none absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-10 w-[92%] sm:w-[82%] text-center transition-opacity duration-300">
+          <div id="subtitleBox" class="inline-block px-3.5 py-2 sm:px-5 sm:py-2.5 rounded-2xl bg-slate-950/80 backdrop-blur-md border border-slate-700/70 text-xs sm:text-sm md:text-base text-slate-100 font-medium shadow-xl leading-relaxed">
+            Nhấn nút Phát để bắt đầu hành trình khám phá nguyên lí hoạt động của cần cẩu cân bằng!
+          </div>
+        </div>
+
+        <!-- START OVERLAY -->
+        <div id="startOverlay" class="absolute inset-0 z-20 bg-slate-950/70 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 text-center">
+          <button aria-label="Phát video Cần Cẩu Cân Bằng" onclick="startVideo()" class="group relative flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-2xl shadow-amber-500/30 transition transform hover:scale-105 active:scale-95">
+            <span class="pulse-ring absolute inset-0 rounded-full border-2 border-amber-300"></span>
+            <svg class="w-8 h-8 sm:w-9 sm:h-9 translate-x-0.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"></path>
+            </svg>
+          </button>
+          <h2 class="mt-4 text-lg sm:text-2xl font-extrabold text-white drop-shadow">
+            Khám phá Cần Cẩu Cân Bằng
+          </h2>
+          <p class="mt-1 text-xs sm:text-sm text-slate-300 max-w-md">
+            Video sẽ tự động dừng tại 4 mốc câu hỏi tương tác. Bạn cũng có thể bấm trực tiếp vào các mốc bên dưới để chuyển nhanh.
+          </p>
+        </div>
+
+        <!-- QUESTION 1 OVERLAY -->
+        <div id="q1Overlay" class="hidden absolute inset-0 z-20 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div class="fade-in bg-slate-900 border border-slate-700 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-2xl my-auto">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">CÂU HỎI 1 / 4</span>
+              <span class="text-xs text-slate-400">Ứng dụng thực tế</span>
+            </div>
+            <h3 class="text-base sm:text-xl font-bold text-white mb-4">
+              Câu 1. Cần cẩu cân bằng có công dụng gì trong thực tế?
+            </h3>
+            <div class="grid grid-cols-1 gap-2.5" id="q1Options">
+              <button onclick="answerQ1(0)" class="q1-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">A.</span>
+                <span>Chỉ dùng để trang trí và chiếu sáng cho các tòa nhà cao tầng.</span>
+              </button>
+              <button onclick="answerQ1(1)" class="q1-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">B.</span>
+                <span>Nâng hạ, di chuyển các vật liệu và hàng hóa nặng lên cao hoặc qua khoảng cách xa trong xây dựng, bến cảng.</span>
+              </button>
+              <button onclick="answerQ1(2)" class="q1-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">C.</span>
+                <span>Dùng để đo khối lượng chính xác của các vật nhỏ trong phòng thí nghiệm.</span>
+              </button>
+              <button onclick="answerQ1(3)" class="q1-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">D.</span>
+                <span>Dùng để tạo ra dòng điện phục vụ cho công trường xây dựng.</span>
+              </button>
+            </div>
+            <div id="q1Feedback" class="hidden mt-4 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+            <div id="q1NextWrap" class="hidden mt-4 flex justify-end">
+              <button onclick="resumeFromCheckpoint(1)" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                Tiếp tục xem video <span>▶</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION 3 OVERLAY -->
+        <div id="q3Overlay" class="hidden absolute inset-0 z-20 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div class="fade-in bg-slate-900 border border-slate-700 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-2xl my-auto">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">CÂU HỎI 3 / 4</span>
+              <span class="text-xs text-slate-400">Vai trò của đối trọng</span>
+            </div>
+            <h3 class="text-base sm:text-xl font-bold text-white mb-4">
+              Câu 3. Vì sao trên cần cẩu cần có đối trọng?
+            </h3>
+            <div class="grid grid-cols-1 gap-2.5" id="q3Options">
+              <button onclick="answerQ3(0)" class="q3-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">A.</span>
+                <span>Để làm tăng tổng khối lượng của cần cẩu giúp di chuyển nhanh hơn.</span>
+              </button>
+              <button onclick="answerQ3(1)" class="q3-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">B.</span>
+                <span>Để tạo lực kéo ngược chiều cân bằng với trọng lượng của vật nâng và tay cần, giữ cho cần cẩu ổn định không bị nghiêng đổ.</span>
+              </button>
+              <button onclick="answerQ3(2)" class="q3-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">C.</span>
+                <span>Để làm chỗ nghỉ ngơi cho người điều khiển cần cẩu.</span>
+              </button>
+              <button onclick="answerQ3(3)" class="q3-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">D.</span>
+                <span>Để giảm chiều dài của tay cần khi nâng vật nặng.</span>
+              </button>
+            </div>
+            <div id="q3Feedback" class="hidden mt-4 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+            <div id="q3NextWrap" class="hidden mt-4 flex justify-end">
+              <button onclick="resumeFromCheckpoint(3)" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                Tiếp tục xem video <span>▶</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- QUESTION 4 OVERLAY (Direct Q&A, no lab sliders) -->
+        <div id="q4Overlay" class="hidden absolute inset-0 z-20 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+          <div class="fade-in bg-slate-900 border border-slate-700 rounded-2xl p-4 sm:p-6 max-w-2xl w-full shadow-2xl my-auto">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/30">CÂU HỎI 4 / 4</span>
+              <span class="text-xs text-slate-400">Quy tắc cân bằng</span>
+            </div>
+            <h3 class="text-base sm:text-xl font-bold text-white mb-4">
+              Câu 4. Theo em khối lượng và khoảng cách đến điểm tựa ảnh hưởng thế nào đến trạng thái cân bằng?
+            </h3>
+            <div class="grid grid-cols-1 gap-2.5" id="q4Options">
+              <button onclick="answerQ4(0)" class="q4-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">A.</span>
+                <span>Chỉ khối lượng ảnh hưởng, khoảng cách đến điểm tựa không ảnh hưởng.</span>
+              </button>
+              <button onclick="answerQ4(1)" class="q4-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">B.</span>
+                <span>Cả khối lượng và khoảng cách đến điểm tựa đều ảnh hưởng: vật càng nặng hoặc đặt càng xa điểm tựa thì càng dễ làm tay cần nghiêng xuống về phía đó.</span>
+              </button>
+              <button onclick="answerQ4(2)" class="q4-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">C.</span>
+                <span>Vật đặt càng xa điểm tựa thì càng khó làm tay cần nghiêng xuống.</span>
+              </button>
+              <button onclick="answerQ4(3)" class="q4-opt text-left p-3 sm:p-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-xs sm:text-sm text-slate-200 transition flex items-start gap-3">
+                <span class="font-bold text-amber-400 shrink-0">D.</span>
+                <span>Cần cẩu chỉ cân bằng khi khối lượng vật nâng luôn bằng khối lượng đối trọng.</span>
+              </button>
+            </div>
+            <div id="q4Feedback" class="hidden mt-4 p-3.5 rounded-xl text-xs sm:text-sm leading-relaxed"></div>
+            <div id="q4NextWrap" class="hidden mt-4 flex justify-end">
+              <button onclick="resumeFromCheckpoint(4)" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-500/20">
+                Hoàn thành &amp; Xem tổng kết <span>▶</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OUTRO / COMPLETION OVERLAY -->
+        <div id="outroOverlay" class="hidden absolute inset-0 z-20 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div class="fade-in bg-slate-900 border border-emerald-500/40 rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center shadow-2xl">
+            <div class="text-4xl sm:text-5xl mb-3">🏆</div>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white mb-2">Xuất sắc! Bạn đã hoàn thành video</h2>
+            <p id="outroSummary" class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
+              Bạn đã chinh phục cả 4 câu hỏi tương tác về công dụng, cấu tạo, vai trò đối trọng và nguyên lí cân bằng của cần cẩu.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <button onclick="restartVideo()" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm transition">
+                ↺ Xem lại từ đầu
+              </button>
+              <button onclick="jumpToCheckpoint(4)" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-semibold text-sm transition">
+                Xem lại Câu 4
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO CONTROLS BAR -->
+      <div class="bg-slate-900/95 border-t border-slate-800 px-3 sm:px-5 py-3">
+        <!-- Interactive Timeline Track -->
+        <div class="relative py-2 mb-2">
+          <div id="timelineTrack" onclick="seekTimeline(event)" class="relative h-2.5 w-full rounded-full bg-slate-800 cursor-pointer overflow-visible group">
+            <!-- Filled Progress -->
+            <div id="timelineFill" class="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-300 transition-all duration-75" style="width: 0%;"></div>
+
+            <!-- Playhead -->
+            <div id="timelineThumb" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-2 border-amber-400 shadow-md pointer-events-none" style="left: 0%;"></div>
+
+            <!-- 4 Checkpoint Markers on Timeline -->
+            <button id="marker1" onclick="event.stopPropagation(); jumpToCheckpoint(1)" title="Câu 1: Công dụng" style="left: 20%;" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-400 text-[10px] font-extrabold text-amber-300 flex items-center justify-center hover:scale-125 transition z-10">1</button>
+            <button id="marker2" onclick="event.stopPropagation(); jumpToCheckpoint(2)" title="Câu 2: Chỉ bộ phận" style="left: 44%;" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-400 text-[10px] font-extrabold text-amber-300 flex items-center justify-center hover:scale-125 transition z-10">2</button>
+            <button id="marker3" onclick="event.stopPropagation(); jumpToCheckpoint(3)" title="Câu 3: Đối trọng" style="left: 68%;" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-400 text-[10px] font-extrabold text-amber-300 flex items-center justify-center hover:scale-125 transition z-10">3</button>
+            <button id="marker4" onclick="event.stopPropagation(); jumpToCheckpoint(4)" title="Câu 4: Quy tắc cân bằng" style="left: 90%;" class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-400 text-[10px] font-extrabold text-amber-300 flex items-center justify-center hover:scale-125 transition z-10">4</button>
+          </div>
+        </div>
+
+        <!-- Bottom Control Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <button id="playPauseBtn" onclick="togglePlayPause()" class="px-3.5 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs sm:text-sm transition flex items-center gap-1.5 shadow">
+              <span id="playPauseIcon">▶</span>
+              <span id="playPauseText">Phát</span>
+            </button>
+            <button onclick="restartVideo()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold transition" title="Xem lại từ đầu">
+              ↺ <span class="hidden sm:inline">Từ đầu</span>
+            </button>
+            <span id="timeDisplay" class="ml-1 text-xs sm:text-sm font-mono text-slate-400">00:00 / 00:46</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="voiceToggleBtn" onclick="toggleVoice()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm font-semibold text-emerald-300 transition flex items-center gap-1.5">
+              <span>🗣️</span>
+              <span class="hidden sm:inline">Giọng đọc:</span>
+              <span id="voiceStatus">Bật</span>
+            </button>
+            <button id="sfxToggleBtn" onclick="toggleSfx()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs sm:text-sm font-semibold text-amber-300 transition flex items-center gap-1.5">
+              <span id="sfxIcon">🔊</span>
+              <span class="hidden sm:inline">Âm thanh</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK JUMP BAR FOR 4 QUESTIONS -->
+    <section class="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3">
+      <button onclick="jumpToCheckpoint(1)" id="cardBtn1" class="text-left p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-400/50 transition group">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-extrabold text-amber-400">CÂU 1</span>
+          <span id="statusIcon1" class="text-xs text-slate-500">○</span>
+        </div>
+        <div class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white line-clamp-2">
+          Công dụng thực tế của cần cẩu cân bằng
+        </div>
+      </button>
+
+      <button onclick="jumpToCheckpoint(2)" id="cardBtn2" class="text-left p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-400/50 transition group">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-extrabold text-amber-400">CÂU 2</span>
+          <span id="statusIcon2" class="text-xs text-slate-500">○</span>
+        </div>
+        <div class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white line-clamp-2">
+          Chỉ ra 5 bộ phận chính trực tiếp trên hình
+        </div>
+      </button>
+
+      <button onclick="jumpToCheckpoint(3)" id="cardBtn3" class="text-left p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-400/50 transition group">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-extrabold text-amber-400">CÂU 3</span>
+          <span id="statusIcon3" class="text-xs text-slate-500">○</span>
+        </div>
+        <div class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white line-clamp-2">
+          Vì sao trên cần cẩu cần có đối trọng?
+        </div>
+      </button>
+
+      <button onclick="jumpToCheckpoint(4)" id="cardBtn4" class="text-left p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-slate-800 hover:border-amber-400/50 transition group">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-extrabold text-amber-400">CÂU 4</span>
+          <span id="statusIcon4" class="text-xs text-slate-500">○</span>
+        </div>
+        <div class="text-xs sm:text-sm font-semibold text-slate-200 group-hover:text-white line-clamp-2">
+          Ảnh hưởng của khối lượng &amp; khoảng cách
+        </div>
+      </button>
+    </section>
+
+    <!-- KNOWLEDGE SUMMARY LOG -->
+    <section class="mt-4 rounded-2xl bg-slate-900/80 border border-slate-800 p-4">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-base">📘</span>
+        <h2 class="text-sm sm:text-base font-bold text-white">Sổ tay kiến thức đã mở khóa</h2>
+      </div>
+      <div id="knowledgeList" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-slate-400">
+        <div id="note1" class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <strong class="text-slate-300">Câu 1:</strong> <span class="italic">Chưa mở khóa — Hãy trả lời Câu 1 trong video.</span>
+        </div>
+        <div id="note2" class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <strong class="text-slate-300">Câu 2:</strong> <span class="italic">Chưa mở khóa — Hãy chỉ đủ 5 bộ phận trên hình.</span>
+        </div>
+        <div id="note3" class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <strong class="text-slate-300">Câu 3:</strong> <span class="italic">Chưa mở khóa — Hãy trả lời Câu 3 trong video.</span>
+        </div>
+        <div id="note4" class="p-3 rounded-xl bg-slate-950/60 border border-slate-800/80">
+          <strong class="text-slate-300">Câu 4:</strong> <span class="italic">Chưa mở khóa — Hãy trả lời Câu 4 trong video.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. STATE & CONFIGURATION
+    // =========================================================================
+    const TOTAL_DURATION = 46; // seconds
+    const CHECKPOINTS = [
+      { id: 1, time: 9.2,  percent: 20, triggered: false, completed: false },
+      { id: 2, time: 20.2, percent: 44, triggered: false, completed: false },
+      { id: 3, time: 31.3, percent: 68, triggered: false, completed: false },
+      { id: 4, time: 41.4, percent: 90, triggered: false, completed: false }
+    ];
+
+    const SUBTITLES = [
+      { start: 0.0,  end: 4.5,  badge: 'PHẦN 1 • THỰC TẾ CÔNG TRƯỜNG', text: 'Chào mừng bạn đến với công trường xây dựng! Hãy quan sát chiếc cần cẩu tháp đang hoạt động.' },
+      { start: 4.5,  end: 9.2,  badge: 'PHẦN 1 • THỰC TẾ CÔNG TRƯỜNG', text: 'Nó có thể dễ dàng nâng những khối bê tông nặng hàng tấn lên độ cao hàng chục mét.' },
+      { start: 9.2,  end: 14.5, badge: 'PHẦN 2 • CẤU TẠO CẦN CẨU',     text: 'Để làm được điều đó, cần cẩu cân bằng được thiết kế gồm 5 bộ phận chính rất chặt chẽ.' },
+      { start: 14.5, end: 20.2, badge: 'PHẦN 2 • CẤU TẠO CẦN CẨU',     text: 'Hãy quan sát kỹ bản vẽ kỹ thuật và chuẩn bị chỉ ra vị trí từng bộ phận trên hình nhé!' },
+      { start: 20.2, end: 25.5, badge: 'PHẦN 3 • VAI TRÒ ĐỐI TRỌNG',   text: 'Điều gì sẽ xảy ra nếu chúng ta tháo bỏ khối đối trọng phía sau khi cần cẩu đang nâng vật nặng?' },
+      { start: 25.5, end: 31.3, badge: 'PHẦN 3 • VAI TRÒ ĐỐI TRỌNG',   text: 'Cảnh báo! Không có đối trọng, tay cần lập tức mất thăng bằng và bị kéo nghiêng đổ về phía vật nâng!' },
+      { start: 31.3, end: 36.5, badge: 'PHẦN 4 • TRẠNG THÁI CÂN BẰNG', text: 'Bây giờ hãy quan sát khi vật nâng dịch chuyển ra xa điểm tựa, khoảng cách đến điểm tựa tăng lên...' },
+      { start: 36.5, end: 41.4, badge: 'PHẦN 4 • TRẠNG THÁI CÂN BẰNG', text: 'Vật càng nặng hoặc đặt càng xa điểm tựa thì càng dễ làm tay cần nghiêng xuống về phía đó!' },
+      { start: 41.4, end: 46.0, badge: 'TỔNG KẾT BÀI HỌC',             text: 'Chúc mừng bạn đã nắm vững nguyên lí hoạt động và quy tắc cân bằng của cần cẩu!' }
+    ];
+
+    // Q2 Interactive Parts Sequence
+    const Q2_PARTS = [
+      { id: 'jib',          name: 'Tay cần',            x: 565, y: 170, labelX: 565, labelY: 130 },
+      { id: 'fulcrum',      name: 'Trục quay / điểm tựa', x: 380, y: 170, labelX: 380, labelY: 118 },
+      { id: 'mast',         name: 'Trụ đỡ',             x: 380, y: 340, labelX: 295, labelY: 340 },
+      { id: 'load',         name: 'Vật nâng',           x: 680, y: 315, labelX: 680, labelY: 385 },
+      { id: 'counterweight',name: 'Đối trọng',          x: 230, y: 185, labelX: 230, labelY: 245 }
+    ];
+
+    const state = {
+      isPlaying: false,
+      hasStarted: false,
+      currentTime: 0,
+      lastFrameTime: null,
+      activeCheckpoint: null,
+      voiceEnabled: true,
+      sfxEnabled: true,
+      lastSpokenSubtitleIndex: -1,
+      // Smooth physics state for canvas
+      currentTilt: 0,
+      targetTilt: 0,
+      // Q2 state
+      q2StepIndex: 0,
+      q2FoundIds: [],
+      q2WrongFlashId: null,
+      q2WrongFlashUntil: 0,
+      hoverPartId: null
+    };
+
+    // Logical canvas resolution (16:9)
+    const LOGICAL_W = 960;
+    const LOGICAL_H = 540;
+    const canvas = document.getElementById('videoCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // =========================================================================
+    // 2. SOUND EFFECTS (Web Audio API - No external URLs) & VOICE
+    // =========================================================================
+    let audioCtx = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playSound(type) {
+      if (!state.sfxEnabled) return;
+      try {
+        const ac = getAudioCtx();
+        if (!ac) return;
+        const now = ac.currentTime;
+
+        if (type === 'correct') {
+          [523.25, 659.25, 783.99].forEach((freq, i) => {
+            const osc = ac.createOscillator();
+            const gain = ac.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.08);
+            gain.gain.setValueAtTime(0.14, now + i * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.25);
+            osc.connect(gain);
+            gain.connect(ac.destination);
+            osc.start(now + i * 0.08);
+            osc.stop(now + i * 0.08 + 0.26);
+          });
+        } else if (type === 'wrong') {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.linearRampToValueAtTime(160, now + 0.22);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now);
+          osc.stop(now + 0.26);
+        } else if (type === 'pause') {
+          const osc = ac.createOscillator();
+          const gain = ac.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(660, now + 0.14);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+          osc.connect(gain);
+          gain.connect(ac.destination);
+          osc.start(now);
+          osc.stop(now + 0.19);
+        } else if (type === 'win') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+            const osc = ac.createOscillator();
+            const gain = ac.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + i * 0.09);
+            gain.gain.setValueAtTime(0.15, now + i * 0.09);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.35);
+            osc.connect(gain);
+            gain.connect(ac.destination);
+            osc.start(now + i * 0.09);
+            osc.stop(now + i * 0.09 + 0.36);
+          });
+        }
+      } catch (e) {
+        // Ignore audio errors gracefully
+      }
+    }
+
+    function speakText(text) {
+      if (!state.voiceEnabled || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'vi-VN';
+        utter.rate = 1.05;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        // Ignore speech synthesis errors
+      }
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+    }
+
+    function toggleVoice() {
+      state.voiceEnabled = !state.voiceEnabled;
+      document.getElementById('voiceStatus').textContent = state.voiceEnabled ? 'Bật' : 'Tắt';
+      const btn = document.getElementById('voiceToggleBtn');
+      btn.classList.toggle('text-emerald-300', state.voiceEnabled);
+      btn.classList.toggle('text-slate-400', !state.voiceEnabled);
+      if (!state.voiceEnabled) stopSpeech();
+    }
+
+    function toggleSfx() {
+      state.sfxEnabled = !state.sfxEnabled;
+      document.getElementById('sfxIcon').textContent = state.sfxEnabled ? '🔊' : '🔇';
+      const btn = document.getElementById('sfxToggleBtn');
+      btn.classList.toggle('text-amber-300', state.sfxEnabled);
+      btn.classList.toggle('text-slate-400', !state.sfxEnabled);
+    }
+
+    // =========================================================================
+    // 3. CANVAS RESPONSIVE SIZING & RENDERING ENGINE
+    // =========================================================================
+    function resizeCanvas() {
+      const container = document.getElementById('stageContainer');
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawDimensionLine(x1, y1, x2, y2, label, color) {
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      // End ticks
+      ctx.beginPath();
+      ctx.moveTo(x1, y1 - 7);
+      ctx.lineTo(x1, y1 + 7);
+      ctx.moveTo(x2, y2 - 7);
+      ctx.lineTo(x2, y2 + 7);
+      ctx.stroke();
+
+      // Label pill
+      const midX = (x1 + x2) / 2;
+      ctx.font = 'bold 12px "Be Vietnam Pro", sans-serif';
+      const pillW = ctx.measureText(label).width + 16;
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.roundRect(midX - pillW / 2, y1 - 12, pillW, 24, 6);
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(label, midX, y1);
+      ctx.restore();
+    }
+
+    function renderScene(nowMs) {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.save();
+      ctx.scale(w / LOGICAL_W, h / LOGICAL_H);
+
+      const t = state.currentTime;
+      const isBlueprint = (t >= 12.5 && t <= 20.5) || state.activeCheckpoint === 2;
+      const isNoCounterweight = (t >= 23.0 && t <= 31.5) || state.activeCheckpoint === 3;
+      const isLabView = (t > 31.5 && t <= 41.6) || state.activeCheckpoint === 4;
+      const isOutro = t >= 43.0;
+
+      // 1. SKY / BACKGROUND
+      if (isBlueprint) {
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, LOGICAL_H);
+        bgGrad.addColorStop(0, '#0c1e35');
+        bgGrad.addColorStop(1, '#0a1628');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+        // Blueprint grid
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+        ctx.lineWidth = 1;
+        for (let gx = 0; gx < LOGICAL_W; gx += 32) {
+          ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, LOGICAL_H); ctx.stroke();
+        }
+        for (let gy = 0; gy < LOGICAL_H; gy += 32) {
+          ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(LOGICAL_W, gy); ctx.stroke();
+        }
+      } else {
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, LOGICAL_H);
+        if (isNoCounterweight) {
+          skyGrad.addColorStop(0, '#1e1b2e');
+          skyGrad.addColorStop(1, '#3b1d2a');
+        } else {
+          skyGrad.addColorStop(0, '#0f294a');
+          skyGrad.addColorStop(0.65, '#1e4b7a');
+          skyGrad.addColorStop(1, '#3b6d96');
+        }
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+        // Soft drifting clouds
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+        for (let i = 0; i < 4; i++) {
+          const cx = ((t * 14 + i * 270) % (LOGICAL_W + 220)) - 110;
+          const cy = 65 + (i % 2) * 45;
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, 75, 22, 0, 0, Math.PI * 2);
+          ctx.ellipse(cx + 35, cy - 8, 48, 18, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Distant city skyline
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.55)';
+        const buildings = [
+          [40, 340, 70, 140], [125, 310, 60, 170], [200, 360, 80, 120],
+          [530, 325, 65, 155], [610, 290, 85, 190], [720, 350, 75, 130], [815, 315, 90, 165]
+        ];
+        buildings.forEach(([bx, by, bw, bh]) => {
+          ctx.fillRect(bx, by, bw, bh);
+        });
+      }
+
+      // 2. GROUND & CONCRETE BASE
+      ctx.fillStyle = isBlueprint ? '#10243d' : '#1e293b';
+      ctx.fillRect(0, 470, LOGICAL_W, 70);
+      ctx.fillStyle = isBlueprint ? '#38bdf8' : '#334155';
+      ctx.fillRect(0, 470, LOGICAL_W, 3);
+
+      // 3. DETERMINE CRANE KINEMATICS
+      const pivotX = 380;
+      const pivotY = 170;
+      let cwOffset = -150;
+      let trolleyOffset = 300;
+      let cableLen = 115;
+      let showCounterweight = true;
+
+      if (t < 12.5) {
+        // Scene 1: Working construction site lifting load up & moving trolley
+        const cycle = (Math.sin(t * 0.85) + 1) / 2;
+        trolleyOffset = 220 + cycle * 120;
+        cableLen = 85 + (1 - cycle) * 95;
+        state.targetTilt = 0;
+      } else if (isBlueprint) {
+        // Scene 2: Steady technical drawing matching Q2_PARTS coordinates
+        cwOffset = -150;
+        trolleyOffset = 300;
+        cableLen = 115;
+        state.targetTilt = 0;
+      } else if (isNoCounterweight) {
+        // Scene 3: Counterweight removed -> crane tilts dangerously!
+        showCounterweight = t < 24.5;
+        trolleyOffset = 290;
+        cableLen = 115;
+        state.targetTilt = showCounterweight ? 0 : 0.24;
+      } else if (isLabView) {
+        // Scene 4: Animated demo: trolley moves further out -> tilts more
+        const wave = (Math.sin((t - 32) * 1.1) + 1) / 2; // 0..1
+        cwOffset = -150;
+        trolleyOffset = 140 + wave * 210;
+        cableLen = 110;
+        state.targetTilt = (trolleyOffset - 220) * 0.0012;
+      } else if (isOutro) {
+        trolleyOffset = 240;
+        cableLen = 100;
+        state.targetTilt = 0;
+      }
+
+      // Smoothly interpolate tilt
+      state.currentTilt += (state.targetTilt - state.currentTilt) * 0.09;
+
+      // 4. DRAW CRANE MAST (TRỤ ĐỠ)
+      ctx.save();
+      // Concrete foundation block
+      ctx.fillStyle = isBlueprint ? '#1e3a5f' : '#475569';
+      ctx.strokeStyle = isBlueprint ? '#38bdf8' : '#64748b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(pivotX - 48, 442, 96, 30, 6);
+      ctx.fill();
+      ctx.stroke();
+
+      // Tower lattice columns
+      const mastW = 34;
+      ctx.strokeStyle = isBlueprint ? '#38bdf8' : '#f59e0b';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(pivotX - mastW / 2, pivotY, mastW, 272);
+
+      // Lattice cross-braces
+      ctx.lineWidth = 2;
+      for (let y = pivotY; y < 440; y += 34) {
+        ctx.beginPath();
+        ctx.moveTo(pivotX - mastW / 2, y);
+        ctx.lineTo(pivotX + mastW / 2, y + 34);
+        ctx.moveTo(pivotX + mastW / 2, y);
+        ctx.lineTo(pivotX - mastW / 2, y + 34);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // 5. DRAW ROTATING JIB ASSEMBLY (TAY CẦN, ĐỐI TRỌNG, XE CON)
+      ctx.save();
+      ctx.translate(pivotX, pivotY);
+      ctx.rotate(state.currentTilt);
+
+      // Top A-frame apex & stay cables
+      ctx.strokeStyle = isBlueprint ? '#7dd3fc' : '#cbd5e1';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(-185, -10);
+      ctx.lineTo(0, -68);
+      ctx.lineTo(360, -10);
+      ctx.stroke();
+
+      // Apex mast
+      ctx.strokeStyle = isBlueprint ? '#38bdf8' : '#f59e0b';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(-14, 0);
+      ctx.lineTo(0, -68);
+      ctx.lineTo(14, 0);
+      ctx.stroke();
+
+      // Main Horizontal Jib Truss
+      const jibLeft = -205;
+      const jibRight = 390;
+      const jibH = 22;
+      ctx.fillStyle = isBlueprint ? 'rgba(56, 189, 248, 0.14)' : 'rgba(245, 158, 11, 0.15)';
+      ctx.fillRect(jibLeft, -jibH / 2, jibRight - jibLeft, jibH);
+
+      ctx.strokeStyle = isBlueprint ? '#38bdf8' : '#f59e0b';
+      ctx.lineWidth = 3.5;
+      ctx.strokeRect(jibLeft, -jibH / 2, jibRight - jibLeft, jibH);
+
+      // Jib internal trusses
+      ctx.lineWidth = 1.8;
+      for (let x = jibLeft; x < jibRight - 22; x += 26) {
+        ctx.beginPath();
+        ctx.moveTo(x, -jibH / 2);
+        ctx.lineTo(x + 26, jibH / 2);
+        ctx.moveTo(x + 26, -jibH / 2);
+        ctx.lineTo(x, jibH / 2);
+        ctx.stroke();
+      }
+
+      // Operator Cabin
+      ctx.fillStyle = isBlueprint ? '#1e3a5f' : '#e2e8f0';
+      ctx.strokeStyle = isBlueprint ? '#38bdf8' : '#475569';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(20, 12, 34, 28, 4);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillRect(36, 16, 14, 14);
+
+      // Counterweight (ĐỐI TRỌNG)
+      if (showCounterweight) {
+        const cwW = 72;
+        const cwH = 44;
+        ctx.fillStyle = isBlueprint ? '#0284c7' : '#64748b';
+        ctx.strokeStyle = isBlueprint ? '#7dd3fc' : '#cbd5e1';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.roundRect(cwOffset - cwW / 2, 10, cwW, cwH, 6);
+        ctx.fill();
+        ctx.stroke();
+
+        // Stripes on counterweight
+        ctx.fillStyle = isBlueprint ? 'rgba(255,255,255,0.2)' : '#334155';
+        ctx.fillRect(cwOffset - cwW / 2 + 8, 18, cwW - 16, 6);
+        ctx.fillRect(cwOffset - cwW / 2 + 8, 30, cwW - 16, 6);
+      } else {
+        // Dashed outline showing missing counterweight
+        ctx.save();
+        ctx.setLineDash([6, 5]);
+        ctx.strokeStyle = '#fb7185';
+        ctx.lineWidth = 2.5;
+        ctx.strokeRect(cwOffset - 36, 10, 72, 44);
+        ctx.fillStyle = '#fda4af';
+        ctx.font = 'bold 12px "Be Vietnam Pro", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ĐÃ THÁO', cwOffset, 36);
+        ctx.restore();
+      }
+
+      // Trolley (Xe con chạy trên tay cần)
+      ctx.fillStyle = isBlueprint ? '#38bdf8' : '#ef4444';
+      ctx.beginPath();
+      ctx.roundRect(trolleyOffset - 18, 6, 36, 16, 4);
+      ctx.fill();
+
+      // Distance Measurement Brackets
+      if (isLabView) {
+        drawDimensionLine(cwOffset, -34, 0, -34, 'Khoảng cách', '#38bdf8');
+        drawDimensionLine(0, -34, trolleyOffset, -34, 'Khoảng cách', '#fbbf24');
+      }
+
+      ctx.restore();
+
+      // 6. DRAW VERTICAL CABLE & LOAD (Always hangs straight down due to gravity!)
+      const cosT = Math.cos(state.currentTilt);
+      const sinT = Math.sin(state.currentTilt);
+      const trolleyWorldX = pivotX + trolleyOffset * cosT - 14 * sinT;
+      const trolleyWorldY = pivotY + trolleyOffset * sinT + 14 * cosT;
+
+      // Cable
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(trolleyWorldX, trolleyWorldY);
+      ctx.lineTo(trolleyWorldX, trolleyWorldY + cableLen);
+      ctx.stroke();
+
+      // Hook
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(trolleyWorldX, trolleyWorldY + cableLen + 7, 7, -Math.PI / 2, Math.PI);
+      ctx.stroke();
+
+      // Load Block (VẬT NÂNG)
+      const loadW = 76;
+      const loadH = 48;
+      const loadY = trolleyWorldY + cableLen + 14;
+      ctx.fillStyle = isBlueprint ? '#f59e0b' : '#ea580c';
+      ctx.strokeStyle = '#fde68a';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.roundRect(trolleyWorldX - loadW / 2, loadY, loadW, loadH, 7);
+      ctx.fill();
+      ctx.stroke();
+
+      // Load label
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 13px "Be Vietnam Pro", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('VẬT NẶNG', trolleyWorldX, loadY + loadH / 2 + 5);
+
+      // 7. DRAW FULCRUM / PIVOT HUB (TRỤC QUAY / ĐIỂM TỰA)
+      ctx.beginPath();
+      ctx.arc(pivotX, pivotY, 12, 0, Math.PI * 2);
+      ctx.fillStyle = '#0f172a';
+      ctx.fill();
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = '#fbbf24';
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(pivotX, pivotY, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+
+      // 8. WARNING BANNER FOR SCENE 3 (NO COUNTERWEIGHT)
+      if (isNoCounterweight && !showCounterweight && state.activeCheckpoint !== 3) {
+        const blink = Math.floor(nowMs / 350) % 2 === 0;
+        ctx.save();
+        ctx.fillStyle = blink ? 'rgba(225, 29, 72, 0.9)' : 'rgba(159, 18, 57, 0.85)';
+        ctx.beginPath();
+        ctx.roundRect(LOGICAL_W / 2 - 175, 58, 350, 38, 12);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 15px "Be Vietnam Pro", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('⚠️ MẤT THĂNG BẰNG — NGUY CƠ LẬT CẦN CẨU!', LOGICAL_W / 2, 82);
+        ctx.restore();
+      }
+
+      // 9. Q2 INTERACTIVE HOTSPOTS
+      if (state.activeCheckpoint === 2) {
+        const pulse = (Math.sin(nowMs * 0.007) + 1) / 2;
+        Q2_PARTS.forEach((part) => {
+          const isFound = state.q2FoundIds.includes(part.id);
+          const isWrongFlash = state.q2WrongFlashId === part.id && nowMs < state.q2WrongFlashUntil;
+          const isHover = state.hoverPartId === part.id;
+
+          if (isFound) {
+            // Green check dot + permanent label
+            ctx.beginPath();
+            ctx.arc(part.x, part.y, 13, 0, Math.PI * 2);
+            ctx.fillStyle = '#10b981';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('✓', part.x, part.y + 1);
+
+            // Callout pill
+            ctx.font = 'bold 13px "Be Vietnam Pro", sans-serif';
+            const textW = ctx.measureText(part.name).width + 20;
+            ctx.fillStyle = 'rgba(6, 78, 59, 0.92)';
+            ctx.strokeStyle = '#34d399';
+            ctx.lineWidth = 1.8;
+            ctx.beginPath();
+            ctx.roundRect(part.labelX - textW / 2, part.labelY - 14, textW, 28, 8);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#ecfdf5';
+            ctx.fillText(part.name, part.labelX, part.labelY);
+          } else {
+            // Pulsing clickable ring
+            ctx.beginPath();
+            ctx.arc(part.x, part.y, 16 + pulse * 10, 0, Math.PI * 2);
+            ctx.strokeStyle = isWrongFlash ? 'rgba(244, 63, 94, 0.9)' : `rgba(251, 191, 36, ${0.75 - pulse * 0.55})`;
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(part.x, part.y, isHover ? 16 : 13, 0, Math.PI * 2);
+            ctx.fillStyle = isWrongFlash ? '#f43f5e' : (isHover ? '#fde047' : '#f59e0b');
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#0f172a';
+            ctx.font = 'bold 14px "Be Vietnam Pro", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('?', part.x, part.y + 1);
+          }
+        });
+      }
+
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // 4. VIDEO PLAYBACK LOOP & TIMELINE CONTROLS
+    // =========================================================================
+    function formatTime(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+    }
+
+    function updateUIForTime() {
+      const pct = Math.min(100, (state.currentTime / TOTAL_DURATION) * 100);
+      document.getElementById('timelineFill').style.width = `${pct}%`;
+      document.getElementById('timelineThumb').style.left = `${pct}%`;
+      document.getElementById('timeDisplay').textContent = `${formatTime(state.currentTime)} / ${formatTime(TOTAL_DURATION)}`;
+
+      // Update subtitles & narration
+      const subIndex = SUBTITLES.findIndex(s => state.currentTime >= s.start && state.currentTime < s.end);
+      if (subIndex !== -1) {
+        const sub = SUBTITLES[subIndex];
+        document.getElementById('sceneBadge').textContent = sub.badge;
+        document.getElementById('subtitleBox').textContent = sub.text;
+
+        if (state.isPlaying && subIndex !== state.lastSpokenSubtitleIndex) {
+          state.lastSpokenSubtitleIndex = subIndex;
+          speakText(sub.text);
+        }
+      }
+    }
+
+    function mainLoop(nowMs) {
+      if (state.lastFrameTime === null) state.lastFrameTime = nowMs;
+      const dt = Math.min((nowMs - state.lastFrameTime) / 1000, 0.1);
+      state.lastFrameTime = nowMs;
+
+      if (state.isPlaying && state.activeCheckpoint === null) {
+        const prevTime = state.currentTime;
+        state.currentTime = Math.min(TOTAL_DURATION, state.currentTime + dt);
+
+        // Check if we crossed any untriggered checkpoint
+        for (const cp of CHECKPOINTS) {
+          if (!cp.triggered && prevTime < cp.time && state.currentTime >= cp.time) {
+            state.currentTime = cp.time;
+            cp.triggered = true;
+            openCheckpoint(cp.id);
+            break;
+          }
+        }
+
+        // Check end of video
+        if (state.currentTime >= TOTAL_DURATION) {
+          state.isPlaying = false;
+          updatePlayButtonUI();
+          stopSpeech();
+          playSound('win');
+          document.getElementById('outroOverlay').classList.remove('hidden');
+          document.getElementById('subtitleWrap').classList.add('opacity-0');
+        }
+
+        updateUIForTime();
+      }
+
+      renderScene(nowMs);
+      requestAnimationFrame(mainLoop);
+    }
+
+    function updatePlayButtonUI() {
+      const icon = document.getElementById('playPauseIcon');
+      const text = document.getElementById('playPauseText');
+      if (state.isPlaying) {
+        icon.textContent = '⏸';
+        text.textContent = 'Tạm dừng';
+      } else {
+        icon.textContent = '▶';
+        text.textContent = 'Phát';
+      }
+    }
+
+    function hideAllOverlays() {
+      ['startOverlay', 'q1Overlay', 'q2Hud', 'q3Overlay', 'q4Overlay', 'outroOverlay'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById('subtitleWrap').classList.remove('opacity-0');
+    }
+
+    function startVideo() {
+      getAudioCtx();
+      state.hasStarted = true;
+      hideAllOverlays();
+      state.isPlaying = true;
+      state.activeCheckpoint = null;
+      state.lastSpokenSubtitleIndex = -1;
+      updatePlayButtonUI();
+      updateUIForTime();
+    }
+
+    function togglePlayPause() {
+      if (!state.hasStarted) {
+        startVideo();
+        return;
+      }
+      if (state.activeCheckpoint !== null) return; // Waiting for user answer
+      if (state.currentTime >= TOTAL_DURATION) {
+        restartVideo();
+        return;
+      }
+      state.isPlaying = !state.isPlaying;
+      if (!state.isPlaying) stopSpeech();
+      updatePlayButtonUI();
+    }
+
+    function restartVideo() {
+      stopSpeech();
+      state.currentTime = 0;
+      state.activeCheckpoint = null;
+      state.lastSpokenSubtitleIndex = -1;
+      CHECKPOINTS.forEach(cp => cp.triggered = false);
+      hideAllOverlays();
+      state.hasStarted = true;
+      state.isPlaying = true;
+      updatePlayButtonUI();
+      updateUIForTime();
+    }
+
+    function seekTimeline(event) {
+      const track = document.getElementById('timelineTrack');
+      const rect = track.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      const newTime = ratio * TOTAL_DURATION;
+
+      stopSpeech();
+      hideAllOverlays();
+      state.hasStarted = true;
+      state.activeCheckpoint = null;
+      state.currentTime = newTime;
+      state.lastSpokenSubtitleIndex = -1;
+
+      // Reset triggered status for checkpoints after seek position
+      CHECKPOINTS.forEach(cp => {
+        cp.triggered = cp.time <= newTime;
+      });
+
+      state.isPlaying = true;
+      updatePlayButtonUI();
+      updateUIForTime();
+    }
+
+    function jumpToCheckpoint(id) {
+      getAudioCtx();
+      const cp = CHECKPOINTS.find(c => c.id === id);
+      if (!cp) return;
+      stopSpeech();
+      state.hasStarted = true;
+      state.currentTime = cp.time;
+      cp.triggered = true;
+      updateUIForTime();
+      openCheckpoint(id);
+    }
+
+    function openCheckpoint(id) {
+      state.isPlaying = false;
+      state.activeCheckpoint = id;
+      updatePlayButtonUI();
+      stopSpeech();
+      playSound('pause');
+      hideAllOverlays();
+      document.getElementById('subtitleWrap').classList.add('opacity-0');
+
+      if (id === 1) {
+        document.getElementById('q1Overlay').classList.remove('hidden');
+      } else if (id === 2) {
+        document.getElementById('q2Hud').classList.remove('hidden');
+        updateQ2Hud();
+      } else if (id === 3) {
+        document.getElementById('q3Overlay').classList.remove('hidden');
+      } else if (id === 4) {
+        document.getElementById('q4Overlay').classList.remove('hidden');
+      }
+    }
+
+    function resumeFromCheckpoint(id) {
+      hideAllOverlays();
+      state.activeCheckpoint = null;
+      state.currentTime = Math.min(TOTAL_DURATION, state.currentTime + 0.15);
+      state.lastSpokenSubtitleIndex = -1;
+      state.isPlaying = true;
+      updatePlayButtonUI();
+      updateUIForTime();
+    }
+
+    // =========================================================================
+    // 5. PROGRESS TRACKING & KNOWLEDGE LOG
+    // =========================================================================
+    function markCompleted(id, summaryText) {
+      const cp = CHECKPOINTS.find(c => c.id === id);
+      if (cp) cp.completed = true;
+
+      // Update timeline marker
+      const marker = document.getElementById(`marker${id}`);
+      if (marker) {
+        marker.classList.remove('border-amber-400', 'text-amber-300', 'bg-slate-900');
+        marker.classList.add('border-emerald-400', 'text-slate-950', 'bg-emerald-400');
+        marker.textContent = '✓';
+      }
+
+      // Update quick-jump card status
+      const statusIcon = document.getElementById(`statusIcon${id}`);
+      if (statusIcon) {
+        statusIcon.textContent = '✓ Đã xong';
+        statusIcon.className = 'text-xs font-bold text-emerald-400';
+      }
+
+      // Update knowledge notebook
+      const note = document.getElementById(`note${id}`);
+      if (note) {
+        note.classList.remove('border-slate-800/80');
+        note.classList.add('border-emerald-500/40', 'bg-emerald-950/20');
+        note.innerHTML = `<strong class="text-emerald-400">Câu ${id}:</strong> <span class="text-slate-200">${summaryText}</span>`;
+      }
+
+      // Update total progress badge
+      const doneCount = CHECKPOINTS.filter(c => c.completed).length;
+      document.getElementById('progressCount').textContent = `${doneCount} / 4`;
+    }
+
+    // =========================================================================
+    // 6. INTERACTIVE QUESTION HANDLERS (Q1, Q2, Q3, Q4)
+    // =========================================================================
+
+    // --- QUESTION 1 ---
+    function answerQ1(idx) {
+      const opts = document.querySelectorAll('.q1-opt');
+      const fb = document.getElementById('q1Feedback');
+      const nextWrap = document.getElementById('q1NextWrap');
+
+      opts.forEach((btn, i) => {
+        btn.classList.remove('border-emerald-500', 'bg-emerald-950/50', 'border-rose-500', 'bg-rose-950/50');
+        if (i === idx) {
+          btn.classList.add(idx === 1 ? 'border-emerald-500' : 'border-rose-500', idx === 1 ? 'bg-emerald-950/50' : 'bg-rose-950/50');
+        }
+      });
+
+      fb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-200', 'border-emerald-500/40', 'bg-rose-950/60', 'text-rose-200', 'border-rose-500/40');
+      if (idx === 1) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-950/60', 'text-emerald-200', 'border', 'border-emerald-500/40');
+        fb.innerHTML = '<strong>✅ Chính xác!</strong> Cần cẩu cân bằng giúp nâng hạ và vận chuyển các vật liệu, hàng hóa rất nặng lên cao hoặc tới vị trí xa một cách an toàn trong xây dựng và bến cảng.';
+        nextWrap.classList.remove('hidden');
+        markCompleted(1, 'Dùng để nâng hạ, di chuyển vật liệu và hàng hóa nặng lên cao hoặc qua khoảng cách xa trong xây dựng, bến cảng.');
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-950/60', 'text-rose-200', 'border', 'border-rose-500/40');
+        fb.innerHTML = '<strong>❌ Chưa chính xác!</strong> Bạn hãy quan sát lại công việc của chiếc cần cẩu trên công trường và chọn đáp án khác nhé.';
+      }
+    }
+
+    // --- QUESTION 2 (Click directly on Canvas hotspots) ---
+    function updateQ2Hud() {
+      const count = state.q2FoundIds.length;
+      document.getElementById('q2ProgressBadge').textContent = `${count} / ${Q2_PARTS.length} bộ phận`;
+
+      if (count >= Q2_PARTS.length) {
+        document.getElementById('q2PromptText').innerHTML = '<span class="text-emerald-300 font-semibold">🎉 Bạn đã xác định chính xác toàn bộ 5 bộ phận của cần cẩu!</span>';
+        document.getElementById('q2DoneBar').classList.remove('hidden');
+      } else {
+        const target = Q2_PARTS[state.q2StepIndex];
+        document.getElementById('q2PromptText').innerHTML = `
+          <span>👉 Hãy chạm vào chấm tròn phát sáng tương ứng với:</span>
+          <strong class="px-2.5 py-0.5 rounded-lg bg-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm">${target.name}</strong>
+        `;
+        document.getElementById('q2DoneBar').classList.add('hidden');
+      }
+    }
+
+    function getCanvasLogicalPos(clientX, clientY) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: ((clientX - rect.left) / rect.width) * LOGICAL_W,
+        y: ((clientY - rect.top) / rect.height) * LOGICAL_H
+      };
+    }
+
+    function handleCanvasInteraction(clientX, clientY) {
+      if (state.activeCheckpoint !== 2) return;
+      if (state.q2FoundIds.length >= Q2_PARTS.length) return;
+
+      const pos = getCanvasLogicalPos(clientX, clientY);
+      const hitPart = Q2_PARTS.find(p => Math.hypot(pos.x - p.x, pos.y - p.y) <= 34);
+      if (!hitPart) return;
+
+      const msgEl = document.getElementById('q2Message');
+      const currentTarget = Q2_PARTS[state.q2StepIndex];
+
+      if (hitPart.id === currentTarget.id) {
+        playSound('correct');
+        state.q2FoundIds.push(hitPart.id);
+        state.q2StepIndex++;
+        msgEl.classList.remove('hidden', 'text-rose-400');
+        msgEl.classList.add('text-emerald-400');
+        msgEl.textContent = `✅ Đúng rồi! Đó chính là ${hitPart.name}.`;
+
+        if (state.q2FoundIds.length >= Q2_PARTS.length) {
+          playSound('win');
+          markCompleted(2, 'Gồm 5 bộ phận chính: Tay cần, Trục quay/điểm tựa, Trụ đỡ, Vật nâng và Đối trọng.');
+        }
+        updateQ2Hud();
+      } else if (!state.q2FoundIds.includes(hitPart.id)) {
+        playSound('wrong');
+        state.q2WrongFlashId = hitPart.id;
+        state.q2WrongFlashUntil = performance.now() + 600;
+        msgEl.classList.remove('hidden', 'text-emerald-400');
+        msgEl.classList.add('text-rose-400');
+        msgEl.textContent = `❌ Chưa đúng vị trí của "${currentTarget.name}". Hãy thử chạm chấm tròn khác nhé!`;
+      }
+    }
+
+    canvas.addEventListener('click', (e) => {
+      handleCanvasInteraction(e.clientX, e.clientY);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (state.activeCheckpoint !== 2) {
+        state.hoverPartId = null;
+        return;
+      }
+      const pos = getCanvasLogicalPos(e.clientX, e.clientY);
+      const hit = Q2_PARTS.find(p => !state.q2FoundIds.includes(p.id) && Math.hypot(pos.x - p.x, pos.y - p.y) <= 30);
+      state.hoverPartId = hit ? hit.id : null;
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+      if (state.activeCheckpoint === 2 && e.touches.length > 0) {
+        e.preventDefault();
+        handleCanvasInteraction(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: false });
+
+    // --- QUESTION 3 ---
+    function answerQ3(idx) {
+      const opts = document.querySelectorAll('.q3-opt');
+      const fb = document.getElementById('q3Feedback');
+      const nextWrap = document.getElementById('q3NextWrap');
+
+      opts.forEach((btn, i) => {
+        btn.classList.remove('border-emerald-500', 'bg-emerald-950/50', 'border-rose-500', 'bg-rose-950/50');
+        if (i === idx) {
+          btn.classList.add(idx === 1 ? 'border-emerald-500' : 'border-rose-500', idx === 1 ? 'bg-emerald-950/50' : 'bg-rose-950/50');
+        }
+      });
+
+      fb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-200', 'border-emerald-500/40', 'bg-rose-950/60', 'text-rose-200', 'border-rose-500/40');
+      if (idx === 1) {
+        playSound('correct');
+        fb.classList.add('bg-emerald-950/60', 'text-emerald-200', 'border', 'border-emerald-500/40');
+        fb.innerHTML = '<strong>✅ Chính xác!</strong> Đối trọng đặt ở phía ngược lại tạo ra lực kéo cân bằng với vật nâng và tay cần, giúp toàn bộ cần cẩu đứng vững, không bị lật đổ.';
+        nextWrap.classList.remove('hidden');
+        markCompleted(3, 'Đối trọng tạo lực kéo ngược chiều giúp cân bằng với trọng lượng vật nâng và tay cần, chống nghiêng đổ.');
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-950/60', 'text-rose-200', 'border', 'border-rose-500/40');
+        fb.innerHTML = '<strong>❌ Chưa chính xác!</strong> Hãy nhớ lại hình ảnh cần cẩu bị nghiêng đổ khi tháo đối trọng vừa rồi và chọn lại nhé.';
+      }
+    }
+
+    // --- QUESTION 4 ---
+    function answerQ4(idx) {
+      const opts = document.querySelectorAll('.q4-opt');
+      const fb = document.getElementById('q4Feedback');
+      const nextWrap = document.getElementById('q4NextWrap');
+
+      opts.forEach((btn, i) => {
+        btn.classList.remove('border-emerald-500', 'bg-emerald-950/50', 'border-rose-500', 'bg-rose-950/50');
+        if (i === idx) {
+          btn.classList.add(idx === 1 ? 'border-emerald-500' : 'border-rose-500', idx === 1 ? 'bg-emerald-950/50' : 'bg-rose-950/50');
+        }
+      });
+
+      fb.classList.remove('hidden', 'bg-emerald-950/60', 'text-emerald-200', 'border-emerald-500/40', 'bg-rose-950/60', 'text-rose-200', 'border-rose-500/40');
+      if (idx === 1) {
+        playSound('win');
+        fb.classList.add('bg-emerald-950/60', 'text-emerald-200', 'border', 'border-emerald-500/40');
+        fb.innerHTML = '<strong>✅ Xuất sắc!</strong> Cả khối lượng và khoảng cách đến điểm tựa đều ảnh hưởng đến trạng thái cân bằng: vật càng nặng hoặc đặt càng xa điểm tựa thì càng dễ làm tay cần nghiêng xuống về phía đó.';
+        nextWrap.classList.remove('hidden');
+        markCompleted(4, 'Vật càng nặng hoặc đặt càng xa điểm tựa thì càng dễ làm tay cần nghiêng xuống; muốn cân bằng cần điều chỉnh khối lượng và khoảng cách ở hai bên phù hợp.');
+      } else {
+        playSound('wrong');
+        fb.classList.add('bg-rose-950/60', 'text-rose-200', 'border', 'border-rose-500/40');
+        fb.innerHTML = '<strong>❌ Chưa đúng!</strong> Hãy nhớ lại cảnh vật nâng di chuyển càng ra xa điểm tựa thì tay cần càng bị kéo nghiêng mạnh hơn và chọn lại nhé.';
+      }
+    }
+
+    // =========================================================================
+    // 7. INITIALIZATION
+    // =========================================================================
+    // 7. PURE-JS ZIP EXPORTER (NO EXTERNAL DEPENDENCIES)
+    // =========================================================================
+    const CLEAN_INDEX_HTML = (() => {
+      try {
+        const cloneDoc = document.documentElement.cloneNode(true);
+        const dlBtn = cloneDoc.querySelector('#downloadZipBtn');
+        if (dlBtn) dlBtn.remove();
+        const toastEl = cloneDoc.querySelector('#zipToast');
+        if (toastEl) toastEl.remove();
+        return '<!DOCTYPE html>\n' + cloneDoc.outerHTML;
+      } catch (e) {
+        return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      }
+    })();
+
+    const CRC_TABLE = (() => {
+      const table = new Uint32Array(256);
+      for (let n = 0; n < 256; n++) {
+        let c = n;
+        for (let k = 0; k < 8; k++) {
+          c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+        }
+        table[n] = c >>> 0;
+      }
+      return table;
+    })();
+
+    function computeCrc32(bytes) {
+      let c = 0xFFFFFFFF;
+      for (let i = 0; i < bytes.length; i++) {
+        c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+      }
+      return (c ^ 0xFFFFFFFF) >>> 0;
+    }
+
+    function buildZipBlob(files) {
+      const encoder = new TextEncoder();
+      const localParts = [];
+      const centralParts = [];
+      let offset = 0;
+
+      files.forEach((file) => {
+        const nameBytes = encoder.encode(file.name);
+        const dataBytes = encoder.encode(file.content);
+        const crc = computeCrc32(dataBytes);
+        const size = dataBytes.length;
+
+        // Local File Header (30 bytes + filename)
+        const localHeader = new ArrayBuffer(30 + nameBytes.length);
+        const lv = new DataView(localHeader);
+        lv.setUint32(0, 0x04034b50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0x0800, true); // UTF-8 filename flag
+        lv.setUint16(8, 0, true);      // STORE method
+        lv.setUint16(10, 0, true);
+        lv.setUint16(12, 0, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, size, true);
+        lv.setUint32(22, size, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lv.setUint16(28, 0, true);
+        new Uint8Array(localHeader, 30).set(nameBytes);
+
+        localParts.push(new Uint8Array(localHeader), dataBytes);
+
+        // Central Directory Header (46 bytes + filename)
+        const centralHeader = new ArrayBuffer(46 + nameBytes.length);
+        const cv = new DataView(centralHeader);
+        cv.setUint32(0, 0x02014b50, true);
+        cv.setUint16(4, 20, true);
+        cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0x0800, true);
+        cv.setUint16(10, 0, true);
+        cv.setUint16(12, 0, true);
+        cv.setUint16(14, 0, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, size, true);
+        cv.setUint32(24, size, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint16(30, 0, true);
+        cv.setUint16(32, 0, true);
+        cv.setUint16(34, 0, true);
+        cv.setUint16(36, 0, true);
+        cv.setUint32(38, 0, true);
+        cv.setUint32(42, offset, true);
+        new Uint8Array(centralHeader, 46).set(nameBytes);
+
+        centralParts.push(new Uint8Array(centralHeader));
+        offset += 30 + nameBytes.length + size;
+      });
+
+      const centralDirSize = centralParts.reduce((sum, p) => sum + p.length, 0);
+
+      // End of Central Directory Record (22 bytes)
+      const eocd = new ArrayBuffer(22);
+      const ev = new DataView(eocd);
+      ev.setUint32(0, 0x06054b50, true);
+      ev.setUint16(4, 0, true);
+      ev.setUint16(6, 0, true);
+      ev.setUint16(8, files.length, true);
+      ev.setUint16(10, files.length, true);
+      ev.setUint32(12, centralDirSize, true);
+      ev.setUint32(16, offset, true);
+      ev.setUint16(20, 0, true);
+
+      return new Blob([...localParts, ...centralParts, new Uint8Array(eocd)], {
+        type: 'application/zip'
+      });
+    }
+
+    function showZipToast(message) {
+      const toast = document.getElementById('zipToast');
+      if (!toast) return;
+      toast.innerHTML = message;
+      toast.classList.remove('hidden');
+      clearTimeout(toast._timer);
+      toast._timer = setTimeout(() => toast.classList.add('hidden'), 5000);
+    }
+
+    function downloadProjectZip() {
+      try {
+        const readmeText = [
+          'VIDEO TUONG TAC: CAN CAU CAN BANG',
+          '==================================',
+          '',
+          '1. MO TRUC TIEP TREN MAY TINH:',
+          '   - Giai nen file .zip va nhap dup vao file "index.html" de mo bang trinh duyet.',
+          '',
+          '2. TAO LINK CONG KHAI CHO MOI NGUOI TUONG TAC (MIEN PHI):',
+          '   - Cach A (Tiiny.host): Truy cap https://tiiny.host -> keo tha truc tiep file .zip nay vao -> bam Publish.',
+          '   - Cach B (Netlify Drop): Giai nen thu muc -> truy cap https://app.netlify.com/drop -> keo tha thu muc chua index.html vao.',
+          ''
+        ].join('\r\n');
+
+        const zipBlob = buildZipBlob([
+          { name: 'index.html', content: CLEAN_INDEX_HTML },
+          { name: 'HUONG_DAN_TAO_LINK.txt', content: readmeText }
+        ]);
+
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'video-tuong-tac-can-cau.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+        showZipToast('✅ Đã tạo và tải xuống <strong>video-tuong-tac-can-cau.zip</strong> (gồm <code>index.html</code> và hướng dẫn tạo link).');
+      } catch (err) {
+        showZipToast('⚠️ Trình duyệt đang chặn tải xuống tự động trong khung xem trước. Bạn hãy sao chép mã nguồn và lưu thành <code>index.html</code> nhé.');
+      }
+    }
+
+    // =========================================================================
+    // 8. INITIALIZATION
+    // =========================================================================
+    window.onload = function () {
+      resizeCanvas();
+      updateUIForTime();
+      requestAnimationFrame(mainLoop);
+    };
+  </script></body></html>
