@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kĩ Sư Nhí – Thử Thách Cần Cẩu Cân Bằng (STEM Toán 7)</title>
+  <style>
+    /* =========================================================================
+       1. THIẾT LẬP CHUNG & BIẾN MÀU SẮC STEM (XANH DƯƠNG - VÀNG - TRẮNG)
+       ========================================================================= */
+    :root {
+      --bg-dark: #062047;
+      --bg-mid: #0b3b82;
+      --bg-deep: #082452;
+      --yellow: #facc15;
+      --amber: #f59e0b;
+      --green: #22c55e;
+      --red: #f43f5e;
+      --white: #ffffff;
+      --navy: #172554;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-mid), var(--bg-deep));
+      color: var(--white);
+      user-select: none;
+    }
+
+    /* Khung bao toàn bộ ứng dụng */
+    #app {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 8px 12px;
+      background: linear-gradient(135deg, var(--bg-dark), var(--bg-mid), var(--bg-deep));
+    }
+
+    /* =========================================================================
+       2. THANH ĐIỀU KHIỂN GIÁO VIÊN (NẰM NGOÀI KHUNG ẢNH 16:9 - KHÔNG CHE ẢNH)
+       ========================================================================= */
+    .topbar {
+      z-index: 30;
+      width: 100%;
+      max-width: 1280px;
+      margin-bottom: 8px;
+      padding: 8px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #fde047, #f59e0b);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      color: #fde047;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: rgba(224, 242, 254, 0.88);
+      line-height: 1.25;
+    }
+
+    .status-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(23, 37, 84, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(224, 242, 254, 0.72);
+      transition: all 0.25s ease;
+    }
+
+    .pill.current {
+      background: var(--yellow);
+      color: var(--navy);
+      box-shadow: 0 2px 10px rgba(250, 204, 21, 0.45);
+    }
+
+    .pill.done {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 2px 10px rgba(34, 197, 94, 0.4);
+    }
+
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(253, 224, 71, 0.45);
+      background: rgba(250, 204, 21, 0.2);
+      color: #fde047;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-next {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #facc15, #f59e0b);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.45);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-next:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-next:active {
+      transform: scale(0.96);
+    }
+
+    .btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 36px;
+      min-width: 36px;
+      padding: 0 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-icon:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-icon:active {
+      transform: scale(0.95);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =========================================================================
+       3. KHUNG SÂN KHẤU CHÍNH TỈ LỆ 16:9 (TỐI ƯU MÀN HÌNH LED)
+       ========================================================================= */
+    .stage-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 82px);
+      max-width: calc((100vh - 82px) * 16 / 9);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid rgba(125, 211, 252, 0.35);
+      background: #072654;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    #confetti-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* =========================================================================
+       4. MÀN HÌNH MỞ ĐẦU (INTRO) & MÀN HÌNH TỔNG KẾT (SUMMARY)
+       ========================================================================= */
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      animation: fadeZoomIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .stem-bg {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      background: linear-gradient(135deg, #0a4da2 0%, #1368ce 50%, #08306b 100%);
+      overflow: hidden;
+    }
+
+    .stem-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.2;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 50% 45%, rgba(250, 204, 21, 0.55), transparent 62%),
+        linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+      background-size: 100% 100%, 42px 42px, 42px 42px;
+    }
+
+    .gear {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    .gear-tl-1 { top: -48px; left: -48px; animation: spinSlow 24s linear infinite; }
+    .gear-tl-2 { top: 90px; left: 90px; animation: spinReverse 18s linear infinite; }
+    .gear-br-1 { right: -56px; bottom: -56px; animation: spinReverse 24s linear infinite; }
+    .gear-br-2 { right: 110px; bottom: 92px; animation: spinSlow 18s linear infinite; }
+
+    .stem-pill {
+      position: relative;
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 20px;
+      border-radius: 999px;
+      border: 2px solid rgba(253, 224, 71, 0.85);
+      background: rgba(23, 37, 84, 0.65);
+      color: #fde047;
+      font-size: clamp(12px, 1.4vw, 17px);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      margin-bottom: 14px;
+    }
+
+    .intro-title {
+      position: relative;
+      z-index: 10;
+      font-size: clamp(34px, 5.8vw, 76px);
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      text-shadow: 0 5px 0 rgba(7, 38, 84, 0.85);
+      line-height: 1.05;
+    }
+
+    .intro-subtitle {
+      position: relative;
+      z-index: 10;
+      margin-top: 8px;
+      font-size: clamp(18px, 3vw, 38px);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      background: linear-gradient(90deg, #fef08a, #facc15, #fcd34d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
+    }
+
+    .intro-tagline {
+      position: relative;
+      z-index: 10;
+      margin-top: 18px;
+      padding: 10px 26px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(6px);
+      font-size: clamp(14px, 1.8vw, 22px);
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .btn-start {
+      position: relative;
+      z-index: 10;
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 44px;
+      border-radius: 999px;
+      border: 4px solid #ffffff;
+      background: linear-gradient(180deg, #fde047 0%, #facc15 55%, #f59e0b 100%);
+      color: var(--navy);
+      font-size: clamp(18px, 2.2vw, 26px);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      animation: pulseGlow 2.2s infinite;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-start:hover {
+      transform: scale(1.06);
+    }
+
+    .btn-start:active {
+      transform: scale(0.96);
+    }
+
+    /* =========================================================================
+       5. MÀN HÌNH ẢNH CÂU HỎI & GIẢI THÍCH (TƯƠNG TÁC TRỰC TIẾP TRÊN ẢNH)
+       ========================================================================= */
+    .image-screen {
+      background: #ffffff;
+    }
+
+    .slide-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .hotspot-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+    }
+
+    .hotspot {
+      position: absolute;
+      background: transparent;
+      border: 3px solid transparent;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .hotspot:hover:not(:disabled) {
+      border-color: rgba(250, 204, 21, 0.92);
+      background: rgba(253, 224, 71, 0.14);
+      box-shadow: 0 0 20px rgba(250, 204, 21, 0.55);
+    }
+
+    .hotspot:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    .hotspot.correct {
+      border: 4px solid #10b981;
+      background: rgba(52, 211, 153, 0.3);
+      box-shadow: 0 0 28px rgba(34, 197, 94, 0.85);
+    }
+
+    .hotspot.wrong {
+      border: 4px solid #f43f5e;
+      background: rgba(244, 63, 94, 0.3);
+      box-shadow: 0 0 24px rgba(244, 63, 94, 0.85);
+      animation: shakeWrong 0.42s ease-in-out;
+    }
+
+    .badge-mark {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+      animation: popBadge 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .badge-mark.correct { background: #10b981; }
+    .badge-mark.wrong { background: #f43f5e; }
+
+    /* Hộp thông báo Đúng / Sai */
+    .feedback-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 16px;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+
+    .feedback-toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 26px;
+      border-radius: 16px;
+      font-size: clamp(14px, 1.9vw, 22px);
+      font-weight: 900;
+      letter-spacing: 0.03em;
+      color: #ffffff;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+      animation: popBadge 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .feedback-toast.correct {
+      border: 2px solid #a7f3d0;
+      background: linear-gradient(90deg, #10b981, #16a34a);
+    }
+
+    .feedback-toast.wrong {
+      border: 2px solid #fecdd3;
+      background: linear-gradient(90deg, #f43f5e, #dc2626);
+    }
+
+    /* =========================================================================
+       6. MÀN HÌNH TỔNG KẾT & DẪN DẮT PHET
+       ========================================================================= */
+    .trophy-circle {
+      position: relative;
+      z-index: 10;
+      width: clamp(58px, 6vw, 82px);
+      height: clamp(58px, 6vw, 82px);
+      border-radius: 50%;
+      border: 4px solid #fef08a;
+      background: linear-gradient(180deg, #fde047, #f59e0b);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 36px rgba(250, 204, 21, 0.7);
+      margin-bottom: 10px;
+    }
+
+    .summary-title {
+      position: relative;
+      z-index: 10;
+      font-size: clamp(22px, 3.6vw, 48px);
+      font-weight: 900;
+      color: #fde047;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .stats-row {
+      position: relative;
+      z-index: 10;
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .stat-card {
+      padding: 10px 24px;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .stat-card.highlight {
+      border-color: rgba(253, 224, 71, 0.65);
+      background: rgba(250, 204, 21, 0.2);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e0f2fe;
+    }
+
+    .stat-value {
+      font-size: clamp(20px, 2.6vw, 32px);
+      font-weight: 900;
+      margin-top: 2px;
+    }
+
+    .stat-card.highlight .stat-label { color: #fef08a; }
+    .stat-card.highlight .stat-value { color: #fde047; }
+
+    .phet-box {
+      position: relative;
+      z-index: 10;
+      margin-top: 18px;
+      max-width: 820px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      border: 2px solid #fde047;
+      background: rgba(23, 37, 84, 0.78);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .phet-question {
+      font-size: clamp(14px, 1.9vw, 23px);
+      font-weight: 900;
+      line-height: 1.35;
+      color: #ffffff;
+    }
+
+    .phet-cta {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 22px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fde047, #fbbf24);
+      color: var(--navy);
+      font-size: clamp(13px, 1.5vw, 18px);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .btn-replay {
+      position: relative;
+      z-index: 10;
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 28px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      font-size: clamp(13px, 1.4vw, 16px);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-replay:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    /* =========================================================================
+       7. HIỆU ỨNG CHUYỂN ĐỘNG
+       ========================================================================= */
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spinReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes fadeZoomIn {
+      0% { opacity: 0; transform: scale(0.975); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes shakeWrong {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    @keyframes popBadge {
+      0% { transform: translateY(-50%) scale(0.5); opacity: 0; }
+      70% { transform: translateY(-50%) scale(1.12); opacity: 1; }
+      100% { transform: translateY(-50%) scale(1); opacity: 1; }
+    }
+    .feedback-toast {
+      animation: popToast 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    @keyframes popToast {
+      0% { transform: scale(0.6); opacity: 0; }
+      75% { transform: scale(1.06); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.55), 0 10px 28px rgba(234, 179, 8, 0.45); }
+      50% { box-shadow: 0 0 0 14px rgba(250, 204, 21, 0), 0 14px 36px rgba(234, 179, 8, 0.65); }
+    }
+
+    @media (max-width: 768px) {
+      .progress-pills { display: none; }
+      .btn-replay-label { display: none; }
+      .badge-mark { width: 32px; height: 32px; right: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- =======================================================================
+         THANH ĐIỀU KHIỂN GIÁO VIÊN
+         ======================================================================= -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Kĩ Sư Nhí – STEM Toán 7</div>
+          <div id="header-subtitle" class="brand-sub">Khởi động: Thử thách Cần cẩu cân bằng</div>
+        </div>
+      </div>
+
+      <div class="status-group">
+        <div id="progress-pills" class="progress-pills"></div>
+        <div class="score-badge">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#fde047" stroke="#fde047" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span id="score-text">0 / 40 điểm</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <a class="btn-icon" href="../index.html#toan7-chapter-1" aria-label="Về phần Toán 7" title="Về phần Toán 7" style="text-decoration:none">Toán 7</a>
+        <button id="btn-next" type="button" class="btn-next hidden">
+          <span id="btn-next-label">CÂU TIẾP THEO</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <button id="btn-sound" type="button" class="btn-icon" title="Bật / Tắt âm thanh" aria-label="Bật hoặc tắt âm thanh">
+          <svg id="icon-sound-on" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fde047" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <svg id="icon-sound-off" class="hidden" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <button id="btn-fullscreen" type="button" class="btn-icon" title="Toàn màn hình" aria-label="Toàn màn hình">
+          <svg id="icon-fs-enter" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+          <svg id="icon-fs-exit" class="hidden" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 14 10 14 10 20"></polyline><polyline points="20 10 14 10 14 4"></polyline><line x1="14" y1="10" x2="21" y2="3"></line><line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+        </button>
+
+        <button id="btn-restart" type="button" class="btn-icon" title="Chơi lại từ đầu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path>
+          </svg>
+          <span class="btn-replay-label">Chơi lại</span>
+        </button>
+
+        
+      </div>
+    </header>
+
+    <!-- =======================================================================
+         KHUNG SÂN KHẤU CHÍNH TỈ LỆ 16:9
+         ======================================================================= -->
+    <main class="stage-wrapper">
+      <div id="stage" class="stage">
+        <canvas id="confetti-canvas"></canvas>
+        <div id="screen-container"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /**
+     * =========================================================================
+     * 1. DỮ LIỆU 4 CÂU HỎI & 8 HÌNH ẢNH GỐC (ĐÁP ÁN: B - D - B - A)
+     * =========================================================================
+     */
+    const QUESTIONS = [
+      {
+        id: 1,
+        title: 'Câu 1: Công dụng của cần cẩu',
+        questionImage: 'ki-su-nhi-cau-1.png',
+        explanationImage: 'ki-su-nhi-cau-1-giai-thich.png',
+        correctAnswer: 'B',
+        hotspots: [
+          { key: 'A', top: 23.6, left: 60.2, width: 38.3, height: 14.3 },
+          { key: 'B', top: 41.7, left: 60.2, width: 38.3, height: 15.6 },
+          { key: 'C', top: 60.4, left: 60.2, width: 38.3, height: 13.7 },
+          { key: 'D', top: 77.0, left: 60.2, width: 38.3, height: 13.8 },
+        ],
+      },
+      {
+        id: 2,
+        title: 'Câu 2: Nhận diện đối trọng',
+        questionImage: 'ki-su-nhi-cau-2.png',
+        explanationImage: 'ki-su-nhi-cau-2-giai-thich.png',
+        correctAnswer: 'D',
+        hotspots: [
+          { key: 'A', top: 42.3, left: 63.4, width: 35.7, height: 10.1 },
+          { key: 'B', top: 54.0, left: 63.4, width: 35.7, height: 10.0 },
+          { key: 'C', top: 65.8, left: 63.4, width: 35.7, height: 10.1 },
+          { key: 'D', top: 77.6, left: 63.4, width: 35.7, height: 10.2 },
+        ],
+      },
+      {
+        id: 3,
+        title: 'Câu 3: Yếu tố ảnh hưởng đến cân bằng',
+        questionImage: 'ki-su-nhi-cau-3.png',
+        explanationImage: 'ki-su-nhi-cau-3-giai-thich.png',
+        correctAnswer: 'B',
+        hotspots: [
+          { key: 'A', top: 35.8, left: 44.5, width: 52.0, height: 12.0 },
+          { key: 'B', top: 49.5, left: 44.5, width: 52.0, height: 11.7 },
+          { key: 'C', top: 62.6, left: 44.5, width: 52.0, height: 11.7 },
+          { key: 'D', top: 75.8, left: 44.5, width: 52.0, height: 12.1 },
+        ],
+      },
+      {
+        id: 4,
+        title: 'Câu 4: Thử thách điều chỉnh đòn bẩy',
+        questionImage: 'ki-su-nhi-cau-4.png',
+        explanationImage: 'ki-su-nhi-cau-4-giai-thich.png',
+        correctAnswer: 'A',
+        hotspots: [
+          { key: 'A', top: 37.2, left: 42.9, width: 53.8, height: 11.4 },
+          { key: 'B', top: 50.0, left: 42.9, width: 53.8, height: 11.2 },
+          { key: 'C', top: 62.5, left: 42.9, width: 53.8, height: 11.3 },
+          { key: 'D', top: 75.3, left: 42.9, width: 53.8, height: 11.5 },
+        ],
+      },
+    ];
+
+    /**
+     * =========================================================================
+     * 2. BỘ TỔNG HỢP ÂM THANH WEB AUDIO API (HOẠT ĐỘNG OFFLINE HOÀN TOÀN)
+     * =========================================================================
+     */
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+        this.muted = false;
+        this.bgmTimer = null;
+        this.bgmStep = 0;
+        this.isBgmPlaying = false;
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) this.ctx = new AudioCtx();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume().catch(() => {});
+        }
+      }
+
+      setMuted(muted) {
+        this.muted = muted;
+        if (muted) {
+          this.stopBgm();
+        } else if (this.isBgmPlaying) {
+          this.startBgm();
+        }
+      }
+
+      playTone(freq, duration, type = 'sine', volume = 0.15, delay = 0) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime + delay;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(volume, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.03);
+        } catch (e) {}
+      }
+
+      playClick() {
+        this.playTone(680, 0.08, 'triangle', 0.12);
+      }
+
+      playWrong() {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(260, now);
+          osc.frequency.linearRampToValueAtTime(170, now + 0.16);
+          osc.frequency.linearRampToValueAtTime(135, now + 0.34);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.linearRampToValueAtTime(0.11, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.4);
+        } catch (e) {}
+      }
+
+      playCorrect() {
+        this.playTone(523.25, 0.18, 'triangle', 0.18, 0);
+        this.playTone(659.25, 0.18, 'triangle', 0.18, 0.09);
+        this.playTone(783.99, 0.22, 'triangle', 0.20, 0.18);
+        this.playTone(1046.5, 0.42, 'sine', 0.22, 0.27);
+      }
+
+      playVictory() {
+        const notes = [
+          { f: 523.25, d: 0.15, t: 0.0 },
+          { f: 659.25, d: 0.15, t: 0.12 },
+          { f: 783.99, d: 0.15, t: 0.24 },
+          { f: 1046.5, d: 0.28, t: 0.36 },
+          { f: 783.99, d: 0.14, t: 0.56 },
+          { f: 1046.5, d: 0.55, t: 0.70 },
+        ];
+        notes.forEach((n) => this.playTone(n.f, n.d, 'triangle', 0.2, n.t));
+      }
+
+      startBgm() {
+        this.isBgmPlaying = true;
+        if (this.muted) return;
+        this.init();
+        if (this.bgmTimer) return;
+        const melody = [
+          523.25, 659.25, 783.99, 659.25,
+          587.33, 698.46, 880.0, 698.46,
+          523.25, 659.25, 783.99, 1046.5,
+          783.99, 659.25, 587.33, 0,
+        ];
+        this.bgmTimer = setInterval(() => {
+          if (this.muted || !this.ctx || this.ctx.state !== 'running') return;
+          const freq = melody[this.bgmStep % melody.length];
+          if (freq > 0) this.playTone(freq, 0.26, 'sine', 0.032, 0);
+          this.bgmStep += 1;
+        }, 380);
+      }
+
+      stopBgm() {
+        if (this.bgmTimer) {
+          clearInterval(this.bgmTimer);
+          this.bgmTimer = null;
+        }
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    /**
+     * =========================================================================
+     * 3. HIỆU ỨNG PHÁO GIẤY & NGÔI SAO (CANVAS)
+     * =========================================================================
+     */
+    const confettiCanvas = document.getElementById('confetti-canvas');
+    const confettiCtx = confettiCanvas.getContext('2d');
+    let confettiAnimId = null;
+
+    function launchConfetti() {
+      if (confettiAnimId) cancelAnimationFrame(confettiAnimId);
+      confettiCanvas.width = confettiCanvas.offsetWidth || window.innerWidth;
+      confettiCanvas.height = confettiCanvas.offsetHeight || window.innerHeight;
+
+      const colors = ['#FACC15', '#22C55E', '#3B82F6', '#F97316', '#EC4899', '#FFFFFF'];
+      const particles = Array.from({ length: 75 }, () => {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 3 + Math.random() * 8;
+        return {
+          x: confettiCanvas.width * (0.25 + Math.random() * 0.5),
+          y: confettiCanvas.height * (0.25 + Math.random() * 0.3),
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 4,
+          size: 6 + Math.random() * 8,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 14,
+          shape: Math.random() > 0.35 ? 'rect' : 'star',
+          alpha: 1,
+        };
+      });
+
+      const startTime = performance.now();
+
+      function draw(now) {
+        const elapsed = now - startTime;
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+
+        let alive = false;
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.18;
+          p.vx *= 0.985;
+          p.rotation += p.vRot;
+          if (elapsed > 1400) p.alpha = Math.max(0, p.alpha - 0.025);
+
+          if (p.alpha > 0 && p.y < confettiCanvas.height + 40) {
+            alive = true;
+            confettiCtx.save();
+            confettiCtx.globalAlpha = p.alpha;
+            confettiCtx.translate(p.x, p.y);
+            confettiCtx.rotate((p.rotation * Math.PI) / 180);
+            confettiCtx.fillStyle = p.color;
+            if (p.shape === 'rect') {
+              confettiCtx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.65);
+            } else {
+              confettiCtx.beginPath();
+              for (let i = 0; i < 5; i++) {
+                const a = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+                const r = p.size * 0.65;
+                if (i === 0) confettiCtx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+                else confettiCtx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+              }
+              confettiCtx.closePath();
+              confettiCtx.fill();
+            }
+            confettiCtx.restore();
+          }
+        }
+
+        if (alive && elapsed < 3200) {
+          confettiAnimId = requestAnimationFrame(draw);
+        } else {
+          confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+      }
+
+      confettiAnimId = requestAnimationFrame(draw);
+    }
+
+    /**
+     * =========================================================================
+     * 4. TRẠNG THÁI TRÒ CHƠI & HIỂN THỊ GIAO DIỆN
+     * =========================================================================
+     */
+    const state = {
+      phase: 'intro', // 'intro' | 'question' | 'explanation' | 'summary'
+      currentIdx: 0,
+      score: 0,
+      wrongAttempts: {},
+      completedIds: [],
+      isLocked: false,
+      timer: null,
+    };
+
+    const screenContainer = document.getElementById('screen-container');
+    const headerSubtitle = document.getElementById('header-subtitle');
+    const progressPills = document.getElementById('progress-pills');
+    const scoreText = document.getElementById('score-text');
+    const btnNext = document.getElementById('btn-next');
+    const btnNextLabel = document.getElementById('btn-next-label');
+    const btnSound = document.getElementById('btn-sound');
+    const iconSoundOn = document.getElementById('icon-sound-on');
+    const iconSoundOff = document.getElementById('icon-sound-off');
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    const iconFsEnter = document.getElementById('icon-fs-enter');
+    const iconFsExit = document.getElementById('icon-fs-exit');
+    const btnRestart = document.getElementById('btn-restart');
+
+    // Tải trước toàn bộ 8 ảnh gốc để chuyển cảnh mượt mà
+    QUESTIONS.forEach((q) => {
+      const i1 = new Image(); i1.src = q.questionImage;
+      const i2 = new Image(); i2.src = q.explanationImage;
+    });
+
+    function gearSVG(size, color, extraClass) {
+      return `
+        <svg width="${size}" height="${size}" viewBox="0 0 100 100" fill="none" class="gear ${extraClass}" aria-hidden="true">
+          <path fill="${color}" d="M43.3 5h13.4l2.2 10.6c2.7.7 5.3 1.8 7.7 3.2l9.1-6 9.5 9.5-6 9.1c1.4 2.4 2.5 5 3.2 7.7L93 41.3v13.4l-10.6 2.2c-.7 2.7-1.8 5.3-3.2 7.7l6 9.1-9.5 9.5-9.1-6c-2.4 1.4-5 2.5-7.7 3.2L56.7 91H43.3l-2.2-10.6c-2.7-.7-5.3-1.8-7.7-3.2l-9.1 6-9.5-9.5 6-9.1c-1.4-2.4-2.5-5-3.2-7.7L7 54.7V41.3l10.6-2.2c.7-2.7 1.8-5.3 3.2-7.7l-6-9.1 9.5-9.5 9.1 6c2.4-1.4 5-2.5 7.7-3.2L43.3 5zM50 32a16 16 0 100 32 16 16 0 000-32z"/>
+        </svg>
+      `;
+    }
+
+    function updateHeader() {
+      const q = QUESTIONS[state.currentIdx];
+      if (state.phase === 'intro') {
+        headerSubtitle.textContent = 'Khởi động: Thử thách Cần cẩu cân bằng';
+      } else if (state.phase === 'question') {
+        headerSubtitle.textContent = q.title;
+      } else if (state.phase === 'explanation') {
+        headerSubtitle.textContent = 'Giải thích ' + q.title;
+      } else {
+        headerSubtitle.textContent = 'Hoàn thành thử thách!';
+      }
+
+      scoreText.textContent = `${state.score} / 40 điểm`;
+
+      progressPills.innerHTML = QUESTIONS.map((item, idx) => {
+        const done = state.completedIds.includes(item.id);
+        const current = (state.phase === 'question' || state.phase === 'explanation') && idx === state.currentIdx;
+        const cls = done ? 'pill done' : current ? 'pill current' : 'pill';
+        const icon = done
+          ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`
+          : '';
+        return `<div class="${cls}">${icon}<span>Câu ${item.id}</span></div>`;
+      }).join('');
+
+      if (state.phase === 'explanation') {
+        btnNext.classList.remove('hidden');
+        btnNextLabel.textContent = state.currentIdx < QUESTIONS.length - 1 ? 'CÂU TIẾP THEO' : 'HOÀN THÀNH';
+      } else {
+        btnNext.classList.add('hidden');
+      }
+    }
+
+    function renderIntro() {
+      screenContainer.innerHTML = `
+        <div class="screen stem-bg">
+          <div class="stem-grid"></div>
+          ${gearSVG(190, 'rgba(255,255,255,0.14)', 'gear-tl-1')}
+          ${gearSVG(115, 'rgba(250,204,21,0.28)', 'gear-tl-2')}
+          ${gearSVG(220, 'rgba(255,255,255,0.12)', 'gear-br-1')}
+          ${gearSVG(110, 'rgba(250,204,21,0.25)', 'gear-br-2')}
+
+          <div class="stem-pill">
+            <span>✦ STEM TOÁN 7 • HOẠT ĐỘNG KHỞI ĐỘNG ✦</span>
+          </div>
+          <h1 class="intro-title">KĨ SƯ NHÍ</h1>
+          <h2 class="intro-subtitle">THỬ THÁCH CẦN CẨU CÂN BẰNG</h2>
+          <div class="intro-tagline">4 CÂU HỎI – 4 THỬ THÁCH</div>
+
+          <button id="btn-start" type="button" class="btn-start">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+            <span>BẮT ĐẦU</span>
+          </button>
+        </div>
+      `;
+
+      document.getElementById('btn-start').addEventListener('click', () => {
+        sound.init();
+        sound.playClick();
+        if (!sound.muted) sound.startBgm();
+        state.currentIdx = 0;
+        state.phase = 'question';
+        state.isLocked = false;
+        render();
+      });
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[state.currentIdx];
+      const spotsHtml = q.hotspots.map((s) => `
+        <button
+          type="button"
+          class="hotspot"
+          data-key="${s.key}"
+          aria-label="Chọn đáp án ${s.key}"
+          style="top:${s.top}%; left:${s.left}%; width:${s.width}%; height:${s.height}%;"
+        ></button>
+      `).join('');
+
+      screenContainer.innerHTML = `
+        <div class="screen image-screen">
+          <img class="slide-img" src="${q.questionImage}" alt="${q.title}" draggable="false" />
+          <div class="hotspot-layer" id="hotspot-layer">${spotsHtml}</div>
+          <div id="feedback-area" class="feedback-wrap hidden"></div>
+        </div>
+      `;
+
+      const buttons = screenContainer.querySelectorAll('.hotspot');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => handleSelectOption(btn.dataset.key, btn));
+      });
+    }
+
+    function handleSelectOption(optionKey, btnEl) {
+      if (state.phase !== 'question' || state.isLocked) return;
+      const q = QUESTIONS[state.currentIdx];
+      const feedbackArea = document.getElementById('feedback-area');
+
+      // Xóa trạng thái cũ nếu đang hiển thị sai
+      if (state.timer) clearTimeout(state.timer);
+      screenContainer.querySelectorAll('.hotspot').forEach((el) => {
+        el.classList.remove('wrong', 'correct');
+        el.innerHTML = '';
+      });
+
+      if (optionKey === q.correctAnswer) {
+        // CHỌN ĐÚNG
+        state.isLocked = true;
+        btnEl.classList.add('correct');
+        btnEl.innerHTML = `
+          <span class="badge-mark correct">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </span>
+        `;
+
+        feedbackArea.classList.remove('hidden');
+        feedbackArea.innerHTML = `
+          <div class="feedback-toast correct">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>CHÍNH XÁC! BẠN THẬT XUẤT SẮC!</span>
+          </div>
+        `;
+
+        sound.playCorrect();
+        launchConfetti();
+
+        if (!state.completedIds.includes(q.id)) {
+          const earned = state.wrongAttempts[q.id] ? 5 : 10;
+          state.score += earned;
+          state.completedIds.push(q.id);
+          updateHeader();
+        }
+
+        // Sau đúng 1,5 giây chuyển sang hình Giải thích
+        state.timer = setTimeout(() => {
+          state.phase = 'explanation';
+          render();
+        }, 1500);
+      } else {
+        // CHỌN SAI
+        state.wrongAttempts[q.id] = true;
+        btnEl.classList.add('wrong');
+        btnEl.innerHTML = `
+          <span class="badge-mark wrong">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </span>
+        `;
+
+        feedbackArea.classList.remove('hidden');
+        feedbackArea.innerHTML = `
+          <div class="feedback-toast wrong">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <span>CHƯA CHÍNH XÁC! HÃY THỬ LẠI NHÉ!</span>
+          </div>
+        `;
+
+        sound.playWrong();
+
+        // Sau 1,5 giây trở lại bình thường cho thử lại
+        state.timer = setTimeout(() => {
+          btnEl.classList.remove('wrong');
+          btnEl.innerHTML = '';
+          feedbackArea.classList.add('hidden');
+        }, 1500);
+      }
+    }
+
+    function renderExplanation() {
+      const q = QUESTIONS[state.currentIdx];
+      screenContainer.innerHTML = `
+        <div class="screen image-screen">
+          <img class="slide-img" src="${q.explanationImage}" alt="Giải thích ${q.title}" draggable="false" />
+        </div>
+      `;
+    }
+
+    function renderSummary() {
+      screenContainer.innerHTML = `
+        <div class="screen stem-bg">
+          <div class="stem-grid"></div>
+          ${gearSVG(180, 'rgba(255,255,255,0.12)', 'gear-tl-1')}
+          ${gearSVG(200, 'rgba(250,204,21,0.16)', 'gear-br-1')}
+
+          <div class="trophy-circle">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+          </div>
+
+          <h1 class="summary-title">CHÚC MỪNG CÁC KĨ SƯ NHÍ!</h1>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-label">Số câu hoàn thành</div>
+              <div class="stat-value">${state.completedIds.length} / ${QUESTIONS.length} câu</div>
+            </div>
+            <div class="stat-card highlight">
+              <div class="stat-label">Tổng điểm đạt được</div>
+              <div class="stat-value">${state.score} / 40 điểm</div>
+            </div>
+          </div>
+
+          <div class="phet-box">
+            <p class="phet-question">
+              “KHỐI LƯỢNG VÀ VỊ TRÍ TREO VẬT CÓ ẢNH HƯỞNG NHƯ THẾ NÀO ĐẾN SỰ CÂN BẰNG?”
+            </p>
+            <div class="phet-cta">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              <span>HÃY CÙNG KHÁM PHÁ TRÊN PHET!</span>
+            </div>
+          </div>
+
+          <button id="btn-summary-replay" type="button" class="btn-replay">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>CHƠI LẠI</span>
+          </button>
+        </div>
+      `;
+
+      document.getElementById('btn-summary-replay').addEventListener('click', restartGame);
+    }
+
+    function render() {
+      updateHeader();
+      if (state.phase === 'intro') renderIntro();
+      else if (state.phase === 'question') renderQuestion();
+      else if (state.phase === 'explanation') renderExplanation();
+      else if (state.phase === 'summary') renderSummary();
+    }
+
+    function restartGame() {
+      if (state.timer) clearTimeout(state.timer);
+      sound.playClick();
+      state.phase = 'intro';
+      state.currentIdx = 0;
+      state.score = 0;
+      state.wrongAttempts = {};
+      state.completedIds = [];
+      state.isLocked = false;
+      render();
+    }
+
+    // Sự kiện nút CÂU TIẾP THEO / HOÀN THÀNH
+    btnNext.addEventListener('click', () => {
+      sound.playClick();
+      if (state.currentIdx < QUESTIONS.length - 1) {
+        state.currentIdx += 1;
+        state.phase = 'question';
+        state.isLocked = false;
+        render();
+      } else {
+        state.phase = 'summary';
+        render();
+        sound.playVictory();
+        launchConfetti();
+      }
+    });
+
+    // Sự kiện nút Âm thanh
+    btnSound.addEventListener('click', () => {
+      const nextMuted = !sound.muted;
+      sound.setMuted(nextMuted);
+      iconSoundOn.classList.toggle('hidden', nextMuted);
+      iconSoundOff.classList.toggle('hidden', !nextMuted);
+    });
+
+    // Sự kiện nút Toàn màn hình
+    btnFullscreen.addEventListener('click', () => {
+      const root = document.documentElement;
+      if (!document.fullscreenElement) {
+        root.requestFullscreen?.().catch(() => {});
+      } else {
+        document.exitFullscreen?.().catch(() => {});
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      const isFs = Boolean(document.fullscreenElement);
+      iconFsEnter.classList.toggle('hidden', isFs);
+      iconFsExit.classList.toggle('hidden', !isFs);
+    });
+
+    // Sự kiện nút Chơi lại trên thanh điều khiển
+    btnRestart.addEventListener('click', restartGame);
+
+    /**
+     * =========================================================================
+     * 5. BỘ ĐÓNG GÓI & TẢI FILE .ZIP THUẦN JAVASCRIPT (KHÔNG CẦN THƯ VIỆN NGOÀI)
+     * =========================================================================
+     */
+    function buildZipBlob(files) {
+      const encoder = new TextEncoder();
+      const crcTable = new Uint32Array(256);
+      for (let i = 0; i < 256; i++) {
+        let c = i;
+        for (let k = 0; k < 8; k++) {
+          c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+        }
+        crcTable[i] = c >>> 0;
+      }
+
+      function crc32(bytes) {
+        let crc = 0xffffffff;
+        for (let i = 0; i < bytes.length; i++) {
+          crc = crcTable[(crc ^ bytes[i]) & 0xff] ^ (crc >>> 8);
+        }
+        return (crc ^ 0xffffffff) >>> 0;
+      }
+
+      const localParts = [];
+      const centralParts = [];
+      let offset = 0;
+
+      for (const file of files) {
+        const nameBytes = encoder.encode(file.name);
+        const dataBytes = encoder.encode(file.content);
+        const crc = crc32(dataBytes);
+
+        // Local File Header (30 bytes + tên tệp)
+        const localHeader = new Uint8Array(30 + nameBytes.length);
+        const lv = new DataView(localHeader.buffer);
+        lv.setUint32(0, 0x04034b50, true);
+        lv.setUint16(4, 20, true);
+        lv.setUint16(6, 0x0800, true); // Cờ UTF-8
+        lv.setUint16(8, 0, true);      // Không nén (Store)
+        lv.setUint16(10, 0, true);
+        lv.setUint16(12, 0x5421, true);
+        lv.setUint32(14, crc, true);
+        lv.setUint32(18, dataBytes.length, true);
+        lv.setUint32(22, dataBytes.length, true);
+        lv.setUint16(26, nameBytes.length, true);
+        lv.setUint16(28, 0, true);
+        localHeader.set(nameBytes, 30);
+
+        localParts.push(localHeader, dataBytes);
+
+        // Central Directory Header (46 bytes + tên tệp)
+        const centralHeader = new Uint8Array(46 + nameBytes.length);
+        const cv = new DataView(centralHeader.buffer);
+        cv.setUint32(0, 0x02014b50, true);
+        cv.setUint16(4, 20, true);
+        cv.setUint16(6, 20, true);
+        cv.setUint16(8, 0x0800, true);
+        cv.setUint16(10, 0, true);
+        cv.setUint16(12, 0, true);
+        cv.setUint16(14, 0x5421, true);
+        cv.setUint32(16, crc, true);
+        cv.setUint32(20, dataBytes.length, true);
+        cv.setUint32(24, dataBytes.length, true);
+        cv.setUint16(28, nameBytes.length, true);
+        cv.setUint16(30, 0, true);
+        cv.setUint16(32, 0, true);
+        cv.setUint16(34, 0, true);
+        cv.setUint16(36, 0, true);
+        cv.setUint32(38, 0, true);
+        cv.setUint32(42, offset, true);
+        centralHeader.set(nameBytes, 46);
+
+        centralParts.push(centralHeader);
+        offset += localHeader.length + dataBytes.length;
+      }
+
+      const centralSize = centralParts.reduce((sum, part) => sum + part.length, 0);
+      const eocd = new Uint8Array(22);
+      const ev = new DataView(eocd.buffer);
+      ev.setUint32(0, 0x06054b50, true);
+      ev.setUint16(4, 0, true);
+      ev.setUint16(6, 0, true);
+      ev.setUint16(8, files.length, true);
+      ev.setUint16(10, files.length, true);
+      ev.setUint32(12, centralSize, true);
+      ev.setUint32(16, offset, true);
+      ev.setUint16(20, 0, true);
+
+      return new Blob([...localParts, ...centralParts, eocd], { type: 'application/zip' });
+    }
+
+    function downloadProjectZip() {
+      sound.playClick();
+      // Tạo bản sao DOM sạch (reset về trạng thái ban đầu và ẩn nút tải .ZIP trong bản trình chiếu)
+      const clone = document.documentElement.cloneNode(true);
+      const cloneScreen = clone.querySelector('#screen-container');
+      const clonePills = clone.querySelector('#progress-pills');
+      const cloneNext = clone.querySelector('#btn-next');
+      const cloneScore = clone.querySelector('#score-text');
+      const cloneSub = clone.querySelector('#header-subtitle');
+      const cloneZipBtn = clone.querySelector('#btn-download-zip');
+
+      if (cloneScreen) cloneScreen.innerHTML = '';
+      if (clonePills) clonePills.innerHTML = '';
+      if (cloneNext) cloneNext.classList.add('hidden');
+      if (cloneScore) cloneScore.textContent = '0 / 40 điểm';
+      if (cloneSub) cloneSub.textContent = 'Khởi động: Thử thách Cần cẩu cân bằng';
+      if (cloneZipBtn) cloneZipBtn.remove();
+
+      const cleanIndexHtml = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const readmeText = [
+        'KĨ SƯ NHÍ – THỬ THÁCH CẦN CẨU CÂN BẰNG (STEM TOÁN 7)',
+        '====================================================',
+        '',
+        'HƯỚNG DẪN SỬ DỤNG:',
+        '1. Giải nén tệp .zip này ra một thư mục trên máy tính.',
+        '2. Nhấp đúp vào tệp "index.html" để mở bằng trình duyệt Chrome hoặc Edge.',
+        '3. Nhấn biểu tượng Toàn màn hình (góc trên bên phải) để trình chiếu chuẩn 16:9 trên màn hình LED.',
+        '4. Nhấn nút "BẮT ĐẦU" để vào Câu 1.',
+        '',
+        'LƯU Ý:',
+        '- Đáp án chuẩn: Câu 1 (B), Câu 2 (D), Câu 3 (B), Câu 4 (A).',
+        '- Học sinh chạm/nhấn trực tiếp lên các ô A, B, C, D trong hình.',
+        '- Khi xem hình Giải thích, giáo viên bấm nút "CÂU TIẾP THEO" / "HOÀN THÀNH" ở thanh phía trên để chuyển tiếp.',
+        '- Cần có kết nối Internet để trình duyệt tải 8 hình ảnh gốc đã nhúng sẵn.'
+      ].join('\r\n');
+
+      const blob = buildZipBlob([
+        { name: 'index.html', content: cleanIndexHtml },
+        { name: 'HUONG_DAN.txt', content: readmeText }
+      ]);
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'KiSuNhi_CanCauCanBang_STEM_Toan7.zip';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    }
+
+    const btnDownloadZip = document.getElementById('btn-download-zip');
+    if (btnDownloadZip) {
+      btnDownloadZip.addEventListener('click', downloadProjectZip);
+    }
+
+    // Khởi chạy màn hình mở đầu khi tải xong trang
+    window.onload = function () {
+      render();
+    };
+  </script>
+
+</body></html>
