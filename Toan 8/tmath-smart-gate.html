@@ -1,0 +1,1833 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMATH SMART GATE – Giải Mã Cổng Thông Minh</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Be Vietnam Pro & Nunito cho tiếng Việt rõ nét, hiện đại -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary-blue: #0284c7;
+      --deep-blue: #0f294a;
+      --cyan-glow: #06b6d4;
+      --teal-accent: #14b8a6;
+      --amber-gold: #f59e0b;
+      --orange-pop: #f97316;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: radial-gradient(circle at 15% 15%, #e0f7ff 0%, #bae6fd 35%, #e0f2fe 70%, #f0f9ff 100%);
+      color: #0f172a;
+      min-height: 100vh;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    .font-display {
+      font-family: 'Nunito', 'Be Vietnam Pro', sans-serif;
+    }
+
+    /* Nền lưới công nghệ STEM nhẹ nhàng */
+    .tech-grid-bg {
+      background-image:
+        linear-gradient(rgba(2, 132, 199, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(2, 132, 199, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Thẻ kính 3D nổi khối */
+    .stem-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow:
+        0 14px 35px -8px rgba(14, 116, 144, 0.18),
+        0 4px 12px -2px rgba(2, 132, 199, 0.08),
+        inset 0 2px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Nút bấm 3D kiểu trò chơi */
+    .btn-3d {
+      position: relative;
+      transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, filter 0.14s ease;
+      user-select: none;
+    }
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(3px);
+    }
+    .btn-3d-orange {
+      background: linear-gradient(180deg, #fbbf24 0%, #f97316 100%);
+      box-shadow: 0 6px 0 #c2410c, 0 12px 20px rgba(249, 115, 22, 0.35);
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(124, 45, 18, 0.45);
+    }
+    .btn-3d-orange:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #c2410c, 0 16px 26px rgba(249, 115, 22, 0.42);
+    }
+    .btn-3d-orange:active:not(:disabled) {
+      box-shadow: 0 2px 0 #c2410c, 0 4px 10px rgba(249, 115, 22, 0.3);
+    }
+
+    .btn-3d-blue {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+      box-shadow: 0 6px 0 #0369a1, 0 12px 20px rgba(2, 132, 199, 0.32);
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(12, 74, 110, 0.4);
+    }
+    .btn-3d-blue:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #0369a1, 0 16px 24px rgba(2, 132, 199, 0.38);
+    }
+    .btn-3d-blue:active:not(:disabled) {
+      box-shadow: 0 2px 0 #0369a1, 0 4px 10px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-3d-teal {
+      background: linear-gradient(180deg, #2dd4bf 0%, #0d9488 100%);
+      box-shadow: 0 6px 0 #115e59, 0 12px 20px rgba(13, 148, 136, 0.32);
+      color: #ffffff;
+    }
+    .btn-3d-teal:hover:not(:disabled) {
+      filter: brightness(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #115e59, 0 16px 24px rgba(13, 148, 136, 0.38);
+    }
+
+    /* Nút chọn đáp án */
+    .option-btn {
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 0 #cbd5e1, 0 6px 14px rgba(15, 23, 42, 0.06);
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      border-color: #0ea5e9;
+      background-color: #f0f9ff;
+      box-shadow: 0 6px 0 #7dd3fc, 0 10px 18px rgba(14, 165, 233, 0.16);
+    }
+    .option-btn.correct {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #10b981;
+      box-shadow: 0 5px 0 #059669, 0 10px 20px rgba(16, 185, 129, 0.25);
+    }
+    .option-btn.wrong {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border-color: #f97316;
+      box-shadow: 0 4px 0 #ea580c;
+      animation: shakeX 0.42s ease-in-out;
+    }
+
+    /* Chuyển cảnh mượt */
+    .screen-enter {
+      animation: fadeSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.99);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-7px); }
+      40% { transform: translateX(7px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+
+    /* Hoạt ảnh Robot TMath bay lơ lửng */
+    @keyframes robotFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .animate-robot-float {
+      animation: robotFloat 3s ease-in-out infinite;
+    }
+
+    /* Hoạt ảnh xe ô tô tiến đến cổng */
+    @keyframes carApproach {
+      0% { transform: translateX(-160px); }
+      100% { transform: translateX(0px); }
+    }
+    .car-approach {
+      animation: carApproach 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Hoạt ảnh xe rung nhẹ động cơ đang nổ máy */
+    @keyframes carIdle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-1.5px); }
+    }
+    .car-idle {
+      animation: carIdle 0.45s ease-in-out infinite;
+    }
+
+    /* Sóng siêu âm phát ra từ cảm biến */
+    @keyframes waveEmit {
+      0% {
+        opacity: 0;
+        transform: translateX(0px) scale(0.7);
+      }
+      25% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-125px) scale(1.35);
+      }
+    }
+    .sonar-wave-1 {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waveEmit 2s linear infinite;
+    }
+    .sonar-wave-2 {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waveEmit 2s linear 0.65s infinite;
+    }
+    .sonar-wave-3 {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waveEmit 2s linear 1.3s infinite;
+    }
+
+    /* Sóng siêu âm phản xạ ngược lại cảm biến (Thử thách 3) */
+    @keyframes waveReflect {
+      0% {
+        opacity: 0;
+        transform: translateX(0px) scale(0.8);
+      }
+      25% {
+        opacity: 0.95;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(125px) scale(1.25);
+      }
+    }
+    .sonar-reflect-1 {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waveReflect 2s linear 1s infinite;
+    }
+    .sonar-reflect-2 {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: waveReflect 2s linear 1.65s infinite;
+    }
+
+    /* Dòng tín hiệu chạy trên dây điện */
+    @keyframes wireFlow {
+      to {
+        stroke-dashoffset: -40;
+      }
+    }
+    .wire-active {
+      stroke-dasharray: 8 6;
+      animation: wireFlow 0.9s linear infinite;
+    }
+
+    /* Hiệu ứng phát sáng bộ phận khi mở khóa */
+    @keyframes glowPulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9)) drop-shadow(0 0 14px rgba(250, 204, 21, 0.65));
+      }
+      50% {
+        filter: drop-shadow(0 0 14px rgba(14, 165, 233, 1)) drop-shadow(0 0 24px rgba(251, 146, 60, 0.95));
+      }
+    }
+    .part-glow {
+      animation: glowPulse 1.6s ease-in-out infinite;
+    }
+
+    /* Dấu hỏi lớn phát sáng */
+    @keyframes questionPulse {
+      0%, 100% {
+        transform: scale(1) rotate(-3deg);
+        box-shadow: 0 0 22px rgba(245, 158, 11, 0.55), 0 0 45px rgba(6, 182, 212, 0.35);
+      }
+      50% {
+        transform: scale(1.1) rotate(3deg);
+        box-shadow: 0 0 36px rgba(249, 115, 22, 0.85), 0 0 65px rgba(14, 165, 233, 0.55);
+      }
+    }
+    .animate-question-glow {
+      animation: questionPulse 2.2s ease-in-out infinite;
+    }
+
+    /* Hiệu ứng sao bay khi trả lời đúng */
+    @keyframes starPop {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      60% { transform: scale(1.3) rotate(120deg); opacity: 1; }
+      100% { transform: scale(0.4) translateY(-55px) rotate(220deg); opacity: 0; }
+    }
+    .star-burst {
+      animation: starPop 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Nhịp đèn LED */
+    @keyframes ledBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .led-blink {
+      animation: ledBlink 1.2s ease-in-out infinite;
+    }
+
+    /* Nhấp nháy chốt khóa Toán học trên thanh chắn ở Thử thách 4 */
+    @keyframes barrierNudge {
+      0%, 80%, 100% { transform: rotate(0deg); }
+      85% { transform: rotate(-4deg); }
+      92% { transform: rotate(1deg); }
+    }
+    .barrier-locked-nudge {
+      transform-origin: 510px 236px;
+      animation: barrierNudge 2.6s ease-in-out infinite;
+    }
+
+    /* Canvas pháo giấy toàn màn hình */
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60;
+    }
+  </style>
+</head>
+<body class="tech-grid-bg flex flex-col min-h-screen">
+  <!-- Canvas hiệu ứng pháo giấy -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Vùng nổi hiệu ứng ngôi sao khi trả lời đúng -->
+  <div id="star-overlay" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+  <!-- Thanh điều khiển trên cùng (Header HUD) -->
+  <header class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-sky-200/80 shadow-sm">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
+      <!-- Logo & Tên trò chơi -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-teal-500 flex items-center justify-center shadow-md text-white font-black text-lg">
+          T
+        </div>
+        <div>
+          <div class="font-display font-black text-sky-900 text-sm sm:text-base leading-tight tracking-tight">
+            TMATH SMART GATE
+          </div>
+          <div class="text-[11px] sm:text-xs font-semibold text-teal-600 leading-tight">
+            Giải Mã Cổng Thông Minh • STEM Toán 8
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiến trình & Điểm số (hiện khi đang chơi hoặc đã hoàn thành) -->
+      <div id="hud-stats" class="hidden items-center gap-2 sm:gap-4">
+        <!-- Thanh tiến trình -->
+        <div class="flex items-center gap-2 bg-sky-50 border border-sky-200 rounded-xl px-3 py-1.5">
+          <span class="text-xs font-bold text-sky-800 hidden sm:inline">Tiến trình:</span>
+          <div class="w-20 sm:w-28 h-2.5 bg-sky-200 rounded-full overflow-hidden">
+            <div id="progress-fill" class="h-full bg-gradient-to-r from-teal-400 to-sky-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+          <span id="progress-text" class="text-xs sm:text-sm font-extrabold text-sky-900">0/4</span>
+        </div>
+
+        <!-- Điểm số -->
+        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-3 py-1.5 shadow-sm">
+          <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          <span id="score-text" class="text-xs sm:text-sm font-black text-amber-700">0 điểm</span>
+        </div>
+      </div>
+
+      <a href="../index.html#toan8-stem" class="px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-sm font-bold">Về phần Toán 8</a>
+
+      <!-- Các nút tiện ích: Âm thanh, Toàn màn hình, Chơi lại -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button id="btn-sound" onclick="toggleSound()" title="Bật / Tắt âm thanh"
+          class="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition cursor-pointer">
+          <span id="sound-icon">🔊</span>
+          <span class="hidden md:inline" id="sound-label">Âm thanh</span>
+        </button>
+
+        <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Toàn màn hình"
+          class="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition cursor-pointer">
+          <span>⛶</span>
+          <span class="hidden md:inline">Toàn màn hình</span>
+        </button>
+
+        <button id="btn-restart-top" onclick="restartGame()" title="Chơi lại từ đầu"
+          class="hidden items-center gap-1.5 px-2.5 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-orange-700 text-xs font-bold transition cursor-pointer">
+          <span>↻</span>
+          <span class="hidden md:inline">Chơi lại</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Nội dung chính -->
+  <main id="app-container" class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col justify-center">
+    <!-- Nội dung từng màn hình sẽ được render động tại đây -->
+  </main>
+
+  <!-- Chân trang cố định theo yêu cầu -->
+  <footer class="w-full py-3 px-4 text-center bg-sky-950 text-sky-100 text-xs sm:text-sm font-semibold tracking-wide border-t-2 border-cyan-500/40">
+    TMATH – HỌC TOÁN QUA TRẢI NGHIỆM | STEM TOÁN 8 | 2026
+  </footer>
+
+  <!-- Hộp thông báo nổi nhẹ (thay thế hoàn toàn cho alert) -->
+  <div id="toast-box" class="fixed bottom-16 right-4 z-50 hidden max-w-xs bg-slate-900/95 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-cyan-400/40"></div>
+
+  <script>
+    /*************************************************************************
+     * 1. BỘ ÂM THANH TỔNG HỢP WEB AUDIO API (KHÔNG CẦN TỆP NGOÀI)
+     *************************************************************************/
+    const SoundFX = {
+      ctx: null,
+      enabled: true,
+
+      init() {
+        try {
+          if (!this.ctx) {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) this.ctx = new AudioCtx();
+          }
+          if (this.ctx && this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+        } catch (e) {
+          console.warn('Không thể khởi tạo âm thanh:', e);
+        }
+      },
+
+      playTone(freq, duration, type = 'sine', volume = 0.14, delay = 0) {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const now = this.ctx.currentTime + delay;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, now);
+          gain.gain.setValueAtTime(0.001, now);
+          gain.gain.exponentialRampToValueAtTime(volume, now + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration + 0.02);
+        } catch (e) {}
+      },
+
+      click() {
+        this.playTone(540, 0.08, 'triangle', 0.1);
+      },
+
+      correct() {
+        // Chuỗi hợp âm vui nhộn khi trả lời đúng & mở khóa bộ phận
+        this.playTone(523.25, 0.14, 'triangle', 0.15, 0);     // C5
+        this.playTone(659.25, 0.14, 'triangle', 0.15, 0.1);   // E5
+        this.playTone(783.99, 0.16, 'triangle', 0.16, 0.2);   // G5
+        this.playTone(1046.5, 0.34, 'sine', 0.18, 0.3);       // C6
+      },
+
+      wrong() {
+        // Âm thanh nhẹ, thân thiện khi chọn sai
+        this.playTone(300, 0.14, 'sine', 0.12, 0);
+        this.playTone(240, 0.22, 'sine', 0.12, 0.12);
+      },
+
+      fanfare() {
+        // Nhạc chúc mừng hoàn thành 4 thử thách
+        const notes = [
+          [523.25, 0.14, 0],
+          [659.25, 0.14, 0.12],
+          [783.99, 0.14, 0.24],
+          [1046.5, 0.25, 0.36],
+          [783.99, 0.12, 0.56],
+          [1046.5, 0.45, 0.68]
+        ];
+        notes.forEach(([f, d, dl]) => this.playTone(f, d, 'triangle', 0.16, dl));
+      }
+    };
+
+    function toggleSound() {
+      SoundFX.enabled = !SoundFX.enabled;
+      document.getElementById('sound-icon').textContent = SoundFX.enabled ? '🔊' : '🔇';
+      document.getElementById('sound-label').textContent = SoundFX.enabled ? 'Âm thanh' : 'Đã tắt';
+      if (SoundFX.enabled) SoundFX.click();
+    }
+
+    function showToast(msg) {
+      const box = document.getElementById('toast-box');
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => box.classList.add('hidden'), 2800);
+    }
+
+    function toggleFullscreen() {
+      SoundFX.click();
+      try {
+        if (!document.fullscreenElement) {
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {
+              showToast('Trình duyệt hiện không cho phép bật toàn màn hình trong khung nhúng.');
+            });
+          } else {
+            showToast('Thiết bị không hỗ trợ chế độ toàn màn hình.');
+          }
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      } catch (e) {
+        showToast('Không thể chuyển chế độ toàn màn hình.');
+      }
+    }
+
+    /*************************************************************************
+     * 2. DỮ LIỆU TRÒ CHƠI & TRẠNG THÁI (STATE)
+     * (Tuyệt đối KHÔNG cung cấp trước công thức khoảng cách hoặc hệ số a, b)
+     *************************************************************************/
+    const PARTS_INFO = [
+      { id: 'barrier', name: 'Thanh chắn', icon: '🚧' },
+      { id: 'sensor', name: 'Cảm biến siêu âm', icon: '📡' },
+      { id: 'controller', name: 'Bộ điều khiển', icon: '🧠' },
+      { id: 'servo', name: 'Động cơ servo', icon: '⚙️' }
+    ];
+
+    const CHALLENGES = [
+      {
+        id: 1,
+        title: 'THỬ THÁCH 1: KHÁM PHÁ CÔNG DỤNG',
+        badge: 'Nhiệm vụ 1/4',
+        question: 'Rào chắn tự động có công dụng gì trong thực tế?',
+        options: [
+          { key: 'A', text: 'Đo khối lượng của xe.' },
+          { key: 'B', text: 'Kiểm soát phương tiện đi qua khu vực được quản lí.' },
+          { key: 'C', text: 'Làm tăng tốc độ di chuyển của xe.' },
+          { key: 'D', text: 'Đo lượng nhiên liệu trong xe.' }
+        ],
+        correctKey: 'B',
+        hint: 'Gợi ý từ Robot TMath: Em hãy quan sát chiếc xe đang dừng trước trạm thu phí nhé! Thanh chắn đặt ngang đường để làm gì nào?',
+        explanation: 'Rào chắn tự động giúp kiểm soát phương tiện ra vào tại trạm thu phí, bãi giữ xe hoặc cổng cơ quan.',
+        unlockPartId: 'barrier',
+        unlockLabel: 'Mở khóa Thanh chắn đỏ – trắng!',
+        robotIntro: 'Quan sát trạm kiểm soát giao thông phía trên và cho mình biết công dụng thực tế của rào chắn tự động nhé!'
+      },
+      {
+        id: 2,
+        title: 'THỬ THÁCH 2: TÌM ĐÔI MẮT CỦA CỔNG THÔNG MINH',
+        badge: 'Nhiệm vụ 2/4',
+        question: 'Bộ phận nào giúp hệ thống phát hiện xe đang đến gần?',
+        options: [
+          { key: 'A', text: 'Động cơ servo.' },
+          { key: 'B', text: 'Nguồn điện.' },
+          { key: 'C', text: 'Cảm biến siêu âm.' },
+          { key: 'D', text: 'Thanh chắn.' }
+        ],
+        correctKey: 'C',
+        hint: 'Gợi ý từ Robot TMath: Hãy tìm bộ phận có hình dạng giống như "đôi mắt" hướng thẳng về phía chiếc xe ô tô!',
+        explanation: 'Cảm biến siêu âm phát và nhận sóng phản xạ để hỗ trợ xác định khoảng cách đến vật cản.',
+        unlockPartId: 'sensor',
+        unlockLabel: 'Mở khóa Cảm biến siêu âm!',
+        robotIntro: 'Trên mô hình có 4 bộ phận được đánh dấu A, B, C, D. Đâu là "đôi mắt" giúp phát hiện xe đang tiến lại gần?'
+      },
+      {
+        id: 3,
+        title: 'THỬ THÁCH 3: BÍ MẬT CỦA SÓNG SIÊU ÂM',
+        badge: 'Nhiệm vụ 3/4',
+        question: 'Trong mô hình này, cảm biến siêu âm cung cấp tín hiệu để bộ điều khiển xác định đại lượng nào trước khi tính khoảng cách?',
+        options: [
+          { key: 'A', text: 'Khối lượng của xe.' },
+          { key: 'B', text: 'Chiều dài của xe.' },
+          { key: 'C', text: 'Vận tốc di chuyển của xe.' },
+          { key: 'D', text: 'Thời gian phản hồi của sóng siêu âm.' }
+        ],
+        correctKey: 'D',
+        hint: 'Gợi ý từ Robot TMath: Quan sát luồng sóng xanh truyền từ cảm biến tới xe rồi phản xạ ngược lại cảm biến. Hệ thống đang đo khoảng thời gian đi và về của sóng đấy!',
+        explanation: 'Hệ thống đo thời gian từ khi phát sóng siêu âm đến khi nhận được sóng phản xạ trở lại.',
+        unlockPartId: 'controller',
+        unlockLabel: 'Mở khóa Bộ điều khiển (hiển thị t theo µs)!',
+        robotIntro: 'Hãy nhìn luồng sóng đi tới xe rồi bật ngược trở lại cảm biến! Bộ điều khiển sẽ ghi nhận đại lượng nào trước tiên?'
+      },
+      {
+        id: 4,
+        title: 'THỬ THÁCH 4: GIẢI MÃ QUYẾT ĐỊNH MỞ CỔNG',
+        badge: 'Nhiệm vụ 4/4',
+        question: 'Để rào chắn tự động mở đúng lúc khi xe đến gần, chúng ta cần giải quyết vấn đề nào?',
+        options: [
+          { key: 'A', text: 'Xây dựng công thức liên hệ giữa thời gian phản hồi và khoảng cách để xác định khi nào cần mở rào chắn.' },
+          { key: 'B', text: 'Tăng kích thước của thanh chắn.' },
+          { key: 'C', text: 'Thay đổi màu sắc của xe ô tô.' },
+          { key: 'D', text: 'Tăng số lượng pin mà không cần xử lí dữ liệu.' }
+        ],
+        correctKey: 'A',
+        hint: 'Gợi ý từ Robot TMath: Bộ điều khiển mới chỉ có dữ liệu thời gian phản hồi t (µs), nó chưa biết xe đang ở cách bao xa để ra lệnh mở cổng!',
+        explanation: 'Cần sử dụng kiến thức Toán học để chuyển dữ liệu thời gian phản hồi thành khoảng cách, từ đó đưa ra quyết định điều khiển động cơ servo.',
+        unlockPartId: 'servo',
+        unlockLabel: 'Mở khóa Động cơ servo & kết nối toàn hệ thống!',
+        robotIntro: 'Hai chiếc xe đang ở hai vị trí xa – gần khác nhau. Bộ điều khiển đã nhận được thời gian phản hồi nhưng vẫn chưa biết khoảng cách!'
+      }
+    ];
+
+    const STEM_ROADMAP = [
+      {
+        step: 1,
+        title: 'Nghiên cứu kiến thức nền',
+        desc: 'Tìm hiểu hàm số bậc nhất y = ax + b (a ≠ 0), đồ thị hàm số và nguyên lí đo khoảng cách bằng sóng siêu âm.',
+        icon: '📚',
+        color: 'from-sky-500 to-blue-600'
+      },
+      {
+        step: 2,
+        title: 'Đo đạc và thu thập dữ liệu',
+        desc: 'Thực hiện thí nghiệm đặt vật cản ở các khoảng cách khác nhau, ghi nhận bảng dữ liệu thời gian phản hồi t (µs) và khoảng cách d (cm).',
+        icon: '📏',
+        color: 'from-cyan-500 to-teal-600'
+      },
+      {
+        step: 3,
+        title: 'Xây dựng hàm số bậc nhất',
+        desc: 'Biểu diễn các cặp dữ liệu lên mặt phẳng tọa độ và vận dụng kiến thức Toán 8 để xác lập công thức liên hệ giữa t và d.',
+        icon: '📈',
+        color: 'from-amber-500 to-orange-500'
+      },
+      {
+        step: 4,
+        title: 'Thiết kế và chế tạo mô hình',
+        desc: 'Lắp ráp đế gỗ, hai trụ đỡ hình thang, thanh chắn đỏ – trắng, trục quay, động cơ servo, cảm biến siêu âm và bộ điều khiển.',
+        icon: '🛠️',
+        color: 'from-emerald-500 to-teal-600'
+      },
+      {
+        step: 5,
+        title: 'Lập trình, kiểm thử và cải tiến',
+        desc: 'Đưa công thức Toán học vào bộ điều khiển, chạy thử nghiệm xe qua trạm, tinh chỉnh độ nhạy và hoàn thiện sản phẩm TMath Smart Gate.',
+        icon: '🚀',
+        color: 'from-indigo-500 to-sky-600'
+      }
+    ];
+
+    // Trạng thái hiện tại của trò chơi
+    let state = {
+      screen: 'start', // 'start' | 'challenge' | 'complete' | 'problem' | 'roadmap'
+      groupName: '',
+      currentIdx: 0, // 0..3
+      score: 0,
+      completedCount: 0,
+      unlocked: {
+        barrier: false,
+        sensor: false,
+        controller: false,
+        servo: false
+      },
+      currentAnsweredCorrect: false,
+      currentHadWrongAttempt: false,
+      wrongKeysTried: [],
+      feedbackMessage: ''
+    };
+
+    /*************************************************************************
+     * 3. ĐỒ HỌA SVG: ROBOT TMATH & MÔ HÌNH TMATH SMART GATE CHI TIẾT
+     *************************************************************************/
+    function renderRobotSVG(mood = 'happy', sizeClass = 'w-20 h-20 sm:w-24 sm:h-24') {
+      // mood: 'happy' | 'excited' | 'thinking'
+      const mouthPath =
+        mood === 'excited'
+          ? 'M 40 53 Q 50 63 60 53'
+          : mood === 'thinking'
+          ? 'M 43 56 Q 50 53 57 56'
+          : 'M 41 53 Q 50 60 59 53';
+
+      const eyeColor = mood === 'excited' ? '#fde047' : '#38bdf8';
+
+      return `
+        <svg viewBox="0 0 100 112" class="${sizeClass} shrink-0 animate-robot-float drop-shadow-lg" aria-label="Robot TMath">
+          <defs>
+            <linearGradient id="robBody" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="65%" stop-color="#e0f2fe"/>
+              <stop offset="100%" stop-color="#7dd3fc"/>
+            </linearGradient>
+            <linearGradient id="robAccent" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#06b6d4"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+            <linearGradient id="robGold" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fde047"/>
+              <stop offset="100%" stop-color="#f97316"/>
+            </linearGradient>
+          </defs>
+          <!-- Bóng đổ dưới chân -->
+          <ellipse cx="50" cy="106" rx="22" ry="4" fill="#0369a1" opacity="0.22"/>
+          <!-- Ăng-ten -->
+          <line x1="50" y1="22" x2="50" y2="10" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="50" cy="8" r="5" fill="url(#robGold)" class="led-blink"/>
+          <!-- Tai cảm biến -->
+          <rect x="14" y="36" width="8" height="18" rx="4" fill="url(#robAccent)"/>
+          <rect x="78" y="36" width="8" height="18" rx="4" fill="url(#robAccent)"/>
+          <!-- Đầu Robot -->
+          <rect x="20" y="21" width="60" height="46" rx="18" fill="url(#robBody)" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Kính mặt công nghệ -->
+          <rect x="27" y="30" width="46" height="30" rx="11" fill="#0f172a"/>
+          <!-- Mắt sáng -->
+          <circle cx="40" cy="43" r="4.5" fill="${eyeColor}"/>
+          <circle cx="41.5" cy="41.5" r="1.5" fill="#ffffff"/>
+          <circle cx="60" cy="43" r="4.5" fill="${eyeColor}"/>
+          <circle cx="61.5" cy="41.5" r="1.5" fill="#ffffff"/>
+          <!-- Miệng biểu cảm -->
+          <path d="${mouthPath}" stroke="${eyeColor}" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <!-- Cổ -->
+          <rect x="42" y="67" width="16" height="6" rx="2" fill="#0369a1"/>
+          <!-- Thân Robot -->
+          <rect x="28" y="72" width="44" height="28" rx="12" fill="url(#robBody)" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Huy hiệu chữ T trên ngực -->
+          <rect x="39" y="78" width="22" height="16" rx="5" fill="url(#robAccent)"/>
+          <text x="50" y="90" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="900" font-family="Nunito, sans-serif">TM</text>
+          <!-- Tay vẫy -->
+          <path d="M 28 79 Q 16 83 18 93" stroke="#0284c7" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+          <path d="M 72 79 Q 85 72 86 62" stroke="#0284c7" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+          <circle cx="86" cy="60" r="3.5" fill="url(#robGold)"/>
+        </svg>
+      `;
+    }
+
+    /**
+     * Render mô hình TMATH SMART GATE hoàn chỉnh bằng SVG 3D-cartoon:
+     * Bao gồm đầy đủ: đế gỗ, 2 trụ đỡ hình thang, thanh chắn đỏ-trắng, trục quay,
+     * động cơ servo, cảm biến siêu âm, bộ điều khiển (màn hình t µs), nguồn điện, đèn báo & xe ô tô mô hình.
+     */
+    function renderSmartGateScene(mode = 'start') {
+      // mode: 'start' | 'c1' | 'c2' | 'c3' | 'c4' | 'complete'
+      const u = state.unlocked;
+      const isC2 = mode === 'c2';
+      const isC3 = mode === 'c3';
+      const isC4 = mode === 'c4';
+      const isComplete = mode === 'complete';
+
+      // Điều kiện phát sáng các bộ phận
+      const barrierGlow = (mode === 'c1' && state.currentAnsweredCorrect) || isComplete;
+      const sensorGlow = (mode === 'c2' && state.currentAnsweredCorrect) || isComplete;
+      const controllerGlow = (mode === 'c3' && state.currentAnsweredCorrect) || isComplete;
+      const servoGlow = (mode === 'c4' && state.currentAnsweredCorrect) || isComplete;
+
+      // Sóng siêu âm
+      const showForwardWaves = (mode === 'c2' && state.currentAnsweredCorrect) || isC3 || isC4 || isComplete;
+      const showReflectWaves = isC3 || (isC4 && !state.currentAnsweredCorrect);
+
+      // Dây tín hiệu chạy điện
+      const wireSensorToCtrlActive = (mode === 'c3' && state.currentAnsweredCorrect) || isC4 || isComplete;
+      const wireCtrlToServoActive = (mode === 'c4' && state.currentAnsweredCorrect) || isComplete;
+
+      // Màn hình bộ điều khiển hiển thị t (µs) — TUYỆT ĐỐI KHÔNG HIỂN THỊ CÔNG THỨC
+      const showTimeOnOLED = u.controller || (mode === 'c3' && state.currentAnsweredCorrect) || isC4 || isComplete;
+
+      // Đèn báo màu
+      const ledColor = isComplete || servoGlow ? '#f59e0b' : '#ef4444';
+      const ledText = isComplete || servoGlow ? 'CHỜ CÔNG THỨC' : 'CỔNG ĐÓNG';
+
+      return `
+        <div class="relative w-full rounded-2xl overflow-hidden border-2 border-sky-200/90 shadow-inner bg-gradient-to-b from-sky-100 to-cyan-50">
+          <svg viewBox="0 0 820 410" class="w-full h-auto block select-none" role="img" aria-label="Mô hình rào chắn tự động TMath Smart Gate">
+            <defs>
+              <!-- Bầu trời công nghệ -->
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bae6fd"/>
+                <stop offset="55%" stop-color="#e0f2fe"/>
+                <stop offset="100%" stop-color="#f0f9ff"/>
+              </linearGradient>
+              <!-- Mặt đường -->
+              <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#475569"/>
+                <stop offset="100%" stop-color="#334155"/>
+              </linearGradient>
+              <!-- Đế gỗ 3D -->
+              <linearGradient id="woodTop" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#e2b485"/>
+                <stop offset="50%" stop-color="#d49e6a"/>
+                <stop offset="100%" stop-color="#c48a54"/>
+              </linearGradient>
+              <linearGradient id="woodFront" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a86d3b"/>
+                <stop offset="100%" stop-color="#7c4d25"/>
+              </linearGradient>
+              <!-- Trụ đỡ hình thang -->
+              <linearGradient id="pillarGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e6bc91"/>
+                <stop offset="100%" stop-color="#b87e49"/>
+              </linearGradient>
+              <!-- Thanh chắn sọc đỏ trắng -->
+              <pattern id="barrierStripes" width="28" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(22)">
+                <rect width="14" height="20" fill="#ef4444"/>
+                <rect x="14" width="14" height="20" fill="#ffffff"/>
+              </pattern>
+              <!-- Thân xe ô tô cam vàng -->
+              <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fbbf24"/>
+                <stop offset="55%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#ea580c"/>
+              </linearGradient>
+              <!-- Thân xe phụ xanh ngọc (Thử thách 4) -->
+              <linearGradient id="carBody2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2dd4bf"/>
+                <stop offset="100%" stop-color="#0284c7"/>
+              </linearGradient>
+              <!-- Servo xanh dương -->
+              <linearGradient id="servoBlue" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#0369a1"/>
+              </linearGradient>
+              <!-- Mạch điều khiển -->
+              <linearGradient id="pcbTeal" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0f766e"/>
+                <stop offset="100%" stop-color="#115e59"/>
+              </linearGradient>
+              <!-- Kính xe -->
+              <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e0f2fe"/>
+                <stop offset="100%" stop-color="#7dd3fc"/>
+              </linearGradient>
+            </defs>
+
+            <!-- 1. NỀN BẦU TRỜI & TRẠM KIỂM SOÁT GIAO THÔNG -->
+            <rect x="0" y="0" width="820" height="295" fill="url(#skyGrad)"/>
+
+            <!-- Đám mây nhẹ -->
+            <g fill="#ffffff" opacity="0.75">
+              <ellipse cx="110" cy="58" rx="38" ry="14"/>
+              <ellipse cx="135" cy="52" rx="28" ry="14"/>
+              <ellipse cx="660" cy="64" rx="44" ry="15"/>
+              <ellipse cx="690" cy="56" rx="26" ry="13"/>
+            </g>
+
+            <!-- Đường chân trời thành phố thông minh -->
+            <g fill="#bae6fd" opacity="0.65">
+              <rect x="25" y="190" width="46" height="105" rx="4"/>
+              <rect x="80" y="165" width="38" height="130" rx="4"/>
+              <rect x="130" y="205" width="55" height="90" rx="4"/>
+              <rect x="640" y="175" width="44" height="120" rx="4"/>
+              <rect x="695" y="150" width="52" height="145" rx="4"/>
+              <rect x="756" y="195" width="48" height="100" rx="4"/>
+            </g>
+
+            <!-- Mái vòm bảng hiệu Trạm Kiểm Soát TMATH -->
+            <g>
+              <rect x="245" y="16" width="330" height="44" rx="14" fill="#0f294a" stroke="#38bdf8" stroke-width="2.5"/>
+              <circle cx="268" cy="38" r="6" fill="#22d3ee" class="led-blink"/>
+              <circle cx="552" cy="38" r="6" fill="#22d3ee" class="led-blink"/>
+              <text x="410" y="36" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="900" font-family="Nunito, sans-serif" letter-spacing="1">
+                TRẠM KIỂM SOÁT TMATH SMART GATE
+              </text>
+              <text x="410" y="51" text-anchor="middle" fill="#7dd3fc" font-size="10.5" font-weight="700">
+                ${ledText}
+              </text>
+            </g>
+
+            <!-- 2. MẶT ĐƯỜNG GIAO THÔNG -->
+            <rect x="0" y="295" width="820" height="115" fill="url(#roadGrad)"/>
+            <!-- Vỉa hè trên -->
+            <rect x="0" y="288" width="820" height="10" fill="#cbd5e1"/>
+            <!-- Vạch kẻ đường đứt nét -->
+            <line x1="20" y1="352" x2="800" y2="352" stroke="#f8fafc" stroke-width="4" stroke-dasharray="28 22" opacity="0.65"/>
+            <!-- Vạch dừng trước rào chắn -->
+            <rect x="332" y="302" width="10" height="96" rx="2" fill="#f8fafc" opacity="0.85"/>
+
+            <!-- 3. ĐẾ GỖ CỦA MÔ HÌNH TMATH SMART GATE -->
+            <g id="wooden-base">
+              <!-- Bóng dưới đế gỗ -->
+              <polygon points="365,336 785,336 798,355 352,355" fill="#0f172a" opacity="0.35"/>
+              <!-- Mặt trên đế gỗ -->
+              <polygon points="382,292 770,292 786,326 366,326" fill="url(#woodTop)" stroke="#8c5a32" stroke-width="2"/>
+              <!-- Đường vân gỗ nhẹ -->
+              <line x1="395" y1="305" x2="760" y2="305" stroke="#b07642" stroke-width="1" opacity="0.45"/>
+              <line x1="382" y1="316" x2="774" y2="316" stroke="#b07642" stroke-width="1" opacity="0.45"/>
+              <!-- Cạnh dày phía trước đế gỗ -->
+              <rect x="366" y="326" width="420" height="18" rx="3" fill="url(#woodFront)" stroke="#6b3f1c" stroke-width="1.5"/>
+              <text x="576" y="339" text-anchor="middle" fill="#fef3c7" font-size="10" font-weight="800" letter-spacing="1.2">
+                ĐẾ GỖ MÔ HÌNH TMATH SMART GATE
+              </text>
+            </g>
+
+            <!-- 4. HAI TRỤ ĐỠ HÌNH THANG (Trụ trước gắn cảm biến & Trụ chính gắn trục quay + servo) -->
+            <g id="support-pillars">
+              <!-- Trụ đỡ hình thang 1 (phía trước - đỡ cảm biến siêu âm) -->
+              <polygon points="415,310 462,310 452,226 425,226" fill="url(#pillarGrad)" stroke="#7c4d25" stroke-width="2"/>
+              <polygon points="462,310 472,304 461,223 452,226" fill="#9a6334" stroke="#7c4d25" stroke-width="1.5"/>
+
+              <!-- Trụ đỡ hình thang 2 (chính giữa - đỡ thanh chắn, trục quay, servo & đèn báo) -->
+              <polygon points="480,310 544,310 532,195 492,195" fill="url(#pillarGrad)" stroke="#7c4d25" stroke-width="2"/>
+              <polygon points="544,310 556,303 543,191 532,195" fill="#9a6334" stroke="#7c4d25" stroke-width="1.5"/>
+              <!-- Nắp trên trụ đỡ chính -->
+              <rect x="488" y="189" width="56" height="8" rx="3" fill="#c48a54" stroke="#7c4d25" stroke-width="1.5"/>
+            </g>
+
+            <!-- 5. ĐÈN BÁO TRẠNG THÁI (trên đỉnh trụ chính) -->
+            <g id="status-led">
+              <rect x="505" y="178" width="18" height="11" rx="2" fill="#334155"/>
+              <path d="M 507 178 A 7 9 0 0 1 521 178 Z" fill="${ledColor}" class="led-blink"/>
+              <circle cx="514" cy="171" r="14" fill="${ledColor}" opacity="0.2" class="led-blink"/>
+            </g>
+
+            <!-- 6. NGUỒN ĐIỆN (Pin nguồn trên đế gỗ bên phải) -->
+            <g id="power-supply">
+              <rect x="706" y="256" width="52" height="52" rx="6" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+              <!-- 2 cục pin minh họa -->
+              <rect x="713" y="264" width="15" height="36" rx="3" fill="#f59e0b"/>
+              <rect x="717" y="260" width="7" height="4" rx="1" fill="#cbd5e1"/>
+              <rect x="734" y="264" width="15" height="36" rx="3" fill="#f59e0b"/>
+              <rect x="738" y="260" width="7" height="4" rx="1" fill="#cbd5e1"/>
+              <text x="732" y="286" text-anchor="middle" fill="#0f172a" font-size="9" font-weight="900">PIN</text>
+              <!-- Dây nguồn nối vào bộ điều khiển -->
+              <path d="M 706 276 Q 692 276 686 286" stroke="#ef4444" stroke-width="2.8" fill="none"/>
+              <path d="M 706 286 Q 694 286 686 293" stroke="#0f172a" stroke-width="2.8" fill="none"/>
+            </g>
+
+            <!-- 7. DÂY KẾT NỐI MẠCH ĐIỆN (Cảm biến -> Bộ điều khiển -> Động cơ servo) -->
+            <g id="circuit-wires">
+              <!-- Dây từ cảm biến siêu âm -> Bộ điều khiển -->
+              <path d="M 442 260 L 442 302 L 584 302"
+                stroke="${wireSensorToCtrlActive ? '#06b6d4' : '#64748b'}"
+                stroke-width="${wireSensorToCtrlActive ? '4' : '2.5'}"
+                fill="none" stroke-linecap="round" stroke-linejoin="round"
+                class="${wireSensorToCtrlActive ? 'wire-active' : ''}"/>
+
+              <!-- Dây từ Bộ điều khiển -> Động cơ Servo -->
+              <path d="M 600 264 L 600 245 L 542 245"
+                stroke="${wireCtrlToServoActive ? '#f59e0b' : '#64748b'}"
+                stroke-width="${wireCtrlToServoActive ? '4' : '2.5'}"
+                fill="none" stroke-linecap="round" stroke-linejoin="round"
+                class="${wireCtrlToServoActive ? 'wire-active' : ''}"/>
+            </g>
+
+            <!-- 8. BỘ ĐIỀU KHIỂN (Vi điều khiển + Màn hình điện tử hiển thị t µs) -->
+            <g id="controller-unit" class="${controllerGlow ? 'part-glow' : ''}" opacity="${u.controller || isC3 || isC4 || isComplete ? '1' : '0.88'}">
+              <!-- Bo mạch -->
+              <rect x="576" y="250" width="112" height="58" rx="8" fill="url(#pcbTeal)" stroke="${controllerGlow ? '#fde047' : '#2dd4bf'}" stroke-width="2.5"/>
+              <!-- Chip vi xử lý -->
+              <rect x="586" y="262" width="22" height="22" rx="3" fill="#0f172a" stroke="#94a3b8" stroke-width="1"/>
+              <circle cx="597" cy="273" r="3" fill="#22d3ee"/>
+              <!-- Màn hình điện tử OLED -->
+              <rect x="615" y="259" width="65" height="36" rx="5" fill="#020617" stroke="#38bdf8" stroke-width="1.8"/>
+              ${
+                showTimeOnOLED
+                  ? `
+                    <text x="647" y="274" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="800" font-family="monospace">TIME (t)</text>
+                    <text x="647" y="289" text-anchor="middle" fill="#fde047" font-size="11.5" font-weight="900" font-family="monospace">t (µs)</text>
+                  `
+                  : `
+                    <text x="647" y="275" text-anchor="middle" fill="#64748b" font-size="8.5" font-weight="700" font-family="monospace">CHỜ DỮ LIỆU</text>
+                    <text x="647" y="288" text-anchor="middle" fill="#475569" font-size="10" font-weight="700" font-family="monospace">---</text>
+                  `
+              }
+              <text x="632" y="304" text-anchor="middle" fill="#ccfbf1" font-size="8" font-weight="800">BỘ ĐIỀU KHIỂN</text>
+            </g>
+
+            <!-- 9. ĐỘNG CƠ SERVO & TRỤC QUAY -->
+            <g id="servo-unit" class="${servoGlow ? 'part-glow' : ''}">
+              <!-- Thân động cơ servo xanh dương gắn trên trụ chính -->
+              <rect x="498" y="220" width="44" height="32" rx="5" fill="url(#servoBlue)" stroke="${servoGlow ? '#fde047' : '#0c4a6e'}" stroke-width="2.2"/>
+              <rect x="492" y="228" width="56" height="6" rx="2" fill="#0284c7"/>
+              <text x="522" y="245" text-anchor="middle" fill="#e0f2fe" font-size="7.5" font-weight="900">SERVO</text>
+            </g>
+
+            <!-- 10. THANH CHẮN ĐỎ – TRẮNG & TRỤC QUAY -->
+            <g id="barrier-unit" class="${barrierGlow ? 'part-glow' : ''} ${(isC4 && state.currentAnsweredCorrect) || isComplete ? 'barrier-locked-nudge' : ''}">
+              <!-- Cánh tay thanh chắn chắn ngang đường -->
+              <rect x="292" y="227" width="228" height="18" rx="7"
+                fill="url(#barrierStripes)"
+                stroke="${barrierGlow ? '#fde047' : '#991b1b'}"
+                stroke-width="${barrierGlow ? '3' : '2'}"
+                opacity="${u.barrier || mode === 'c1' || isC2 || isC3 || isC4 || isComplete ? '1' : '0.85'}"/>
+              <!-- Đầu mút bảo vệ thanh chắn -->
+              <circle cx="296" cy="236" r="8" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+              <!-- Trục quay gắn khớp servo -->
+              <circle cx="510" cy="236" r="11" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5"/>
+              <circle cx="510" cy="236" r="4.5" fill="#f97316"/>
+
+              <!-- Nếu đã mở khóa hết nhưng chưa có công thức Toán học -> hiện biểu tượng khóa ? nhẹ trên thanh chắn -->
+              ${
+                (isC4 && state.currentAnsweredCorrect) || isComplete
+                  ? `
+                    <g transform="translate(382, 198)">
+                      <rect x="0" y="0" width="44" height="24" rx="12" fill="#0f294a" stroke="#fbbf24" stroke-width="2"/>
+                      <text x="22" y="16" text-anchor="middle" fill="#fde047" font-size="12" font-weight="900">🔒 ?</text>
+                    </g>
+                  `
+                  : ''
+              }
+            </g>
+
+            <!-- 11. CẢM BIẾN SIÊU ÂM (HC-SR04 - Đôi mắt của cổng thông minh) -->
+            <g id="ultrasonic-sensor" class="${sensorGlow ? 'part-glow' : ''}">
+              <!-- Bo mạch xanh của cảm biến -->
+              <rect x="412" y="232" width="38" height="26" rx="5" fill="#0284c7" stroke="${sensorGlow ? '#fde047' : '#0c4a6e'}" stroke-width="2"/>
+              <!-- Hai mắt thu phát siêu âm hướng về phía xe (bên trái) -->
+              <rect x="403" y="236" width="11" height="8" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+              <rect x="403" y="246" width="11" height="8" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+              <circle cx="406" cy="240" r="2.2" fill="#334155"/>
+              <circle cx="406" cy="250" r="2.2" fill="#334155"/>
+            </g>
+
+            <!-- 12. SÓNG SIÊU ÂM PHÁT RA & PHẢN XẠ -->
+            ${
+              showForwardWaves
+                ? `
+                  <g id="sonar-waves-out" fill="none" stroke="#06b6d4" stroke-width="3.5" stroke-linecap="round">
+                    <path class="sonar-wave-1" d="M 392 232 A 22 22 0 0 0 392 260"/>
+                    <path class="sonar-wave-2" d="M 382 226 A 30 30 0 0 0 382 266"/>
+                    <path class="sonar-wave-3" d="M 372 220 A 38 38 0 0 0 372 272"/>
+                  </g>
+                `
+                : ''
+            }
+            ${
+              showReflectWaves
+                ? `
+                  <g id="sonar-waves-back" fill="none" stroke="#f97316" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="6 4">
+                    <path class="sonar-reflect-1" d="M 272 234 A 22 22 0 0 1 272 262"/>
+                    <path class="sonar-reflect-2" d="M 284 228 A 28 28 0 0 1 284 268"/>
+                  </g>
+                  <!-- Chú thích luồng sóng đi & về (Thử thách 3) -->
+                  <g transform="translate(274, 186)">
+                    <rect x="0" y="0" width="128" height="24" rx="12" fill="rgba(15,41,74,0.88)"/>
+                    <text x="64" y="15.5" text-anchor="middle" fill="#7dd3fc" font-size="10" font-weight="800">Phát đi ◄──► Phản xạ</text>
+                  </g>
+                `
+                : ''
+            }
+
+            <!-- 13. XE Ô TÔ MÔ HÌNH -->
+            ${
+              isC4
+                ? `
+                  <!-- THỬ THÁCH 4: HIỂN THỊ HAI XE Ở HAI KHOẢNG CÁCH KHÁC NHAU SO VỚI CẢM BIẾN -->
+                  <!-- Xe 1 (Ở XA cảm biến) -->
+                  <g transform="translate(28, 250) scale(0.84)" class="car-idle">
+                    <ellipse cx="95" cy="86" rx="76" ry="9" fill="#0f172a" opacity="0.28"/>
+                    <path d="M 24 62 L 42 32 Q 50 22 65 22 L 118 22 Q 134 22 144 35 L 166 54 Q 178 57 178 68 L 178 78 Q 178 82 172 82 L 22 82 Q 16 82 16 74 L 16 66 Q 16 62 24 62 Z" fill="url(#carBody2)" stroke="#0c4a6e" stroke-width="2.5"/>
+                    <path d="M 48 54 L 58 30 L 92 30 L 92 54 Z" fill="url(#glassGrad)"/>
+                    <path d="M 98 54 L 98 30 L 122 30 L 138 54 Z" fill="url(#glassGrad)"/>
+                    <rect x="166" y="61" width="10" height="9" rx="3" fill="#fef08a"/>
+                    <circle cx="54" cy="81" r="16" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
+                    <circle cx="54" cy="81" r="6" fill="#e2e8f0"/>
+                    <circle cx="142" cy="81" r="16" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
+                    <circle cx="142" cy="81" r="6" fill="#e2e8f0"/>
+                    <rect x="56" y="-8" width="76" height="22" rx="11" fill="#0f294a"/>
+                    <text x="94" y="7" text-anchor="middle" fill="#7dd3fc" font-size="11" font-weight="900">Xe 1 (Xa)</text>
+                  </g>
+
+                  <!-- Xe 2 (Ở GẦN cảm biến hơn) -->
+                  <g transform="translate(174, 294) scale(0.92)" class="car-idle">
+                    <ellipse cx="95" cy="86" rx="78" ry="10" fill="#0f172a" opacity="0.32"/>
+                    <path d="M 24 62 L 42 32 Q 50 22 65 22 L 118 22 Q 134 22 144 35 L 166 54 Q 178 57 178 68 L 178 78 Q 178 82 172 82 L 22 82 Q 16 82 16 74 L 16 66 Q 16 62 24 62 Z" fill="url(#carBody)" stroke="#9a3412" stroke-width="2.5"/>
+                    <path d="M 48 54 L 58 30 L 92 30 L 92 54 Z" fill="url(#glassGrad)"/>
+                    <path d="M 98 54 L 98 30 L 122 30 L 138 54 Z" fill="url(#glassGrad)"/>
+                    <rect x="166" y="61" width="10" height="9" rx="3" fill="#fef08a"/>
+                    <circle cx="54" cy="81" r="16" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
+                    <circle cx="54" cy="81" r="6" fill="#e2e8f0"/>
+                    <circle cx="142" cy="81" r="16" fill="#1e293b" stroke="#94a3b8" stroke-width="3"/>
+                    <circle cx="142" cy="81" r="6" fill="#e2e8f0"/>
+                    <rect x="52" y="-8" width="84" height="22" rx="11" fill="#0f294a"/>
+                    <text x="94" y="7" text-anchor="middle" fill="#fde047" font-size="11" font-weight="900">Xe 2 (Gần)</text>
+                  </g>
+
+                  <!-- Nhãn so sánh dữ liệu chưa xác định khoảng cách -->
+                  <g transform="translate(178, 182)">
+                    <rect x="0" y="0" width="198" height="32" rx="12" fill="rgba(15,41,74,0.92)" stroke="#fbbf24" stroke-width="1.8"/>
+                    <text x="99" y="20" text-anchor="middle" fill="#fde047" font-size="11" font-weight="800">Đã có t (µs) ➔ Khoảng cách = ?</text>
+                  </g>
+                `
+                : `
+                  <!-- Xe ô tô mô hình đang chờ trước thanh chắn -->
+                  <g class="${mode === 'start' || mode === 'c1' ? 'car-approach' : ''}">
+                    <g transform="translate(120, 272)" class="car-idle">
+                      <!-- Bóng xe -->
+                      <ellipse cx="98" cy="88" rx="82" ry="11" fill="#0f172a" opacity="0.32"/>
+                      <!-- Thân xe 3D -->
+                      <path d="M 24 62 L 42 30 Q 50 20 66 20 L 122 20 Q 138 20 148 34 L 170 53 Q 184 56 184 68 L 184 79 Q 184 84 176 84 L 22 84 Q 14 84 14 75 L 14 67 Q 14 62 24 62 Z"
+                        fill="url(#carBody)" stroke="#9a3412" stroke-width="2.5"/>
+                      <!-- Cửa kính -->
+                      <path d="M 48 53 L 58 29 L 94 29 L 94 53 Z" fill="url(#glassGrad)" stroke="#0284c7" stroke-width="1.5"/>
+                      <path d="M 101 53 L 101 29 L 126 29 L 143 53 Z" fill="url(#glassGrad)" stroke="#0284c7" stroke-width="1.5"/>
+                      <!-- Đèn pha trước -->
+                      <rect x="172" y="61" width="11" height="10" rx="3" fill="#fef08a"/>
+                      <polygon points="183,61 224,52 224,78 183,71" fill="#fef08a" opacity="0.22"/>
+                      <!-- Đèn hậu -->
+                      <rect x="15" y="63" width="8" height="10" rx="2" fill="#ef4444"/>
+                      <!-- Chữ TMATH trên cửa xe -->
+                      <text x="98" y="72" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="900" letter-spacing="0.8">TMATH</text>
+                      <!-- Bánh xe -->
+                      <circle cx="54" cy="83" r="17" fill="#1e293b" stroke="#cbd5e1" stroke-width="3"/>
+                      <circle cx="54" cy="83" r="6.5" fill="#f8fafc"/>
+                      <circle cx="146" cy="83" r="17" fill="#1e293b" stroke="#cbd5e1" stroke-width="3"/>
+                      <circle cx="146" cy="83" r="6.5" fill="#f8fafc"/>
+                    </g>
+                  </g>
+                `
+            }
+
+            <!-- 14. ĐÁNH DẤU 4 BỘ PHẬN A, B, C, D (CHỈ HIỆN Ở THỬ THÁCH 2) -->
+            ${
+              isC2
+                ? `
+                  <g font-family="Nunito, sans-serif" font-weight="900">
+                    <!-- A: Động cơ servo -->
+                    <line x1="528" y1="220" x2="578" y2="152" stroke="#0f294a" stroke-width="2.2" stroke-dasharray="4 3"/>
+                    <circle cx="585" cy="142" r="18" fill="#0284c7" stroke="#ffffff" stroke-width="3"/>
+                    <text x="585" y="148" text-anchor="middle" fill="#ffffff" font-size="16">A</text>
+
+                    <!-- B: Nguồn điện -->
+                    <line x1="732" y1="255" x2="732" y2="188" stroke="#0f294a" stroke-width="2.2" stroke-dasharray="4 3"/>
+                    <circle cx="732" cy="172" r="18" fill="#0d9488" stroke="#ffffff" stroke-width="3"/>
+                    <text x="732" y="178" text-anchor="middle" fill="#ffffff" font-size="16">B</text>
+
+                    <!-- C: Cảm biến siêu âm -->
+                    <line x1="422" y1="230" x2="412" y2="152" stroke="#0f294a" stroke-width="2.2" stroke-dasharray="4 3"/>
+                    <circle cx="410" cy="136" r="18" fill="#f97316" stroke="#ffffff" stroke-width="3"/>
+                    <text x="410" y="142" text-anchor="middle" fill="#ffffff" font-size="16">C</text>
+
+                    <!-- D: Thanh chắn -->
+                    <line x1="336" y1="225" x2="316" y2="165" stroke="#0f294a" stroke-width="2.2" stroke-dasharray="4 3"/>
+                    <circle cx="310" cy="150" r="18" fill="#ef4444" stroke="#ffffff" stroke-width="3"/>
+                    <text x="310" y="156" text-anchor="middle" fill="#ffffff" font-size="16">D</text>
+                  </g>
+                `
+                : ''
+            }
+          </svg>
+        </div>
+      `;
+    }
+
+    /**
+     * Thanh 4 biểu tượng bộ phận (Khóa / Đã mở khóa)
+     */
+    function renderPartsBar(compact = false) {
+      return `
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full">
+          ${PARTS_INFO.map((part) => {
+            const unlocked = state.unlocked[part.id];
+            return `
+              <div class="flex items-center gap-2.5 ${compact ? 'px-2.5 py-2' : 'px-3.5 py-2.5'} rounded-2xl border-2 transition-all duration-500 ${
+                unlocked
+                  ? 'bg-gradient-to-r from-emerald-50 to-cyan-50 border-teal-400 shadow-md scale-[1.01]'
+                  : 'bg-slate-100/90 border-slate-200 opacity-85'
+              }">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-lg shrink-0 ${
+                  unlocked
+                    ? 'bg-gradient-to-br from-teal-400 to-sky-500 text-white shadow-sm'
+                    : 'bg-slate-200 text-slate-500'
+                }">
+                  ${unlocked ? part.icon : '🔒'}
+                </div>
+                <div class="min-w-0">
+                  <div class="text-xs sm:text-sm font-extrabold truncate ${unlocked ? 'text-sky-950' : 'text-slate-600'}">
+                    ${part.name}
+                  </div>
+                  <div class="text-[11px] font-bold ${unlocked ? 'text-teal-600' : 'text-slate-400'}">
+                    ${unlocked ? 'Đã mở khóa ✓' : 'Đang khóa'}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    /*************************************************************************
+     * 4. HIỆU ỨNG NGÔI SAO & PHÁO GIẤY (CANVAS)
+     *************************************************************************/
+    function triggerStarBurst() {
+      const overlay = document.getElementById('star-overlay');
+      const colors = ['#fbbf24', '#38bdf8', '#2dd4bf', '#f97316', '#fde047'];
+      for (let i = 0; i < 18; i++) {
+        const star = document.createElement('div');
+        star.textContent = i % 2 === 0 ? '★' : '✦';
+        star.className = 'star-burst absolute font-black select-none';
+        star.style.left = `${20 + Math.random() * 60}%`;
+        star.style.top = `${25 + Math.random() * 45}%`;
+        star.style.fontSize = `${18 + Math.random() * 20}px`;
+        star.style.color = colors[i % colors.length];
+        star.style.animationDelay = `${Math.random() * 0.25}s`;
+        overlay.appendChild(star);
+        setTimeout(() => star.remove(), 1300);
+      }
+    }
+
+    let confettiAnimId = null;
+    let confettiParticles = [];
+
+    function startConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#0284c7', '#06b6d4', '#14b8a6', '#f59e0b', '#f97316', '#fbbf24', '#ef4444'];
+      confettiParticles = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * canvas.height * 0.6,
+        w: 7 + Math.random() * 7,
+        h: 5 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 3.2,
+        vy: 2.2 + Math.random() * 3.5,
+        rot: Math.random() * Math.PI * 2,
+        vrot: (Math.random() - 0.5) * 0.14
+      }));
+
+      let frames = 0;
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettiParticles.forEach((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vrot;
+          if (p.y > canvas.height + 20 && frames < 200) {
+            p.y = -15;
+            p.x = Math.random() * canvas.width;
+          }
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        frames++;
+        if (frames < 340) {
+          confettiAnimId = requestAnimationFrame(loop);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      cancelAnimationFrame(confettiAnimId);
+      loop();
+    }
+
+    function stopConfetti() {
+      cancelAnimationFrame(confettiAnimId);
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      const canvas = document.getElementById('confetti-canvas');
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    });
+
+    /*************************************************************************
+     * 5. CẬP NHẬT THANH HUD & ĐIỀU PHỐI CÁC MÀN HÌNH
+     *************************************************************************/
+    function updateHUD() {
+      const hudStats = document.getElementById('hud-stats');
+      const restartBtn = document.getElementById('btn-restart-top');
+      const progressFill = document.getElementById('progress-fill');
+      const progressText = document.getElementById('progress-text');
+      const scoreText = document.getElementById('score-text');
+
+      if (state.screen === 'start') {
+        hudStats.classList.add('hidden');
+        hudStats.classList.remove('flex');
+        restartBtn.classList.add('hidden');
+        restartBtn.classList.remove('flex');
+      } else {
+        hudStats.classList.remove('hidden');
+        hudStats.classList.add('flex');
+        restartBtn.classList.remove('hidden');
+        restartBtn.classList.add('flex');
+      }
+
+      const pct = (state.completedCount / 4) * 100;
+      progressFill.style.width = `${pct}%`;
+      progressText.textContent = `${state.completedCount}/4`;
+      scoreText.textContent = `${state.score} điểm`;
+    }
+
+    function render() {
+      updateHUD();
+      const app = document.getElementById('app-container');
+
+      if (state.screen === 'start') {
+        app.innerHTML = renderStartScreen();
+      } else if (state.screen === 'challenge') {
+        app.innerHTML = renderChallengeScreen();
+      } else if (state.screen === 'complete') {
+        app.innerHTML = renderCompleteScreen();
+      } else if (state.screen === 'problem') {
+        app.innerHTML = renderProblemScreen();
+      } else if (state.screen === 'roadmap') {
+        app.innerHTML = renderRoadmapScreen();
+      }
+    }
+
+    /*************************************************************************
+     * MÀN HÌNH 1: MÀN HÌNH MỞ ĐẦU
+     *************************************************************************/
+    function renderStartScreen() {
+      return `
+        <section class="screen-enter stem-card rounded-3xl p-4 sm:p-7 space-y-5">
+          <!-- Tiêu đề lớn -->
+          <div class="text-center space-y-1.5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-sky-100 to-teal-100 border border-sky-300 text-sky-800 text-xs sm:text-sm font-extrabold">
+              <span>⚡</span> HÀNH TRÌNH TRỞ THÀNH KỸ SƯ NHÍ <span>⚡</span>
+            </div>
+            <h1 class="font-display font-black text-3xl sm:text-5xl tracking-tight bg-gradient-to-r from-sky-700 via-cyan-600 to-teal-600 bg-clip-text text-transparent">
+              TMATH SMART GATE
+            </h1>
+            <p class="font-display font-extrabold text-lg sm:text-2xl text-orange-500">
+              GIẢI MÃ CỔNG THÔNG MINH
+            </p>
+          </div>
+
+          <!-- Khung cảnh xe chờ trước trạm thu phí + Robot TMath -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+            <div class="lg:col-span-7">
+              ${renderSmartGateScene('start')}
+            </div>
+
+            <div class="lg:col-span-5 flex flex-col gap-4">
+              <!-- Hộp thoại Robot TMath -->
+              <div class="bg-gradient-to-br from-sky-50 to-cyan-50 border-2 border-sky-200 rounded-2xl p-4 shadow-sm flex items-start gap-3">
+                ${renderRobotSVG('happy', 'w-20 h-20 sm:w-24 sm:h-24')}
+                <div class="space-y-1">
+                  <div class="inline-block px-2.5 py-0.5 rounded-lg bg-sky-600 text-white text-xs font-extrabold">
+                    Robot TMath
+                  </div>
+                  <p class="text-slate-800 text-sm sm:text-base font-medium leading-relaxed">
+                    “Xin chào các kỹ sư nhí! Một chiếc xe đang chờ đi qua cổng thông minh. Tuy nhiên, hệ thống chưa được kích hoạt. Các em hãy vượt qua <strong>4 thử thách</strong> để khám phá bí mật hoạt động của rào chắn tự động nhé!”
+                  </p>
+                </div>
+              </div>
+
+              <!-- Nhập tên nhóm (không bắt buộc) + Nút bắt đầu -->
+              <div class="bg-white border-2 border-sky-100 rounded-2xl p-4 shadow-sm space-y-3">
+                <div>
+                  <label for="group-name-input" class="block text-xs sm:text-sm font-bold text-sky-900 mb-1.5">
+                    Tên nhóm / Lớp (không bắt buộc):
+                  </label>
+                  <input id="group-name-input" type="text" maxlength="40"
+                    value="${escapeHtml(state.groupName)}"
+                    oninput="state.groupName = this.value"
+                    placeholder="Ví dụ: Nhóm Kỹ Sư 8A1..."
+                    class="w-full px-4 py-2.5 rounded-xl border-2 border-sky-200 focus:border-sky-500 focus:outline-none text-sm sm:text-base font-semibold text-slate-800 bg-sky-50/40" />
+                </div>
+
+                <button onclick="startMission()"
+                  class="btn-3d btn-3d-orange w-full py-3.5 px-6 rounded-2xl font-display font-black text-base sm:text-xl tracking-wide cursor-pointer flex items-center justify-center gap-2">
+                  <span>🚀</span> BẮT ĐẦU NHIỆM VỤ
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 biểu tượng bộ phận đang bị khóa -->
+          <div class="space-y-2">
+            <div class="text-xs sm:text-sm font-extrabold text-sky-900 uppercase tracking-wider flex items-center gap-2">
+              <span>🔐</span> 4 bộ phận cần mở khóa:
+            </div>
+            ${renderPartsBar(false)}
+          </div>
+        </section>
+      `;
+    }
+
+    /*************************************************************************
+     * MÀN HÌNH 2: 4 THỬ THÁCH TRẮC NGHIỆM TƯƠNG TÁC
+     *************************************************************************/
+    function renderChallengeScreen() {
+      const ch = CHALLENGES[state.currentIdx];
+      const modeMap = ['c1', 'c2', 'c3', 'c4'];
+      const sceneMode = modeMap[state.currentIdx];
+      const robotMood = state.currentAnsweredCorrect
+        ? 'excited'
+        : state.wrongKeysTried.length > 0
+        ? 'thinking'
+        : 'happy';
+
+      const robotText = state.currentAnsweredCorrect
+        ? `Chính xác! ${ch.explanation}`
+        : state.feedbackMessage || ch.robotIntro;
+
+      return `
+        <section class="screen-enter space-y-4">
+          <!-- Thanh trạng thái 4 bộ phận nhỏ gọn -->
+          ${renderPartsBar(true)}
+
+          <div class="stem-card rounded-3xl p-4 sm:p-6 space-y-4">
+            <!-- Header câu hỏi -->
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+              <div>
+                <span class="inline-block px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-extrabold mb-1">
+                  ${ch.badge} ${state.groupName ? `• ${escapeHtml(state.groupName)}` : ''}
+                </span>
+                <h2 class="font-display font-black text-lg sm:text-2xl text-sky-950">
+                  ${ch.title}
+                </h2>
+              </div>
+              <div class="text-xs font-bold px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800">
+                Đúng lần đầu: +25 điểm
+              </div>
+            </div>
+
+            <!-- Bố cục 2 cột: Minh họa hoạt ảnh bên trái, Câu hỏi & Đáp án bên phải -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+              <!-- Cột trái: Mô hình SVG động + Robot TMath -->
+              <div class="lg:col-span-7 space-y-3">
+                ${renderSmartGateScene(sceneMode)}
+
+                <!-- Hộp thoại Robot TMath phản hồi trực tiếp -->
+                <div class="rounded-2xl p-3.5 border-2 flex items-start gap-3 transition-colors duration-300 ${
+                  state.currentAnsweredCorrect
+                    ? 'bg-emerald-50 border-emerald-300'
+                    : state.wrongKeysTried.length > 0
+                    ? 'bg-amber-50 border-amber-300'
+                    : 'bg-sky-50 border-sky-200'
+                }">
+                  ${renderRobotSVG(robotMood, 'w-16 h-16 sm:w-20 sm:h-20')}
+                  <div class="space-y-1 flex-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold text-white ${
+                        state.currentAnsweredCorrect
+                          ? 'bg-emerald-600'
+                          : state.wrongKeysTried.length > 0
+                          ? 'bg-orange-500'
+                          : 'bg-sky-600'
+                      }">
+                        ${state.currentAnsweredCorrect ? '🎉 Mở khóa thành công!' : state.wrongKeysTried.length > 0 ? '💡 Gợi ý từ Robot TMath' : '🤖 Robot TMath'}
+                      </span>
+                      ${
+                        state.currentAnsweredCorrect
+                          ? `<span class="text-xs font-extrabold text-teal-700 bg-teal-100 px-2.5 py-0.5 rounded-lg">✨ ${ch.unlockLabel}</span>`
+                          : ''
+                      }
+                    </div>
+                    <p class="text-slate-800 text-sm sm:text-base font-medium leading-relaxed">
+                      ${robotText}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cột phải: Câu hỏi & 4 phương án A, B, C, D -->
+              <div class="lg:col-span-5 flex flex-col justify-between space-y-3.5">
+                <div class="bg-gradient-to-r from-sky-900 to-sky-800 text-white rounded-2xl p-4 shadow-md">
+                  <div class="text-xs font-bold text-cyan-300 uppercase tracking-wider mb-1">Câu hỏi:</div>
+                  <p class="text-base sm:text-lg font-bold leading-snug">
+                    ${ch.question}
+                  </p>
+                </div>
+
+                <!-- Danh sách đáp án -->
+                <div class="space-y-2.5">
+                  ${ch.options
+                    .map((opt) => {
+                      const isCorrectSelected = state.currentAnsweredCorrect && opt.key === ch.correctKey;
+                      const isWrongTried = state.wrongKeysTried.includes(opt.key);
+                      const disabled = state.currentAnsweredCorrect || isWrongTried;
+
+                      return `
+                        <button
+                          onclick="selectOption('${opt.key}')"
+                          ${disabled ? 'disabled' : ''}
+                          class="option-btn w-full text-left p-3.5 rounded-2xl border-2 bg-white border-sky-200 flex items-start gap-3 cursor-pointer disabled:cursor-default ${
+                            isCorrectSelected ? 'correct' : isWrongTried ? 'wrong opacity-75' : ''
+                          }">
+                          <span class="w-8 h-8 rounded-xl shrink-0 flex items-center justify-center font-display font-black text-sm ${
+                            isCorrectSelected
+                              ? 'bg-emerald-500 text-white'
+                              : isWrongTried
+                              ? 'bg-orange-500 text-white'
+                              : 'bg-sky-100 text-sky-800'
+                          }">
+                            ${isCorrectSelected ? '✓' : opt.key}
+                          </span>
+                          <span class="text-sm sm:text-base font-semibold text-slate-800 leading-snug pt-0.5">
+                            ${opt.text}
+                          </span>
+                        </button>
+                      `;
+                    })
+                    .join('')}
+                </div>
+
+                <!-- Nút Tiếp tục (chỉ hiện khi đã trả lời đúng, KHÔNG tự động chuyển câu để GV giải thích) -->
+                ${
+                  state.currentAnsweredCorrect
+                    ? `
+                      <div class="pt-2">
+                        <button onclick="nextChallenge()"
+                          class="btn-3d btn-3d-orange w-full py-3.5 px-6 rounded-2xl font-display font-black text-base sm:text-lg cursor-pointer flex items-center justify-center gap-2">
+                          <span>${state.currentIdx < CHALLENGES.length - 1 ? 'TIẾP TỤC THỬ THÁCH' : 'XEM KẾT QUẢ KHÁM PHÁ'}</span>
+                          <span>➜</span>
+                        </button>
+                      </div>
+                    `
+                    : ''
+                }
+              </div>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    /*************************************************************************
+     * MÀN HÌNH 3: HOÀN THÀNH 4 THỬ THÁCH & XUẤT HIỆN CHÌA KHÓA TOÁN HỌC
+     *************************************************************************/
+    function renderCompleteScreen() {
+      return `
+        <section class="screen-enter stem-card rounded-3xl p-4 sm:p-7 space-y-5">
+          <!-- Huy hiệu chúc mừng -->
+          <div class="text-center space-y-2">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-300 via-amber-400 to-orange-500 shadow-lg text-3xl border-4 border-white">
+              🏆
+            </div>
+            <div class="font-display font-black text-2xl sm:text-3xl text-orange-500">
+              CHÚC MỪNG${state.groupName ? ` ${escapeHtml(state.groupName.toUpperCase())}` : ''}!
+            </div>
+            <h2 class="font-display font-black text-xl sm:text-3xl text-sky-950">
+              EM ĐÃ TRỞ THÀNH KỸ SƯ KHÁM PHÁ TMATH SMART GATE
+            </h2>
+
+            <!-- Thống kê điểm số & tiến độ -->
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+              <div class="px-4 py-2 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-800 font-extrabold text-sm sm:text-base">
+                ⭐ Điểm số: <span class="text-lg text-orange-600">${state.score} / 100</span>
+              </div>
+              <div class="px-4 py-2 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-emerald-800 font-extrabold text-sm sm:text-base">
+                ✅ Hoàn thành: <span class="text-lg text-teal-700">4 / 4 thử thách</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mô hình hoàn chỉnh đã mở khóa + Tình huống chiếc xe vẫn đang chờ -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+            <div class="lg:col-span-7 space-y-3">
+              ${renderSmartGateScene('complete')}
+              ${renderPartsBar(true)}
+            </div>
+
+            <div class="lg:col-span-5 space-y-4">
+              <!-- Robot TMath dẫn dắt đến Chìa khóa Toán học -->
+              <div class="bg-gradient-to-br from-sky-50 to-teal-50 border-2 border-sky-200 rounded-2xl p-4 flex items-start gap-3">
+                ${renderRobotSVG('excited', 'w-20 h-20')}
+                <div class="space-y-1">
+                  <span class="inline-block px-2.5 py-0.5 rounded-lg bg-sky-600 text-white text-xs font-extrabold">
+                    Robot TMath
+                  </span>
+                  <p class="text-slate-800 text-sm sm:text-base font-semibold leading-relaxed">
+                    “Tuyệt vời! Các em đã khám phá được những bộ phận quan trọng của cổng thông minh. Nhưng hệ thống vẫn còn thiếu một chiếc chìa khóa đặc biệt – <strong class="text-orange-600">chiếc chìa khóa Toán học!</strong>”
+                  </p>
+                </div>
+              </div>
+
+              <!-- Hai ô dữ liệu t (µs) và d (cm) với dấu hỏi lớn phát sáng ở giữa -->
+              <div class="bg-sky-950 rounded-2xl p-4 sm:p-5 border-2 border-cyan-400/50 shadow-lg">
+                <div class="text-center text-xs font-bold text-cyan-300 uppercase tracking-wider mb-3">
+                  Dữ liệu hệ thống cần giải mã
+                </div>
+                <div class="flex items-center justify-between gap-2 sm:gap-3">
+                  <!-- Ô 1: Thời gian phản hồi -->
+                  <div class="flex-1 bg-sky-900/90 border border-sky-500/60 rounded-xl p-3 text-center">
+                    <div class="text-[11px] sm:text-xs font-bold text-sky-200">Thời gian phản hồi</div>
+                    <div class="font-display font-black text-xl sm:text-2xl text-cyan-300 mt-1">t (µs)</div>
+                  </div>
+
+                  <!-- Dấu hỏi lớn phát sáng -->
+                  <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 text-white font-display font-black text-3xl sm:text-4xl flex items-center justify-center shrink-0 border-2 border-white animate-question-glow">
+                    ?
+                  </div>
+
+                  <!-- Ô 2: Khoảng cách đến xe -->
+                  <div class="flex-1 bg-sky-900/90 border border-teal-400/60 rounded-xl p-3 text-center">
+                    <div class="text-[11px] sm:text-xs font-bold text-teal-200">Khoảng cách đến xe</div>
+                    <div class="font-display font-black text-xl sm:text-2xl text-amber-300 mt-1">d (cm)</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Nút chuyển sang Tình huống có vấn đề -->
+              <button onclick="goToProblemScreen()"
+                class="btn-3d btn-3d-orange w-full py-3.5 px-5 rounded-2xl font-display font-black text-base sm:text-lg cursor-pointer flex items-center justify-center gap-2">
+                <span>🔑</span> KHÁM PHÁ CHÌA KHÓA TOÁN HỌC ➜
+              </button>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    /*************************************************************************
+     * MÀN HÌNH 4: TÌNH HUỐNG CÓ VẤN ĐỀ – DẪN NHẬP BÀI HỌC
+     *************************************************************************/
+    function renderProblemScreen() {
+      return `
+        <section class="screen-enter stem-card rounded-3xl p-5 sm:p-8 max-w-4xl mx-auto w-full space-y-6 text-center">
+          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 border border-orange-300 text-orange-700 text-xs sm:text-sm font-extrabold uppercase tracking-wider">
+            <span>❓</span> Tình huống có vấn đề – Dẫn nhập bài học
+          </div>
+
+          <!-- Câu hỏi trung tâm -->
+          <div class="bg-gradient-to-br from-sky-950 via-sky-900 to-teal-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl border-2 border-cyan-400/50 space-y-4">
+            <div class="flex justify-center items-center gap-4">
+              <span class="px-3.5 py-1.5 rounded-xl bg-sky-800/90 border border-cyan-400/40 font-black text-cyan-300 text-sm sm:text-base">t (µs)</span>
+              <span class="w-11 h-11 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center font-black text-2xl animate-question-glow">?</span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-sky-800/90 border border-amber-400/40 font-black text-amber-300 text-sm sm:text-base">d (cm)</span>
+            </div>
+
+            <h2 class="font-display font-black text-xl sm:text-3xl leading-snug text-amber-300">
+              CẢM BIẾN CUNG CẤP DỮ LIỆU THỜI GIAN PHẢN HỒI. LÀM THẾ NÀO ĐỂ XÁC ĐỊNH ĐƯỢC KHOẢNG CÁCH TỪ XE ĐẾN CẢM BIẾN?
+            </h2>
+          </div>
+
+          <!-- Nhiệm vụ STEM -->
+          <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-5 flex flex-col sm:flex-row items-center gap-4 text-left">
+            ${renderRobotSVG('happy', 'w-20 h-20')}
+            <div class="space-y-1">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-teal-700">Nhiệm vụ STEM của em:</div>
+              <p class="text-slate-800 text-base sm:text-lg font-bold leading-relaxed">
+                “Em hãy tiến hành đo đạc, thu thập dữ liệu, vận dụng kiến thức hàm số bậc nhất để xây dựng công thức tính khoảng cách và thiết kế mô hình rào chắn tự động.”
+              </p>
+            </div>
+          </div>
+
+          <!-- Tên chủ đề bài học -->
+          <div class="py-4 px-5 rounded-2xl bg-gradient-to-r from-sky-100 via-white to-teal-100 border-2 border-sky-300 shadow-sm space-y-1">
+            <div class="font-display font-black text-2xl sm:text-3xl text-sky-800 tracking-tight">
+              TMATH SMART GATE
+            </div>
+            <div class="font-display font-black text-base sm:text-xl text-teal-700">
+              THIẾT KẾ MÔ HÌNH RÀO CHẮN TỰ ĐỘNG DỰA TRÊN HÀM SỐ BẬC NHẤT
+            </div>
+          </div>
+
+          <!-- Nút chuyển sang màn hình giao nhiệm vụ -->
+          <div class="flex flex-wrap justify-center gap-3 pt-1">
+            <button onclick="goToRoadmapScreen()"
+              class="btn-3d btn-3d-orange px-7 py-4 rounded-2xl font-display font-black text-base sm:text-xl cursor-pointer flex items-center gap-2">
+              <span>🛠️</span> SẴN SÀNG TRỞ THÀNH KỸ SƯ THIẾT KẾ
+            </button>
+          </div>
+        </section>
+      `;
+    }
+
+    /*************************************************************************
+     * MÀN HÌNH 5: MÀN HÌNH GIAO NHIỆM VỤ (5 BƯỚC QUY TRÌNH STEM)
+     *************************************************************************/
+    function renderRoadmapScreen() {
+      return `
+        <section class="screen-enter stem-card rounded-3xl p-5 sm:p-7 space-y-6">
+          <div class="text-center space-y-1.5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-100 border border-teal-300 text-teal-800 text-xs sm:text-sm font-extrabold uppercase">
+              <span>📋</span> Kế hoạch hành động Kỹ sư Thiết kế
+            </div>
+            <h2 class="font-display font-black text-2xl sm:text-3xl text-sky-950">
+              NHIỆM VỤ DỰ ÁN STEM: TMATH SMART GATE
+            </h2>
+            <p class="text-slate-600 text-sm sm:text-base font-medium">
+              Hãy cùng nhóm thực hiện lần lượt 5 bước sau để chế tạo và lập trình cổng thông minh hoạt động tự động nhé!
+            </p>
+          </div>
+
+          <!-- 5 Bước giao nhiệm vụ -->
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-3 sm:gap-4">
+            ${STEM_ROADMAP.map(
+              (item) => `
+                <div class="bg-white rounded-2xl border-2 border-sky-100 p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition flex flex-col justify-between gap-3">
+                  <div class="space-y-2.5">
+                    <div class="flex items-center justify-between">
+                      <span class="w-10 h-10 rounded-xl bg-gradient-to-br ${item.color} text-white font-display font-black text-lg flex items-center justify-center shadow">
+                        ${item.step}
+                      </span>
+                      <span class="text-2xl">${item.icon}</span>
+                    </div>
+                    <h3 class="font-display font-black text-base text-sky-950 leading-snug">
+                      ${item.step}. ${item.title}
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
+                      ${item.desc}
+                    </p>
+                  </div>
+                  <div class="h-1.5 w-full rounded-full bg-gradient-to-r ${item.color} opacity-80"></div>
+                </div>
+              `
+            ).join('')}
+          </div>
+
+          <!-- Hộp lời chúc của Robot TMath & Nút Chơi lại -->
+          <div class="bg-gradient-to-r from-sky-50 to-cyan-50 border-2 border-sky-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              ${renderRobotSVG('excited', 'w-16 h-16')}
+              <div>
+                <div class="font-extrabold text-sky-950 text-sm sm:text-base">
+                  Chúc các kỹ sư nhí${state.groupName ? ` (${escapeHtml(state.groupName)})` : ''} chinh phục thành công dự án STEM Toán 8!
+                </div>
+                <div class="text-xs sm:text-sm text-slate-600 font-medium">
+                  Điểm khởi động của em: <strong class="text-orange-600">${state.score}/100 điểm</strong> • Đã mở khóa 4/4 bộ phận.
+                </div>
+              </div>
+            </div>
+
+            <button onclick="restartGame()"
+              class="btn-3d btn-3d-blue px-6 py-3 rounded-2xl font-display font-black text-sm sm:text-base cursor-pointer shrink-0 flex items-center gap-2">
+              <span>↻</span> CHƠI LẠI TỪ ĐẦU
+            </button>
+          </div>
+        </section>
+      `;
+    }
+
+    /*************************************************************************
+     * 6. LOGIC TƯƠNG TÁC: BẮT ĐẦU, CHỌN ĐÁP ÁN, TÍNH ĐIỂM, MỞ KHÓA, CHƠI LẠI
+     *************************************************************************/
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function startMission() {
+      SoundFX.click();
+      state.screen = 'challenge';
+      state.currentIdx = 0;
+      state.currentAnsweredCorrect = false;
+      state.currentHadWrongAttempt = false;
+      state.wrongKeysTried = [];
+      state.feedbackMessage = '';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectOption(optionKey) {
+      if (state.currentAnsweredCorrect) return;
+      const ch = CHALLENGES[state.currentIdx];
+
+      if (optionKey === ch.correctKey) {
+        // Trả lời ĐÚNG
+        SoundFX.correct();
+        triggerStarBurst();
+
+        state.currentAnsweredCorrect = true;
+        state.unlocked[ch.unlockPartId] = true;
+        state.completedCount = Math.max(state.completedCount, state.currentIdx + 1);
+
+        // Cộng 25 điểm nếu trả lời đúng ngay lần đầu tiên
+        if (!state.currentHadWrongAttempt) {
+          state.score += 25;
+        }
+        render();
+      } else {
+        // Trả lời SAI: phát âm thanh nhẹ, không trừ điểm, hiện gợi ý và cho phép trả lời lại
+        SoundFX.wrong();
+        state.currentHadWrongAttempt = true;
+        if (!state.wrongKeysTried.includes(optionKey)) {
+          state.wrongKeysTried.push(optionKey);
+        }
+        state.feedbackMessage = ch.hint;
+        render();
+      }
+    }
+
+    function nextChallenge() {
+      SoundFX.click();
+      if (state.currentIdx < CHALLENGES.length - 1) {
+        state.currentIdx += 1;
+        state.currentAnsweredCorrect = false;
+        state.currentHadWrongAttempt = false;
+        state.wrongKeysTried = [];
+        state.feedbackMessage = '';
+        render();
+      } else {
+        state.screen = 'complete';
+        render();
+        SoundFX.fanfare();
+        startConfetti();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToProblemScreen() {
+      SoundFX.click();
+      stopConfetti();
+      state.screen = 'problem';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goToRoadmapScreen() {
+      SoundFX.click();
+      state.screen = 'roadmap';
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restartGame() {
+      SoundFX.click();
+      stopConfetti();
+      state = {
+        screen: 'start',
+        groupName: state.groupName, // giữ lại tên nhóm tiện cho lớp chơi lại
+        currentIdx: 0,
+        score: 0,
+        completedCount: 0,
+        unlocked: {
+          barrier: false,
+          sensor: false,
+          controller: false,
+          servo: false
+        },
+        currentAnsweredCorrect: false,
+        currentHadWrongAttempt: false,
+        wrongKeysTried: [],
+        feedbackMessage: ''
+      };
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Khởi chạy ứng dụng khi tải xong trang
+    window.onload = function () {
+      render();
+    };
+  </script>
+</body>
+</html>
