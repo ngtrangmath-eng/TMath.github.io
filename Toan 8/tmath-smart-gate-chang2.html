@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMATH SMART GATE – Chặng 2: Truy tìm chìa khóa Toán học</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts hỗ trợ tiếng Việt sắc nét & kí hiệu toán học rõ ràng -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --tmath-blue: #0284c7;
+      --tmath-deep: #0f172a;
+      --tmath-teal: #0d9488;
+      --tmath-amber: #f59e0b;
+      --tmath-orange: #ea580c;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 15% 15%, #e0f2fe 0%, #f0fdfa 45%, #eff6ff 100%);
+      color: #0f172a;
+      min-height: 100vh;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    /* Nền lưới kỹ thuật STEM mờ nhẹ */
+    .stem-grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(2, 132, 199, 0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 132, 199, 0.06) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .math-font {
+      font-family: 'JetBrains Mono', 'Be Vietnam Pro', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Nút bấm 3D nổi bật cho trò chơi giáo dục */
+    .btn-3d {
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+      box-shadow: 0 5px 0 rgba(15, 23, 42, 0.22), 0 10px 20px rgba(2, 132, 199, 0.2);
+    }
+    .btn-3d:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow: 0 7px 0 rgba(15, 23, 42, 0.22), 0 14px 24px rgba(2, 132, 199, 0.28);
+    }
+    .btn-3d:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(15, 23, 42, 0.22), 0 4px 10px rgba(2, 132, 199, 0.18);
+    }
+    .btn-3d:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Thẻ kính 3D hiện đại */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border: 2px solid rgba(186, 230, 253, 0.9);
+      box-shadow: 0 12px 32px -8px rgba(14, 116, 144, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    /* Hoạt ảnh Robot TMath bay nhẹ */
+    @keyframes floatBot {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    .animate-bot {
+      animation: floatBot 3.2s ease-in-out infinite;
+    }
+
+    /* Hoạt ảnh mắt Robot chớp */
+    @keyframes blinkEye {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.12); }
+    }
+    .robot-eye {
+      transform-origin: center;
+      transform-box: fill-box;
+      animation: blinkEye 4s infinite;
+    }
+
+    /* Sóng siêu âm truyền đi & phản xạ */
+    @keyframes waveOut {
+      0% { transform: translateX(0) scale(0.75); opacity: 0; }
+      20% { opacity: 0.95; }
+      85% { opacity: 0.85; }
+      100% { transform: translateX(var(--wave-dist, 120px)) scale(1.15); opacity: 0; }
+    }
+    @keyframes waveBack {
+      0% { transform: translateX(var(--wave-dist, 120px)) scale(0.8); opacity: 0; }
+      20% { opacity: 0.95; }
+      85% { opacity: 0.85; }
+      100% { transform: translateX(0) scale(1.15); opacity: 0; }
+    }
+    .sonar-out {
+      animation: waveOut var(--wave-dur, 1.8s) linear infinite;
+    }
+    .sonar-back {
+      animation: waveBack var(--wave-dur, 1.8s) linear infinite;
+      animation-delay: calc(var(--wave-dur, 1.8s) / 2);
+    }
+
+    /* Hiệu ứng mở khóa mảnh ghép */
+    @keyframes popUnlock {
+      0% { transform: scale(0.6) rotate(-12deg); opacity: 0.2; }
+      60% { transform: scale(1.18) rotate(5deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .animate-unlock {
+      animation: popUnlock 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Hiệu ứng phát sáng hệ số a, b */
+    @keyframes glowBlue {
+      0%, 100% { box-shadow: 0 0 10px rgba(2, 132, 199, 0.5), 0 0 22px rgba(56, 189, 248, 0.45); }
+      50% { box-shadow: 0 0 18px rgba(2, 132, 199, 0.9), 0 0 34px rgba(56, 189, 248, 0.75); }
+    }
+    @keyframes glowAmber {
+      0%, 100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.5), 0 0 22px rgba(251, 146, 60, 0.45); }
+      50% { box-shadow: 0 0 18px rgba(245, 158, 11, 0.95), 0 0 34px rgba(251, 146, 60, 0.8); }
+    }
+    .glow-blue { animation: glowBlue 1.8s ease-in-out infinite; }
+    .glow-amber { animation: glowAmber 1.8s ease-in-out infinite; }
+
+    /* Hiệu ứng vẽ đường thẳng trên đồ thị */
+    @keyframes drawLine {
+      from { stroke-dashoffset: 320; }
+      to { stroke-dashoffset: 0; }
+    }
+    .animate-draw-line {
+      stroke-dasharray: 320;
+      stroke-dashoffset: 320;
+      animation: drawLine 1.1s ease-out forwards;
+    }
+
+    /* Hiệu ứng 5 mảnh ghép bay tụ về trung tâm */
+    @keyframes flyToCenter {
+      0% { transform: translate(var(--tx), var(--ty)) scale(0.75); opacity: 0.9; }
+      70% { transform: translate(0, 0) scale(1.1); opacity: 1; }
+      100% { transform: translate(0, 0) scale(0.2); opacity: 0; }
+    }
+    .fly-piece {
+      animation: flyToCenter 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes keyReveal {
+      0% { transform: scale(0.2) rotate(-18deg); opacity: 0; }
+      65% { transform: scale(1.12) rotate(4deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .key-reveal {
+      animation: keyReveal 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 1.05s both;
+    }
+
+    /* Hiệu ứng mở cửa phòng thí nghiệm */
+    @keyframes slideLeftDoor {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+    @keyframes slideRightDoor {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(100%); }
+    }
+    .door-left-open { animation: slideLeftDoor 1.25s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+    .door-right-open { animation: slideRightDoor 1.25s cubic-bezier(0.77, 0, 0.175, 1) forwards; }
+
+    /* Rung nhẹ khi trả lời sai */
+    @keyframes shakeWrong {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .shake-wrong { animation: shakeWrong 0.4s ease; }
+
+    /* Thẻ kéo thả */
+    .draggable-chip {
+      user-select: none;
+      touch-action: none;
+      cursor: grab;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .draggable-chip:active {
+      cursor: grabbing;
+      transform: scale(1.06);
+    }
+    .drop-zone-active {
+      border-color: #0284c7 !important;
+      background-color: #e0f2fe !important;
+      transform: scale(1.03);
+    }
+
+    /* Phân số toán học chuẩn đẹp */
+    .math-frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.05;
+      margin: 0 2px;
+    }
+    .math-frac .num {
+      border-bottom: 2px solid currentColor;
+      padding: 0 4px 1px;
+    }
+    .math-frac .den {
+      padding: 1px 4px 0;
+    }
+
+    /* Thanh cuộn gọn gàng */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; }
+  </style>
+</head>
+<body class="stem-grid-bg flex flex-col min-h-screen">
+
+  <!-- Canvas pháo giấy cho màn hình hoàn thành -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+
+  <!-- Hiệu ứng cửa phòng thí nghiệm mở ra -->
+  <div id="lab-door-overlay" class="fixed inset-0 z-50 hidden pointer-events-none overflow-hidden">
+    <div id="lab-door-left" class="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-br from-slate-900 via-sky-950 to-slate-800 border-r-4 border-amber-400 flex items-center justify-end pr-6 shadow-2xl">
+      <div class="text-right">
+        <div class="text-xs uppercase tracking-widest text-teal-300 font-bold">Smart Gate Lab</div>
+        <div class="text-2xl md:text-4xl font-black text-white">PHÒNG THÍ</div>
+      </div>
+    </div>
+    <div id="lab-door-right" class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-bl from-slate-900 via-sky-950 to-slate-800 border-l-4 border-amber-400 flex items-center justify-start pl-6 shadow-2xl">
+      <div class="text-left">
+        <div class="text-xs uppercase tracking-widest text-amber-300 font-bold">Mở khóa thành công</div>
+        <div class="text-2xl md:text-4xl font-black text-white">NGHIỆM</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thanh điều hướng & trạng thái trên cùng -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-2 border-sky-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+      <!-- Thương hiệu -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md border-2 border-white">
+          T
+        </div>
+        <div>
+          <div class="text-xs font-extrabold uppercase tracking-wider text-sky-600 leading-none">TMATH SMART GATE</div>
+          <div class="text-sm sm:text-base font-extrabold text-slate-800 leading-tight">Chặng 2: Truy tìm chìa khóa Toán học</div>
+        </div>
+      </div>
+
+      <nav aria-label="Điều hướng Smart Gate" class="flex items-center gap-2 flex-wrap text-xs sm:text-sm font-bold">
+        <a href="../index.html#toan8-stem" class="px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800">Về phần Toán 8</a>
+        <a href="tmath-smart-gate.html" class="px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800">Chặng 1</a>
+      </nav>
+
+      <!-- Tiến trình 5 mảnh ghép & Điểm số -->
+      <div class="flex items-center gap-2 sm:gap-4 flex-wrap">
+        <!-- Thanh tiến trình 0/5 -> 5/5 -->
+        <div class="flex items-center gap-2 bg-sky-50 border border-sky-200 rounded-xl px-3 py-1.5">
+          <span class="text-xs font-bold text-slate-600 hidden sm:inline">Tiến trình:</span>
+          <div id="header-pieces" class="flex items-center gap-1">
+            <!-- 5 biểu tượng mảnh ghép render bằng JS -->
+          </div>
+          <span id="progress-text" class="text-xs sm:text-sm font-black text-sky-700 ml-1">0/5</span>
+        </div>
+
+        <!-- Điểm số -->
+        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-300 rounded-xl px-3 py-1.5">
+          <span class="text-base">🏆</span>
+          <span id="score-display" class="text-sm sm:text-base font-black text-amber-700">0</span>
+          <span class="text-xs font-bold text-amber-600">/100</span>
+        </div>
+
+        <!-- Nút tiện ích: Âm thanh, Toàn màn hình, Làm lại -->
+        <div class="flex items-center gap-1.5">
+          <button id="btn-sound" onclick="toggleSound()" title="Bật / Tắt âm thanh"
+            class="p-2 rounded-xl bg-slate-100 hover:bg-sky-100 text-slate-700 border border-slate-200 transition text-sm font-bold flex items-center gap-1">
+            <span id="sound-icon">🔊</span>
+          </button>
+          <button id="btn-fullscreen" onclick="toggleFullscreen()" title="Toàn màn hình"
+            class="p-2 rounded-xl bg-slate-100 hover:bg-sky-100 text-slate-700 border border-slate-200 transition text-sm font-bold">
+            ⛶
+          </button>
+          <button id="btn-restart-top" onclick="confirmRestartModal()" title="Chơi lại từ đầu"
+            class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-amber-100 text-slate-700 border border-slate-200 transition text-xs sm:text-sm font-bold flex items-center gap-1">
+            <span>↺</span><span class="hidden md:inline">Làm lại</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thanh tiến độ dạng dải màu -->
+    <div class="w-full h-1.5 bg-slate-100">
+      <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-sky-500 via-teal-400 to-amber-400 transition-all duration-500" style="width: 0%;"></div>
+    </div>
+  </header>
+
+  <!-- Khu vực nội dung chính của trò chơi -->
+  <main id="game-stage" class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-5 py-4 sm:py-6 flex flex-col justify-center">
+    <!-- Nội dung từng màn chơi sẽ được render động tại đây -->
+  </main>
+
+  <!-- Hộp thoại xác nhận chơi lại (không dùng confirm()) -->
+  <div id="restart-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-sky-200 text-center">
+      <div class="text-4xl mb-2">🔄</div>
+      <h3 class="text-xl font-black text-slate-800 mb-2">Bắt đầu lại từ đầu?</h3>
+      <p class="text-sm text-slate-600 mb-5">Điểm số và tiến trình mở khóa 5 mảnh ghép hiện tại sẽ được đặt lại về 0.</p>
+      <div class="flex justify-center gap-3">
+        <button onclick="closeRestartModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">Hủy bỏ</button>
+        <button onclick="resetFullGame()" class="btn-3d px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold">Làm lại ngay</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chân trang bắt buộc -->
+  <footer class="bg-slate-900 text-sky-100 text-center py-3 px-4 text-xs sm:text-sm font-semibold tracking-wide border-t-2 border-sky-500/40">
+    TMATH – HỌC TOÁN QUA TRẢI NGHIỆM | STEM TOÁN 8 | 2026
+  </footer>
+
+  <script>
+    /* =========================================================================
+       1. HỆ THỐNG ÂM THANH (WEB AUDIO API – KHÔNG CẦN TÀI NGUYÊN NGOÀI)
+    ========================================================================= */
+    const SoundFX = (() => {
+      let ctx = null;
+      let enabled = true;
+
+      function init() {
+        if (!ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) ctx = new AudioCtx();
+        }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+      }
+
+      function playTone(freq, duration, type = 'sine', volume = 0.14, delay = 0) {
+        if (!enabled) return;
+        try {
+          init();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+          gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+          gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + delay + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + delay);
+          osc.stop(ctx.currentTime + delay + duration + 0.02);
+        } catch (e) { /* Bỏ qua lỗi trình duyệt chặn âm thanh */ }
+      }
+
+      return {
+        toggle() {
+          enabled = !enabled;
+          return enabled;
+        },
+        isEnabled() { return enabled; },
+        click() { playTone(560, 0.07, 'triangle', 0.08); },
+        drop() { playTone(680, 0.09, 'sine', 0.1); },
+        correct() {
+          playTone(523.25, 0.14, 'triangle', 0.15, 0);
+          playTone(659.25, 0.14, 'triangle', 0.15, 0.1);
+          playTone(783.99, 0.24, 'triangle', 0.16, 0.2);
+        },
+        wrong() {
+          playTone(230, 0.18, 'sawtooth', 0.1, 0);
+          playTone(185, 0.24, 'sawtooth', 0.1, 0.14);
+        },
+        unlock() {
+          playTone(523.25, 0.12, 'sine', 0.15, 0);
+          playTone(659.25, 0.12, 'sine', 0.15, 0.09);
+          playTone(783.99, 0.14, 'sine', 0.15, 0.18);
+          playTone(1046.5, 0.35, 'triangle', 0.18, 0.28);
+        },
+        fanfare() {
+          const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+          const delays = [0, 0.12, 0.24, 0.36, 0.54, 0.68];
+          notes.forEach((n, i) => playTone(n, i === 5 ? 0.5 : 0.18, 'triangle', 0.16, delays[i]));
+        }
+      };
+    })();
+
+    function toggleSound() {
+      const on = SoundFX.toggle();
+      document.getElementById('sound-icon').textContent = on ? '🔊' : '🔇';
+      if (on) SoundFX.click();
+    }
+
+    function toggleFullscreen() {
+      SoundFX.click();
+      try {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      } catch (e) { /* Không hỗ trợ trong một số iFrame */ }
+    }
+
+    function confirmRestartModal() {
+      SoundFX.click();
+      const modal = document.getElementById('restart-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeRestartModal() {
+      SoundFX.click();
+      const modal = document.getElementById('restart-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /* =========================================================================
+       2. QUẢN LÝ TRẠNG THÁI TRÒ CHƠI & TÍNH ĐIỂM CHUẨN
+    ========================================================================= */
+    const PIECE_META = [
+      { id: 1, title: 'Hàm số bậc nhất', short: 'y = ax + b', icon: '📐', color: 'from-sky-500 to-blue-600' },
+      { id: 2, title: 'Hệ số a, b', short: 'a ≠ 0', icon: '🔑', color: 'from-teal-500 to-emerald-600' },
+      { id: 3, title: 'Các đại lượng', short: 't & d', icon: '📡', color: 'from-cyan-500 to-sky-600' },
+      { id: 4, title: 'Đồ thị hàm số', short: 'Đường thẳng', icon: '📈', color: 'from-amber-500 to-orange-500' },
+      { id: 5, title: 'Mô hình hóa toán học', short: 'd = at + b', icon: '⚙️', color: 'from-indigo-500 to-sky-600' }
+    ];
+
+    let state = {};
+
+    function createInitialState() {
+      return {
+        screen: 'intro', // intro | c1 | c2 | c3 | c4 | c5 | complete | lab
+        score: 0,
+        unlockedPieces: [false, false, false, false, false],
+        // Theo dõi từng nhiệm vụ để chỉ cộng điểm khi đúng ngay lần đầu & không cộng lặp
+        taskStatus: {
+          c1: { solved: false, missed: false, awarded: false },
+          c2a: { solved: false, missed: false, awarded: false },
+          c2b: { solved: false, missed: false, awarded: false },
+          c3a: { solved: false, missed: false, awarded: false },
+          c3b: { solved: false, missed: false, awarded: false },
+          c4a: { solved: false, missed: false, awarded: false },
+          c4b: { solved: false, missed: false, awarded: false },
+          c5a: { solved: false, missed: false, awarded: false },
+          c5b: { solved: false, missed: false, awarded: false }
+        },
+        // Trạng thái riêng cho từng thử thách
+        c1Selected: null,
+        c2Slots: { a: null, b: null },
+        c2SelectedCard: null,
+        c2SubSelected: null,
+        c3Pairs: { t: null, d: null }, // 'ind' | 'dep'
+        c3ActiveLeft: null,
+        c3SubSelected: null,
+        c3CarMode: 'near', // 'near' | 'far'
+        c4SelectedGraph: null,
+        c4SubSelected: null,
+        c5Slots: [null, null, null, null, null, null],
+        c5SubSelected: null,
+        c5ShowKeyFusion: false
+      };
+    }
+
+    function awardTaskPoints(taskKey, maxPts) {
+      const t = state.taskStatus[taskKey];
+      if (!t.solved) {
+        t.solved = true;
+        if (!t.missed && !t.awarded) {
+          state.score += maxPts;
+          t.awarded = true;
+        }
+      }
+      updateHeaderUI();
+    }
+
+    function markTaskMissed(taskKey) {
+      const t = state.taskStatus[taskKey];
+      if (!t.solved) {
+        t.missed = true;
+      }
+    }
+
+    function unlockPiece(indexZeroBased) {
+      if (!state.unlockedPieces[indexZeroBased]) {
+        state.unlockedPieces[indexZeroBased] = true;
+        SoundFX.unlock();
+        updateHeaderUI();
+      }
+    }
+
+    function updateHeaderUI() {
+      const count = state.unlockedPieces.filter(Boolean).length;
+      document.getElementById('score-display').textContent = state.score;
+      document.getElementById('progress-text').textContent = `${count}/5`;
+      document.getElementById('progress-bar-fill').style.width = `${(count / 5) * 100}%`;
+
+      const piecesEl = document.getElementById('header-pieces');
+      piecesEl.innerHTML = PIECE_META.map((p, idx) => {
+        const unlocked = state.unlockedPieces[idx];
+        return `
+          <div title="Mảnh ghép ${p.id}: ${p.title}"
+            class="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black border transition-all ${
+              unlocked
+                ? 'bg-gradient-to-br ' + p.color + ' text-white border-white shadow-sm animate-unlock'
+                : 'bg-slate-200/80 text-slate-400 border-slate-300'
+            }">
+            ${unlocked ? p.icon : '🔒'}
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* =========================================================================
+       3. TÀI NGUYÊN SVG: ROBOT TMATH & MÔ HÌNH RÀO CHẮN TỰ ĐỘNG SMART GATE
+    ========================================================================= */
+    function renderRobotSVG(mood = 'happy', sizeClass = 'w-24 h-24 sm:w-28 sm:h-28') {
+      const mouthPath = mood === 'thinking'
+        ? 'M 43 53 Q 50 51 57 53'
+        : mood === 'oops'
+        ? 'M 44 55 Q 50 50 56 55'
+        : 'M 42 51 Q 50 58 58 51';
+
+      const eyeColor = mood === 'oops' ? '#fbbf24' : '#38bdf8';
+
+      return `
+        <svg viewBox="0 0 100 112" class="${sizeClass} animate-bot drop-shadow-md flex-shrink-0" aria-label="Robot TMath">
+          <defs>
+            <linearGradient id="botBodyGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="55%" stop-color="#e0f2fe"/>
+              <stop offset="100%" stop-color="#bae6fd"/>
+            </linearGradient>
+            <linearGradient id="botAccent" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#0d9488"/>
+            </linearGradient>
+            <linearGradient id="botOrange" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fbbf24"/>
+              <stop offset="100%" stop-color="#f97316"/>
+            </linearGradient>
+          </defs>
+          <!-- Ăng-ten -->
+          <line x1="50" y1="18" x2="50" y2="8" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round"/>
+          <circle cx="50" cy="6" r="4.5" fill="url(#botOrange)"/>
+          <!-- Tai -->
+          <rect x="14" y="34" width="8" height="18" rx="4" fill="url(#botAccent)"/>
+          <rect x="78" y="34" width="8" height="18" rx="4" fill="url(#botAccent)"/>
+          <!-- Đầu -->
+          <rect x="20" y="18" width="60" height="46" rx="18" fill="url(#botBodyGrad)" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Màn hình khuôn mặt -->
+          <rect x="27" y="26" width="46" height="32" rx="11" fill="#0f172a"/>
+          <!-- Mắt phát sáng -->
+          <g class="robot-eye">
+            <ellipse cx="40" cy="40" rx="5" ry="5.5" fill="${eyeColor}"/>
+            <circle cx="41.5" cy="38.5" r="1.6" fill="#ffffff"/>
+            <ellipse cx="60" cy="40" rx="5" ry="5.5" fill="${eyeColor}"/>
+            <circle cx="61.5" cy="38.5" r="1.6" fill="#ffffff"/>
+          </g>
+          <!-- Miệng -->
+          <path d="${mouthPath}" stroke="#38bdf8" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <!-- Cổ -->
+          <rect x="43" y="64" width="14" height="6" rx="2" fill="#0284c7"/>
+          <!-- Tay trái/phải -->
+          <path d="M 24 76 Q 11 82 14 93" stroke="url(#botAccent)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <path d="M 76 76 Q 89 82 86 93" stroke="url(#botAccent)" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <!-- Thân -->
+          <rect x="25" y="69" width="50" height="35" rx="13" fill="url(#botBodyGrad)" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Biểu tượng chữ T trên ngực -->
+          <circle cx="50" cy="86" r="12" fill="url(#botAccent)"/>
+          <text x="50" y="92" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900" font-family="Be Vietnam Pro, sans-serif">T</text>
+          <!-- Bóng đáy -->
+          <ellipse cx="50" cy="109" rx="22" ry="3" fill="rgba(2,132,199,0.2)"/>
+        </svg>
+      `;
+    }
+
+    /**
+     * Mô hình rào chắn tự động TMath Smart Gate đầy đủ cấu tạo:
+     * Đế gỗ, hai trụ đỡ hình thang, thanh chắn đỏ–trắng, trục quay, servo,
+     * cảm biến siêu âm, bộ điều khiển và xe ô tô mô hình.
+     */
+    function renderSmartGateSVG({ carMode = 'near', showWaves = true, showRuler = false, gateOpen = false } = {}) {
+      // Vị trí xe: gần (x=285) hoặc xa (x=390)
+      const carX = carMode === 'far' ? 385 : 275;
+      const waveDist = carMode === 'far' ? 195 : 88;
+      const waveDur = carMode === 'far' ? '2.4s' : '1.35s';
+      const armTransform = gateOpen ? 'rotate(-68 150 112)' : 'rotate(0 150 112)';
+
+      return `
+        <svg viewBox="0 0 540 250" class="w-full h-auto max-w-2xl mx-auto drop-shadow-sm select-none" aria-label="Mô hình rào chắn tự động TMath Smart Gate">
+          <defs>
+            <linearGradient id="woodBase" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e7c294"/>
+              <stop offset="50%" stop-color="#d4a373"/>
+              <stop offset="100%" stop-color="#b07d4f"/>
+            </linearGradient>
+            <linearGradient id="woodPillar" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f3d5b5"/>
+              <stop offset="100%" stop-color="#c6915e"/>
+            </linearGradient>
+            <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+            <linearGradient id="boardGreen" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0d9488"/>
+              <stop offset="100%" stop-color="#0f766e"/>
+            </linearGradient>
+            <pattern id="barrierStripes" width="24" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+              <rect width="12" height="14" fill="#ef4444"/>
+              <rect x="12" width="12" height="14" fill="#ffffff"/>
+            </pattern>
+          </defs>
+
+          <!-- Nền phòng thí nghiệm nhẹ -->
+          <rect x="6" y="6" width="528" height="238" rx="18" fill="#f8fafc" stroke="#bae6fd" stroke-width="2"/>
+          <!-- Mặt bàn / Đường chạy -->
+          <rect x="20" y="196" width="500" height="26" rx="6" fill="#e2e8f0"/>
+          <line x1="20" y1="196" x2="520" y2="196" stroke="#94a3b8" stroke-width="2"/>
+
+          <!-- Đế gỗ của mô hình rào chắn -->
+          <polygon points="40,196 235,196 225,180 50,180" fill="url(#woodBase)" stroke="#8c5a2b" stroke-width="2"/>
+          <rect x="40" y="196" width="195" height="10" rx="2" fill="#9c6644" stroke="#7f4f24" stroke-width="1.5"/>
+
+          <!-- Bộ điều khiển (Vi điều khiển) đặt trên đế gỗ -->
+          <g>
+            <rect x="56" y="156" width="52" height="24" rx="4" fill="url(#boardGreen)" stroke="#115e59" stroke-width="1.8"/>
+            <rect x="64" y="162" width="16" height="11" rx="2" fill="#1e293b"/>
+            <circle cx="90" cy="166" r="2.8" fill="#4ade80"/>
+            <circle cx="99" cy="166" r="2.8" fill="#fbbf24"/>
+            <text x="82" y="150" text-anchor="middle" font-size="9.5" font-weight="700" fill="#0f766e">Bộ điều khiển</text>
+            <!-- Dây nối -->
+            <path d="M 108 168 Q 124 168 128 145" stroke="#f97316" stroke-width="2" fill="none"/>
+            <path d="M 108 173 Q 150 178 184 166" stroke="#0284c7" stroke-width="2" fill="none"/>
+          </g>
+
+          <!-- Hai trụ đỡ hình thang -->
+          <polygon points="122,180 144,180 139,96 127,96" fill="url(#woodPillar)" stroke="#8c5a2b" stroke-width="2"/>
+          <polygon points="154,180 176,180 171,96 159,96" fill="url(#woodPillar)" stroke="#8c5a2b" stroke-width="2"/>
+
+          <!-- Động cơ Servo gắn trên trụ -->
+          <rect x="133" y="122" width="28" height="22" rx="4" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="1.8"/>
+          <text x="147" y="136" text-anchor="middle" font-size="8" font-weight="800" fill="#ffffff">SERVO</text>
+
+          <!-- Thanh chắn đỏ – trắng & trục quay -->
+          <g style="transition: transform 0.7s ease;" transform="${armTransform}">
+            <rect x="138" y="105" width="150" height="14" rx="5" fill="url(#barrierStripes)" stroke="#991b1b" stroke-width="1.8"/>
+            <!-- Trục quay -->
+            <circle cx="150" cy="112" r="9" fill="#f59e0b" stroke="#92400e" stroke-width="2"/>
+            <circle cx="150" cy="112" r="3.5" fill="#ffffff"/>
+          </g>
+
+          <!-- Cảm biến siêu âm (HC-SR04) hướng về phía xe -->
+          <g>
+            <rect x="182" y="148" width="14" height="32" rx="3" fill="#0284c7" stroke="#0369a1" stroke-width="1.8"/>
+            <rect x="196" y="153" width="8" height="9" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1.4"/>
+            <rect x="196" y="166" width="8" height="9" rx="2" fill="#cbd5e1" stroke="#475569" stroke-width="1.4"/>
+            <text x="192" y="142" text-anchor="middle" font-size="9.5" font-weight="700" fill="#0369a1">Cảm biến</text>
+          </g>
+
+          <!-- Hoạt ảnh sóng siêu âm truyền đi (xanh) và phản xạ lại (vàng cam) -->
+          ${showWaves ? `
+            <g style="--wave-dist: ${waveDist}px; --wave-dur: ${waveDur};">
+              <!-- Đường dẫn tia sóng mờ -->
+              <line x1="208" y1="164" x2="${carX - 4}" y2="164" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.6"/>
+              <!-- Sóng truyền đi -->
+              <path d="M 210 154 Q 218 164 210 174" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" class="sonar-out"/>
+              <path d="M 217 150 Q 227 164 217 178" stroke="#06b6d4" stroke-width="2.5" fill="none" stroke-linecap="round" class="sonar-out" style="animation-delay:0.25s;"/>
+              <!-- Sóng phản xạ trở lại -->
+              <path d="M 214 154 Q 206 164 214 174" stroke="#f59e0b" stroke-width="3" fill="none" stroke-linecap="round" class="sonar-back"/>
+              <path d="M 221 150 Q 211 164 221 178" stroke="#ea580c" stroke-width="2.5" fill="none" stroke-linecap="round" class="sonar-back" style="animation-delay: calc(${waveDur}/2 + 0.25s);"/>
+            </g>
+          ` : ''}
+
+          <!-- Nhãn khoảng cách d (không hiển thị số liệu cụ thể) -->
+          ${showWaves ? `
+            <g>
+              <line x1="206" y1="188" x2="${carX}" y2="188" stroke="#0f766e" stroke-width="2"/>
+              <polygon points="206,188 213,184 213,192" fill="#0f766e"/>
+              <polygon points="${carX},188 ${carX - 7},184 ${carX - 7},192" fill="#0f766e"/>
+              <rect x="${(206 + carX) / 2 - 26}" y="177" width="52" height="17" rx="6" fill="#ccfbf1" stroke="#0d9488" stroke-width="1.2"/>
+              <text x="${(206 + carX) / 2}" y="189" text-anchor="middle" font-size="10.5" font-weight="800" fill="#0f766e">d (cm)</text>
+            </g>
+          ` : ''}
+
+          <!-- Xe ô tô mô hình -->
+          <g style="transition: transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1);" transform="translate(${carX}, 145)">
+            <!-- Thân xe -->
+            <path d="M 10 22 L 22 4 L 72 4 L 88 22 L 104 26 L 104 42 L 4 42 L 4 26 Z" fill="url(#carBody)" stroke="#0369a1" stroke-width="2"/>
+            <!-- Cửa kính -->
+            <polygon points="26,9 46,9 46,21 17,21" fill="#e0f2fe"/>
+            <polygon points="51,9 69,9 80,21 51,21" fill="#e0f2fe"/>
+            <!-- Đèn pha -->
+            <rect x="4" y="27" width="6" height="7" rx="2" fill="#fde047"/>
+            <!-- Bánh xe -->
+            <circle cx="26" cy="43" r="10" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="26" cy="43" r="4" fill="#cbd5e1"/>
+            <circle cx="80" cy="43" r="10" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="80" cy="43" r="4" fill="#cbd5e1"/>
+            <text x="54" y="-3" text-anchor="middle" font-size="10" font-weight="800" fill="#0369a1">Xe ô tô mô hình</text>
+          </g>
+
+          <!-- Thước đo cm cho màn hình phòng thí nghiệm -->
+          ${showRuler ? `
+            <g transform="translate(204, 206)">
+              <rect x="0" y="0" width="280" height="22" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+              ${[0, 10, 20, 30, 40, 50].map((cm, i) => `
+                <line x1="${10 + i * 52}" y1="0" x2="${10 + i * 52}" y2="9" stroke="#92400e" stroke-width="1.5"/>
+                <text x="${10 + i * 52}" y="18" text-anchor="middle" font-size="9" font-weight="800" fill="#92400e">${cm}</text>
+              `).join('')}
+              <text x="274" y="18" text-anchor="end" font-size="8.5" font-weight="800" fill="#b45309">cm</text>
+            </g>
+          ` : ''}
+
+          <!-- Nhãn trạng thái thanh chắn -->
+          <g transform="translate(22, 18)">
+            <rect x="0" y="0" width="142" height="24" rx="12" fill="${gateOpen ? '#dcfce7' : '#fee2e2'}" stroke="${gateOpen ? '#16a34a' : '#ef4444'}" stroke-width="1.5"/>
+            <circle cx="14" cy="12" r="5" fill="${gateOpen ? '#16a34a' : '#ef4444'}"/>
+            <text x="25" y="16" font-size="10.5" font-weight="800" fill="${gateOpen ? '#15803d' : '#b91c1c'}">
+              ${gateOpen ? 'THANH CHẮN: MỞ' : 'THANH CHẮN: ĐÓNG'}
+            </text>
+          </g>
+        </svg>
+      `;
+    }
+
+    /* =========================================================================
+       4. HỆ TRỤC TỌA ĐỘ SVG CHÍNH XÁC CHO THỬ THÁCH 4
+       Phạm vi đồng nhất: x ∈ [-3, 3], y ∈ [-2, 4], tỉ lệ 1:1 chuẩn xác.
+    ========================================================================= */
+    function renderCoordinateGraphSVG(type, highlightSolution = false) {
+      // mapX: x từ -3..3 -> 30..210 (30px / đơn vị)
+      // mapY: y từ -2..4 -> 210..30 (30px / đơn vị)
+      const mapX = x => 30 + (x + 3) * 30;
+      const mapY = y => 210 - (y + 2) * 30;
+
+      // Lưới ô vuông
+      let gridLines = '';
+      for (let x = -3; x <= 3; x++) {
+        gridLines += `<line x1="${mapX(x)}" y1="30" x2="${mapX(x)}" y2="210" stroke="#e2e8f0" stroke-width="1"/>`;
+      }
+      for (let y = -2; y <= 4; y++) {
+        gridLines += `<line x1="30" y1="${mapY(y)}" x2="210" y2="${mapY(y)}" stroke="#e2e8f0" stroke-width="1"/>`;
+      }
+
+      // Vạch chia & số trên trục
+      let ticks = '';
+      [-2, -1, 1, 2].forEach(x => {
+        ticks += `<line x1="${mapX(x)}" y1="${mapY(0) - 3}" x2="${mapX(x)}" y2="${mapY(0) + 3}" stroke="#475569" stroke-width="1.5"/>`;
+        ticks += `<text x="${mapX(x)}" y="${mapY(0) + 15}" text-anchor="middle" font-size="10" font-weight="700" fill="#475569">${x < 0 ? '−' + Math.abs(x) : x}</text>`;
+      });
+      [-1, 1, 2, 3].forEach(y => {
+        ticks += `<line x1="${mapX(0) - 3}" y1="${mapY(y)}" x2="${mapX(0) + 3}" y2="${mapY(y)}" stroke="#475569" stroke-width="1.5"/>`;
+        ticks += `<text x="${mapX(0) - 10}" y="${mapY(y) + 3.5}" text-anchor="end" font-size="10" font-weight="700" fill="#475569">${y < 0 ? '−' + Math.abs(y) : y}</text>`;
+      });
+
+      // Vẽ đồ thị ứng với từng phương án
+      let graphPath = '';
+      if (type === 'A') {
+        // y = -2x + 1: (-1.5, 4) -> (1.5, -2)
+        graphPath = `<line x1="${mapX(-1.5)}" y1="${mapY(4)}" x2="${mapX(1.5)}" y2="${mapY(-2)}" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>`;
+      } else if (type === 'B') {
+        // y = 2x - 1: (-0.5, -2) -> (2.5, 4)
+        graphPath = `<line x1="${mapX(-0.5)}" y1="${mapY(-2)}" x2="${mapX(2.5)}" y2="${mapY(4)}" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>`;
+      } else if (type === 'C') {
+        // y = 2x + 1: (-1.5, -2) -> (1.5, 4)
+        graphPath = `<line x1="${mapX(-1.5)}" y1="${mapY(-2)}" x2="${mapX(1.5)}" y2="${mapY(4)}" stroke="${highlightSolution ? '#0d9488' : '#0284c7'}" stroke-width="3" stroke-linecap="round" class="${highlightSolution ? 'animate-draw-line' : ''}"/>`;
+      } else if (type === 'D') {
+        // Parabol y = x^2 + 1 từ x = -1.73 đến 1.73
+        const pts = [];
+        for (let x = -1.73; x <= 1.74; x += 0.1) {
+          const y = x * x + 1;
+          if (y <= 4.02) pts.push(`${mapX(x).toFixed(1)},${mapY(y).toFixed(1)}`);
+        }
+        graphPath = `<polyline points="${pts.join(' ')}" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+      }
+
+      // Khi trả lời đúng đáp án C: đánh dấu hai điểm (0; 1) và (1; 3) cùng đường gióng
+      const solutionMarkers = (type === 'C' && highlightSolution) ? `
+        <!-- Đường gióng cho điểm (1; 3) -->
+        <line x1="${mapX(1)}" y1="${mapY(0)}" x2="${mapX(1)}" y2="${mapY(3)}" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <line x1="${mapX(0)}" y1="${mapY(3)}" x2="${mapX(1)}" y2="${mapY(3)}" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <!-- Đoạn nối nhấn mạnh giữa (0; 1) và (1; 3) -->
+        <line x1="${mapX(0)}" y1="${mapY(1)}" x2="${mapX(1)}" y2="${mapY(3)}" stroke="#f97316" stroke-width="4.2" stroke-linecap="round" class="animate-draw-line"/>
+        <!-- Điểm (0; 1) -->
+        <circle cx="${mapX(0)}" cy="${mapY(1)}" r="5.5" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+        <rect x="${mapX(0) + 7}" y="${mapY(1) - 10}" width="38" height="17" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+        <text x="${mapX(0) + 26}" y="${mapY(1) + 2}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#c2410c">(0; 1)</text>
+        <!-- Điểm (1; 3) -->
+        <circle cx="${mapX(1)}" cy="${mapY(3)}" r="5.5" fill="#f97316" stroke="#ffffff" stroke-width="2"/>
+        <rect x="${mapX(1) + 7}" y="${mapY(3) - 10}" width="38" height="17" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1.2"/>
+        <text x="${mapX(1) + 26}" y="${mapY(3) + 2}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#c2410c">(1; 3)</text>
+      ` : '';
+
+      return `
+        <svg viewBox="0 0 240 240" class="w-full h-auto max-w-[230px] mx-auto bg-white rounded-xl border border-slate-200">
+          ${gridLines}
+          <!-- Trục Ox -->
+          <line x1="22" y1="${mapY(0)}" x2="222" y2="${mapY(0)}" stroke="#1e293b" stroke-width="2"/>
+          <polygon points="226,${mapY(0)} 218,${mapY(0) - 4} 218,${mapY(0) + 4}" fill="#1e293b"/>
+          <text x="224" y="${mapY(0) + 15}" font-size="11" font-weight="800" font-style="italic" fill="#0f172a">x</text>
+
+          <!-- Trục Oy -->
+          <line x1="${mapX(0)}" y1="218" x2="${mapX(0)}" y2="18" stroke="#1e293b" stroke-width="2"/>
+          <polygon points="${mapX(0)},14 ${mapX(0) - 4},22 ${mapX(0) + 4},22" fill="#1e293b"/>
+          <text x="${mapX(0) + 8}" y="22" font-size="11" font-weight="800" font-style="italic" fill="#0f172a">y</text>
+
+          <!-- Gốc tọa độ O -->
+          <text x="${mapX(0) - 11}" y="${mapY(0) + 14}" font-size="11" font-weight="800" font-style="italic" fill="#0f172a">O</text>
+
+          ${ticks}
+          ${graphPath}
+          ${solutionMarkers}
+        </svg>
+      `;
+    }
+
+    /* =========================================================================
+       5. KHUNG HỘI THOẠI ROBOT TMATH
+    ========================================================================= */
+    function renderRobotDialog(text, mood = 'happy', badgeText = 'Robot TMath') {
+      return `
+        <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 bg-gradient-to-r from-sky-50 via-white to-teal-50 border-2 border-sky-200 rounded-2xl p-3.5 sm:p-4 shadow-sm">
+          ${renderRobotSVG(mood, 'w-20 h-20 sm:w-24 sm:h-24')}
+          <div class="flex-1 text-center sm:text-left">
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-sky-600 text-white text-xs font-extrabold tracking-wide mb-1.5">${badgeText}</span>
+            <p class="text-slate-800 font-semibold text-sm sm:text-base leading-relaxed">${text}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       6. RENDER CÁC MÀN HÌNH TRÒ CHƠI
+    ========================================================================= */
+    function renderScreen() {
+      const stage = document.getElementById('game-stage');
+      updateHeaderUI();
+
+      switch (state.screen) {
+        case 'intro': renderIntro(stage); break;
+        case 'c1': renderChallenge1(stage); break;
+        case 'c2': renderChallenge2(stage); break;
+        case 'c3': renderChallenge3(stage); break;
+        case 'c4': renderChallenge4(stage); break;
+        case 'c5': renderChallenge5(stage); break;
+        case 'complete': renderComplete(stage); break;
+        case 'lab': renderLabScreen(stage); break;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* -------------------------------------------------------------------------
+       MÀN HÌNH MỞ ĐẦU
+    ------------------------------------------------------------------------- */
+    function renderIntro(stage) {
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-8 space-y-6">
+          <!-- Tiêu đề chính -->
+          <div class="text-center space-y-1.5">
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-sky-100 border border-sky-300 text-sky-800 text-xs sm:text-sm font-extrabold tracking-wider uppercase">
+              <span>🔬</span> TMATH SMART GATE – HOẠT ĐỘNG 2
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-700 via-teal-600 to-sky-700 tracking-tight">
+              THỬ THÁCH KỸ SƯ TOÁN HỌC
+            </h1>
+            <p class="text-base sm:text-xl font-extrabold text-amber-600 uppercase tracking-wide">
+              Chặng 2 – TRUY TÌM CHÌA KHÓA TOÁN HỌC
+            </p>
+          </div>
+
+          <!-- Bối cảnh mô hình + Robot TMath -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+            <div class="lg:col-span-7">
+              ${renderSmartGateSVG({ carMode: 'near', showWaves: true, gateOpen: false })}
+            </div>
+            <div class="lg:col-span-5 space-y-4">
+              ${renderRobotDialog(
+                '“Chúc mừng các kỹ sư nhí! Các em đã khám phá được cấu tạo của cổng thông minh. Tuy nhiên, hệ thống vẫn chưa biết cách chuyển dữ liệu thời gian phản hồi thành khoảng cách. Hãy vượt qua 5 thử thách Toán học để mở khóa phòng thí nghiệm Smart Gate!”',
+                'happy',
+                'Robot TMath hướng dẫn'
+              )}
+              <div class="text-center pt-1">
+                <button onclick="startChallenges()"
+                  class="btn-3d w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white font-black text-lg sm:text-xl tracking-wide flex items-center justify-center gap-2.5 mx-auto">
+                  <span>🚀</span> BẮT ĐẦU THỬ THÁCH
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 mảnh ghép chìa khóa đang bị khóa -->
+          <div class="bg-slate-50/90 border-2 border-slate-200 rounded-2xl p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-sm sm:text-base font-extrabold text-slate-700 flex items-center gap-2">
+                <span>🗝️</span> 5 Mảnh ghép của Chìa khóa Toán học (Đang khóa)
+              </h2>
+              <span class="text-xs font-bold text-slate-500">Hoàn thành 5 thử thách để mở khóa</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+              ${PIECE_META.map(p => `
+                <div class="rounded-xl bg-white border-2 border-dashed border-slate-300 p-3 text-center flex flex-col items-center justify-center gap-1 opacity-85">
+                  <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">🔒</div>
+                  <div class="text-xs font-black text-sky-700">Mảnh ghép ${p.id}</div>
+                  <div class="text-xs font-bold text-slate-600 leading-tight">${p.title}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function startChallenges() {
+      SoundFX.click();
+      state.screen = 'c1';
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       THỬ THÁCH 1: NHẬN DIỆN HÀM SỐ BẬC NHẤT (Trắc nghiệm – 20 điểm)
+    ------------------------------------------------------------------------- */
+    function renderChallenge1(stage) {
+      const solved = state.taskStatus.c1.solved;
+      const options = [
+        { id: 'A', html: 'y = 2x<sup>2</sup> + 1' },
+        { id: 'B', html: 'y = 3x &minus; 2' },
+        { id: 'C', html: 'y = 5' },
+        { id: 'D', html: 'y = <span class="math-frac"><span class="num">1</span><span class="den">x</span></span>' }
+      ];
+
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-5">
+          <!-- Tiêu đề thử thách -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-extrabold uppercase">Thử thách 1 / 5 • 20 điểm</span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-800 mt-1">NHẬN DIỆN HÀM SỐ BẬC NHẤT</h2>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl ${solved ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-500 border border-slate-200'} text-xs sm:text-sm font-extrabold">
+              ${solved ? '🔓 Đã mở Mảnh ghép 1' : '🔒 Mảnh ghép 1: Hàm số bậc nhất'}
+            </div>
+          </div>
+
+          ${renderRobotDialog(
+            solved
+              ? '“Tuyệt vời! Em đã tìm được dạng hàm số cần nghiên cứu.”'
+              : '“Trước mặt thầy trò mình là 4 màn hình điện tử hiển thị 4 công thức khác nhau. Em hãy chọn đúng màn hình chứa hàm số bậc nhất nhé!”',
+            solved ? 'happy' : 'thinking'
+          )}
+
+          <!-- Câu hỏi -->
+          <div class="bg-sky-50/80 border-2 border-sky-200 rounded-2xl p-4 text-center">
+            <p class="text-base sm:text-lg font-extrabold text-slate-800">
+              Trong các hàm số sau, hàm số nào là <span class="text-sky-700 underline decoration-amber-400 decoration-4 underline-offset-4">hàm số bậc nhất</span>?
+            </p>
+          </div>
+
+          <!-- 4 màn hình điện tử -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            ${options.map(opt => {
+              const isSelected = state.c1Selected === opt.id;
+              const isCorrect = opt.id === 'B';
+              let cardClass = 'bg-slate-900 border-sky-500/60 hover:border-amber-400 hover:-translate-y-1 text-white';
+              if (solved && isCorrect) {
+                cardClass = 'bg-gradient-to-br from-emerald-600 to-teal-700 border-emerald-300 text-white ring-4 ring-emerald-300/60';
+              } else if (isSelected && !isCorrect) {
+                cardClass = 'bg-rose-950 border-rose-400 text-rose-100 shake-wrong';
+              }
+              return `
+                <button onclick="selectC1('${opt.id}')" ${solved ? 'disabled' : ''}
+                  class="relative rounded-2xl border-4 p-5 transition-all shadow-lg flex items-center gap-4 text-left ${cardClass}">
+                  <div class="w-11 h-11 rounded-xl bg-white/15 border border-white/30 flex items-center justify-center font-black text-xl flex-shrink-0">
+                    ${opt.id}
+                  </div>
+                  <div class="flex-1 text-center math-font text-2xl sm:text-3xl font-extrabold tracking-wide">
+                    ${opt.html}
+                  </div>
+                  <div class="absolute top-2 right-3 flex gap-1">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  </div>
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Phản hồi & Công thức tổng quát -->
+          <div id="c1-feedback">
+            ${solved ? `
+              <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 sm:p-5 space-y-3 animate-unlock">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div>
+                    <div class="text-emerald-800 font-black text-base sm:text-lg">✅ Chính xác! Đáp án đúng là B.</div>
+                    <p class="text-slate-700 text-sm sm:text-base font-medium mt-1">
+                      <strong>Giải thích:</strong> Hàm số bậc nhất có dạng <strong class="math-font text-sky-800">y = ax + b</strong>, trong đó <em>a, b</em> là các số cho trước và <strong class="math-font text-sky-800">a &ne; 0</strong>.
+                    </p>
+                  </div>
+                  <div class="px-5 py-3 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-600 text-white math-font text-xl sm:text-2xl font-black shadow-md whitespace-nowrap glow-blue">
+                    y = ax + b &nbsp;(a &ne; 0)
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-end pt-3">
+                <button onclick="goToScreen('c2')" class="btn-3d px-7 py-3 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black text-base sm:text-lg">
+                  Tiếp tục sang Thử thách 2 →
+                </button>
+              </div>
+            ` : state.c1Selected ? `
+              <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 text-amber-900 font-semibold text-sm sm:text-base">
+                💡 <strong>Gợi ý từ Robot TMath:</strong> Chưa chính xác rồi! Em hãy nhớ hàm số bậc nhất có bậc của biến <em>x</em> bằng 1 và có dạng <span class="math-font font-bold">y = ax + b (a &ne; 0)</span>. Hãy thử chọn lại nhé!
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function selectC1(optId) {
+      if (state.taskStatus.c1.solved) return;
+      state.c1Selected = optId;
+      if (optId === 'B') {
+        SoundFX.correct();
+        awardTaskPoints('c1', 20);
+        unlockPiece(0);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c1');
+      }
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       THỬ THÁCH 2: TRUY TÌM HỆ SỐ BÍ ẨN (Kéo thả 10đ + Câu hỏi phụ 10đ)
+    ------------------------------------------------------------------------- */
+    function renderChallenge2(stage) {
+      const sA = state.taskStatus.c2a.solved;
+      const sB = state.taskStatus.c2b.solved;
+      const cards = ['4', '−3', '3', '−4'];
+      const usedValues = [state.c2Slots.a, state.c2Slots.b];
+
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-extrabold uppercase">Thử thách 2 / 5 • 20 điểm (10 + 10)</span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-800 mt-1">TRUY TÌM HỆ SỐ BÍ ẨN</h2>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl ${sB ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-500 border border-slate-200'} text-xs sm:text-sm font-extrabold">
+              ${sB ? '🔓 Đã mở Mảnh ghép 2' : '🔒 Mảnh ghép 2: Hệ số a, b'}
+            </div>
+          </div>
+
+          ${renderRobotDialog(
+            sB
+              ? '“Xuất sắc! Hệ số a = 4 phát sáng màu xanh dương và b = −3 phát sáng màu vàng cam. Mảnh ghép số 2 đã được mở khóa!”'
+              : sA
+              ? '“Đúng rồi! Em đã xác định chính xác a = 4 và b = −3. Bây giờ hãy trả lời câu hỏi phụ bên dưới để mở khóa mảnh ghép số 2 nhé!”'
+              : '“Hãy kéo thả (hoặc chạm chọn) các thẻ số vào đúng vị trí hệ số a và hệ số b của hàm số bậc nhất sau đây!”',
+            sB ? 'happy' : 'thinking'
+          )}
+
+          <!-- Hiển thị hàm số y = 4x - 3 -->
+          <div class="bg-slate-900 rounded-2xl p-5 text-center border-4 border-sky-400/50 shadow-inner">
+            <div class="text-xs uppercase tracking-widest text-sky-300 font-bold mb-1">Hàm số cần phân tích</div>
+            <div class="math-font text-3xl sm:text-5xl font-black text-white tracking-wider flex items-center justify-center gap-1.5">
+              <span>y =</span>
+              <span class="px-2.5 py-0.5 rounded-xl transition-all ${sB ? 'bg-sky-500 text-white glow-blue' : 'text-sky-300'}">4</span>
+              <span>x</span>
+              <span class="px-2.5 py-0.5 rounded-xl transition-all ${sB ? 'bg-amber-500 text-white glow-amber' : 'text-amber-300'}">&minus; 3</span>
+            </div>
+          </div>
+
+          <!-- Nhiệm vụ 2A: Kéo thả hệ số a, b -->
+          <div class="bg-sky-50/70 border-2 border-sky-200 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Nhiệm vụ 1: Kéo thả thẻ số vào ô hệ số a và b (10 điểm)</h3>
+              <span class="text-xs font-semibold text-sky-700">Mẹo: Kéo thả hoặc chạm vào thẻ rồi chạm vào ô trống</span>
+            </div>
+
+            <!-- 2 ô thả -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+              <!-- Ô a -->
+              <div onclick="placeC2ByTap('a')" data-drop="a"
+                ondragover="event.preventDefault(); this.classList.add('drop-zone-active')"
+                ondragleave="this.classList.remove('drop-zone-active')"
+                ondrop="handleC2Drop(event, 'a')"
+                class="rounded-2xl p-4 border-3 border-dashed transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                  sB ? 'bg-sky-600 text-white border-sky-300 glow-blue' :
+                  state.c2Slots.a ? 'bg-sky-100 border-sky-500 text-sky-900' : 'bg-white border-sky-300 text-slate-700 hover:bg-sky-50'
+                }">
+                <span class="font-extrabold text-base sm:text-lg">Hệ số <span class="math-font text-xl">a</span> =</span>
+                <div class="w-20 h-14 rounded-xl flex items-center justify-center math-font text-2xl font-black border-2 ${
+                  state.c2Slots.a ? 'bg-white text-sky-700 border-sky-400 shadow-sm' : 'bg-slate-100 text-slate-400 border-slate-200'
+                }">
+                  ${state.c2Slots.a || '...'}
+                </div>
+              </div>
+
+              <!-- Ô b -->
+              <div onclick="placeC2ByTap('b')" data-drop="b"
+                ondragover="event.preventDefault(); this.classList.add('drop-zone-active')"
+                ondragleave="this.classList.remove('drop-zone-active')"
+                ondrop="handleC2Drop(event, 'b')"
+                class="rounded-2xl p-4 border-3 border-dashed transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                  sB ? 'bg-amber-500 text-white border-amber-200 glow-amber' :
+                  state.c2Slots.b ? 'bg-amber-100 border-amber-500 text-amber-900' : 'bg-white border-amber-300 text-slate-700 hover:bg-amber-50'
+                }">
+                <span class="font-extrabold text-base sm:text-lg">Hệ số <span class="math-font text-xl">b</span> =</span>
+                <div class="w-20 h-14 rounded-xl flex items-center justify-center math-font text-2xl font-black border-2 ${
+                  state.c2Slots.b ? 'bg-white text-amber-700 border-amber-400 shadow-sm' : 'bg-slate-100 text-slate-400 border-slate-200'
+                }">
+                  ${state.c2Slots.b || '...'}
+                </div>
+              </div>
+            </div>
+
+            <!-- Kho thẻ kéo thả -->
+            ${!sA ? `
+              <div class="flex flex-wrap justify-center gap-3 pt-1">
+                ${cards.map(val => {
+                  const isUsed = usedValues.includes(val);
+                  const isPicked = state.c2SelectedCard === val;
+                  return `
+                    <button draggable="${!isUsed}"
+                      ondragstart="handleC2DragStart(event, '${val}')"
+                      onclick="pickC2Card('${val}')"
+                      ${isUsed ? 'disabled' : ''}
+                      class="draggable-chip math-font text-2xl font-black w-20 h-14 rounded-2xl border-2 shadow-md transition-all ${
+                        isUsed ? 'bg-slate-200 text-slate-400 border-slate-300 opacity-45 cursor-not-allowed' :
+                        isPicked ? 'bg-amber-500 text-white border-amber-700 scale-110 ring-4 ring-amber-200' :
+                        'bg-white hover:bg-sky-50 text-slate-800 border-sky-400'
+                      }">
+                      ${val}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="flex flex-wrap justify-center gap-3 pt-2">
+                <button onclick="resetC2Slots()" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold border-2 border-slate-300">
+                  ↺ Làm lại thẻ
+                </button>
+                <button onclick="checkC2A()" class="btn-3d px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black">
+                  ✓ Kiểm tra
+                </button>
+              </div>
+              <div id="c2a-msg"></div>
+            ` : `
+              <div class="text-center text-emerald-700 font-extrabold text-sm sm:text-base bg-emerald-50 border border-emerald-200 rounded-xl py-2 px-4">
+                ✅ Chính xác! Trong hàm số <span class="math-font">y = 4x − 3</span> có <span class="math-font text-sky-700">a = 4</span> và <span class="math-font text-amber-700">b = −3</span>.
+              </div>
+            `}
+          </div>
+
+          <!-- Nhiệm vụ 2B: Câu hỏi phụ -->
+          ${sA ? `
+            <div class="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-4 sm:p-5 space-y-3 animate-unlock">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Nhiệm vụ 2 (Câu hỏi phụ – 10 điểm): Vì sao hàm số trên là hàm số bậc nhất?</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${[
+                  { id: 'A', label: 'Vì b &ne; 0.' },
+                  { id: 'B', label: 'Vì a &ne; 0.' },
+                  { id: 'C', label: 'Vì a = b.' },
+                  { id: 'D', label: 'Vì x luôn dương.' }
+                ].map(o => {
+                  const sel = state.c2SubSelected === o.id;
+                  let cls = 'bg-white border-slate-200 hover:border-sky-400 text-slate-800';
+                  if (sB && o.id === 'B') cls = 'bg-emerald-600 border-emerald-700 text-white shadow-md';
+                  else if (sel && o.id !== 'B') cls = 'bg-rose-100 border-rose-400 text-rose-800 shake-wrong';
+                  return `
+                    <button onclick="selectC2Sub('${o.id}')" ${sB ? 'disabled' : ''}
+                      class="p-3.5 rounded-xl border-2 font-bold text-left flex items-center gap-3 transition ${cls}">
+                      <span class="w-8 h-8 rounded-lg bg-black/10 flex items-center justify-center font-black">${o.id}</span>
+                      <span class="text-sm sm:text-base">${o.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              ${sB ? `
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-3.5 text-emerald-900 text-sm sm:text-base font-medium">
+                  ✅ <strong>Chính xác!</strong> Điều kiện để <span class="math-font font-bold">y = ax + b</span> là hàm số bậc nhất là <span class="math-font font-bold">a &ne; 0</span>.
+                </div>
+                <div class="flex justify-end pt-2">
+                  <button onclick="goToScreen('c3')" class="btn-3d px-7 py-3 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black text-base sm:text-lg">
+                    Tiếp tục sang Thử thách 3 →
+                  </button>
+                </div>
+              ` : state.c2SubSelected ? `
+                <div class="bg-amber-100 border border-amber-300 rounded-xl p-3 text-amber-900 text-sm font-semibold">
+                  💡 <strong>Gợi ý:</strong> Nếu <em>a = 0</em> thì <em>y = b</em> trở thành hàm hằng, không còn là hàm số bậc nhất nữa. Vậy điều kiện quan trọng nhất là gì?
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function handleC2DragStart(e, val) {
+      e.dataTransfer.setData('text/plain', val);
+      state.c2SelectedCard = val;
+    }
+
+    function handleC2Drop(e, slot) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drop-zone-active');
+      if (state.taskStatus.c2a.solved) return;
+      const val = e.dataTransfer.getData('text/plain') || state.c2SelectedCard;
+      if (!val) return;
+      SoundFX.drop();
+      // Nếu thẻ đang ở ô kia thì gỡ ra
+      if (state.c2Slots.a === val) state.c2Slots.a = null;
+      if (state.c2Slots.b === val) state.c2Slots.b = null;
+      state.c2Slots[slot] = val;
+      state.c2SelectedCard = null;
+      renderScreen();
+    }
+
+    function pickC2Card(val) {
+      if (state.taskStatus.c2a.solved) return;
+      SoundFX.click();
+      state.c2SelectedCard = (state.c2SelectedCard === val) ? null : val;
+      renderScreen();
+    }
+
+    function placeC2ByTap(slot) {
+      if (state.taskStatus.c2a.solved) return;
+      if (state.c2SelectedCard) {
+        SoundFX.drop();
+        state.c2Slots[slot] = state.c2SelectedCard;
+        state.c2SelectedCard = null;
+        renderScreen();
+      } else if (state.c2Slots[slot]) {
+        // Chạm vào ô đã có thẻ để gỡ ra
+        SoundFX.click();
+        state.c2Slots[slot] = null;
+        renderScreen();
+      }
+    }
+
+    function resetC2Slots() {
+      SoundFX.click();
+      state.c2Slots = { a: null, b: null };
+      state.c2SelectedCard = null;
+      renderScreen();
+    }
+
+    function checkC2A() {
+      const msgEl = document.getElementById('c2a-msg');
+      if (!state.c2Slots.a || !state.c2Slots.b) {
+        SoundFX.wrong();
+        msgEl.innerHTML = `<div class="bg-amber-100 border border-amber-300 text-amber-900 rounded-xl p-3 text-sm font-bold text-center">⚠️ Em hãy đặt đủ cả 2 thẻ vào ô hệ số a và hệ số b trước khi kiểm tra nhé!</div>`;
+        return;
+      }
+      if (state.c2Slots.a === '4' && state.c2Slots.b === '−3') {
+        SoundFX.correct();
+        awardTaskPoints('c2a', 10);
+        renderScreen();
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c2a');
+        msgEl.innerHTML = `<div class="bg-rose-50 border-2 border-rose-300 text-rose-800 rounded-xl p-3 text-sm font-semibold text-center shake-wrong">💡 <strong>Gợi ý:</strong> Hãy viết <span class="math-font font-bold">y = 4x − 3</span> dưới dạng <span class="math-font font-bold">y = 4x + (−3)</span> để nhận ra đúng dấu của hệ số <em>b</em> nhé!</div>`;
+      }
+    }
+
+    function selectC2Sub(optId) {
+      if (state.taskStatus.c2b.solved) return;
+      state.c2SubSelected = optId;
+      if (optId === 'B') {
+        SoundFX.correct();
+        awardTaskPoints('c2b', 10);
+        unlockPiece(1);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c2b');
+      }
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       THỬ THÁCH 3: GIẢI MÃ CÁC ĐẠI LƯỢNG (Ghép nối 10đ + Câu hỏi 10đ)
+    ------------------------------------------------------------------------- */
+    function renderChallenge3(stage) {
+      const sA = state.taskStatus.c3a.solved;
+      const sB = state.taskStatus.c3b.solved;
+
+      const pairBadge = (val) => {
+        if (val === 'ind') return '<span class="px-2.5 py-0.5 rounded-full bg-sky-600 text-white text-xs font-extrabold">→ Biến độc lập</span>';
+        if (val === 'dep') return '<span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-xs font-extrabold">→ Biến phụ thuộc</span>';
+        return '<span class="px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-500 text-xs font-bold">Chưa ghép</span>';
+      };
+
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-cyan-100 text-cyan-800 text-xs font-extrabold uppercase">Thử thách 3 / 5 • 20 điểm (10 + 10)</span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-800 mt-1">GIẢI MÃ CÁC ĐẠI LƯỢNG</h2>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl ${sB ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-500 border border-slate-200'} text-xs sm:text-sm font-extrabold">
+              ${sB ? '🔓 Đã mở Mảnh ghép 3' : '🔒 Mảnh ghép 3: Các đại lượng'}
+            </div>
+          </div>
+
+          ${renderRobotDialog(
+            sB
+              ? '“Rất chuẩn xác! Em hãy thử bấm hai nút Xe ở gần / Xe ở xa bên dưới để quan sát trực quan đường truyền sóng siêu âm nhé!”'
+              : '“Bộ điều khiển nhận được dữ liệu thời gian phản hồi t và cần xác định khoảng cách d tương ứng. Em hãy xác định vai trò của từng đại lượng.”',
+            sB ? 'happy' : 'thinking'
+          )}
+
+          <!-- Mô phỏng mô hình rào chắn & sóng siêu âm -->
+          <div class="bg-white border-2 border-sky-100 rounded-2xl p-3 sm:p-4 space-y-3">
+            ${renderSmartGateSVG({ carMode: state.c3CarMode, showWaves: true, gateOpen: false })}
+
+            <!-- Thanh điều khiển minh họa vị trí xe (hiển thị nổi bật khi giải xong 3B hoặc để học sinh quan sát) -->
+            <div class="flex flex-wrap items-center justify-center gap-2.5">
+              <button onclick="setC3CarMode('near')"
+                class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm border-2 transition ${
+                  state.c3CarMode === 'near' ? 'bg-sky-600 text-white border-sky-700 shadow' : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-sky-50'
+                }">
+                🚗 Xe ở gần cảm biến (đường truyền ngắn)
+              </button>
+              <button onclick="setC3CarMode('far')"
+                class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm border-2 transition ${
+                  state.c3CarMode === 'far' ? 'bg-amber-500 text-white border-amber-600 shadow' : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-amber-50'
+                }">
+                🚙 Xe ở xa cảm biến (đường truyền dài)
+              </button>
+            </div>
+            <div class="text-center text-xs sm:text-sm font-semibold text-slate-600">
+              ${state.c3CarMode === 'near'
+                ? '📡 Xe ở gần: đường truyền sóng ngắn → thời gian phản hồi nhỏ hơn.'
+                : '📡 Xe ở xa: đường truyền sóng dài → thời gian phản hồi lớn hơn.'}
+            </div>
+          </div>
+
+          <!-- Nhiệm vụ 3A: Ghép nối t và d -->
+          <div class="bg-sky-50/70 border-2 border-sky-200 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Nhiệm vụ 1: Ghép nối mỗi đại lượng với vai trò tương ứng (10 điểm)</h3>
+              <span class="text-xs font-semibold text-sky-700">Chạm đại lượng bên trái, sau đó chạm vai trò bên phải</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Cột trái: Đại lượng -->
+              <div class="space-y-3">
+                <button onclick="selectC3Left('t')" ${sA ? 'disabled' : ''}
+                  class="w-full p-4 rounded-2xl border-2 text-left transition flex items-center justify-between gap-2 ${
+                    state.c3ActiveLeft === 't' ? 'bg-sky-100 border-sky-600 ring-4 ring-sky-200' : 'bg-white border-sky-200 hover:border-sky-400'
+                  }">
+                  <div>
+                    <div class="font-black text-sky-800 text-base sm:text-lg"><span class="math-font text-xl">t</span> – Thời gian phản hồi</div>
+                    <div class="text-xs text-slate-500 font-semibold">Thời gian phản hồi của sóng siêu âm, đơn vị µs</div>
+                  </div>
+                  ${pairBadge(state.c3Pairs.t)}
+                </button>
+
+                <button onclick="selectC3Left('d')" ${sA ? 'disabled' : ''}
+                  class="w-full p-4 rounded-2xl border-2 text-left transition flex items-center justify-between gap-2 ${
+                    state.c3ActiveLeft === 'd' ? 'bg-sky-100 border-sky-600 ring-4 ring-sky-200' : 'bg-white border-sky-200 hover:border-sky-400'
+                  }">
+                  <div>
+                    <div class="font-black text-teal-800 text-base sm:text-lg"><span class="math-font text-xl">d</span> – Khoảng cách đến xe</div>
+                    <div class="text-xs text-slate-500 font-semibold">Khoảng cách từ cảm biến đến xe, đơn vị cm</div>
+                  </div>
+                  ${pairBadge(state.c3Pairs.d)}
+                </button>
+              </div>
+
+              <!-- Cột phải: Vai trò -->
+              <div class="space-y-3 flex flex-col justify-center">
+                <button onclick="selectC3Right('ind')" ${sA ? 'disabled' : ''}
+                  class="w-full p-4 rounded-2xl border-2 text-left transition flex items-center justify-between ${
+                    state.c3ActiveLeft ? 'bg-white border-sky-400 hover:bg-sky-50 cursor-pointer shadow-sm' : 'bg-white/80 border-slate-200'
+                  }">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-black">x</span>
+                    <div>
+                      <div class="font-extrabold text-slate-800 text-base">Biến độc lập</div>
+                      <div class="text-xs text-slate-500 font-medium">Đại lượng đầu vào do cảm biến ghi nhận</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button onclick="selectC3Right('dep')" ${sA ? 'disabled' : ''}
+                  class="w-full p-4 rounded-2xl border-2 text-left transition flex items-center justify-between ${
+                    state.c3ActiveLeft ? 'bg-white border-amber-400 hover:bg-amber-50 cursor-pointer shadow-sm' : 'bg-white/80 border-slate-200'
+                  }">
+                  <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-black">y</span>
+                    <div>
+                      <div class="font-extrabold text-slate-800 text-base">Biến phụ thuộc</div>
+                      <div class="text-xs text-slate-500 font-medium">Đại lượng cần xác định tương ứng theo đầu vào</div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            ${!sA ? `
+              <div class="flex flex-wrap justify-center gap-3 pt-1">
+                <button onclick="resetC3Pairs()" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold border-2 border-slate-300">
+                  ↺ Làm lại ghép nối
+                </button>
+                <button onclick="checkC3A()" class="btn-3d px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black">
+                  ✓ Kiểm tra
+                </button>
+              </div>
+              <div id="c3a-msg"></div>
+            ` : `
+              <div class="text-center text-emerald-700 font-extrabold text-sm sm:text-base bg-emerald-50 border border-emerald-200 rounded-xl py-2.5 px-4">
+                ✅ Chính xác! <span class="math-font">t</span> → Biến độc lập; <span class="math-font">d</span> → Biến phụ thuộc.
+              </div>
+            `}
+          </div>
+
+          <!-- Nhiệm vụ 3B: Câu hỏi vật lí - toán học -->
+          ${sA ? `
+            <div class="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-4 sm:p-5 space-y-3 animate-unlock">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">
+                Nhiệm vụ 2 (10 điểm): Trong cùng điều kiện đo, khi xe ở xa cảm biến hơn thì thời gian phản hồi của sóng siêu âm thay đổi như thế nào?
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${[
+                  { id: 'A', label: 'Giảm.' },
+                  { id: 'B', label: 'Tăng.' },
+                  { id: 'C', label: 'Không thay đổi.' },
+                  { id: 'D', label: 'Luôn bằng 0.' }
+                ].map(o => {
+                  const sel = state.c3SubSelected === o.id;
+                  let cls = 'bg-white border-slate-200 hover:border-sky-400 text-slate-800';
+                  if (sB && o.id === 'B') cls = 'bg-emerald-600 border-emerald-700 text-white shadow-md';
+                  else if (sel && o.id !== 'B') cls = 'bg-rose-100 border-rose-400 text-rose-800 shake-wrong';
+                  return `
+                    <button onclick="selectC3Sub('${o.id}')" ${sB ? 'disabled' : ''}
+                      class="p-3.5 rounded-xl border-2 font-bold text-left flex items-center gap-3 transition ${cls}">
+                      <span class="w-8 h-8 rounded-lg bg-black/10 flex items-center justify-center font-black">${o.id}</span>
+                      <span class="text-sm sm:text-base">${o.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              ${sB ? `
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-3.5 text-emerald-900 text-sm sm:text-base font-medium">
+                  ✅ <strong>Chính xác!</strong> Trong cùng điều kiện truyền sóng, khi khoảng cách đến vật cản tăng thì thời gian sóng truyền đi và phản xạ trở lại cũng tăng.
+                </div>
+                <div class="flex justify-end pt-2">
+                  <button onclick="goToScreen('c4')" class="btn-3d px-7 py-3 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black text-base sm:text-lg">
+                    Tiếp tục sang Thử thách 4 →
+                  </button>
+                </div>
+              ` : state.c3SubSelected ? `
+                <div class="bg-amber-100 border border-amber-300 rounded-xl p-3 text-amber-900 text-sm font-semibold">
+                  💡 <strong>Gợi ý:</strong> Khi xe ở xa hơn, sóng siêu âm phải đi quãng đường dài hơn để chạm vào xe rồi quay trở lại cảm biến. Vậy thời gian đi và về sẽ tăng hay giảm?
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function setC3CarMode(mode) {
+      SoundFX.click();
+      state.c3CarMode = mode;
+      renderScreen();
+    }
+
+    function selectC3Left(key) {
+      if (state.taskStatus.c3a.solved) return;
+      SoundFX.click();
+      state.c3ActiveLeft = key;
+      renderScreen();
+    }
+
+    function selectC3Right(role) {
+      if (state.taskStatus.c3a.solved) return;
+      if (!state.c3ActiveLeft) {
+        // Tự chọn mục chưa ghép đầu tiên cho tiện thao tác
+        state.c3ActiveLeft = !state.c3Pairs.t ? 't' : 'd';
+      }
+      SoundFX.drop();
+      // Đảm bảo 1-1: nếu đại lượng kia đang giữ vai trò này thì gỡ ra
+      const other = state.c3ActiveLeft === 't' ? 'd' : 't';
+      if (state.c3Pairs[other] === role) state.c3Pairs[other] = null;
+      state.c3Pairs[state.c3ActiveLeft] = role;
+      state.c3ActiveLeft = null;
+      renderScreen();
+    }
+
+    function resetC3Pairs() {
+      SoundFX.click();
+      state.c3Pairs = { t: null, d: null };
+      state.c3ActiveLeft = null;
+      renderScreen();
+    }
+
+    function checkC3A() {
+      const msgEl = document.getElementById('c3a-msg');
+      if (!state.c3Pairs.t || !state.c3Pairs.d) {
+        SoundFX.wrong();
+        msgEl.innerHTML = `<div class="bg-amber-100 border border-amber-300 text-amber-900 rounded-xl p-3 text-sm font-bold text-center">⚠️ Em hãy ghép nối đủ cả hai đại lượng t và d trước khi kiểm tra nhé!</div>`;
+        return;
+      }
+      if (state.c3Pairs.t === 'ind' && state.c3Pairs.d === 'dep') {
+        SoundFX.correct();
+        awardTaskPoints('c3a', 10);
+        renderScreen();
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c3a');
+        msgEl.innerHTML = `<div class="bg-rose-50 border-2 border-rose-300 text-rose-800 rounded-xl p-3 text-sm font-semibold text-center shake-wrong">💡 <strong>Gợi ý:</strong> Bộ điều khiển nhận dữ liệu đầu vào là thời gian phản hồi <em>t</em>, từ đó tính ra khoảng cách <em>d</em> tương ứng. Vậy <em>t</em> là biến độc lập hay phụ thuộc?</div>`;
+      }
+    }
+
+    function selectC3Sub(optId) {
+      if (state.taskStatus.c3b.solved) return;
+      state.c3SubSelected = optId;
+      if (optId === 'B') {
+        SoundFX.correct();
+        state.c3CarMode = 'far'; // Tự chuyển sang minh họa xe ở xa để học sinh thấy ngay
+        awardTaskPoints('c3b', 10);
+        unlockPiece(2);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c3b');
+      }
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       THỬ THÁCH 4: GIẢI MÃ ĐỒ THỊ (Chọn đồ thị 10đ + Câu hỏi phụ 10đ)
+    ------------------------------------------------------------------------- */
+    function renderChallenge4(stage) {
+      const sA = state.taskStatus.c4a.solved;
+      const sB = state.taskStatus.c4b.solved;
+      const graphs = ['A', 'B', 'C', 'D'];
+
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold uppercase">Thử thách 4 / 5 • 20 điểm (10 + 10)</span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-800 mt-1">GIẢI MÃ ĐỒ THỊ</h2>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl ${sB ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-500 border border-slate-200'} text-xs sm:text-sm font-extrabold">
+              ${sB ? '🔓 Đã mở Mảnh ghép 4' : '🔒 Mảnh ghép 4: Đồ thị hàm số'}
+            </div>
+          </div>
+
+          ${renderRobotDialog(
+            sB
+              ? '“Tuyệt vời! Em đã nhận diện chính xác đồ thị hàm số bậc nhất và chiều biến thiên khi a > 0. Mảnh ghép số 4 đã mở!”'
+              : sA
+              ? '“Đúng rồi! Đồ thị hàm số y = 2x + 1 là đường thẳng đi qua hai điểm (0; 1) và (1; 3). Hãy trả lời thêm câu hỏi phụ bên dưới nhé!”'
+              : '“Quan sát 4 hệ trục tọa độ có cùng tỉ lệ bên dưới. Em hãy tìm đồ thị biểu diễn đúng hàm số y = 2x + 1!”',
+            sB ? 'happy' : 'thinking'
+          )}
+
+          <!-- Câu hỏi & Hàm số -->
+          <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 text-center">
+            <p class="text-base sm:text-lg font-extrabold text-slate-800">
+              Nhiệm vụ 1 (10 điểm): Đồ thị nào biểu diễn đúng hàm số
+              <span class="inline-block ml-1 px-3 py-1 rounded-xl bg-sky-700 text-white math-font text-lg sm:text-xl font-black">y = 2x + 1</span> ?
+            </p>
+          </div>
+
+          <!-- 4 đồ thị SVG chuẩn xác, không hiển thị công thức bên cạnh trước khi trả lời -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            ${graphs.map(g => {
+              const sel = state.c4SelectedGraph === g;
+              const isCorrect = g === 'C';
+              let boxCls = 'bg-white border-slate-200 hover:border-sky-400 hover:-translate-y-1';
+              if (sA && isCorrect) boxCls = 'bg-emerald-50 border-emerald-500 ring-4 ring-emerald-200';
+              else if (sel && !isCorrect) boxCls = 'bg-rose-50 border-rose-400 shake-wrong';
+
+              return `
+                <button onclick="selectC4Graph('${g}')" ${sA ? 'disabled' : ''}
+                  class="rounded-2xl border-3 p-3 transition-all shadow-sm flex flex-col items-center gap-2 ${boxCls}">
+                  <div class="w-full flex items-center justify-between px-1">
+                    <span class="w-8 h-8 rounded-lg ${sA && isCorrect ? 'bg-emerald-600 text-white' : 'bg-sky-100 text-sky-800'} font-black flex items-center justify-center">${g}</span>
+                    ${sA && isCorrect ? '<span class="text-xs font-extrabold text-emerald-700">✓ Đáp án đúng</span>' : ''}
+                  </div>
+                  ${renderCoordinateGraphSVG(g, sA && isCorrect)}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          ${sA ? `
+            <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4 text-emerald-900 text-sm sm:text-base font-medium animate-unlock">
+              ✅ <strong>Giải thích:</strong> Đồ thị của hàm số <span class="math-font font-bold">y = 2x + 1</span> là đường thẳng đi qua hai điểm <strong class="math-font text-orange-700">(0; 1)</strong> và <strong class="math-font text-orange-700">(1; 3)</strong>.
+            </div>
+          ` : state.c4SelectedGraph ? `
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-3.5 text-amber-900 text-sm font-semibold">
+              💡 <strong>Gợi ý:</strong> Hãy thử thay <em>x = 0</em> vào <span class="math-font font-bold">y = 2x + 1</span> để tìm giao điểm với trục Oy, sau đó thay <em>x = 1</em> để tìm thêm một điểm nữa trên đường thẳng nhé!
+            </div>
+          ` : ''}
+
+          <!-- Nhiệm vụ 4B: Câu hỏi phụ -->
+          ${sA ? `
+            <div class="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-4 sm:p-5 space-y-3 animate-unlock">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">
+                Nhiệm vụ 2 (Câu hỏi phụ – 10 điểm): Nếu hệ số <span class="math-font text-sky-800">a &gt; 0</span> thì khi <em>x</em> tăng, giá trị <em>y</em> thay đổi như thế nào?
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${[
+                  { id: 'A', label: 'Tăng.' },
+                  { id: 'B', label: 'Giảm.' },
+                  { id: 'C', label: 'Không đổi.' },
+                  { id: 'D', label: 'Luôn bằng 0.' }
+                ].map(o => {
+                  const sel = state.c4SubSelected === o.id;
+                  let cls = 'bg-white border-slate-200 hover:border-sky-400 text-slate-800';
+                  if (sB && o.id === 'A') cls = 'bg-emerald-600 border-emerald-700 text-white shadow-md';
+                  else if (sel && o.id !== 'A') cls = 'bg-rose-100 border-rose-400 text-rose-800 shake-wrong';
+                  return `
+                    <button onclick="selectC4Sub('${o.id}')" ${sB ? 'disabled' : ''}
+                      class="p-3.5 rounded-xl border-2 font-bold text-left flex items-center gap-3 transition ${cls}">
+                      <span class="w-8 h-8 rounded-lg bg-black/10 flex items-center justify-center font-black">${o.id}</span>
+                      <span class="text-sm sm:text-base">${o.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              ${sB ? `
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-3.5 text-emerald-900 text-sm sm:text-base font-medium">
+                  ✅ <strong>Chính xác!</strong> Với hàm số bậc nhất <span class="math-font font-bold">y = ax + b</span>, khi <span class="math-font font-bold">a &gt; 0</span> thì đường thẳng đi lên từ trái sang phải, tức là khi <em>x</em> tăng thì <em>y</em> cũng tăng.
+                </div>
+                <div class="flex justify-end pt-2">
+                  <button onclick="goToScreen('c5')" class="btn-3d px-7 py-3 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black text-base sm:text-lg">
+                    Tiếp tục sang Thử thách 5 →
+                  </button>
+                </div>
+              ` : state.c4SubSelected ? `
+                <div class="bg-amber-100 border border-amber-300 rounded-xl p-3 text-amber-900 text-sm font-semibold">
+                  💡 <strong>Gợi ý:</strong> Nhìn vào đồ thị <span class="math-font font-bold">y = 2x + 1</span> (có <em>a = 2 &gt; 0</em>) ở đáp án C: khi <em>x</em> tăng từ 0 lên 1 thì <em>y</em> thay đổi từ 1 lên 3!
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function selectC4Graph(g) {
+      if (state.taskStatus.c4a.solved) return;
+      state.c4SelectedGraph = g;
+      if (g === 'C') {
+        SoundFX.correct();
+        awardTaskPoints('c4a', 10);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c4a');
+      }
+      renderScreen();
+    }
+
+    function selectC4Sub(optId) {
+      if (state.taskStatus.c4b.solved) return;
+      state.c4SubSelected = optId;
+      if (optId === 'A') {
+        SoundFX.correct();
+        awardTaskPoints('c4b', 10);
+        unlockPiece(3);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c4b');
+      }
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       THỬ THÁCH 5: CHẾ TẠO CHÌA KHÓA TOÁN HỌC (Xây dựng công thức 10đ + Câu hỏi 10đ)
+    ------------------------------------------------------------------------- */
+    function renderChallenge5(stage) {
+      const sA = state.taskStatus.c5a.solved;
+      const sB = state.taskStatus.c5b.solved;
+      const allCards = ['d', 't', 'a', 'b', '=', '+', '−'];
+
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-7 space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-sky-100 pb-3">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-extrabold uppercase">Thử thách 5 / 5 • 20 điểm (10 + 10)</span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-800 mt-1">CHẾ TẠO CHÌA KHÓA TOÁN HỌC</h2>
+            </div>
+            <div class="px-3.5 py-1.5 rounded-xl ${sB ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-slate-100 text-slate-500 border border-slate-200'} text-xs sm:text-sm font-extrabold">
+              ${sB ? '🔓 Đã mở Mảnh ghép 5' : '🔒 Mảnh ghép 5: Mô hình hóa toán học'}
+            </div>
+          </div>
+
+          ${renderRobotDialog(
+            sB
+              ? '“Phi thường! Cả 5 mảnh ghép đã hội tụ tạo thành Chiếc Chìa khóa Toán học d = at + b!”'
+              : '“Các kỹ sư nhí hãy vận dụng kiến thức hàm số bậc nhất để đề xuất dạng công thức mô tả mối liên hệ giữa thời gian phản hồi và khoảng cách.”',
+            sB ? 'happy' : 'thinking'
+          )}
+
+          <!-- Bảng quy chiếu mô hình -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-slate-900 rounded-2xl p-4 text-center border-2 border-sky-500/60 flex flex-col justify-center">
+              <div class="text-xs uppercase tracking-widest text-sky-300 font-bold mb-1">Dạng tổng quát hàm số bậc nhất</div>
+              <div class="math-font text-3xl sm:text-4xl font-black text-white">y = ax + b</div>
+            </div>
+            <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-4 flex flex-col justify-center space-y-2 text-sm sm:text-base font-bold text-slate-800">
+              <div class="text-xs uppercase tracking-wider text-sky-700 font-extrabold">Tương ứng trong mô hình TMath Smart Gate:</div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg bg-sky-600 text-white math-font">x</span>
+                <span>→</span>
+                <span class="px-2.5 py-0.5 rounded-lg bg-teal-600 text-white math-font">t</span>
+                <span class="text-slate-600 font-semibold">– thời gian phản hồi</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg bg-amber-500 text-white math-font">y</span>
+                <span>→</span>
+                <span class="px-2.5 py-0.5 rounded-lg bg-orange-500 text-white math-font">d</span>
+                <span class="text-slate-600 font-semibold">– khoảng cách</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nhiệm vụ 5A: Kéo thả hoặc bấm chọn theo thứ tự tạo d = at + b -->
+          <div class="bg-sky-50/80 border-2 border-sky-200 rounded-2xl p-4 sm:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">Nhiệm vụ 1 (10 điểm): Sắp xếp các thẻ để tạo công thức tổng quát</h3>
+              <span class="text-xs font-semibold text-sky-700">Kéo thả vào ô hoặc bấm chọn thẻ theo thứ tự</span>
+            </div>
+
+            <!-- 6 ô công thức -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 py-2">
+              ${state.c5Slots.map((val, idx) => `
+                <button onclick="removeC5Slot(${idx})"
+                  ondragover="event.preventDefault(); this.classList.add('drop-zone-active')"
+                  ondragleave="this.classList.remove('drop-zone-active')"
+                  ondrop="handleC5Drop(event, ${idx})"
+                  ${sA ? 'disabled' : ''}
+                  class="w-12 h-14 sm:w-16 sm:h-16 rounded-2xl border-3 border-dashed math-font text-2xl sm:text-3xl font-black flex items-center justify-center transition-all ${
+                    sA ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white border-emerald-200 shadow-md' :
+                    val ? 'bg-white text-sky-800 border-sky-500 shadow hover:bg-rose-50' : 'bg-white/70 text-slate-300 border-sky-300'
+                  }">
+                  ${val || '?'}
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Các thẻ lựa chọn -->
+            ${!sA ? `
+              <div class="flex flex-wrap justify-center gap-2.5">
+                ${allCards.map(ch => {
+                  const used = state.c5Slots.includes(ch);
+                  return `
+                    <button draggable="${!used}"
+                      ondragstart="handleC5DragStart(event, '${ch}')"
+                      onclick="tapC5Card('${ch}')"
+                      ${used ? 'disabled' : ''}
+                      class="draggable-chip math-font text-2xl font-black w-14 h-14 rounded-2xl border-2 shadow-md transition ${
+                        used ? 'bg-slate-200 text-slate-400 border-slate-300 opacity-40 cursor-not-allowed' :
+                        'bg-white hover:bg-amber-50 text-slate-800 border-sky-400 hover:border-amber-500'
+                      }">
+                      ${ch}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="flex flex-wrap justify-center gap-3 pt-1">
+                <button onclick="resetC5Slots()" class="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold border-2 border-slate-300">
+                  ↺ Làm lại công thức
+                </button>
+                <button onclick="checkC5A()" class="btn-3d px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-black">
+                  ✓ Kiểm tra
+                </button>
+              </div>
+              <div id="c5a-msg"></div>
+            ` : `
+              <div class="text-center text-emerald-800 font-extrabold text-sm sm:text-base bg-emerald-50 border border-emerald-200 rounded-xl py-2.5 px-4">
+                ✅ Tuyệt vời! Dạng công thức mô tả mối liên hệ là <span class="math-font text-lg text-sky-800">d = at + b</span>.
+              </div>
+            `}
+          </div>
+
+          <!-- Nhiệm vụ 5B: Câu hỏi về phương pháp xác định a, b -->
+          ${sA ? `
+            <div class="bg-amber-50/70 border-2 border-amber-200 rounded-2xl p-4 sm:p-5 space-y-3 animate-unlock">
+              <h3 class="font-extrabold text-slate-800 text-sm sm:text-base">
+                Nhiệm vụ 2 (10 điểm): Để xác định giá trị cụ thể của <em>a</em> và <em>b</em> trong mô hình TMath Smart Gate, chúng ta cần làm gì?
+              </h3>
+              <div class="grid grid-cols-1 gap-2.5">
+                ${[
+                  { id: 'A', label: 'Chọn ngẫu nhiên hai số.' },
+                  { id: 'B', label: 'Sử dụng cùng một giá trị cho mọi mô hình mà không cần kiểm chứng.' },
+                  { id: 'C', label: 'Thay đổi màu sắc của thanh chắn.' },
+                  { id: 'D', label: 'Đo đạc, thu thập dữ liệu thời gian và khoảng cách, sau đó tính toán.' }
+                ].map(o => {
+                  const sel = state.c5SubSelected === o.id;
+                  let cls = 'bg-white border-slate-200 hover:border-sky-400 text-slate-800';
+                  if (sB && o.id === 'D') cls = 'bg-emerald-600 border-emerald-700 text-white shadow-md';
+                  else if (sel && o.id !== 'D') cls = 'bg-rose-100 border-rose-400 text-rose-800 shake-wrong';
+                  return `
+                    <button onclick="selectC5Sub('${o.id}')" ${sB ? 'disabled' : ''}
+                      class="p-3.5 rounded-xl border-2 font-bold text-left flex items-center gap-3 transition ${cls}">
+                      <span class="w-8 h-8 rounded-lg bg-black/10 flex items-center justify-center font-black flex-shrink-0">${o.id}</span>
+                      <span class="text-sm sm:text-base">${o.label}</span>
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              ${sB ? `
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-xl p-3.5 text-emerald-900 text-sm sm:text-base font-medium">
+                  ✅ <strong>Giải thích:</strong> Muốn xây dựng công thức phù hợp với mô hình thực tế, cần thu thập dữ liệu, xác định các hệ số và kiểm chứng kết quả.
+                </div>
+
+                <!-- Hoạt ảnh 5 mảnh ghép hợp nhất thành Chìa khóa Toán học d = at + b -->
+                <div class="relative bg-gradient-to-br from-slate-900 via-sky-950 to-teal-950 rounded-3xl p-6 text-center overflow-hidden border-2 border-amber-400/70 shadow-xl min-h-[210px] flex flex-col items-center justify-center">
+                  <!-- 5 mảnh bay vào tâm -->
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="fly-piece absolute text-2xl" style="--tx:-140px; --ty:-60px;">📐</div>
+                    <div class="fly-piece absolute text-2xl" style="--tx:140px; --ty:-60px;">🔑</div>
+                    <div class="fly-piece absolute text-2xl" style="--tx:-150px; --ty:55px;">📡</div>
+                    <div class="fly-piece absolute text-2xl" style="--tx:150px; --ty:55px;">📈</div>
+                    <div class="fly-piece absolute text-2xl" style="--tx:0px; --ty:-90px;">⚙️</div>
+                  </div>
+                  <!-- Chìa khóa phát sáng xuất hiện -->
+                  <div class="key-reveal space-y-2 z-10">
+                    <div class="text-xs uppercase tracking-widest text-amber-300 font-extrabold">5 Mảnh ghép đã hợp nhất!</div>
+                    <div class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-900 shadow-2xl border-4 border-white glow-amber">
+                      <span class="text-3xl">🗝️</span>
+                      <span class="math-font text-2xl sm:text-3xl font-black tracking-wide">d = at + b</span>
+                    </div>
+                    <div class="text-sky-200 text-xs sm:text-sm font-semibold">Chìa khóa Toán học đã sẵn sàng mở cửa phòng thí nghiệm!</div>
+                  </div>
+                </div>
+
+                <div class="flex justify-end pt-2">
+                  <button onclick="goToComplete()" class="btn-3d px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black text-base sm:text-lg">
+                    Nhận huy hiệu & Hoàn thành →
+                  </button>
+                </div>
+              ` : state.c5SubSelected ? `
+                <div class="bg-amber-100 border border-amber-300 rounded-xl p-3 text-amber-900 text-sm font-semibold">
+                  💡 <strong>Gợi ý:</strong> Trong khoa học kỹ thuật STEM, để tìm các hệ số phù hợp với thiết bị thực tế, ta cần tiến hành đo đạc và thu thập dữ liệu thực nghiệm!
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    let c5DraggedChar = null;
+    function handleC5DragStart(e, ch) {
+      c5DraggedChar = ch;
+      e.dataTransfer.setData('text/plain', ch);
+    }
+
+    function handleC5Drop(e, idx) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drop-zone-active');
+      if (state.taskStatus.c5a.solved) return;
+      const ch = e.dataTransfer.getData('text/plain') || c5DraggedChar;
+      if (!ch) return;
+      SoundFX.drop();
+      // Nếu kí tự đã nằm ở ô khác thì gỡ ra
+      const prevIdx = state.c5Slots.indexOf(ch);
+      if (prevIdx !== -1) state.c5Slots[prevIdx] = null;
+      state.c5Slots[idx] = ch;
+      c5DraggedChar = null;
+      renderScreen();
+    }
+
+    function tapC5Card(ch) {
+      if (state.taskStatus.c5a.solved) return;
+      const emptyIdx = state.c5Slots.indexOf(null);
+      if (emptyIdx === -1) return;
+      SoundFX.drop();
+      state.c5Slots[emptyIdx] = ch;
+      renderScreen();
+    }
+
+    function removeC5Slot(idx) {
+      if (state.taskStatus.c5a.solved) return;
+      if (state.c5Slots[idx] !== null) {
+        SoundFX.click();
+        state.c5Slots[idx] = null;
+        renderScreen();
+      }
+    }
+
+    function resetC5Slots() {
+      SoundFX.click();
+      state.c5Slots = [null, null, null, null, null, null];
+      renderScreen();
+    }
+
+    function checkC5A() {
+      const msgEl = document.getElementById('c5a-msg');
+      if (state.c5Slots.includes(null)) {
+        SoundFX.wrong();
+        msgEl.innerHTML = `<div class="bg-amber-100 border border-amber-300 text-amber-900 rounded-xl p-3 text-sm font-bold text-center">⚠️ Em hãy điền đủ cả 6 ô công thức trước khi kiểm tra nhé!</div>`;
+        return;
+      }
+      const formula = state.c5Slots.join('');
+      if (formula === 'd=at+b') {
+        SoundFX.correct();
+        awardTaskPoints('c5a', 10);
+        renderScreen();
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c5a');
+        msgEl.innerHTML = `<div class="bg-rose-50 border-2 border-rose-300 text-rose-800 rounded-xl p-3 text-sm font-semibold text-center shake-wrong">💡 <strong>Gợi ý:</strong> Từ dạng tổng quát <span class="math-font font-bold">y = ax + b</span>, hãy thay <em>y</em> bằng <em>d</em> và thay <em>x</em> bằng <em>t</em> nhé!</div>`;
+      }
+    }
+
+    function selectC5Sub(optId) {
+      if (state.taskStatus.c5b.solved) return;
+      state.c5SubSelected = optId;
+      if (optId === 'D') {
+        SoundFX.correct();
+        awardTaskPoints('c5b', 10);
+        unlockPiece(4);
+      } else {
+        SoundFX.wrong();
+        markTaskMissed('c5b');
+      }
+      renderScreen();
+    }
+
+    /* -------------------------------------------------------------------------
+       MÀN HÌNH HOÀN THÀNH (PHÁO GIẤY, HUY HIỆU, CHÌA KHÓA & a=?, b=?)
+    ------------------------------------------------------------------------- */
+    function goToComplete() {
+      SoundFX.fanfare();
+      state.screen = 'complete';
+      renderScreen();
+      launchConfetti();
+    }
+
+    function renderComplete(stage) {
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-8 space-y-6 text-center">
+          <!-- Tiêu đề chúc mừng -->
+          <div class="space-y-2">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 border-2 border-amber-300 text-amber-800 text-xs sm:text-sm font-black uppercase tracking-wider">
+              🏅 HUY HIỆU: KỸ SƯ TOÁN HỌC – TMATH SMART GATE
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-700 via-teal-600 to-amber-600">
+              CHÚC MỪNG CÁC KỸ SƯ NHÍ!
+            </h1>
+            <p class="text-lg sm:text-2xl font-black text-slate-800">ĐÃ TÌM ĐƯỢC CHÌA KHÓA TOÁN HỌC</p>
+          </div>
+
+          <!-- Chìa khóa & Màn hình máy tính a = ?, b = ? -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+            <!-- Thẻ thành tích & Chìa khóa -->
+            <div class="bg-gradient-to-br from-sky-50 to-teal-50 border-2 border-sky-200 rounded-2xl p-5 flex flex-col items-center justify-center gap-4">
+              <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-900 border-4 border-white shadow-xl glow-amber">
+                <span class="text-3xl">🗝️</span>
+                <span class="math-font text-2xl sm:text-3xl font-black">d = at + b</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 w-full max-w-xs">
+                <div class="bg-white rounded-xl p-3 border border-sky-200 shadow-sm">
+                  <div class="text-xs font-bold text-slate-500">Tổng điểm</div>
+                  <div class="text-2xl sm:text-3xl font-black text-amber-600">${state.score}<span class="text-sm text-slate-400">/100</span></div>
+                </div>
+                <div class="bg-white rounded-xl p-3 border border-sky-200 shadow-sm">
+                  <div class="text-xs font-bold text-slate-500">Hoàn thành</div>
+                  <div class="text-2xl sm:text-3xl font-black text-emerald-600">5/5</div>
+                </div>
+              </div>
+
+              <!-- 5 mảnh ghép đã thu thập -->
+              <div class="flex flex-wrap justify-center gap-2">
+                ${PIECE_META.map(p => `
+                  <span class="px-2.5 py-1 rounded-lg bg-white border border-emerald-300 text-emerald-800 text-xs font-extrabold shadow-xs">
+                    ${p.icon} ${p.title}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Màn hình máy tính hiển thị d = at + b, a = ?, b = ? -->
+            <div class="bg-slate-900 rounded-2xl p-6 border-4 border-sky-400/70 shadow-xl flex flex-col justify-center items-center text-left">
+              <div class="w-full flex items-center gap-1.5 mb-3 pb-2 border-b border-slate-700">
+                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-400"></span>
+                <span class="ml-2 text-xs font-mono text-sky-300 font-bold">TMATH_CONTROLLER.SYS</span>
+              </div>
+              <div class="math-font text-3xl sm:text-4xl font-black text-teal-300 mb-3">d = at + b</div>
+              <div class="flex gap-6 math-font text-2xl sm:text-3xl font-black">
+                <div class="px-4 py-2 rounded-xl bg-sky-900/80 border border-sky-400 text-sky-300">a = ?</div>
+                <div class="px-4 py-2 rounded-xl bg-amber-900/70 border border-amber-400 text-amber-300">b = ?</div>
+              </div>
+              <p class="text-xs text-slate-400 mt-4 font-semibold text-center">
+                Hệ thống đang chờ dữ liệu đo đạc thực nghiệm để xác định các hệ số a, b.
+              </p>
+            </div>
+          </div>
+
+          <!-- Robot TMath dẫn dắt sang phòng thí nghiệm -->
+          <div class="text-left">
+            ${renderRobotDialog(
+              '“Xuất sắc! Các em đã tìm được dạng công thức toán học cần nghiên cứu. Nhưng chúng ta vẫn chưa biết giá trị cụ thể của a và b. Làm thế nào để tìm được hai hệ số này? Hãy cùng bước vào phòng thí nghiệm Smart Gate!”',
+              'happy',
+              'Robot TMath'
+            )}
+          </div>
+
+          <!-- Nút chuyển giao nhiệm vụ phòng thí nghiệm -->
+          <div class="pt-2">
+            <button onclick="openLabWithDoors()"
+              class="btn-3d px-8 py-4 rounded-2xl bg-gradient-to-r from-sky-600 via-teal-500 to-emerald-500 text-white font-black text-base sm:text-xl tracking-wide inline-flex items-center gap-2.5">
+              <span>🚪</span> KHÁM PHÁ PHÒNG THÍ NGHIỆM SMART GATE
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function openLabWithDoors() {
+      SoundFX.unlock();
+      const overlay = document.getElementById('lab-door-overlay');
+      const left = document.getElementById('lab-door-left');
+      const right = document.getElementById('lab-door-right');
+
+      overlay.classList.remove('hidden');
+      left.classList.remove('door-left-open');
+      right.classList.remove('door-right-open');
+
+      // Chuyển nội dung bên dưới sang màn hình phòng thí nghiệm rồi mở cửa
+      state.screen = 'lab';
+      renderScreen();
+
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          left.classList.add('door-left-open');
+          right.classList.add('door-right-open');
+        }, 180);
+      });
+
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+      }, 1550);
+    }
+
+    /* -------------------------------------------------------------------------
+       MÀN HÌNH CHUYỂN GIAO NHIỆM VỤ PHÒNG THÍ NGHIỆM SMART GATE
+       (Không tự động tạo bảng kết quả hay cung cấp đáp án thực nghiệm)
+    ------------------------------------------------------------------------- */
+    function renderLabScreen(stage) {
+      stage.innerHTML = `
+        <div class="glass-card rounded-3xl p-5 sm:p-8 space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-sky-100 pb-4">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-extrabold uppercase">Chuyển giao nhiệm vụ thực nghiệm</span>
+              <h1 class="text-2xl sm:text-3xl font-black text-slate-800 mt-1">PHÒNG THÍ NGHIỆM SMART GATE</h1>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-slate-900 text-teal-300 math-font font-black text-sm sm:text-base border-2 border-sky-400">
+              d = at + b &nbsp;|&nbsp; a = ? &nbsp; b = ?
+            </div>
+          </div>
+
+          <!-- Khu vực mô hình, thước đo & bảng dữ liệu trống + hệ trục tọa độ trống -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <!-- Bên trái: Mô hình thực nghiệm có thước đo + Nhiệm vụ -->
+            <div class="lg:col-span-7 space-y-4">
+              <div class="bg-white border-2 border-sky-200 rounded-2xl p-3">
+                <div class="text-xs font-extrabold uppercase text-sky-700 mb-1.5 px-1">🔬 Bàn thí nghiệm: Mô hình Smart Gate, Xe mô hình, Cảm biến siêu âm & Thước đo</div>
+                ${renderSmartGateSVG({ carMode: 'near', showWaves: true, showRuler: true, gateOpen: false })}
+              </div>
+
+              <!-- Nhiệm vụ của kỹ sư nhí -->
+              <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl p-5 space-y-3">
+                <h2 class="text-lg sm:text-xl font-black text-amber-800 flex items-center gap-2">
+                  <span>📋</span> NHIỆM VỤ CỦA KỸ SƯ NHÍ
+                </h2>
+                <ol class="space-y-2 text-slate-800 font-semibold text-sm sm:text-base list-decimal list-inside">
+                  <li>Đặt xe tại các khoảng cách <strong>10 cm, 20 cm, 30 cm, 40 cm và 50 cm</strong>.</li>
+                  <li>Ghi lại <strong>thời gian phản hồi</strong> tương ứng.</li>
+                  <li>Xác định hệ số <strong class="math-font text-sky-700">a</strong> và <strong class="math-font text-amber-700">b</strong>.</li>
+                  <li>Xây dựng công thức thực nghiệm <strong class="math-font text-teal-700">d = at + b</strong>.</li>
+                  <li>Biểu diễn dữ liệu trên <strong>mặt phẳng tọa độ</strong>.</li>
+                  <li>Kiểm chứng công thức bằng <strong>một khoảng cách mới</strong>.</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Bên phải: Bảng thu thập dữ liệu trống & Hệ trục tọa độ trống -->
+            <div class="lg:col-span-5 space-y-4">
+              <!-- Bảng thu thập dữ liệu chưa có kết quả -->
+              <div class="bg-white border-2 border-sky-200 rounded-2xl p-4">
+                <h3 class="text-sm font-black text-slate-700 uppercase mb-2.5 flex items-center gap-1.5">
+                  <span>📊</span> Bảng thu thập dữ liệu thực nghiệm
+                </h3>
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm border-collapse text-center">
+                    <thead>
+                      <tr class="bg-sky-100 text-sky-900">
+                        <th class="border border-sky-200 py-2 px-2 font-extrabold">Lần đo</th>
+                        <th class="border border-sky-200 py-2 px-2 font-extrabold">Khoảng cách d (cm)</th>
+                        <th class="border border-sky-200 py-2 px-2 font-extrabold">Thời gian t (µs)</th>
+                      </tr>
+                    </thead>
+                    <tbody class="font-semibold text-slate-700">
+                      ${[10, 20, 30, 40, 50].map((d, i) => `
+                        <tr class="${i % 2 ? 'bg-slate-50' : 'bg-white'}">
+                          <td class="border border-slate-200 py-2">${i + 1}</td>
+                          <td class="border border-slate-200 py-2 math-font font-bold text-sky-700">${d}</td>
+                          <td class="border border-slate-200 py-2 text-slate-400 italic">...</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Hệ trục tọa độ chưa có dữ liệu -->
+              <div class="bg-white border-2 border-sky-200 rounded-2xl p-4">
+                <h3 class="text-sm font-black text-slate-700 uppercase mb-2 flex items-center gap-1.5">
+                  <span>📈</span> Mặt phẳng tọa độ Otd (Chưa có dữ liệu)
+                </h3>
+                <svg viewBox="0 0 260 175" class="w-full h-auto bg-slate-50 rounded-xl border border-slate-200">
+                  <!-- Lưới mờ -->
+                  ${[60, 95, 130, 165, 200, 235].map(x => `<line x1="${x}" y1="20" x2="${x}" y2="145" stroke="#e2e8f0" stroke-width="1"/>`).join('')}
+                  ${[35, 62.5, 90, 117.5].map(y => `<line x1="35" y1="${y}" x2="242" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`).join('')}
+                  <!-- Trục Ot -->
+                  <line x1="25" y1="145" x2="246" y2="145" stroke="#0f172a" stroke-width="2"/>
+                  <polygon points="250,145 242,141 242,149" fill="#0f172a"/>
+                  <text x="242" y="162" text-anchor="end" font-size="11" font-weight="800" fill="#0369a1">t (µs)</text>
+                  <!-- Trục Od -->
+                  <line x1="35" y1="155" x2="35" y2="14" stroke="#0f172a" stroke-width="2"/>
+                  <polygon points="35,10 31,18 39,18" fill="#0f172a"/>
+                  <text x="44" y="20" font-size="11" font-weight="800" fill="#0f766e">d (cm)</text>
+                  <!-- Gốc O -->
+                  <text x="23" y="159" font-size="11" font-weight="800" font-style="italic" fill="#0f172a">O</text>
+                  <!-- Nhãn gợi ý trống -->
+                  <text x="142" y="88" text-anchor="middle" font-size="11" font-weight="700" fill="#94a3b8">(Học sinh biểu diễn điểm đo tại đây)</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Điều hướng cuối -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-sky-100">
+            <button onclick="goToScreen('complete')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">
+              ← Xem lại huy hiệu & điểm số
+            </button>
+            <button onclick="confirmRestartModal()" class="btn-3d px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-black">
+              ↺ Chơi lại từ đầu
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       7. ĐIỀU HƯỚNG & HIỆU ỨNG PHÁO GIẤY (CANVAS CONFETTI)
+    ========================================================================= */
+    function goToScreen(scr) {
+      SoundFX.click();
+      state.screen = scr;
+      renderScreen();
+    }
+
+    function resetFullGame() {
+      closeRestartModal();
+      state = createInitialState();
+      renderScreen();
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.classList.remove('hidden');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#0284c7', '#14b8a6', '#f59e0b', '#f97316', '#38bdf8', '#10b981'];
+      const particles = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height * 0.6,
+        w: 7 + Math.random() * 6,
+        h: 5 + Math.random() * 5,
+        vx: (Math.random() - 0.5) * 3.5,
+        vy: 2.5 + Math.random() * 4.5,
+        rot: Math.random() * Math.PI * 2,
+        vrot: (Math.random() - 0.5) * 0.18,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      }));
+
+      let frames = 0;
+      function loop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vrot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        frames++;
+        if (frames < 190) {
+          requestAnimationFrame(loop);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.classList.add('hidden');
+        }
+      }
+      requestAnimationFrame(loop);
+    }
+
+    /* =========================================================================
+       8. KHỞI CHẠY ỨNG DỤNG
+    ========================================================================= */
+    window.onload = function () {
+      state = createInitialState();
+      renderScreen();
+    };
+  </script>
+</body>
+</html>
