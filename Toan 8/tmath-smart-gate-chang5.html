@@ -1,0 +1,3300 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMATH SMART GATE – Điều Hành Trạm Thu Phí Thông Minh</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Be Vietnam Pro & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            tmath: {
+              dark: '#071326',
+              navy: '#0d2244',
+              blue: '#1d4ed8',
+              cyan: '#06b6d4',
+              teal: '#14b8a6',
+              amber: '#f59e0b',
+              orange: '#f97316',
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: radial-gradient(circle at top left, #0f274d, #071326 65%, #040b18);
+      color: #f8fafc;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Custom Glass & Game Card Styles */
+    .glass-panel {
+      background: rgba(13, 34, 68, 0.78);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-panel-alert {
+      background: rgba(69, 10, 10, 0.82);
+      border: 1px solid rgba(248, 113, 113, 0.65);
+      box-shadow: 0 0 28px rgba(239, 68, 68, 0.35);
+    }
+
+    .glass-panel-success {
+      background: rgba(6, 78, 59, 0.82);
+      border: 1px solid rgba(52, 211, 153, 0.65);
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.35);
+    }
+
+    .game-btn {
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .game-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+    .game-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+    }
+    .game-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Robot float animation */
+    @keyframes floatBot {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatBot 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 12px rgba(6, 182, 212, 0.45); }
+      50% { box-shadow: 0 0 26px rgba(6, 182, 212, 0.9); }
+    }
+    .pulse-glow {
+      animation: pulseGlow 2.2s infinite;
+    }
+
+    @keyframes badgeMerge {
+      0% { transform: scale(0.7) rotate(-12deg); opacity: 0; }
+      60% { transform: scale(1.12) rotate(4deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    .badge-pop {
+      animation: badgeMerge 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.45); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.75); }
+
+    /* Print styling for report */
+    @media print {
+      body { background: #ffffff !important; color: #0f172a !important; }
+      .no-print { display: none !important; }
+      #print-report-area { display: block !important; color: #0f172a !important; background: #ffffff !important; border: none !important; box-shadow: none !important; }
+      #print-report-area * { color: #0f172a !important; border-color: #cbd5e1 !important; }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen selection:bg-cyan-500 selection:text-white">
+  <nav aria-label="Điều hướng Smart Gate" style="position:relative;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:10px 16px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;color:#075985"><a href="../index.html#toan8-stem" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Về phần Toán 8</a><a href="tmath-smart-gate-chang4.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">← Chặng 4</a></nav>
+
+
+  <!-- =====================================================================
+       TOAST / MESSAGE NOTIFICATION (NEVER USES alert() OR confirm())
+       ===================================================================== -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none max-w-sm"></div>
+
+  <!-- =====================================================================
+       CONFETTI CANVAS OVERLAY
+       ===================================================================== -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-40 hidden"></canvas>
+
+  <!-- =====================================================================
+       TOP NAVIGATION / HUD BAR (VISIBLE DURING GAMEPLAY & VICTORY)
+       ===================================================================== -->
+  <header id="top-hud" class="hidden no-print sticky top-0 z-30 glass-panel border-b border-cyan-400/20 px-3 sm:px-5 py-2.5">
+    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-2">
+      <!-- Brand + Player -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center font-black text-white text-lg shadow-lg border border-white/25">
+          T
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-extrabold text-sm sm:text-base tracking-wide text-white leading-tight">TMATH SMART GATE</h1>
+            <span id="hud-level-pill" class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/40">Level 1</span>
+          </div>
+          <p class="text-xs text-slate-300">Kỹ sư: <span id="hud-player-name" class="font-bold text-amber-300">---</span></p>
+        </div>
+      </div>
+
+      <!-- Core Stats -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/70 border border-amber-400/35">
+          <span class="text-amber-400 text-sm">★</span>
+          <span class="text-xs text-slate-300 hidden sm:inline">Điểm:</span>
+          <span id="hud-score" class="font-mono font-bold text-amber-300 text-sm">0/100</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/70 border border-emerald-400/35">
+          <span class="text-emerald-400 text-sm">🚗</span>
+          <span class="text-xs text-slate-300 hidden sm:inline">An toàn:</span>
+          <span id="hud-safe-cars" class="font-mono font-bold text-emerald-300 text-sm">0</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/70 border border-cyan-400/35" title="Huy hiệu đã thu thập">
+          <span class="text-cyan-300 text-sm">🏅</span>
+          <span id="hud-badges-count" class="font-mono font-bold text-cyan-200 text-sm">0/5</span>
+        </div>
+      </div>
+
+      <!-- System Controls -->
+      <div class="flex items-center gap-1.5">
+        <button id="btn-principle" onclick="openPrincipleModal()" class="game-btn px-2.5 py-1.5 rounded-xl bg-indigo-600/80 hover:bg-indigo-500 text-xs font-bold text-white border border-indigo-300/30" title="Xem nguyên lí TMath Smart Gate">
+          📐 <span class="hidden md:inline">Nguyên lí</span>
+        </button>
+        <button id="btn-pause" onclick="togglePause()" class="game-btn px-2.5 py-1.5 rounded-xl bg-slate-700/90 hover:bg-slate-600 text-xs font-bold text-white border border-white/15" title="Tạm dừng / Tiếp tục">
+          ⏸ <span class="hidden lg:inline">Tạm dừng</span>
+        </button>
+        <button id="btn-sound" onclick="toggleSound()" class="game-btn px-2.5 py-1.5 rounded-xl bg-slate-700/90 hover:bg-slate-600 text-xs font-bold text-white border border-white/15" title="Bật / Tắt âm thanh">
+          🔊
+        </button>
+        <button id="btn-fullscreen" onclick="toggleFullscreen()" class="game-btn px-2.5 py-1.5 rounded-xl bg-slate-700/90 hover:bg-slate-600 text-xs font-bold text-white border border-white/15" title="Toàn màn hình">
+          ⛶
+        </button>
+        <button id="btn-restart-hud" onclick="openRestartConfirm()" class="game-btn px-2.5 py-1.5 rounded-xl bg-rose-600/80 hover:bg-rose-500 text-xs font-bold text-white border border-rose-300/30" title="Chơi lại từ đầu">
+          ↺
+        </button>
+      </div>
+    </div>
+
+    <!-- Level Selector Progress Bar -->
+    <div class="max-w-[1440px] mx-auto mt-2 flex items-center gap-1.5 overflow-x-auto pb-0.5" id="level-nav-bar">
+      <!-- Dynamically populated -->
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN APPLICATION CONTAINER
+       ===================================================================== -->
+  <main class="flex-1 w-full max-w-[1440px] mx-auto px-3 sm:px-5 py-4 flex flex-col">
+
+    <!-- ===================================================================
+         SCREEN 1: OPENING / WELCOME SCREEN
+         =================================================================== -->
+    <section id="screen-start" class="flex-1 flex flex-col justify-center items-center py-2 sm:py-4">
+      <div class="w-full glass-panel rounded-3xl overflow-hidden border border-cyan-400/35 shadow-2xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <!-- Left: Hero & Interactive 3D Preview -->
+          <div class="lg:col-span-7 relative p-5 sm:p-8 flex flex-col justify-between bg-gradient-to-br from-blue-950/90 via-slate-900/85 to-cyan-950/75">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-bold mb-3">
+                <span>CHẶNG 5 • STEM TOÁN 8</span>
+                <span>•</span>
+                <span>HÀM SỐ BẬC NHẤT</span>
+              </div>
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-amber-300 leading-tight">
+                TMATH SMART GATE
+              </h1>
+              <h2 class="text-lg sm:text-2xl font-extrabold text-cyan-300 mt-1">
+                ĐIỀU HÀNH TRẠM THU PHÍ THÔNG MINH
+              </h2>
+              <p class="text-sm sm:text-base font-bold text-amber-400 tracking-wider uppercase mt-0.5">
+                KỸ SƯ LÀM CHỦ CÔNG NGHỆ
+              </p>
+            </div>
+
+            <!-- Live 3D Isometric Preview Canvas on Opening Screen -->
+            <div class="relative my-5 rounded-2xl overflow-hidden border border-cyan-400/30 bg-slate-950/80 h-56 sm:h-64 shadow-inner">
+              <canvas id="intro-canvas" class="w-full h-full block"></canvas>
+              <div class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-900/80 border border-amber-400/40 text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                HỆ THỐNG ĐANG CẦN KỸ SƯ HIỆU CHỈNH
+              </div>
+            </div>
+
+            <!-- Robot TMath Dialogue -->
+            <div class="flex items-start gap-3 sm:gap-4 p-4 rounded-2xl bg-slate-900/75 border border-cyan-400/30">
+              <div class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float" id="intro-robot-slot"></div>
+              <div class="text-xs sm:text-sm text-slate-200 leading-relaxed">
+                <div class="font-extrabold text-cyan-300 mb-1 flex items-center gap-1.5">
+                  <span>Robot TMath</span>
+                  <span class="px-1.5 py-0.5 text-[10px] rounded bg-cyan-500/20 text-cyan-200">Trợ lý AI STEM</span>
+                </div>
+                “Chúc mừng! Các em đã hoàn thành hành trình thiết kế, chế tạo và lập trình cổng thông minh. Hôm nay, các em sẽ chính thức trở thành kỹ sư điều hành trạm thu phí TMath. Hãy sử dụng kiến thức Toán học để giúp các phương tiện đi qua an toàn, chính xác và hiệu quả!”
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Player Input & 5 Levels Roadmap -->
+          <div class="lg:col-span-5 p-5 sm:p-8 flex flex-col justify-between bg-slate-950/60 border-t lg:border-t-0 lg:border-l border-cyan-400/20">
+            <div>
+              <label for="player-name-input" class="block text-xs font-bold uppercase tracking-wider text-cyan-300 mb-2">
+                Nhập tên học sinh hoặc tên nhóm kỹ sư
+              </label>
+              <input
+                id="player-name-input"
+                type="text"
+                maxlength="40"
+                placeholder="Ví dụ: Nhóm Kỹ Sư 8A1 hoặc Minh Anh..."
+                class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border-2 border-cyan-500/40 focus:border-amber-400 focus:outline-none text-white font-semibold placeholder-slate-400 text-sm sm:text-base transition"
+              />
+              <p class="text-[11px] text-slate-400 mt-1.5">Chỉ dùng tên hiển thị trên chứng nhận &amp; báo cáo (lưu cục bộ trên trình duyệt).</p>
+
+              <!-- 5 Levels Preview -->
+              <div class="mt-5">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2.5">Lộ trình 5 cấp độ vận hành (100 điểm)</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+                    <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-300 font-black flex items-center justify-center text-sm shrink-0">L1</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs sm:text-sm font-bold text-white">Level 1: Tính toán chính xác</p>
+                      <p class="text-[11px] text-slate-400 truncate">Tính khoảng cách d = 0,017t + 0,5 từ cảm biến</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-amber-300 font-bold">20đ</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+                    <span class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-300 font-black flex items-center justify-center text-sm shrink-0">L2</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs sm:text-sm font-bold text-white">Level 2: Điều khiển rào chắn</p>
+                      <p class="text-[11px] text-slate-400 truncate">Quyết định mở/chờ theo ngưỡng d ≤ 20 cm</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-amber-300 font-bold">20đ</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+                    <span class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300 font-black flex items-center justify-center text-sm shrink-0">L3</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs sm:text-sm font-bold text-white">Level 3: Hiệu chỉnh cảm biến</p>
+                      <p class="text-[11px] text-slate-400 truncate">Tìm hệ số a, b, vẽ đồ thị và kiểm chứng công thức</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-amber-300 font-bold">20đ</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+                    <span class="w-8 h-8 rounded-lg bg-orange-500/20 text-orange-300 font-black flex items-center justify-center text-sm shrink-0">L4</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs sm:text-sm font-bold text-white">Level 4: Phát hiện và sửa lỗi</p>
+                      <p class="text-[11px] text-slate-400 truncate">Phân tích sai lệch và hiệu chỉnh bộ điều khiển</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-amber-300 font-bold">20đ</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+                    <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 font-black flex items-center justify-center text-sm shrink-0">L5</span>
+                    <div class="min-w-0 flex-1">
+                      <p class="text-xs sm:text-sm font-bold text-white">Level 5: Kỹ sư xử lí tình huống</p>
+                      <p class="text-[11px] text-slate-400 truncate">Xử lí tình huống thực tiễn &amp; đề xuất nâng cấp</p>
+                    </div>
+                    <span class="text-[11px] font-mono text-amber-300 font-bold">20đ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-6 space-y-2.5">
+              <button onclick="startNewGame()" class="game-btn pulse-glow w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-slate-950 font-black text-base sm:text-lg tracking-wide flex items-center justify-center gap-2">
+                <span>🚀</span>
+                <span>NHẬN NHIỆM VỤ</span>
+              </button>
+              <button id="btn-resume-saved" onclick="resumeSavedGame()" class="hidden game-btn w-full py-2.5 px-4 rounded-xl bg-cyan-600/80 hover:bg-cyan-500 text-white font-bold text-sm flex items-center justify-center gap-2 border border-cyan-300/40">
+                <span>▶</span>
+                <span>TIẾP TỤC TIẾN TRÌNH ĐÃ LƯU</span>
+              </button>
+              <button onclick="openPrincipleModal()" class="w-full py-2 px-4 rounded-xl bg-slate-800/70 hover:bg-slate-700/80 text-cyan-300 font-semibold text-xs border border-cyan-500/25 transition">
+                📐 Xem sơ đồ nguyên lí mô hình TMath Smart Gate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCREEN 2: MAIN 3-ZONE GAMEPLAY WORKSPACE
+         =================================================================== -->
+    <section id="screen-game" class="hidden flex-1 flex flex-col gap-3">
+      <!-- Top Row: Zone 1 (3D Toll Station) + Zone 2 (Control Center) -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-3">
+        <!-- ZONE 1: 3D ISOMETRIC TOLL STATION -->
+        <div class="xl:col-span-8 glass-panel rounded-2xl overflow-hidden flex flex-col border border-cyan-400/30">
+          <div class="px-4 py-2 bg-slate-900/75 border-b border-cyan-400/20 flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-cyan-200">Khu vực 1 • Trạm thu phí 3D Isometric</span>
+            </div>
+            <div class="flex items-center gap-2 text-[11px] font-semibold">
+              <span id="sim-lane-badge" class="px-2 py-0.5 rounded bg-blue-500/25 text-blue-200 border border-blue-400/30">Làn 1 đang hoạt động</span>
+              <span id="sim-status-badge" class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-white/10">Trạng thái: Chờ lệnh</span>
+            </div>
+          </div>
+          <div class="relative w-full h-[300px] sm:h-[360px] lg:h-[400px] bg-slate-950">
+            <canvas id="game-canvas" class="w-full h-full block"></canvas>
+            <!-- Pause Overlay -->
+            <div id="pause-overlay" class="hidden absolute inset-0 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center z-20">
+              <div class="text-4xl mb-2">⏸</div>
+              <h3 class="text-xl font-black text-white">HỆ THỐNG ĐANG TẠM DỪNG</h3>
+              <p class="text-xs text-slate-300 mt-1 mb-4">Nhấn tiếp tục để quay lại điều hành trạm thu phí.</p>
+              <button onclick="togglePause()" class="game-btn px-6 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-black text-sm">▶ TIẾP TỤC</button>
+            </div>
+            <!-- Level 1 Verification Cards Overlay -->
+            <div id="l1-cards-overlay" class="hidden absolute bottom-2.5 left-2.5 flex items-center gap-1.5 z-10"></div>
+          </div>
+        </div>
+
+        <!-- ZONE 2: CONTROL CENTER TELEMETRY -->
+        <div id="control-center-panel" class="xl:col-span-4 glass-panel rounded-2xl p-3.5 sm:p-4 flex flex-col justify-between transition-colors duration-300">
+          <div>
+            <div class="flex items-center justify-between pb-2 mb-2.5 border-b border-cyan-400/20">
+              <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-cyan-200">Khu vực 2 • Trung tâm điều khiển</span>
+              <span id="cc-alert-dot" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">ONLINE</span>
+            </div>
+
+            <!-- Active Formula Banner -->
+            <div class="p-2.5 rounded-xl bg-slate-950/75 border border-cyan-400/30 mb-3">
+              <div class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Công thức điều khiển hiện tại</div>
+              <div id="cc-formula" class="font-mono text-base sm:text-lg font-bold text-amber-300 mt-0.5">d = 0,017t + 0,5</div>
+              <div id="cc-formula-note" class="text-[10px] text-cyan-300/80 mt-0.5 italic">
+                * Công thức giả định dùng trong trò chơi (không phải số liệu đo thực tế của nhóm).
+              </div>
+            </div>
+
+            <!-- Telemetry Grid -->
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Thời gian phản hồi (t)</div>
+                <div id="cc-t" class="font-mono font-bold text-cyan-300 text-sm mt-0.5">---</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Hệ số a / Hệ số b</div>
+                <div id="cc-ab" class="font-mono font-bold text-white text-sm mt-0.5">a = 0,017 | b = 0,5</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Khoảng cách tính được</div>
+                <div id="cc-d-calc" class="font-mono font-bold text-amber-300 text-sm mt-0.5">---</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Đo bằng thước / Sai lệch</div>
+                <div id="cc-d-meas" class="font-mono font-bold text-emerald-300 text-sm mt-0.5">---</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Ngưỡng mở thanh chắn</div>
+                <div id="cc-threshold" class="font-mono font-bold text-teal-300 text-sm mt-0.5">d ≤ 20 cm</div>
+              </div>
+              <div class="p-2 rounded-xl bg-slate-900/75 border border-white/10">
+                <div class="text-[10px] text-slate-400">Trạng thái Servo</div>
+                <div id="cc-servo" class="font-bold text-rose-300 text-sm mt-0.5">ĐÓNG (0°)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sensor & Vehicle Status Bar -->
+          <div class="mt-3 pt-2.5 border-t border-cyan-400/20 grid grid-cols-2 gap-2 text-[11px]">
+            <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-lg border border-white/10">
+              <span>📡</span>
+              <div class="truncate">
+                <span class="text-slate-400">Cảm biến: </span>
+                <span id="cc-sensor" class="font-bold text-cyan-300">Sẵn sàng</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 bg-slate-900/70 px-2.5 py-1.5 rounded-lg border border-white/10">
+              <span>🚘</span>
+              <div class="truncate">
+                <span class="text-slate-400">Xe: </span>
+                <span id="cc-vehicle" class="font-bold text-white">Đang chờ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: ZONE 3 (MISSION BOARD + ROBOT TMATH) -->
+      <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-cyan-400/30">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+          <!-- Robot TMath Guide Column -->
+          <div class="lg:col-span-4 flex flex-row lg:flex-col items-center lg:items-stretch gap-3 p-3.5 rounded-2xl bg-slate-900/75 border border-cyan-400/25">
+            <div class="flex items-center gap-3">
+              <div id="game-robot-slot" class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float"></div>
+              <div>
+                <div class="text-xs font-extrabold text-cyan-300 uppercase tracking-wider">Robot TMath</div>
+                <div id="robot-mood-label" class="text-[11px] text-slate-400">Đang hỗ trợ kỹ sư</div>
+              </div>
+            </div>
+            <div id="robot-speech" class="flex-1 text-xs sm:text-sm text-slate-100 leading-relaxed bg-slate-950/70 p-3 rounded-xl border border-cyan-500/20">
+              Hãy quan sát thông số trên bảng điều khiển và hoàn thành nhiệm vụ nhé!
+            </div>
+          </div>
+
+          <!-- Interactive Mission Area -->
+          <div class="lg:col-span-8 flex flex-col justify-between" id="mission-container">
+            <!-- Dynamically rendered per Level & Sub-task -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCREEN 3: VICTORY, CERTIFICATE, REPORT & CREATIVE CHALLENGE
+         =================================================================== -->
+    <section id="screen-victory" class="hidden flex-1 flex flex-col gap-5 pb-8">
+      <!-- Live Victory Banner with Smooth Running Toll Plaza -->
+      <div class="glass-panel rounded-3xl overflow-hidden border border-amber-400/45 shadow-2xl no-print">
+        <div class="relative h-52 sm:h-64 bg-slate-950">
+          <canvas id="victory-canvas" class="w-full h-full block"></canvas>
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent flex flex-col justify-end p-5 sm:p-7">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/25 border border-emerald-400/50 text-emerald-300 text-xs font-bold w-fit mb-2">
+              ✨ TRẠM THU PHÍ HOẠT ĐỘNG THÔNG SUỐT &amp; AN TOÀN
+            </div>
+            <h1 class="text-2xl sm:text-4xl font-black text-amber-300 tracking-tight">
+              CHÚC MỪNG! HOÀN THÀNH HÀNH TRÌNH KỸ SƯ NHÍ
+            </h1>
+            <p class="text-sm sm:text-lg font-extrabold text-cyan-300">TMATH SMART GATE – KỸ SƯ LÀM CHỦ CÔNG NGHỆ</p>
+          </div>
+        </div>
+
+        <!-- Robot Congrats + 5 Badges STEM Emblem -->
+        <div class="p-5 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <div class="lg:col-span-7 flex items-start gap-4">
+            <div id="victory-robot-slot" class="w-20 h-20 shrink-0 animate-float"></div>
+            <div>
+              <p class="text-sm sm:text-base text-slate-100 leading-relaxed">
+                “Tuyệt vời! Các em đã vận dụng kiến thức hàm số bậc nhất để điều hành một hệ thống thông minh, xử lí dữ liệu, phát hiện sai lệch và giải quyết các tình huống thực tiễn. Các em chính là những kỹ sư làm chủ công nghệ của tương lai!”
+              </p>
+              <div class="mt-3 p-3 rounded-xl bg-gradient-to-r from-cyan-950/90 to-blue-950/90 border border-cyan-400/30 text-center">
+                <div class="text-xs sm:text-sm font-black text-amber-300 tracking-wide">TỪ KIẾN THỨC TOÁN HỌC ĐẾN GIẢI PHÁP CÔNG NGHỆ</div>
+                <div class="text-[11px] sm:text-xs font-bold text-cyan-200 mt-0.5">HỌC TOÁN QUA TRẢI NGHIỆM – SÁNG TẠO VÌ CUỘC SỐNG</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 Badges Combined STEM Emblem -->
+          <div class="lg:col-span-5 flex flex-col items-center p-4 rounded-2xl bg-slate-900/80 border border-amber-400/30">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-amber-300 mb-3">Biểu tượng Kỹ sư STEM (5 Huy hiệu)</div>
+            <div id="victory-badges-grid" class="flex flex-wrap justify-center gap-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Electronic Certificate Card -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-8 border-2 border-amber-400/50 bg-gradient-to-br from-slate-900 via-blue-950/90 to-slate-900 shadow-2xl no-print">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="text-center md:text-left">
+            <div class="text-xs font-bold uppercase tracking-widest text-cyan-300">CHỨNG NHẬN ĐIỆN TỬ STEM TOÁN 8</div>
+            <h2 class="text-2xl sm:text-3xl font-black text-white mt-1" id="cert-name">---</h2>
+            <div class="mt-2 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/50 text-amber-300 font-extrabold text-sm" id="cert-rank">
+              Kỹ sư trưởng TMath
+            </div>
+            <div class="mt-3 flex flex-wrap justify-center md:justify-start gap-4 text-xs text-slate-300">
+              <span>📅 Ngày hoàn thành: <strong id="cert-date" class="text-white">---</strong></span>
+              <span>✅ Cấp độ hoàn thành: <strong id="cert-levels" class="text-emerald-300">5/5</strong></span>
+              <span>🚗 Xe qua an toàn: <strong id="cert-cars" class="text-cyan-300">0</strong></span>
+            </div>
+          </div>
+          <div class="flex flex-col items-center justify-center w-36 h-36 rounded-full bg-gradient-to-br from-amber-400 via-orange-500 to-amber-600 p-1 shadow-xl shrink-0">
+            <div class="w-full h-full rounded-full bg-slate-950 flex flex-col items-center justify-center">
+              <span class="text-[11px] font-bold text-slate-400 uppercase">Tổng điểm</span>
+              <span id="cert-score" class="text-3xl font-black font-mono text-amber-300">100</span>
+              <span class="text-xs text-slate-400">/ 100 điểm</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons for Report & Certificate -->
+        <div class="mt-6 pt-5 border-t border-white/15 flex flex-wrap gap-2.5 justify-center md:justify-start">
+          <button onclick="scrollToReport()" class="game-btn px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs sm:text-sm">
+            📊 XEM LẠI KẾT QUẢ
+          </button>
+          <button onclick="openSolutionsModal()" class="game-btn px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm">
+            📘 XEM LỜI GIẢI
+          </button>
+          <button onclick="downloadCertificatePNG()" class="game-btn px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm">
+            🖼 TẢI CHỨNG NHẬN PNG
+          </button>
+          <button onclick="window.print()" class="game-btn px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm">
+            🖨 IN BÁO CÁO KẾT QUẢ
+          </button>
+          <button onclick="openRestartConfirm()" class="game-btn px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm">
+            ↺ CHƠI LẠI
+          </button>
+        </div>
+      </div>
+
+      <!-- Learning Results Report (Print-ready) -->
+      <div id="print-report-area" class="glass-panel rounded-3xl p-5 sm:p-7 border border-cyan-400/30">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-white/15">
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-cyan-300">BÁO CÁO KẾT QUẢ HỌC TẬP – TMATH SMART GATE</h3>
+            <p class="text-xs text-slate-300 mt-0.5">Chủ đề STEM Toán 8: Hàm số bậc nhất và đồ thị của hàm số bậc nhất</p>
+          </div>
+          <div class="text-xs text-right text-slate-300">
+            <div>Học sinh / Nhóm: <strong id="rep-name" class="text-white">---</strong></div>
+            <div>Thời gian hoàn thành: <strong id="rep-duration" class="text-amber-300">---</strong></div>
+          </div>
+        </div>
+
+        <!-- Level breakdown table -->
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-white/15 text-cyan-300">
+                <th class="py-2 px-3">Cấp độ</th>
+                <th class="py-2 px-3">Kĩ năng STEM</th>
+                <th class="py-2 px-3 text-center">Điểm đạt</th>
+                <th class="py-2 px-3 text-center">Huy hiệu</th>
+              </tr>
+            </thead>
+            <tbody id="rep-levels-body" class="divide-y divide-white/10"></tbody>
+          </table>
+        </div>
+
+        <!-- Summary metrics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-rose-300 mb-2">Các câu trả lời sai trong lần đầu</h4>
+            <div id="rep-mistakes" class="text-xs text-slate-300 space-y-1.5"></div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/70 border border-white/10">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-300 mb-2">Kiến thức cần ôn tập &amp; củng cố</h4>
+            <div id="rep-review" class="text-xs text-slate-300 space-y-1.5"></div>
+          </div>
+        </div>
+
+        <!-- Student Level 5 Upgrade Proposal -->
+        <div class="mt-4 p-4 rounded-2xl bg-slate-900/70 border border-cyan-400/25">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-cyan-300 mb-1.5">Phương án nâng cấp trạm thu phí do học sinh đề xuất (Level 5)</h4>
+          <div id="rep-upgrade" class="text-xs sm:text-sm text-slate-200"></div>
+        </div>
+
+        <!-- Student Extended Creative Challenge Summary (for printing) -->
+        <div id="rep-creative-summary" class="hidden mt-4 p-4 rounded-2xl bg-slate-900/70 border border-teal-400/25">
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-teal-300 mb-1.5">Ý tưởng Thử thách sáng tạo mở rộng</h4>
+          <div id="rep-creative-content" class="text-xs sm:text-sm text-slate-200 space-y-1"></div>
+        </div>
+      </div>
+
+      <!-- EXTENDED APPLICATION: THỬ THÁCH SÁNG TẠO -->
+      <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-teal-400/40 no-print">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-full bg-teal-500/20 border border-teal-400/40 text-teal-300 text-xs font-extrabold">VẬN DỤNG MỞ RỘNG • KHÔNG TÍNH VÀO 100 ĐIỂM</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black text-white">💡 THỬ THÁCH SÁNG TẠO</h3>
+        <p class="text-sm text-slate-200 mt-1">
+          “Ngoài trạm thu phí, em có thể ứng dụng nguyên lí đo khoảng cách bằng cảm biến siêu âm và hàm số bậc nhất để thiết kế những thiết bị thông minh nào khác?”
+        </p>
+
+        <!-- Suggested Idea Chips -->
+        <div class="mt-4">
+          <div class="text-xs font-bold text-cyan-300 mb-2">Chọn nhanh một hướng ứng dụng gợi ý (hoặc tự đề xuất):</div>
+          <div class="flex flex-wrap gap-2" id="creative-chips"></div>
+        </div>
+
+        <!-- 5 Structured Prompts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">1. Tên sản phẩm thông minh</label>
+            <input id="cr-name" type="text" placeholder="Ví dụ: Cổng trường thông minh..." class="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-sm text-white focus:border-teal-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">2. Vấn đề thực tiễn cần giải quyết</label>
+            <input id="cr-problem" type="text" placeholder="Ví dụ: Giảm ùn tắc giờ tan học..." class="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-sm text-white focus:border-teal-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">3. Đại lượng cần đo</label>
+            <input id="cr-measure" type="text" placeholder="Ví dụ: Khoảng cách từ người/xe đến cổng..." class="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-sm text-white focus:border-teal-400 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">4. Vai trò của hàm số bậc nhất</label>
+            <input id="cr-math" type="text" placeholder="Ví dụ: Quy đổi thời gian phản hồi t thành khoảng cách d..." class="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-sm text-white focus:border-teal-400 focus:outline-none" />
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-xs font-bold text-slate-300 mb-1">5. Phương án thiết kế hoặc cải tiến</label>
+            <textarea id="cr-design" rows="2" placeholder="Mô tả cảm biến, đèn báo, còi hoặc kết nối thông minh..." class="w-full px-3 py-2 rounded-xl bg-slate-900/90 border border-cyan-500/30 text-sm text-white focus:border-teal-400 focus:outline-none"></textarea>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <button onclick="saveCreativeChallenge()" class="game-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 text-slate-950 font-black text-sm">
+            💾 LƯU Ý TƯỞNG VÀO BÁO CÁO
+          </button>
+          <span id="cr-saved-msg" class="text-xs text-emerald-300 font-semibold hidden">✓ Đã lưu ý tưởng sáng tạo của em!</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER (MANDATORY TEXT)
+       ===================================================================== -->
+  <footer class="no-print w-full py-3 px-4 text-center text-xs text-slate-400 border-t border-cyan-400/15 bg-slate-950/70">
+    TMATH – HỌC TOÁN QUA TRẢI NGHIỆM | STEM TOÁN 8 | 2026.
+  </footer>
+
+  <!-- =====================================================================
+       MODAL: SYSTEM PRINCIPLE DIAGRAM (MÔ HÌNH TMATH SMART GATE)
+       ===================================================================== -->
+  <div id="modal-principle" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-3xl w-full p-5 sm:p-7 border border-cyan-400/40 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-white/15">
+        <h3 class="text-lg sm:text-xl font-black text-cyan-300">📐 NGUYÊN LÍ HOẠT ĐỘNG – MÔ HÌNH TMATH SMART GATE</h3>
+        <button onclick="closeModal('modal-principle')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">✕</button>
+      </div>
+      <!-- Clean SVG Schematic illustrating TMath Smart Gate -->
+      <div class="my-4 bg-slate-950/80 rounded-2xl p-4 border border-cyan-500/25 overflow-x-auto">
+        <svg viewBox="0 0 720 260" class="w-full min-w-[540px] h-auto">
+          <defs>
+            <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0f294a"/>
+              <stop offset="100%" stop-color="#071326"/>
+            </linearGradient>
+            <marker id="arrowCyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#22d3ee"/>
+            </marker>
+            <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#fbbf24"/>
+            </marker>
+          </defs>
+          <rect width="720" height="260" rx="16" fill="url(#bgGrad)"/>
+          <!-- Road line -->
+          <rect x="20" y="190" width="680" height="45" rx="8" fill="#1e293b"/>
+          <line x1="40" y1="212" x2="680" y2="212" stroke="#64748b" stroke-width="3" stroke-dasharray="14 10"/>
+          <!-- Car -->
+          <g transform="translate(55,148)">
+            <rect x="0" y="18" width="110" height="32" rx="8" fill="#f97316"/>
+            <path d="M22,18 L36,2 L78,2 L92,18 Z" fill="#fdba74"/>
+            <circle cx="24" cy="52" r="10" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+            <circle cx="86" cy="52" r="10" fill="#0f172a" stroke="#94a3b8" stroke-width="3"/>
+            <text x="55" y="38" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">PHƯƠNG TIỆN</text>
+          </g>
+          <!-- Ultrasonic waves -->
+          <path d="M180,168 Q195,155 210,168 T240,168 T270,168" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="5 3"/>
+          <path d="M270,180 Q255,193 240,180 T210,180 T180,180" fill="none" stroke="#fbbf24" stroke-width="2.5"/>
+          <text x="225" y="148" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">Sóng siêu âm (t µs)</text>
+          <text x="225" y="205" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">Khoảng cách d (cm)</text>
+
+          <!-- Front Ultrasonic Sensor -->
+          <rect x="285" y="140" width="64" height="50" rx="8" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+          <circle cx="305" cy="165" r="9" fill="#0f172a" stroke="#bae6fd" stroke-width="2"/>
+          <circle cx="329" cy="165" r="9" fill="#0f172a" stroke="#bae6fd" stroke-width="2"/>
+          <text x="317" y="132" text-anchor="middle" fill="#7dd3fc" font-size="10" font-weight="bold">CẢM BIẾN TRƯỚC</text>
+
+          <!-- Arrow Sensor -> Controller -->
+          <line x1="317" y1="120" x2="317" y2="92" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#arrowCyan)"/>
+
+          <!-- Microcontroller Box -->
+          <rect x="210" y="20" width="240" height="68" rx="12" fill="#1e3a8a" stroke="#38bdf8" stroke-width="2"/>
+          <text x="330" y="42" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">BỘ ĐIỀU KHIỂN TMATH</text>
+          <text x="330" y="60" text-anchor="middle" fill="#fbbf24" font-size="13" font-weight="bold">Hàm số: d = a·t + b</text>
+          <text x="330" y="77" text-anchor="middle" fill="#34d399" font-size="11">Điều kiện mở: d ≤ 20 cm (hợp lệ)</text>
+
+          <!-- Arrow Controller -> Servo -->
+          <line x1="450" y1="54" x2="520" y2="54" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber)"/>
+          <line x1="520" y1="54" x2="520" y2="118" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowAmber)"/>
+
+          <!-- Barrier & Servo -->
+          <rect x="500" y="126" width="40" height="64" rx="6" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+          <circle cx="520" cy="144" r="7" fill="#ef4444"/>
+          <circle cx="520" cy="162" r="7" fill="#22c55e"/>
+          <g transform="translate(520,136) rotate(-35)">
+            <rect x="0" y="-5" width="95" height="10" rx="4" fill="#ef4444"/>
+            <rect x="18" y="-5" width="16" height="10" fill="#ffffff"/>
+            <rect x="52" y="-5" width="16" height="10" fill="#ffffff"/>
+          </g>
+          <text x="545" y="108" text-anchor="middle" fill="#fca5a5" font-size="10" font-weight="bold">SERVO &amp; THANH CHẮN</text>
+
+          <!-- Rear Clearance Sensor (Extended model) -->
+          <rect x="615" y="148" width="56" height="42" rx="8" fill="#0f766e" stroke="#2dd4bf" stroke-width="2"/>
+          <text x="643" y="167" text-anchor="middle" fill="#ccfbf1" font-size="9" font-weight="bold">CẢM BIẾN</text>
+          <text x="643" y="180" text-anchor="middle" fill="#ccfbf1" font-size="9" font-weight="bold">XÁC NHẬN</text>
+          <text x="643" y="138" text-anchor="middle" fill="#5eead4" font-size="9" font-weight="bold">(Mở rộng an toàn)</text>
+        </svg>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-200">
+        <div class="p-3 rounded-xl bg-slate-900/70 border border-cyan-500/20">
+          <strong class="text-cyan-300">1. Cảm biến siêu âm phía trước:</strong> Phát sóng siêu âm và đo thời gian phản hồi <span class="font-mono text-amber-300">t (µs)</span>. Bộ điều khiển dùng hàm số bậc nhất <span class="font-mono text-amber-300">d = at + b</span> để tính khoảng cách <span class="font-mono text-amber-300">d (cm)</span>.
+        </div>
+        <div class="p-3 rounded-xl bg-slate-900/70 border border-teal-500/20">
+          <strong class="text-teal-300">2. Cảm biến xác nhận xe đã đi qua (Mở rộng):</strong> Phân biệt rõ với cảm biến đo khoảng cách phía trước. Chỉ khi vùng thanh chắn không còn xe, động cơ servo mới hạ thanh chắn an toàn.
+        </div>
+      </div>
+      <div class="mt-4 text-right">
+        <button onclick="closeModal('modal-principle')" class="game-btn px-5 py-2 rounded-xl bg-cyan-500 text-slate-950 font-black text-sm">ĐÃ HIỂU</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL: DETAILED SOLUTIONS (XEM LỜI GIẢI)
+       ===================================================================== -->
+  <div id="modal-solutions" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-3xl w-full p-5 sm:p-7 border border-indigo-400/40 max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-white/15">
+        <h3 class="text-lg sm:text-xl font-black text-indigo-300">📘 LỜI GIẢI CHI TIẾT 5 CẤP ĐỘ</h3>
+        <button onclick="closeModal('modal-solutions')" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-bold">✕</button>
+      </div>
+      <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-200">
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-cyan-500/25">
+          <h4 class="font-extrabold text-cyan-300 mb-1">Level 1 – Tính toán chính xác (d = 0,017t + 0,5)</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Xe 1 (cam, t = 1 000 µs): d = 0,017 × 1 000 + 0,5 = 17 + 0,5 = <strong>17,5 cm</strong>.</li>
+            <li>Xe 2 (xanh, t = 2 000 µs): d = 0,017 × 2 000 + 0,5 = 34 + 0,5 = <strong>34,5 cm</strong>.</li>
+            <li>Xe 3 (tải đỏ, t = 1 500 µs): d = 0,017 × 1 500 + 0,5 = 25,5 + 0,5 = <strong>26 cm</strong>.</li>
+          </ul>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-teal-500/25">
+          <h4 class="font-extrabold text-teal-300 mb-1">Level 2 – Điều khiển rào chắn (Ngưỡng d ≤ 20 cm)</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Xe A (d = 25 cm &gt; 20 cm): <strong>Chờ xe đến gần</strong>.</li>
+            <li>Xe B (d = 18 cm ≤ 20 cm): <strong>Mở thanh chắn</strong>.</li>
+            <li>Xe C (d = 20 cm ≤ 20 cm): <strong>Mở thanh chắn</strong> (dấu ≤ bao gồm cả giá trị bằng 20 cm).</li>
+            <li>Xe D (d = 32 cm &gt; 20 cm): <strong>Chờ xe đến gần</strong>.</li>
+          </ul>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-blue-500/25">
+          <h4 class="font-extrabold text-blue-300 mb-1">Level 3 – Hiệu chỉnh cảm biến</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Chọn 2 điểm bất kì, ví dụ (500; 9) và (1 000; 17,5): a = (17,5 − 9) / (1 000 − 500) = 8,5 / 500 = <strong>0,017</strong>.</li>
+            <li>Thay (1 000; 17,5) vào d = 0,017t + b ⇒ 17,5 = 17 + b ⇒ b = <strong>0,5</strong>.</li>
+            <li>Công thức hoàn chỉnh: <strong>d = 0,017t + 0,5</strong>.</li>
+            <li>Kiểm chứng với t = 3 000 µs: d = 0,017 × 3 000 + 0,5 = <strong>51,5 cm</strong>.</li>
+          </ul>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-orange-500/25">
+          <h4 class="font-extrabold text-orange-300 mb-1">Level 4 – Phát hiện và sửa lỗi hệ thống</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Khoảng cách theo công thức lỗi (d = 0,020t + 0,5) tại t = 1 000 µs: <strong>20,5 cm</strong>.</li>
+            <li>Sai lệch tuyệt đối: |20,5 − 17,5| = <strong>3 cm</strong>.</li>
+            <li>Hậu quả: <strong>B</strong> – Công thức tính ra 20,5 cm &gt; 20 cm nên thanh chắn không mở dù xe ở 17,5 cm.</li>
+            <li>Hiệu chỉnh khớp cả (1 000; 17,5) và (2 000; 34,5): <strong>B (d = 0,017t + 0,5)</strong>.</li>
+          </ul>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-900/80 border border-amber-500/25">
+          <h4 class="font-extrabold text-amber-300 mb-1">Level 5 – Kỹ sư xử lí tình huống</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Tình huống 1 (Xe tải dài): <strong>B</strong> – Giữ thanh chắn mở đến khi xác nhận toàn bộ xe đã đi qua.</li>
+            <li>Tình huống 2 (Mất tín hiệu cảm biến): <strong>C</strong> – Tạm dừng tự động, giữ trạng thái an toàn và phát cảnh báo.</li>
+            <li>Tình huống 3 (Mở quá sớm ở 30 cm): <strong>B</strong> – Điều chỉnh ngưỡng mở về 20 cm.</li>
+            <li>Tình huống 4 (Hai xe đi sát nhau): <strong>C</strong> – Bổ sung cảm biến xác nhận vùng thanh chắn, quản lí từng lượt xe.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-4 text-right">
+        <button onclick="closeModal('modal-solutions')" class="game-btn px-5 py-2 rounded-xl bg-indigo-500 text-white font-bold text-sm">ĐÓNG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL: LEVEL COMPLETE / BADGE REWARD POPUP
+       ===================================================================== -->
+  <div id="modal-badge" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-md w-full p-6 text-center border-2 border-amber-400/60 shadow-2xl">
+      <div id="badge-modal-icon" class="w-24 h-24 mx-auto mb-3 badge-pop"></div>
+      <div class="text-xs font-extrabold uppercase tracking-widest text-cyan-300">HOÀN THÀNH CẤP ĐỘ!</div>
+      <h3 id="badge-modal-title" class="text-2xl font-black text-amber-300 mt-1">HUY HIỆU</h3>
+      <p id="badge-modal-desc" class="text-sm text-slate-200 mt-2"></p>
+      <div class="mt-4 p-3 rounded-xl bg-slate-900/80 border border-white/10 text-xs text-slate-300">
+        Điểm cấp độ: <strong id="badge-modal-pts" class="text-amber-300 font-mono text-sm">20/20</strong> •
+        Tổng điểm hiện tại: <strong id="badge-modal-total" class="text-emerald-300 font-mono text-sm">20/100</strong>
+      </div>
+      <button id="badge-modal-next-btn" onclick="proceedAfterBadge()" class="game-btn mt-5 w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-base">
+        TIẾP TỤC CẤP ĐỘ TIẾP THEO →
+      </button>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL: RESTART CONFIRMATION (REPLACES confirm())
+       ===================================================================== -->
+  <div id="modal-restart" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-panel rounded-2xl max-w-sm w-full p-6 text-center border border-rose-400/40">
+      <div class="text-3xl mb-2">↺</div>
+      <h3 class="text-lg font-black text-white">Chơi lại từ đầu?</h3>
+      <p class="text-xs text-slate-300 mt-1.5">Tiến trình và điểm số hiện tại sẽ được đặt lại để em thực hiện một lượt trải nghiệm mới.</p>
+      <div class="mt-5 flex gap-2.5 justify-center">
+        <button onclick="closeModal('modal-restart')" class="game-btn px-4 py-2 rounded-xl bg-slate-700 text-white font-bold text-sm">Hủy</button>
+        <button onclick="confirmRestart()" class="game-btn px-4 py-2 rounded-xl bg-rose-600 text-white font-bold text-sm">Chơi lại ngay</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       COMPLETE APPLICATION JAVASCRIPT
+       ===================================================================== -->
+  <script>
+    /* =========================================================================
+       1. SOUND ENGINE (WEB AUDIO API - NO EXTERNAL URLS)
+       ========================================================================= */
+    const SoundFX = (() => {
+      let ctx = null;
+      let enabled = true;
+
+      function ensureCtx() {
+        if (!enabled) return null;
+        if (!ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (AudioCtx) ctx = new AudioCtx();
+        }
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+
+      function playTone(freq, duration, type = 'sine', vol = 0.12, delay = 0) {
+        try {
+          const c = ensureCtx();
+          if (!c) return;
+          const osc = c.createOscillator();
+          const gain = c.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, c.currentTime + delay);
+          gain.gain.setValueAtTime(vol, c.currentTime + delay);
+          gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + delay + duration);
+          osc.connect(gain);
+          gain.connect(c.destination);
+          osc.start(c.currentTime + delay);
+          osc.stop(c.currentTime + delay + duration);
+        } catch (e) {}
+      }
+
+      return {
+        toggle() {
+          enabled = !enabled;
+          return enabled;
+        },
+        isEnabled() { return enabled; },
+        click() { playTone(540, 0.06, 'triangle', 0.08); },
+        correct() {
+          playTone(523.25, 0.12, 'sine', 0.12, 0);
+          playTone(659.25, 0.12, 'sine', 0.12, 0.09);
+          playTone(783.99, 0.22, 'triangle', 0.13, 0.18);
+        },
+        wrong() {
+          playTone(260, 0.16, 'sawtooth', 0.09, 0);
+          playTone(210, 0.22, 'sawtooth', 0.09, 0.12);
+        },
+        barrier() {
+          playTone(320, 0.15, 'sine', 0.08, 0);
+          playTone(440, 0.18, 'sine', 0.08, 0.1);
+        },
+        badge() {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+            playTone(f, 0.22, 'triangle', 0.14, i * 0.1);
+          });
+        }
+      };
+    })();
+
+    /* =========================================================================
+       2. INLINE SVG ASSETS: ROBOT TMATH & 5 STEM BADGES
+       ========================================================================= */
+    function getRobotSVG(mood = 'happy') {
+      const eyeColor = mood === 'warning' ? '#f87171' : (mood === 'thinking' ? '#fbbf24' : '#22d3ee');
+      const mouthPath = mood === 'warning'
+        ? 'M42,46 Q50,41 58,46'
+        : (mood === 'thinking' ? 'M43,45 L57,45' : 'M41,43 Q50,51 59,43');
+      return `
+        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-lg">
+          <defs>
+            <linearGradient id="robBody" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#dbeafe"/>
+            </linearGradient>
+            <linearGradient id="robBlue" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0284c7"/>
+              <stop offset="100%" stop-color="#1d4ed8"/>
+            </linearGradient>
+          </defs>
+          <!-- Antenna -->
+          <line x1="50" y1="16" x2="50" y2="6" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="50" cy="6" r="4" fill="${eyeColor}"/>
+          <!-- Head -->
+          <rect x="22" y="16" width="56" height="38" rx="14" fill="url(#robBody)" stroke="#38bdf8" stroke-width="2.5"/>
+          <!-- Visor -->
+          <rect x="29" y="23" width="42" height="25" rx="9" fill="#0f172a"/>
+          <!-- Eyes -->
+          <circle cx="40" cy="34" r="4.5" fill="${eyeColor}"/>
+          <circle cx="60" cy="34" r="4.5" fill="${eyeColor}"/>
+          <circle cx="41.5" cy="32.5" r="1.5" fill="#ffffff"/>
+          <circle cx="61.5" cy="32.5" r="1.5" fill="#ffffff"/>
+          <!-- Mouth -->
+          <path d="${mouthPath}" fill="none" stroke="${eyeColor}" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Ears -->
+          <rect x="16" y="28" width="6" height="14" rx="3" fill="url(#robBlue)"/>
+          <rect x="78" y="28" width="6" height="14" rx="3" fill="url(#robBlue)"/>
+          <!-- Neck -->
+          <rect x="44" y="54" width="12" height="6" fill="#64748b"/>
+          <!-- Torso -->
+          <rect x="26" y="59" width="48" height="33" rx="11" fill="url(#robBody)" stroke="#2563eb" stroke-width="2.5"/>
+          <!-- Blue chest emblem with T -->
+          <rect x="37" y="65" width="26" height="21" rx="6" fill="url(#robBlue)"/>
+          <text x="50" y="81" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="900" font-family="Be Vietnam Pro, sans-serif">T</text>
+          <!-- Arms -->
+          <rect x="14" y="63" width="10" height="22" rx="5" fill="url(#robBlue)"/>
+          <rect x="76" y="63" width="10" height="22" rx="5" fill="url(#robBlue)"/>
+        </svg>
+      `;
+    }
+
+    const BADGES = [
+      { id: 1, name: 'CHUYÊN GIA TÍNH TOÁN', short: 'Tính toán', color: '#06b6d4', icon: '🧮', desc: 'Tính chính xác khoảng cách từ thời gian phản hồi sóng siêu âm.' },
+      { id: 2, name: 'KỸ SƯ ĐIỀU KHIỂN', short: 'Điều khiển', color: '#14b8a6', icon: '🚦', desc: 'Làm chủ điều kiện ngưỡng d ≤ 20 cm để đóng/mở thanh chắn an toàn.' },
+      { id: 3, name: 'CHUYÊN GIA MÔ HÌNH HÓA', short: 'Mô hình hóa', color: '#3b82f6', icon: '📈', desc: 'Xây dựng công thức hàm số bậc nhất và vẽ đồ thị từ dữ liệu thực nghiệm.' },
+      { id: 4, name: 'KỸ SƯ SỬA LỖI', short: 'Sửa lỗi', color: '#f97316', icon: '🛠️', desc: 'Phát hiện sai lệch đo lường và hiệu chỉnh chính xác hệ số a, b.' },
+      { id: 5, name: 'KỸ SƯ SÁNG TẠO', short: 'Sáng tạo', color: '#f59e0b', icon: '💡', desc: 'Xử lí xuất sắc các tình huống thực tiễn và đề xuất nâng cấp hệ thống.' },
+    ];
+
+    function getBadgeSVG(badge, earned = true) {
+      const opacity = earned ? '1' : '0.28';
+      return `
+        <svg viewBox="0 0 100 100" class="w-full h-full" style="opacity:${opacity}">
+          <polygon points="50,4 90,26 90,74 50,96 10,74 10,26" fill="${earned ? badge.color : '#334155'}" fill-opacity="0.22" stroke="${earned ? badge.color : '#64748b'}" stroke-width="4"/>
+          <polygon points="50,14 82,31 82,69 50,86 18,69 18,31" fill="#0f172a" stroke="${earned ? '#fbbf24' : '#475569'}" stroke-width="2"/>
+          <text x="50" y="59" text-anchor="middle" font-size="30">${badge.icon}</text>
+        </svg>
+      `;
+    }
+
+    /* =========================================================================
+       3. GAME STATE & PERSISTENCE (localStorage)
+       ========================================================================= */
+    const STORAGE_KEY = 'tmath_smart_gate_v5_save';
+
+    function createInitialState() {
+      return {
+        playerName: '',
+        startedAt: null,
+        completedAt: null,
+        currentLevel: 1,
+        maxUnlockedLevel: 1,
+        completedLevels: [],
+        earnedBadges: [],
+        score: 0,
+        levelScores: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        scoredTasks: {},        // Prevent duplicate scoring
+        firstAttemptWrong: {},  // Track tasks missed on first try
+        mistakesLog: [],        // Detailed log for report
+        firstTryCorrectCount: 0,
+        safeCarsPassed: 0,
+        isPaused: false,
+        // Per-level progress
+        l1Step: 0, // 0,1,2
+        l2Step: 0, // 0,1,2,3
+        l3Step: 0, // 0..4
+        l3SelectedRows: [],
+        l3PlottedIndices: [],
+        l4Step: 0, // 0..4
+        l5Step: 0, // 0..4
+        l5SliderVal: 35,
+        l5Upgrade: { cards: [], explanation: '' },
+        creativeIdea: { name: '', problem: '', measure: '', math: '', design: '' }
+      };
+    }
+
+    let state = createInitialState();
+
+    function saveProgress() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function loadSavedProgress() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) { return null; }
+    }
+
+    /* =========================================================================
+       4. UTILITY FUNCTIONS (NUMBER PARSING, TOASTS, MODALS)
+       ========================================================================= */
+    function parseVNNumber(str) {
+      if (typeof str !== 'string') return NaN;
+      const cleaned = str.trim().replace(/\s+/g, '').replace(',', '.');
+      if (!cleaned) return NaN;
+      return Number(cleaned);
+    }
+
+    function formatVN(num, decimals = null) {
+      if (decimals !== null) {
+        return Number(num).toFixed(decimals).replace('.', ',');
+      }
+      return String(num).replace('.', ',');
+    }
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        success: 'bg-emerald-600/95 border-emerald-300/60 text-white',
+        error: 'bg-rose-600/95 border-rose-300/60 text-white',
+        info: 'bg-cyan-700/95 border-cyan-300/60 text-white',
+        warning: 'bg-amber-600/95 border-amber-300/60 text-white',
+      };
+      const div = document.createElement('div');
+      div.className = `pointer-events-auto px-4 py-2.5 rounded-xl border text-xs sm:text-sm font-bold shadow-xl transition-all duration-300 ${colors[type] || colors.info}`;
+      div.textContent = msg;
+      container.appendChild(div);
+      setTimeout(() => {
+        div.style.opacity = '0';
+        div.style.transform = 'translateX(20px)';
+        setTimeout(() => div.remove(), 300);
+      }, 2800);
+    }
+
+    function openPrincipleModal() {
+      SoundFX.click();
+      document.getElementById('modal-principle').classList.remove('hidden');
+    }
+    function openSolutionsModal() {
+      SoundFX.click();
+      document.getElementById('modal-solutions').classList.remove('hidden');
+    }
+    function openRestartConfirm() {
+      SoundFX.click();
+      document.getElementById('modal-restart').classList.remove('hidden');
+    }
+    function closeModal(id) {
+      SoundFX.click();
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function setRobot(mood, htmlMessage) {
+      const slot = document.getElementById('game-robot-slot');
+      if (slot) slot.innerHTML = getRobotSVG(mood);
+      const speech = document.getElementById('robot-speech');
+      if (speech) speech.innerHTML = htmlMessage;
+      const moodLabel = document.getElementById('robot-mood-label');
+      if (moodLabel) {
+        const labels = {
+          happy: 'Đang hướng dẫn kỹ sư',
+          thinking: 'Gợi ý Toán học',
+          warning: 'Cảnh báo an toàn hệ thống',
+          celebrate: 'Xuất sắc! Chính xác!'
+        };
+        moodLabel.textContent = labels[mood] || 'Trợ lý TMath';
+      }
+    }
+
+    /* =========================================================================
+       5. SCORING & MISTAKE TRACKING
+       ========================================================================= */
+    function awardTaskPoints(taskId, levelNum, points) {
+      if (state.scoredTasks[taskId]) return 0; // Only score once
+      state.scoredTasks[taskId] = true;
+      state.score += points;
+      state.levelScores[levelNum] += points;
+      if (!state.firstAttemptWrong[taskId]) {
+        state.firstTryCorrectCount += 1;
+      }
+      updateHUD();
+      saveProgress();
+      return points;
+    }
+
+    function recordMistake(taskId, levelNum, title, topic) {
+      if (!state.firstAttemptWrong[taskId]) {
+        state.firstAttemptWrong[taskId] = true;
+        state.mistakesLog.push({ taskId, level: levelNum, title, topic });
+        saveProgress();
+      }
+    }
+
+    /* =========================================================================
+       6. ISOMETRIC 3D TOLL STATION CANVAS SIMULATION ENGINE
+       ========================================================================= */
+    const SimEngine = (() => {
+      let animId = null;
+      let time = 0;
+
+      // Active gameplay simulation state
+      const sim = {
+        activeLane: 0,          // 0 = Làn 1, 1 = Làn 2, 2 = Làn 3
+        barriers: [0, 0, 0],    // 0 = closed, 1 = fully open (75 deg)
+        targetBarriers: [0, 0, 0],
+        lights: ['red', 'red', 'red'], // 'red' | 'green' | 'amber'
+        sensorPulse: true,
+        sensorError: false,
+        rearSensorActive: false,
+        rearSensorDetected: false,
+        showRuler: false,
+        rulerDistance: 0,
+        thresholdCm: 20,
+        showThresholdLine: false,
+        ledText: 'SẴN SÀNG',
+        ledColor: '#22d3ee',
+        alertMode: false,
+        // Primary vehicle on active lane: pos in cm from barrier (positive = before barrier, 0 = at barrier, negative = passed)
+        vehicles: [],
+        onVehicleCleared: null
+      };
+
+      // Intro & Victory background ambient cars
+      let ambientCars = [
+        { lane: 0, pos: 55, color: '#f97316', type: 'sedan', speed: 0 },
+        { lane: 1, pos: 38, color: '#3b82f6', type: 'sedan', speed: 0 },
+        { lane: 2, pos: 64, color: '#ef4444', type: 'truck', speed: 0 },
+        { lane: 0, pos: 95, color: '#14b8a6', type: 'bus', speed: 0 },
+      ];
+
+      let victoryCars = [
+        { lane: 0, pos: 80, color: '#f97316', type: 'sedan', speed: 24 },
+        { lane: 1, pos: 35, color: '#3b82f6', type: 'bus', speed: 20 },
+        { lane: 2, pos: 110, color: '#10b981', type: 'truck', speed: 22 },
+      ];
+
+      // Isometric projection helper: world (u = along road, v = across lanes, z = height) -> screen (x, y)
+      function isoProject(u, v, z, cx, cy, scale) {
+        const x = cx + (u - v) * 0.866 * scale;
+        const y = cy + (u + v) * 0.46 * scale - z * scale;
+        return { x, y };
+      }
+
+      function drawIsoBox(ctx, u, v, z, du, dv, dz, cx, cy, scale, topCol, leftCol, rightCol) {
+        const p000 = isoProject(u, v, z, cx, cy, scale);
+        const p100 = isoProject(u + du, v, z, cx, cy, scale);
+        const p110 = isoProject(u + du, v + dv, z, cx, cy, scale);
+        const p010 = isoProject(u, v + dv, z, cx, cy, scale);
+        const p001 = isoProject(u, v, z + dz, cx, cy, scale);
+        const p101 = isoProject(u + du, v, z + dz, cx, cy, scale);
+        const p111 = isoProject(u + du, v + dv, z + dz, cx, cy, scale);
+        const p011 = isoProject(u, v + dv, z + dz, cx, cy, scale);
+
+        // Left face (v + dv)
+        ctx.fillStyle = leftCol;
+        ctx.beginPath();
+        ctx.moveTo(p010.x, p010.y);
+        ctx.lineTo(p110.x, p110.y);
+        ctx.lineTo(p111.x, p111.y);
+        ctx.lineTo(p011.x, p011.y);
+        ctx.closePath();
+        ctx.fill();
+
+        // Right face (u + du)
+        ctx.fillStyle = rightCol;
+        ctx.beginPath();
+        ctx.moveTo(p100.x, p100.y);
+        ctx.lineTo(p110.x, p110.y);
+        ctx.lineTo(p111.x, p111.y);
+        ctx.lineTo(p101.x, p101.y);
+        ctx.closePath();
+        ctx.fill();
+
+        // Top face
+        ctx.fillStyle = topCol;
+        ctx.beginPath();
+        ctx.moveTo(p001.x, p001.y);
+        ctx.lineTo(p101.x, p101.y);
+        ctx.lineTo(p111.x, p111.y);
+        ctx.lineTo(p011.x, p011.y);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function shadeColor(hex, percent) {
+        const num = parseInt(hex.replace('#', ''), 16);
+        const r = Math.min(255, Math.max(0, (num >> 16) + percent));
+        const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + percent));
+        const b = Math.min(255, Math.max(0, (num & 0x0000FF) + percent));
+        return `rgb(${r},${g},${b})`;
+      }
+
+      function drawVehicle(ctx, laneIdx, distCm, color, type, cx, cy, scale) {
+        // Barrier is at u = 0. Road approaches from u = -140 towards u = +90.
+        // distCm = distance from front bumper to barrier (u = 0).
+        // Convert cm to world units: 1 cm = 1.65 world units
+        const len = type === 'longtruck' ? 54 : (type === 'bus' ? 44 : (type === 'truck' ? 38 : 28));
+        const wid = type === 'bus' || type === 'longtruck' ? 16 : 14;
+        const frontU = -distCm * 1.65;
+        const startU = frontU - len;
+        const laneV = (laneIdx - 1) * 34 - wid / 2;
+
+        // Ground shadow
+        const s0 = isoProject(startU - 2, laneV - 2, 0.2, cx, cy, scale);
+        const s1 = isoProject(frontU + 2, laneV - 2, 0.2, cx, cy, scale);
+        const s2 = isoProject(frontU + 2, laneV + wid + 2, 0.2, cx, cy, scale);
+        const s3 = isoProject(startU - 2, laneV + wid + 2, 0.2, cx, cy, scale);
+        ctx.fillStyle = 'rgba(0,0,0,0.42)';
+        ctx.beginPath();
+        ctx.moveTo(s0.x, s0.y); ctx.lineTo(s1.x, s1.y); ctx.lineTo(s2.x, s2.y); ctx.lineTo(s3.x, s3.y);
+        ctx.closePath(); ctx.fill();
+
+        const topC = color;
+        const leftC = shadeColor(color, -28);
+        const rightC = shadeColor(color, -45);
+
+        if (type === 'sedan') {
+          drawIsoBox(ctx, startU, laneV, 2, len, wid, 7, cx, cy, scale, topC, leftC, rightC);
+          drawIsoBox(ctx, startU + 6, laneV + 1.5, 9, len - 13, wid - 3, 6.5, cx, cy, scale, '#bae6fd', '#38bdf8', '#0284c7');
+        } else if (type === 'truck' || type === 'longtruck') {
+          const cabLen = 12;
+          const cargoLen = len - cabLen - 2;
+          // Cargo box
+          drawIsoBox(ctx, startU, laneV, 3, cargoLen, wid, 15, cx, cy, scale, '#f8fafc', '#cbd5e1', '#94a3b8');
+          // Colored stripe on cargo
+          drawIsoBox(ctx, startU + 2, laneV - 0.1, 8, cargoLen - 4, wid + 0.2, 3, cx, cy, scale, topC, leftC, rightC);
+          // Cab
+          drawIsoBox(ctx, startU + cargoLen + 2, laneV + 0.5, 2.5, cabLen, wid - 1, 11.5, cx, cy, scale, topC, leftC, rightC);
+          // Windshield
+          drawIsoBox(ctx, startU + cargoLen + 6, laneV + 1.5, 9, 7, wid - 3, 4.5, cx, cy, scale, '#bae6fd', '#38bdf8', '#0284c7');
+        } else if (type === 'bus') {
+          drawIsoBox(ctx, startU, laneV, 2.5, len, wid, 14, cx, cy, scale, topC, leftC, rightC);
+          drawIsoBox(ctx, startU + 3, laneV - 0.1, 9, len - 6, wid + 0.2, 5, cx, cy, scale, '#e0f2fe', '#38bdf8', '#0369a1');
+        }
+
+        // Headlights glow
+        const hl1 = isoProject(frontU + 0.5, laneV + 3, 5, cx, cy, scale);
+        const hl2 = isoProject(frontU + 0.5, laneV + wid - 3, 5, cx, cy, scale);
+        ctx.fillStyle = '#fef08a';
+        ctx.beginPath(); ctx.arc(hl1.x, hl1.y, Math.max(2, 2.2 * scale), 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(hl2.x, hl2.y, Math.max(2, 2.2 * scale), 0, Math.PI * 2); ctx.fill();
+      }
+
+      function renderScene(canvas, mode) {
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width < 10 || rect.height < 10) return;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const w = Math.floor(rect.width * dpr);
+        const h = Math.floor(rect.height * dpr);
+        if (canvas.width !== w || canvas.height !== h) {
+          canvas.width = w;
+          canvas.height = h;
+        }
+
+        const ctx = canvas.getContext('2d');
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        const cw = rect.width;
+        const ch = rect.height;
+
+        // Futuristic Sky/Grid Background
+        const bgGrad = ctx.createLinearGradient(0, 0, 0, ch);
+        if (mode === 'game' && sim.alertMode) {
+          bgGrad.addColorStop(0, '#2a0808');
+          bgGrad.addColorStop(1, '#0c0a1d');
+        } else {
+          bgGrad.addColorStop(0, '#0a1f3f');
+          bgGrad.addColorStop(1, '#040d1d');
+        }
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, cw, ch);
+
+        // Subtle futuristic city silhouette in top background
+        ctx.fillStyle = 'rgba(14, 116, 144, 0.14)';
+        for (let i = 0; i < 12; i++) {
+          const bx = (i * cw) / 11 - 10;
+          const bh = 28 + ((i * 37) % 55);
+          ctx.fillRect(bx, 10, 26, bh);
+        }
+
+        const scale = Math.min(cw / 290, ch / 175);
+        const cx = cw * 0.54;
+        const cy = ch * 0.56;
+
+        // Draw Road Deck (3 lanes: v from -52 to +52, u from -145 to +105)
+        const r0 = isoProject(-145, -54, 0, cx, cy, scale);
+        const r1 = isoProject(105, -54, 0, cx, cy, scale);
+        const r2 = isoProject(105, 54, 0, cx, cy, scale);
+        const r3 = isoProject(-145, 54, 0, cx, cy, scale);
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath();
+        ctx.moveTo(r0.x, r0.y); ctx.lineTo(r1.x, r1.y); ctx.lineTo(r2.x, r2.y); ctx.lineTo(r3.x, r3.y);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Lane Dividers & Active Lane Highlight
+        for (let lane = 0; lane < 3; lane++) {
+          const lv = (lane - 1) * 34;
+          if (mode === 'game' && lane === sim.activeLane) {
+            const hl0 = isoProject(-142, lv - 15, 0.1, cx, cy, scale);
+            const hl1 = isoProject(102, lv - 15, 0.1, cx, cy, scale);
+            const hl2 = isoProject(102, lv + 15, 0.1, cx, cy, scale);
+            const hl3 = isoProject(-142, lv + 15, 0.1, cx, cy, scale);
+            ctx.fillStyle = sim.alertMode ? 'rgba(239,68,68,0.14)' : 'rgba(6,182,212,0.12)';
+            ctx.beginPath();
+            ctx.moveTo(hl0.x, hl0.y); ctx.lineTo(hl1.x, hl1.y); ctx.lineTo(hl2.x, hl2.y); ctx.lineTo(hl3.x, hl3.y);
+            ctx.closePath(); ctx.fill();
+          }
+          // Lane label on road
+          const lbl = isoProject(-120, lv, 0.2, cx, cy, scale);
+          ctx.fillStyle = 'rgba(148,163,184,0.65)';
+          ctx.font = `700 ${Math.max(9, 8.5 * scale)}px "Be Vietnam Pro", sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.fillText(`LÀN ${lane + 1}`, lbl.x, lbl.y);
+        }
+
+        // Dashed lane separator lines
+        [-17, 17].forEach(dv => {
+          const l0 = isoProject(-140, dv, 0.2, cx, cy, scale);
+          const l1 = isoProject(100, dv, 0.2, cx, cy, scale);
+          ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+          ctx.setLineDash([7, 7]);
+          ctx.lineWidth = 1.2;
+          ctx.beginPath(); ctx.moveTo(l0.x, l0.y); ctx.lineTo(l1.x, l1.y); ctx.stroke();
+          ctx.setLineDash([]);
+        });
+
+        // Draw Threshold Line on active lane (Level 2 & Level 5 Sit 3)
+        if (mode === 'game' && (sim.showThresholdLine || state.currentLevel === 2)) {
+          const lv = (sim.activeLane - 1) * 34;
+          const tu = -sim.thresholdCm * 1.65;
+          const t0 = isoProject(tu, lv - 14, 0.3, cx, cy, scale);
+          const t1 = isoProject(tu, lv + 14, 0.3, cx, cy, scale);
+          ctx.strokeStyle = '#fbbf24';
+          ctx.lineWidth = 2.5;
+          ctx.setLineDash([4, 3]);
+          ctx.beginPath(); ctx.moveTo(t0.x, t0.y); ctx.lineTo(t1.x, t1.y); ctx.stroke();
+          ctx.setLineDash([]);
+          const tLbl = isoProject(tu - 4, lv + 17, 0.5, cx, cy, scale);
+          ctx.fillStyle = '#fde047';
+          ctx.font = `700 ${Math.max(9, 8 * scale)}px "JetBrains Mono", monospace`;
+          ctx.fillText(`Ngưỡng ${sim.thresholdCm}cm`, tLbl.x, tLbl.y);
+        }
+
+        // Draw Visual Ruler in Level 1 or Level 4
+        if (mode === 'game' && sim.showRuler && sim.rulerDistance > 0) {
+          const lv = (sim.activeLane - 1) * 34 + 13;
+          const ru0 = isoProject(0, lv, 0.5, cx, cy, scale);
+          const ru1 = isoProject(-sim.rulerDistance * 1.65, lv, 0.5, cx, cy, scale);
+          ctx.strokeStyle = '#34d399';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath(); ctx.moveTo(ru0.x, ru0.y); ctx.lineTo(ru1.x, ru1.y); ctx.stroke();
+          const mid = isoProject((-sim.rulerDistance * 1.65) / 2, lv + 5, 2, cx, cy, scale);
+          ctx.fillStyle = '#6ee7b7';
+          ctx.font = `700 ${Math.max(10, 9 * scale)}px "JetBrains Mono", monospace`;
+          ctx.fillText(`d = ${formatVN(sim.rulerDistance)} cm`, mid.x, mid.y);
+        }
+
+        // Toll Booths + Sensors + Barriers + Vehicles sorted by lane
+        const listVehicles = mode === 'intro' ? ambientCars : (mode === 'victory' ? victoryCars : sim.vehicles);
+
+        for (let lane = 0; lane < 3; lane++) {
+          const lv = (lane - 1) * 34;
+
+          // Draw Rear Clearance Sensor (after barrier at u = +28)
+          if (mode === 'game' && lane === sim.activeLane && sim.rearSensorActive) {
+            drawIsoBox(ctx, 26, lv - 16, 0, 5, 4, 9, cx, cy, scale, '#2dd4bf', '#0d9488', '#115e59');
+            const beam0 = isoProject(28.5, lv - 12, 4, cx, cy, scale);
+            const beam1 = isoProject(28.5, lv + 12, 4, cx, cy, scale);
+            ctx.strokeStyle = sim.rearSensorDetected ? '#f97316' : 'rgba(45,212,191,0.7)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 3]);
+            ctx.beginPath(); ctx.moveTo(beam0.x, beam0.y); ctx.lineTo(beam1.x, beam1.y); ctx.stroke();
+            ctx.setLineDash([]);
+          }
+
+          // Draw Vehicles in this lane
+          listVehicles.filter(v => v.lane === lane).forEach(v => {
+            drawVehicle(ctx, v.lane, v.pos, v.color, v.type, cx, cy, scale);
+          });
+
+          // Draw Ultrasonic Waves on active lane (front sensor at u = 0 to front of nearest car)
+          if (mode === 'game' && lane === sim.activeLane && sim.sensorPulse) {
+            const frontCar = listVehicles.find(v => v.lane === lane && v.pos > 0);
+            if (frontCar) {
+              const waveEndU = -frontCar.pos * 1.65;
+              const pSensor = isoProject(0, lv, 7, cx, cy, scale);
+              const pCar = isoProject(waveEndU, lv, 7, cx, cy, scale);
+              if (sim.sensorError) {
+                ctx.strokeStyle = '#ef4444';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([3, 5]);
+                ctx.beginPath(); ctx.moveTo(pSensor.x, pSensor.y); ctx.lineTo((pSensor.x + pCar.x) / 2, (pSensor.y + pCar.y) / 2); ctx.stroke();
+                ctx.setLineDash([]);
+              } else {
+                // Outgoing cyan pulse + returning amber pulse
+                const prog = (time * 1.3) % 1;
+                const wx = pSensor.x + (pCar.x - pSensor.x) * prog;
+                const wy = pSensor.y + (pCar.y - pSensor.y) * prog;
+                ctx.strokeStyle = 'rgba(34,211,238,0.85)';
+                ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(wx, wy, 5 * scale * (0.4 + prog * 0.6), 0, Math.PI * 2); ctx.stroke();
+
+                const rprog = (time * 1.3 + 0.5) % 1;
+                const rx = pCar.x + (pSensor.x - pCar.x) * rprog;
+                const ry = pCar.y + (pSensor.y - pCar.y) * rprog;
+                ctx.strokeStyle = 'rgba(251,191,36,0.85)';
+                ctx.beginPath(); ctx.arc(rx, ry, 4.5 * scale * (0.4 + rprog * 0.6), 0, Math.PI * 2); ctx.stroke();
+              }
+            }
+          }
+
+          // Toll Booth Pillar (between lanes at v = lv - 16)
+          drawIsoBox(ctx, -6, lv - 18, 0, 14, 6, 22, cx, cy, scale, '#e2e8f0', '#94a3b8', '#475569');
+          // Front Ultrasonic Sensor module mounted on booth
+          drawIsoBox(ctx, -7.5, lv - 16, 6, 2, 4, 4, cx, cy, scale, '#38bdf8', '#0284c7', '#0369a1');
+
+          // Traffic Light on booth
+          const lightState = mode === 'victory' ? 'green' : (mode === 'intro' ? 'red' : sim.lights[lane]);
+          const tlPos = isoProject(1, lv - 15, 24, cx, cy, scale);
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(tlPos.x - 4 * scale, tlPos.y - 8 * scale, 8 * scale, 12 * scale);
+          // Red bulb
+          ctx.fillStyle = lightState === 'red' ? '#ef4444' : '#450a0a';
+          ctx.beginPath(); ctx.arc(tlPos.x, tlPos.y - 5 * scale, 2.3 * scale, 0, Math.PI * 2); ctx.fill();
+          // Green bulb
+          ctx.fillStyle = lightState === 'green' ? '#22c55e' : '#052e16';
+          ctx.beginPath(); ctx.arc(tlPos.x, tlPos.y + 0.5 * scale, 2.3 * scale, 0, Math.PI * 2); ctx.fill();
+
+          // Rotating Barrier Arm (exact pivot at u = 0, v = lv - 13, z = 9)
+          const openRatio = mode === 'victory' ? 1 : (mode === 'intro' ? 0 : sim.barriers[lane]);
+          const angleRad = openRatio * (Math.PI * 0.43); // 0 to ~77 deg upward
+          const armLen = 26;
+          const pivot = isoProject(0, lv - 13, 9, cx, cy, scale);
+          const tip = isoProject(0, lv - 13 + Math.cos(angleRad) * armLen, 9 + Math.sin(angleRad) * armLen, cx, cy, scale);
+
+          // Draw red-white striped barrier arm
+          ctx.lineCap = 'round';
+          ctx.strokeStyle = '#ef4444';
+          ctx.lineWidth = Math.max(4, 4.2 * scale);
+          ctx.beginPath(); ctx.moveTo(pivot.x, pivot.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = Math.max(3, 3.6 * scale);
+          ctx.setLineDash([6 * scale, 6 * scale]);
+          ctx.beginPath(); ctx.moveTo(pivot.x, pivot.y); ctx.lineTo(tip.x, tip.y); ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Pivot hub
+          ctx.fillStyle = '#f59e0b';
+          ctx.beginPath(); ctx.arc(pivot.x, pivot.y, 3.2 * scale, 0, Math.PI * 2); ctx.fill();
+        }
+
+        // Overhead Smart Gate Canopy + LED Board
+        drawIsoBox(ctx, -12, -55, 32, 26, 110, 5, cx, cy, scale, '#0284c7', '#1d4ed8', '#1e3a8a');
+        // LED Sign on Canopy
+        const ledCenter = isoProject(-12, 0, 35, cx, cy, scale);
+        ctx.save();
+        ctx.translate(ledCenter.x, ledCenter.y);
+        ctx.fillStyle = '#020617';
+        ctx.strokeStyle = mode === 'game' ? sim.ledColor : '#22d3ee';
+        ctx.lineWidth = 2;
+        const bw = Math.min(180, cw * 0.44);
+        const bh = 22;
+        ctx.beginPath();
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 6);
+        ctx.fill(); ctx.stroke();
+        ctx.fillStyle = mode === 'game' ? sim.ledColor : '#38bdf8';
+        ctx.font = `700 ${Math.max(10, 11)}px "JetBrains Mono", monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const displayLED = mode === 'victory' ? 'TMATH SMART GATE • THÔNG SUỐT' : (mode === 'intro' ? 'TMATH SMART GATE • CHỜ KỸ SƯ' : sim.ledText);
+        ctx.fillText(displayLED, 0, 1);
+        ctx.restore();
+
+        ctx.restore();
+      }
+
+      function update(dt) {
+        time += dt;
+
+        // Smoothly interpolate barrier angles
+        for (let i = 0; i < 3; i++) {
+          const diff = sim.targetBarriers[i] - sim.barriers[i];
+          sim.barriers[i] += diff * Math.min(1, dt * 6);
+          if (Math.abs(diff) < 0.01) sim.barriers[i] = sim.targetBarriers[i];
+        }
+
+        // Update active game vehicles
+        if (!state.isPaused) {
+          sim.vehicles.forEach(v => {
+            if (v.mode === 'approach') {
+              if (v.pos > v.targetPos) {
+                v.pos = Math.max(v.targetPos, v.pos - v.speed * dt);
+              } else {
+                v.mode = 'stopped';
+                if (v.onArrived) { const cb = v.onArrived; v.onArrived = null; cb(); }
+              }
+            } else if (v.mode === 'pass') {
+              // Only cross barrier if barrier is sufficiently open (>0.82)
+              if (v.pos > 4 || sim.barriers[v.lane] > 0.82) {
+                v.pos -= v.speed * dt;
+              }
+              // Check rear clearance sensor zone
+              const tailOffset = v.type === 'longtruck' ? 35 : 18;
+              sim.rearSensorDetected = (v.pos < 5 && v.pos > -tailOffset - 16);
+              if (v.pos < -tailOffset - 22) {
+                v.mode = 'done';
+                // Safe to close barrier ONLY after vehicle completely leaves zone!
+                sim.targetBarriers[v.lane] = 0;
+                sim.lights[v.lane] = 'red';
+                sim.rearSensorDetected = false;
+                updateTelemetryServo('ĐÓNG (0°)', 'text-rose-300');
+                if (sim.onVehicleCleared) {
+                  const cb = sim.onVehicleCleared;
+                  sim.onVehicleCleared = null;
+                  cb();
+                }
+              }
+            }
+          });
+        }
+
+        // Update Victory continuous traffic
+        victoryCars.forEach(v => {
+          v.pos -= v.speed * dt;
+          if (v.pos < -55) v.pos = 95 + Math.random() * 25;
+        });
+      }
+
+      let lastTs = 0;
+      function loop(ts) {
+        const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0.016);
+        lastTs = ts;
+        update(dt);
+
+        if (!document.getElementById('screen-start').classList.contains('hidden')) {
+          renderScene(document.getElementById('intro-canvas'), 'intro');
+        }
+        if (!document.getElementById('screen-game').classList.contains('hidden')) {
+          renderScene(document.getElementById('game-canvas'), 'game');
+        }
+        if (!document.getElementById('screen-victory').classList.contains('hidden')) {
+          renderScene(document.getElementById('victory-canvas'), 'victory');
+        }
+        animId = requestAnimationFrame(loop);
+      }
+
+      return {
+        start() {
+          if (!animId) animId = requestAnimationFrame(loop);
+        },
+        sim,
+        resetLane(laneIdx = 0) {
+          sim.activeLane = laneIdx;
+          sim.barriers = [0, 0, 0];
+          sim.targetBarriers = [0, 0, 0];
+          sim.lights = ['red', 'red', 'red'];
+          sim.sensorPulse = true;
+          sim.sensorError = false;
+          sim.rearSensorActive = false;
+          sim.rearSensorDetected = false;
+          sim.showRuler = false;
+          sim.rulerDistance = 0;
+          sim.showThresholdLine = false;
+          sim.thresholdCm = 20;
+          sim.alertMode = false;
+          sim.vehicles = [];
+          sim.onVehicleCleared = null;
+          document.getElementById('sim-lane-badge').textContent = `Làn ${laneIdx + 1} đang hoạt động`;
+        },
+        spawnVehicle({ lane = 0, startPos = 75, targetPos = 20, color = '#f97316', type = 'sedan', speed = 36, onArrived = null }) {
+          sim.vehicles = [{ lane, pos: startPos, targetPos, color, type, speed, mode: 'approach', onArrived }];
+        },
+        openAndPass(laneIdx, onCleared) {
+          SoundFX.barrier();
+          sim.targetBarriers[laneIdx] = 1;
+          sim.lights[laneIdx] = 'green';
+          updateTelemetryServo('MỞ (75°)', 'text-emerald-300');
+          sim.onVehicleCleared = onCleared;
+          const v = sim.vehicles[0];
+          if (v) {
+            v.speed = 38;
+            v.mode = 'pass';
+          }
+        }
+      };
+    })();
+
+    /* =========================================================================
+       7. TELEMETRY & HUD UPDATERS
+       ========================================================================= */
+    function updateTelemetryServo(text, colorClass) {
+      const el = document.getElementById('cc-servo');
+      if (!el) return;
+      el.textContent = text;
+      el.className = `font-bold text-sm mt-0.5 ${colorClass}`;
+    }
+
+    function setTelemetry({
+      formula = 'd = 0,017t + 0,5',
+      formulaNote = '* Công thức giả định dùng trong trò chơi (không phải số liệu đo thực tế của nhóm).',
+      t = '---',
+      ab = 'a = 0,017 | b = 0,5',
+      dCalc = '---',
+      dMeas = '---',
+      threshold = 'd ≤ 20 cm',
+      servo = 'ĐÓNG (0°)',
+      servoClass = 'text-rose-300',
+      sensor = 'Hoạt động tốt',
+      vehicle = 'Đang chờ',
+      alertState = 'normal' // 'normal' | 'error' | 'success'
+    }) {
+      document.getElementById('cc-formula').textContent = formula;
+      document.getElementById('cc-formula-note').textContent = formulaNote;
+      document.getElementById('cc-t').textContent = t;
+      document.getElementById('cc-ab').textContent = ab;
+      document.getElementById('cc-d-calc').textContent = dCalc;
+      document.getElementById('cc-d-meas').textContent = dMeas;
+      document.getElementById('cc-threshold').textContent = threshold;
+      updateTelemetryServo(servo, servoClass);
+      document.getElementById('cc-sensor').textContent = sensor;
+      document.getElementById('cc-vehicle').textContent = vehicle;
+
+      const panel = document.getElementById('control-center-panel');
+      const dot = document.getElementById('cc-alert-dot');
+      panel.classList.remove('glass-panel', 'glass-panel-alert', 'glass-panel-success');
+      if (alertState === 'error') {
+        panel.classList.add('glass-panel-alert');
+        dot.textContent = 'CẢNH BÁO LỖI';
+        dot.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/30 text-rose-200 border border-rose-400';
+      } else if (alertState === 'success') {
+        panel.classList.add('glass-panel-success');
+        dot.textContent = 'ĐÃ HIỆU CHỈNH';
+        dot.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/30 text-emerald-200 border border-emerald-400';
+      } else {
+        panel.classList.add('glass-panel');
+        dot.textContent = 'ONLINE';
+        dot.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
+      }
+    }
+
+    function updateHUD() {
+      document.getElementById('hud-player-name').textContent = state.playerName || 'Kỹ sư TMath';
+      document.getElementById('hud-score').textContent = `${state.score}/100`;
+      document.getElementById('hud-safe-cars').textContent = state.safeCarsPassed;
+      document.getElementById('hud-badges-count').textContent = `${state.earnedBadges.length}/5`;
+      document.getElementById('hud-level-pill').textContent = `Level ${state.currentLevel}`;
+
+      // Level Nav Bar
+      const nav = document.getElementById('level-nav-bar');
+      const names = [
+        '1. Tính toán',
+        '2. Điều khiển',
+        '3. Hiệu chỉnh',
+        '4. Sửa lỗi',
+        '5. Tình huống'
+      ];
+      nav.innerHTML = names.map((n, idx) => {
+        const lvl = idx + 1;
+        const done = state.completedLevels.includes(lvl);
+        const active = state.currentLevel === lvl;
+        const unlocked = lvl <= state.maxUnlockedLevel;
+        const cls = active
+          ? 'bg-cyan-500 text-slate-950 font-black border-cyan-300'
+          : done
+            ? 'bg-emerald-500/25 text-emerald-200 border-emerald-400/40 hover:bg-emerald-500/35'
+            : unlocked
+              ? 'bg-slate-800 text-white border-white/20 hover:bg-slate-700'
+              : 'bg-slate-900/50 text-slate-500 border-white/5 cursor-not-allowed';
+        return `<button ${unlocked ? `onclick="loadLevel(${lvl})"` : 'disabled'} class="px-3 py-1 rounded-lg text-[11px] font-bold border transition whitespace-nowrap ${cls}">
+          ${done ? '✓ ' : (unlocked ? '' : '🔒 ')}${n}
+        </button>`;
+      }).join('');
+    }
+
+    /* =========================================================================
+       8. GAME FLOW: START, RESUME, PAUSE, SOUND, FULLSCREEN
+       ========================================================================= */
+    function showScreen(screenId) {
+      ['screen-start', 'screen-game', 'screen-victory'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(screenId).classList.remove('hidden');
+      const hud = document.getElementById('top-hud');
+      if (screenId === 'screen-start') hud.classList.add('hidden');
+      else hud.classList.remove('hidden');
+    }
+
+    function startNewGame() {
+      SoundFX.click();
+      const input = document.getElementById('player-name-input');
+      const name = input.value.trim() || 'Nhóm Kỹ Sư TMath';
+      state = createInitialState();
+      state.playerName = name;
+      state.startedAt = Date.now();
+      saveProgress();
+      showScreen('screen-game');
+      loadLevel(1);
+    }
+
+    function resumeSavedGame() {
+      SoundFX.click();
+      const saved = loadSavedProgress();
+      if (!saved) return startNewGame();
+      state = { ...createInitialState(), ...saved };
+      if (state.completedLevels.length >= 5) {
+        showVictoryScreen();
+      } else {
+        showScreen('screen-game');
+        loadLevel(state.currentLevel || 1);
+      }
+    }
+
+    function confirmRestart() {
+      closeModal('modal-restart');
+      localStorage.removeItem(STORAGE_KEY);
+      state = createInitialState();
+      document.getElementById('btn-resume-saved').classList.add('hidden');
+      showScreen('screen-start');
+      showToast('Đã đặt lại trò chơi. Sẵn sàng cho lượt mới!', 'info');
+    }
+
+    function togglePause() {
+      SoundFX.click();
+      state.isPaused = !state.isPaused;
+      document.getElementById('pause-overlay').classList.toggle('hidden', !state.isPaused);
+      document.getElementById('btn-pause').innerHTML = state.isPaused
+        ? '▶ <span class="hidden lg:inline">Tiếp tục</span>'
+        : '⏸ <span class="hidden lg:inline">Tạm dừng</span>';
+    }
+
+    function toggleSound() {
+      const on = SoundFX.toggle();
+      document.getElementById('btn-sound').textContent = on ? '🔊' : '🔇';
+      showToast(on ? 'Đã bật âm thanh' : 'Đã tắt âm thanh', 'info');
+    }
+
+    function toggleFullscreen() {
+      SoundFX.click();
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.().catch(() => {});
+      } else {
+        document.exitFullscreen?.().catch(() => {});
+      }
+    }
+
+    /* =========================================================================
+       9. LEVEL CONTROLLER & BADGE COMPLETION
+       ========================================================================= */
+    function loadLevel(lvl) {
+      state.currentLevel = lvl;
+      state.isPaused = false;
+      document.getElementById('pause-overlay').classList.add('hidden');
+      document.getElementById('l1-cards-overlay').classList.add('hidden');
+      updateHUD();
+      saveProgress();
+
+      if (lvl === 1) startLevel1();
+      else if (lvl === 2) startLevel2();
+      else if (lvl === 3) startLevel3();
+      else if (lvl === 4) startLevel4();
+      else if (lvl === 5) startLevel5();
+    }
+
+    function completeLevel(lvl) {
+      if (!state.completedLevels.includes(lvl)) state.completedLevels.push(lvl);
+      if (!state.earnedBadges.includes(lvl)) state.earnedBadges.push(lvl);
+      if (lvl < 5 && state.maxUnlockedLevel < lvl + 1) state.maxUnlockedLevel = lvl + 1;
+      if (lvl === 5 && !state.completedAt) state.completedAt = Date.now();
+      saveProgress();
+      updateHUD();
+
+      SoundFX.badge();
+      launchConfetti(1400);
+
+      const badge = BADGES[lvl - 1];
+      document.getElementById('badge-modal-icon').innerHTML = getBadgeSVG(badge, true);
+      document.getElementById('badge-modal-title').textContent = `Huy hiệu: ${badge.name}`;
+      document.getElementById('badge-modal-desc').textContent = badge.desc;
+      document.getElementById('badge-modal-pts').textContent = `${state.levelScores[lvl]}/20`;
+      document.getElementById('badge-modal-total').textContent = `${state.score}/100`;
+      const btn = document.getElementById('badge-modal-next-btn');
+      btn.textContent = lvl < 5 ? `MỞ KHÓA LEVEL ${lvl + 1} →` : '🏆 XEM MÀN HÌNH CHIẾN THẮNG →';
+      btn.dataset.nextLevel = lvl + 1;
+      document.getElementById('modal-badge').classList.remove('hidden');
+    }
+
+    function proceedAfterBadge() {
+      closeModal('modal-badge');
+      const next = Number(document.getElementById('badge-modal-next-btn').dataset.nextLevel);
+      if (next <= 5) {
+        loadLevel(next);
+      } else {
+        showVictoryScreen();
+      }
+    }
+
+    /* =========================================================================
+       10. LEVEL 1 – TÍNH TOÁN CHÍNH XÁC (20 ĐIỂM)
+       ========================================================================= */
+    const L1_CARS = [
+      { id: 'l1_1', name: 'Xe số 1 – Xe ô tô màu cam', color: '#f97316', type: 'sedan', t: 1000, d: 17.5, pts: 6 },
+      { id: 'l1_2', name: 'Xe số 2 – Xe ô tô màu xanh', color: '#3b82f6', type: 'sedan', t: 2000, d: 34.5, pts: 7 },
+      { id: 'l1_3', name: 'Xe số 3 – Xe tải màu đỏ', color: '#ef4444', type: 'truck', t: 1500, d: 26, pts: 7 },
+    ];
+
+    function startLevel1() {
+      if (state.l1Step >= L1_CARS.length) state.l1Step = 0;
+      SimEngine.resetLane(0);
+      renderLevel1Step();
+    }
+
+    function renderLevel1Cards() {
+      const box = document.getElementById('l1-cards-overlay');
+      box.classList.remove('hidden');
+      box.innerHTML = L1_CARS.map((c, i) => {
+        const verified = i < state.l1Step;
+        return `<div class="px-2.5 py-1 rounded-lg text-[10px] font-bold border ${verified ? 'bg-emerald-600/90 border-emerald-300 text-white' : 'bg-slate-900/80 border-white/15 text-slate-400'}">
+          ${verified ? '✓' : '○'} Thẻ Xe ${i + 1}
+        </div>`;
+      }).join('');
+    }
+
+    function renderLevel1Step() {
+      const car = L1_CARS[state.l1Step];
+      renderLevel1Cards();
+      SimEngine.sim.showRuler = false;
+      SimEngine.sim.ledText = `L1 • XE ${state.l1Step + 1}: t = ${car.t.toLocaleString('vi-VN')} µs`;
+      SimEngine.sim.ledColor = '#22d3ee';
+      SimEngine.spawnVehicle({ lane: 0, startPos: 75, targetPos: car.d, color: car.color, type: car.type, speed: 42 });
+
+      document.getElementById('sim-status-badge').textContent = `Đang đo ${car.name}`;
+
+      setTelemetry({
+        formula: 'd = 0,017t + 0,5',
+        formulaNote: '* Công thức giả định dùng trong trò chơi, không phải kết quả đo thực tế của nhóm học sinh.',
+        t: `${car.t.toLocaleString('vi-VN')} µs`,
+        ab: 'a = 0,017 | b = 0,5',
+        dCalc: 'Chờ kỹ sư tính...',
+        dMeas: '---',
+        threshold: 'd ≤ 20 cm',
+        servo: 'ĐÓNG (0°)',
+        sensor: 'Đang phát sóng siêu âm',
+        vehicle: car.name
+      });
+
+      setRobot('happy', `
+        <strong>Level 1 – Tính toán chính xác (${state.l1Step + 1}/3):</strong><br/>
+        Cảm biến siêu âm tại Làn 1 vừa nhận được thời gian phản hồi <strong class="text-amber-300">t = ${car.t.toLocaleString('vi-VN')} µs</strong> từ <strong>${car.name}</strong>.
+        Em hãy thay vào công thức <span class="font-mono text-cyan-300">d = 0,017t + 0,5</span> để tính khoảng cách <strong>d (cm)</strong> nhé!
+      `);
+
+      const mc = document.getElementById('mission-container');
+      mc.innerHTML = `
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-cyan-300">Nhiệm vụ ${state.l1Step + 1}/3 • Cấp thẻ xác nhận dữ liệu</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+${car.pts} điểm</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/75 border border-cyan-500/25">
+            <div class="text-sm sm:text-base font-bold text-white mb-2">${car.name}</div>
+            <div class="flex flex-wrap gap-3 text-xs sm:text-sm mb-3">
+              <span class="px-3 py-1 rounded-lg bg-slate-950 border border-cyan-400/30 font-mono text-cyan-300">Công thức: d = 0,017t + 0,5</span>
+              <span class="px-3 py-1 rounded-lg bg-slate-950 border border-amber-400/30 font-mono text-amber-300">t = ${car.t.toLocaleString('vi-VN')} µs</span>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2.5 items-stretch sm:items-center">
+              <div class="flex-1 relative">
+                <input id="l1-input" type="text" inputmode="decimal" placeholder="Nhập khoảng cách d (ví dụ: 17,5 hoặc 17.5)"
+                  class="w-full px-4 py-3 rounded-xl bg-slate-950 border-2 border-cyan-500/40 focus:border-amber-400 focus:outline-none text-white font-mono font-bold text-base" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">cm</span>
+              </div>
+              <button id="l1-check-btn" onclick="checkLevel1()" class="game-btn px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-sm">
+                KIỂM TRA KẾT QUẢ
+              </button>
+            </div>
+            <div id="l1-feedback" class="hidden mt-3 p-3 rounded-xl text-xs sm:text-sm"></div>
+          </div>
+        </div>
+      `;
+
+      const inp = document.getElementById('l1-input');
+      inp.focus();
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkLevel1(); });
+    }
+
+    function checkLevel1() {
+      const car = L1_CARS[state.l1Step];
+      const val = parseVNNumber(document.getElementById('l1-input').value);
+      const fb = document.getElementById('l1-feedback');
+
+      if (isNaN(val)) {
+        showToast('Em hãy nhập một giá trị số hợp lệ nhé!', 'warning');
+        return;
+      }
+
+      if (Math.abs(val - car.d) < 0.05) {
+        SoundFX.correct();
+        const gained = awardTaskPoints(car.id, 1, car.pts);
+        state.safeCarsPassed += 1;
+        updateHUD();
+
+        document.getElementById('l1-check-btn').disabled = true;
+        document.getElementById('cc-d-calc').textContent = `${formatVN(car.d)} cm`;
+
+        // Show visual ruler on 3D canvas
+        SimEngine.sim.showRuler = true;
+        SimEngine.sim.rulerDistance = car.d;
+        SimEngine.sim.ledText = `CHÍNH XÁC: d = ${formatVN(car.d)} cm`;
+        SimEngine.sim.ledColor = '#34d399';
+
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-emerald-500/20 border border-emerald-400/50 text-emerald-100';
+        fb.innerHTML = `
+          <div class="font-bold text-emerald-300">✓ Chính xác! Đã cấp Thẻ xác nhận dữ liệu cho ${car.name} ${gained ? `(+${gained} điểm)` : ''}</div>
+          <div class="font-mono mt-1 text-white">Phép tính: d = 0,017 × ${car.t.toLocaleString('vi-VN')} + 0,5 = ${formatVN(0.017 * car.t)} + 0,5 = <strong>${formatVN(car.d)} cm</strong></div>
+          <div class="mt-2">
+            <button onclick="nextLevel1Car()" class="game-btn px-4 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">
+              ${state.l1Step < 2 ? 'TIẾP TỤC XE TIẾP THEO →' : 'HOÀN THÀNH LEVEL 1 →'}
+            </button>
+          </div>
+        `;
+        setRobot('celebrate', `Tuyệt vời! Khoảng cách của <strong>${car.name}</strong> là <strong>${formatVN(car.d)} cm</strong>. Hãy nhìn vị trí xe được đánh dấu trên thước đo 3D kìa!`);
+        SimEngine.openAndPass(0, null);
+      } else {
+        SoundFX.wrong();
+        recordMistake(car.id, 1, `Level 1 - ${car.name} (t = ${car.t} µs)`, 'Thay giá trị biến t vào hàm số bậc nhất d = 0,017t + 0,5');
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.innerHTML = `Chưa chính xác (em nhập ${formatVN(val)} cm). Hãy kiểm tra lại phép nhân <span class="font-mono">0,017 × ${car.t.toLocaleString('vi-VN')}</span> rồi cộng thêm <span class="font-mono">0,5</span> nhé!`;
+        setRobot('thinking', `
+          Gợi ý cho em: Với <span class="font-mono text-amber-300">t = ${car.t.toLocaleString('vi-VN')}</span>, ta thay vào công thức:<br/>
+          <span class="font-mono text-cyan-300">d = 0,017 × ${car.t.toLocaleString('vi-VN')} + 0,5</span>.<br/>
+          Em hãy tính tích trước rồi cộng 0,5 và nhập lại nhé!
+        `);
+      }
+    }
+
+    function nextLevel1Car() {
+      SoundFX.click();
+      state.l1Step += 1;
+      saveProgress();
+      if (state.l1Step < L1_CARS.length) {
+        renderLevel1Step();
+      } else {
+        completeLevel(1);
+      }
+    }
+
+    /* =========================================================================
+       11. LEVEL 2 – ĐIỀU KHIỂN RÀO CHẮN (20 ĐIỂM)
+       ========================================================================= */
+    const L2_CARS = [
+      { id: 'l2_1', label: 'Xe A', name: 'Xe A – Ô tô xanh ngọc', color: '#14b8a6', type: 'sedan', d: 25, shouldOpen: false, pts: 5 },
+      { id: 'l2_2', label: 'Xe B', name: 'Xe B – Ô tô cam', color: '#f97316', type: 'sedan', d: 18, shouldOpen: true, pts: 5 },
+      { id: 'l2_3', label: 'Xe C', name: 'Xe C – Xe buýt thành phố', color: '#eab308', type: 'bus', d: 20, shouldOpen: true, pts: 5, specialEqual: true },
+      { id: 'l2_4', label: 'Xe D', name: 'Xe D – Xe tải xanh dương', color: '#3b82f6', type: 'truck', d: 32, shouldOpen: false, pts: 5 },
+    ];
+
+    function startLevel2() {
+      if (state.l2Step >= L2_CARS.length) state.l2Step = 0;
+      SimEngine.resetLane(0);
+      SimEngine.sim.showThresholdLine = true;
+      SimEngine.sim.rearSensorActive = true;
+      renderLevel2Step();
+    }
+
+    function renderLevel2Step() {
+      const car = L2_CARS[state.l2Step];
+      SimEngine.sim.targetBarriers[0] = 0;
+      SimEngine.sim.lights[0] = 'red';
+      SimEngine.sim.ledText = `${car.label}: d = ${car.d} cm | NGƯỠNG ≤ 20 cm`;
+      SimEngine.sim.ledColor = '#fbbf24';
+      SimEngine.spawnVehicle({ lane: 0, startPos: 78, targetPos: car.d, color: car.color, type: car.type, speed: 40 });
+
+      document.getElementById('sim-status-badge').textContent = `Chờ quyết định điều khiển ${car.label}`;
+
+      setTelemetry({
+        formula: 'Điều kiện mở: d ≤ 20 cm',
+        formulaNote: '* Dữ liệu cảm biến hợp lệ. Thanh chắn chỉ đóng lại sau khi xe rời khỏi vùng chắn an toàn.',
+        t: `${Math.round((car.d - 0.5) / 0.017).toLocaleString('vi-VN')} µs`,
+        ab: 'a = 0,017 | b = 0,5',
+        dCalc: `${car.d} cm`,
+        dMeas: 'Hợp lệ',
+        threshold: 'd ≤ 20 cm',
+        servo: 'ĐÓNG (0°)',
+        servoClass: 'text-rose-300',
+        sensor: 'Trước + Xác nhận sau',
+        vehicle: `${car.label} (d = ${car.d} cm)`
+      });
+
+      setRobot('happy', `
+        <strong>Level 2 – Điều khiển rào chắn (${state.l2Step + 1}/4):</strong><br/>
+        <strong>${car.name}</strong> đang ở khoảng cách <strong class="text-amber-300">d = ${car.d} cm</strong>.
+        Quy định: Ngưỡng mở thanh chắn là <strong>không vượt quá 20 cm (d ≤ 20 cm)</strong>. Em chọn lệnh nào?
+      `);
+
+      const mc = document.getElementById('mission-container');
+      mc.innerHTML = `
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-teal-300">Tình huống ${state.l2Step + 1}/4 • Quyết định điều khiển</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+${car.pts} điểm</span>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-900/75 border border-teal-500/30">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <div>
+                <div class="text-base font-extrabold text-white">${car.name}</div>
+                <div class="text-xs text-slate-300">Thanh chắn hiện tại: <strong class="text-rose-400">ĐANG ĐÓNG (Đèn đỏ)</strong></div>
+              </div>
+              <div class="px-4 py-2 rounded-xl bg-slate-950 border border-amber-400/40 text-center">
+                <div class="text-[10px] text-slate-400 uppercase">Khoảng cách hiện tại</div>
+                <div class="font-mono text-xl font-black text-amber-300">d = ${car.d} cm</div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button id="l2-btn-open" onclick="checkLevel2(true)" class="game-btn py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-sm sm:text-base flex items-center justify-center gap-2">
+                <span>🟢</span> MỞ THANH CHẮN
+              </button>
+              <button id="l2-btn-wait" onclick="checkLevel2(false)" class="game-btn py-3.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-sm sm:text-base flex items-center justify-center gap-2">
+                <span>🟡</span> CHỜ XE ĐẾN GẦN
+              </button>
+            </div>
+            <div id="l2-feedback" class="hidden mt-3 p-3 rounded-xl text-xs sm:text-sm"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function checkLevel2(choseOpen) {
+      const car = L2_CARS[state.l2Step];
+      const fb = document.getElementById('l2-feedback');
+
+      if (choseOpen === car.shouldOpen) {
+        SoundFX.correct();
+        const gained = awardTaskPoints(car.id, 2, car.pts);
+        document.getElementById('l2-btn-open').disabled = true;
+        document.getElementById('l2-btn-wait').disabled = true;
+
+        const specialNote = car.specialEqual
+          ? `<div class="mt-1.5 p-2 rounded-lg bg-cyan-500/20 border border-cyan-300/50 text-cyan-100 font-semibold">⭐ Lưu ý Toán học quan trọng: Điều kiện <strong>d ≤ 20 cm</strong> (nhỏ hơn <u>hoặc bằng</u> 20 cm) nên tại đúng biên <strong>d = 20 cm</strong>, hệ thống <strong>CHO PHÉP MỞ</strong>!</div>`
+          : '';
+
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-emerald-500/20 border border-emerald-400/50 text-emerald-100';
+
+        if (car.shouldOpen) {
+          SimEngine.sim.ledText = `${car.d} ≤ 20 cm → MỞ THANH CHẮN`;
+          SimEngine.sim.ledColor = '#34d399';
+          fb.innerHTML = `
+            <div class="font-bold text-emerald-300">✓ Quyết định chính xác! ${car.d} cm ≤ 20 cm ${gained ? `(+${gained} điểm)` : ''}</div>
+            <div>Đèn xanh sáng, thanh chắn mở và chỉ đóng lại khi cảm biến xác nhận ${car.label} đã rời khỏi vùng thanh chắn an toàn.</div>
+            ${specialNote}
+          `;
+          setRobot('celebrate', `Chuẩn xác! Vì <strong>${car.d} ≤ 20</strong> nên thanh chắn mở an toàn cho ${car.label} đi qua.`);
+          SimEngine.openAndPass(0, () => {
+            state.safeCarsPassed += 1;
+            updateHUD();
+            showLevel2NextButton(fb);
+          });
+        } else {
+          SimEngine.sim.ledText = `${car.d} > 20 cm → CHỜ XE ĐẾN GẦN`;
+          SimEngine.sim.ledColor = '#fbbf24';
+          fb.innerHTML = `
+            <div class="font-bold text-emerald-300">✓ Quyết định chính xác! ${car.d} cm &gt; 20 cm ${gained ? `(+${gained} điểm)` : ''}</div>
+            <div>Thanh chắn giữ trạng thái đóng. ${car.label} đang tiếp tục tiến đến vị trí thích hợp (18 cm ≤ 20 cm) trước khi được mở thanh chắn!</div>
+          `;
+          setRobot('celebrate', `Rất chính xác! Vì <strong>${car.d} &gt; 20</strong> nên ta chờ ${car.label} tiến vào vùng ngưỡng 20 cm rồi mới mở thanh chắn.`);
+          // Vehicle creeps closer to 18 cm, then barrier opens safely
+          const v = SimEngine.sim.vehicles[0];
+          if (v) {
+            v.targetPos = 18;
+            v.speed = 18;
+            v.mode = 'approach';
+            v.onArrived = () => {
+              SimEngine.sim.ledText = `18 ≤ 20 cm → MỞ THANH CHẮN`;
+              SimEngine.sim.ledColor = '#34d399';
+              document.getElementById('cc-d-calc').textContent = '18 cm';
+              SimEngine.openAndPass(0, () => {
+                state.safeCarsPassed += 1;
+                updateHUD();
+                showLevel2NextButton(fb);
+              });
+            };
+          }
+        }
+      } else {
+        SoundFX.wrong();
+        recordMistake(car.id, 2, `Level 2 - ${car.label} (d = ${car.d} cm)`, 'So sánh khoảng cách với ngưỡng mở d ≤ 20 cm (chú ý dấu ≤)');
+        SimEngine.sim.ledText = `KIỂM TRA LẠI: d = ${car.d} cm`;
+        SimEngine.sim.ledColor = '#f87171';
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.innerHTML = `Hệ thống tạm dừng để đảm bảo an toàn (không xảy ra va chạm). Em hãy kiểm tra lại: <strong>${car.d} cm</strong> có thỏa mãn điều kiện <strong>d ≤ 20 cm</strong> không?`;
+        setRobot('warning', `Khoan đã! Hãy kiểm tra lại điều kiện Toán học: Thanh chắn chỉ mở khi <strong>d ≤ 20 cm</strong>. Hiện tại <strong class="text-amber-300">d = ${car.d} cm</strong> đấy!`);
+      }
+    }
+
+    function showLevel2NextButton(fb) {
+      const btnWrap = document.createElement('div');
+      btnWrap.className = 'mt-2';
+      btnWrap.innerHTML = `<button onclick="nextLevel2Car()" class="game-btn px-4 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">
+        ${state.l2Step < 3 ? 'TIẾP TỤC XE TIẾP THEO →' : 'HOÀN THÀNH LEVEL 2 →'}
+      </button>`;
+      fb.appendChild(btnWrap);
+    }
+
+    function nextLevel2Car() {
+      SoundFX.click();
+      state.l2Step += 1;
+      saveProgress();
+      if (state.l2Step < L2_CARS.length) {
+        renderLevel2Step();
+      } else {
+        completeLevel(2);
+      }
+    }
+
+    /* =========================================================================
+       12. LEVEL 3 – HIỆU CHỈNH CẢM BIẾN (20 ĐIỂM)
+       ========================================================================= */
+    const L3_DATA = [
+      { t: 500, d: 9 },
+      { t: 1000, d: 17.5 },
+      { t: 1500, d: 26 },
+      { t: 2000, d: 34.5 },
+      { t: 2500, d: 43 }
+    ];
+
+    function startLevel3() {
+      if (state.l3Step > 4) state.l3Step = 0;
+      SimEngine.resetLane(1); // Làn 2
+      SimEngine.sim.ledText = 'LÀN 2 • CẢM BIẾN MỚI CHƯA HIỆU CHỈNH';
+      SimEngine.sim.ledColor = '#38bdf8';
+      SimEngine.spawnVehicle({ lane: 1, startPos: 65, targetPos: 28, color: '#06b6d4', type: 'sedan', speed: 35 });
+      renderLevel3Step();
+    }
+
+    function renderLevel3Step() {
+      const step = state.l3Step; // 0: find a, 1: find b, 2: formula, 3: graph, 4: verify t=3000
+      document.getElementById('sim-status-badge').textContent = `Hiệu chỉnh cảm biến Làn 2 (Bước ${step + 1}/5)`;
+
+      setTelemetry({
+        formula: step >= 2 ? 'd = 0,017t + 0,5' : (step === 1 ? 'd = 0,017t + b' : 'd = a·t + b (Chưa xác định)'),
+        formulaNote: '* Bộ dữ liệu mô phỏng lý tưởng dùng để luyện tập xây dựng hàm số bậc nhất.',
+        t: step === 4 ? '3 000 µs (Kiểm chứng)' : 'Bảng 5 cặp dữ liệu',
+        ab: step >= 2 ? 'a = 0,017 | b = 0,5' : (step === 1 ? 'a = 0,017 | b = ?' : 'a = ? | b = ?'),
+        dCalc: step === 4 ? 'Chờ kiểm chứng...' : 'Đang hiệu chỉnh',
+        dMeas: 'Dữ liệu mẫu chuẩn',
+        threshold: 'd ≤ 20 cm',
+        servo: 'CHỜ KÍCH HOẠT',
+        servoClass: 'text-amber-300',
+        sensor: 'Làn 2 (Mới lắp đặt)',
+        vehicle: 'Xe kiểm thử Làn 2'
+      });
+
+      const mc = document.getElementById('mission-container');
+
+      if (step === 0) {
+        setRobot('happy', `“Cảm biến mới đã được lắp đặt, nhưng chúng ta cần xây dựng lại công thức Toán học để hệ thống hoạt động chính xác. Em hãy sử dụng các dữ liệu sau!”<br/><strong>Bước 1/5:</strong> Chọn 2 điểm bất kì trong bảng rồi tính hệ số góc <span class="font-mono text-amber-300">a = (d₂ − d₁) / (t₂ − t₁)</span>.`);
+        renderL3Task1(mc);
+      } else if (step === 1) {
+        setRobot('happy', `<strong>Bước 2/5:</strong> Đã tìm được <span class="font-mono text-emerald-300">a = 0,017</span>. Em hãy thay một cặp dữ liệu (t; d) bất kì từ bảng vào <span class="font-mono text-cyan-300">d = 0,017t + b</span> để tìm hệ số <strong>b</strong> nhé!`);
+        renderL3Task2(mc);
+      } else if (step === 2) {
+        setRobot('happy', `<strong>Bước 3/5:</strong> Em đã có cả <span class="font-mono text-emerald-300">a = 0,017</span> và <span class="font-mono text-emerald-300">b = 0,5</span>. Hãy nhập công thức hàm số bậc nhất hoàn chỉnh vào bộ điều khiển!`);
+        renderL3Task3(mc);
+      } else if (step === 3) {
+        setRobot('happy', `<strong>Bước 4/5:</strong> Hãy biểu diễn tất cả 5 cặp tọa độ <span class="font-mono text-amber-300">(t; d)</span> lên hệ trục tọa độ bằng cách nhấn chọn các điểm tương ứng trên đồ thị. Khi đủ 5 điểm, đường thẳng hàm số sẽ hiện ra!`);
+        renderL3Task4(mc);
+      } else if (step === 4) {
+        setRobot('happy', `<strong>Bước 5/5:</strong> Kiểm chứng công thức vừa tìm được! Khi cảm biến trả về <span class="font-mono text-amber-300">t = 3 000 µs</span>, khoảng cách tính được là bao nhiêu cm?`);
+        renderL3Task5(mc);
+      }
+    }
+
+    function getL3TableHTML(selectable = false) {
+      return `
+        <div class="overflow-x-auto mb-3">
+          <div class="text-[11px] text-cyan-300/90 mb-1 font-semibold">Bảng dữ liệu mô phỏng lý tưởng dùng để luyện tập ${selectable ? '(Nhấn chọn 2 dòng có t khác nhau)' : ''}:</div>
+          <table class="w-full text-center border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-950/90 text-cyan-300 border-b border-cyan-500/30">
+                <th class="py-1.5 px-2">Điểm</th>
+                <th class="py-1.5 px-2">Thời gian phản hồi t (µs)</th>
+                <th class="py-1.5 px-2">Khoảng cách d (cm)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/10">
+              ${L3_DATA.map((row, idx) => {
+                const selected = state.l3SelectedRows.includes(idx);
+                return `<tr ${selectable ? `onclick="toggleL3Row(${idx})"` : ''} class="${selectable ? 'cursor-pointer hover:bg-cyan-500/20' : ''} ${selected ? 'bg-amber-500/25 text-amber-200 font-bold' : 'bg-slate-900/60'} transition">
+                  <td class="py-1.5 px-2 font-mono">P${idx + 1} ${selected ? '✓' : ''}</td>
+                  <td class="py-1.5 px-2 font-mono">${row.t.toLocaleString('vi-VN')}</td>
+                  <td class="py-1.5 px-2 font-mono">${formatVN(row.d)}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function toggleL3Row(idx) {
+      SoundFX.click();
+      if (state.l3SelectedRows.includes(idx)) {
+        state.l3SelectedRows = state.l3SelectedRows.filter(i => i !== idx);
+      } else {
+        if (state.l3SelectedRows.length >= 2) state.l3SelectedRows.shift();
+        state.l3SelectedRows.push(idx);
+      }
+      renderL3Task1(document.getElementById('mission-container'));
+    }
+
+    function renderL3Task1(mc) {
+      let pairHint = '<span class="text-slate-400">Hãy chọn 2 điểm trong bảng trên để xem công thức thay số.</span>';
+      if (state.l3SelectedRows.length === 2) {
+        const p1 = L3_DATA[state.l3SelectedRows[0]];
+        const p2 = L3_DATA[state.l3SelectedRows[1]];
+        pairHint = `Đã chọn: <strong>(${p1.t.toLocaleString('vi-VN')}; ${formatVN(p1.d)})</strong> và <strong>(${p2.t.toLocaleString('vi-VN')}; ${formatVN(p2.d)})</strong> → <span class="font-mono text-amber-300">a = (${formatVN(p2.d)} − ${formatVN(p1.d)}) / (${p2.t.toLocaleString('vi-VN')} − ${p1.t.toLocaleString('vi-VN')})</span>`;
+      }
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-blue-500/30">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-extrabold uppercase text-blue-300">Nhiệm vụ 1/5 • Tìm hệ số a</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+          </div>
+          ${getL3TableHTML(true)}
+          <div class="text-xs p-2.5 rounded-xl bg-slate-950/70 border border-white/10 mb-3">${pairHint}</div>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="l3-a-input" type="text" inputmode="decimal" placeholder="Nhập giá trị hệ số a..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-blue-500/40 focus:border-amber-400 focus:outline-none text-white font-mono font-bold" />
+            <button onclick="checkL3Task1()" class="game-btn px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-sm">KIỂM TRA a</button>
+          </div>
+          <div id="l3-fb" class="hidden mt-2.5 p-2.5 rounded-xl text-xs"></div>
+        </div>
+      `;
+    }
+
+    function checkL3Task1() {
+      const fb = document.getElementById('l3-fb');
+      if (state.l3SelectedRows.length < 2) {
+        showToast('Em hãy nhấn chọn 2 dòng dữ liệu trong bảng trước nhé!', 'warning');
+        return;
+      }
+      const val = parseVNNumber(document.getElementById('l3-a-input').value);
+      if (isNaN(val)) return showToast('Vui lòng nhập số hợp lệ!', 'warning');
+
+      if (Math.abs(val - 0.017) <= 0.0005) {
+        SoundFX.correct();
+        awardTaskPoints('l3_1', 3, 4);
+        showToast('Chính xác! Hệ số a = 0,017 (+4 điểm)', 'success');
+        state.l3Step = 1;
+        saveProgress();
+        renderLevel3Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l3_1', 3, 'Level 3 - Tính hệ số góc a', 'Tính hệ số góc a = (d₂ − d₁)/(t₂ − t₁) của hàm số bậc nhất');
+        fb.className = 'mt-2.5 p-2.5 rounded-xl text-xs bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.textContent = 'Chưa đúng rồi! Hãy lấy hiệu hai giá trị d chia cho hiệu hai giá trị t tương ứng (chú ý dấu phẩy thập phân).';
+        setRobot('thinking', 'Gợi ý: Ví dụ với (500; 9) và (1 000; 17,5), ta có: a = (17,5 − 9) / (1 000 − 500) = 8,5 / 500. Em bấm tính xem bằng bao nhiêu nhé!');
+      }
+    }
+
+    function renderL3Task2(mc) {
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-blue-500/30">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-extrabold uppercase text-blue-300">Nhiệm vụ 2/5 • Tìm hệ số tự do b</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+          </div>
+          ${getL3TableHTML(false)}
+          <div class="text-xs text-slate-200 mb-3">Đã có <span class="font-mono text-emerald-300 font-bold">a = 0,017</span>. Thay một cặp (t; d) vào <span class="font-mono text-amber-300">d = 0,017t + b</span> để tính <strong>b</strong>:</div>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="l3-b-input" type="text" inputmode="decimal" placeholder="Nhập giá trị hệ số b..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-blue-500/40 focus:border-amber-400 focus:outline-none text-white font-mono font-bold" />
+            <button onclick="checkL3Task2()" class="game-btn px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-sm">KIỂM TRA b</button>
+          </div>
+          <div id="l3-fb" class="hidden mt-2.5 p-2.5 rounded-xl text-xs"></div>
+        </div>
+      `;
+    }
+
+    function checkL3Task2() {
+      const fb = document.getElementById('l3-fb');
+      const val = parseVNNumber(document.getElementById('l3-b-input').value);
+      if (isNaN(val)) return showToast('Vui lòng nhập số hợp lệ!', 'warning');
+
+      if (Math.abs(val - 0.5) <= 0.05) {
+        SoundFX.correct();
+        awardTaskPoints('l3_2', 3, 4);
+        showToast('Chính xác! Hệ số b = 0,5 (+4 điểm)', 'success');
+        state.l3Step = 2;
+        saveProgress();
+        renderLevel3Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l3_2', 3, 'Level 3 - Tính hệ số b', 'Tìm hệ số tự do b bằng cách thay tọa độ 1 điểm vào d = at + b');
+        fb.className = 'mt-2.5 p-2.5 rounded-xl text-xs bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.textContent = 'Chưa chính xác. Hãy thử thay t = 1 000 và d = 17,5 vào d = 0,017t + b nhé!';
+        setRobot('thinking', 'Gợi ý: Thay t = 1 000, d = 17,5 ta được: 17,5 = 0,017 × 1 000 + b ⇒ 17,5 = 17 + b. Vậy b bằng bao nhiêu?');
+      }
+    }
+
+    function renderL3Task3(mc) {
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-blue-500/30">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-extrabold uppercase text-blue-300">Nhiệm vụ 3/5 • Nhập công thức hoàn chỉnh</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-200 mb-3">Với <strong class="text-emerald-300">a = 0,017</strong> và <strong class="text-emerald-300">b = 0,5</strong>, hãy viết công thức hàm số bậc nhất biểu diễn khoảng cách <strong>d</strong> theo thời gian phản hồi <strong>t</strong>:</p>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="l3-f-input" type="text" placeholder="Ví dụ: d = 0,017t + 0,5" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-blue-500/40 focus:border-amber-400 focus:outline-none text-white font-mono font-bold" />
+            <button onclick="checkL3Task3()" class="game-btn px-5 py-2.5 rounded-xl bg-blue-600 text-white font-black text-sm">XÁC NHẬN CÔNG THỨC</button>
+          </div>
+          <div id="l3-fb" class="hidden mt-2.5 p-2.5 rounded-xl text-xs"></div>
+        </div>
+      `;
+    }
+
+    function checkL3Task3() {
+      const fb = document.getElementById('l3-fb');
+      const raw = document.getElementById('l3-f-input').value.trim().toLowerCase().replace(/\s+/g, '').replace(/,/g, '.').replace(/\*/g, '').replace(/×/g, '');
+      const valid = raw === 'd=0.017t+0.5' || raw === 'd=0.5+0.017t';
+
+      if (valid) {
+        SoundFX.correct();
+        awardTaskPoints('l3_3', 3, 4);
+        showToast('Chính xác! Công thức d = 0,017t + 0,5 (+4 điểm)', 'success');
+        state.l3Step = 3;
+        state.l3PlottedIndices = [];
+        saveProgress();
+        renderLevel3Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l3_3', 3, 'Level 3 - Viết công thức hàm số', 'Viết dạng tổng quát hàm số bậc nhất d = at + b');
+        fb.className = 'mt-2.5 p-2.5 rounded-xl text-xs bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.textContent = 'Hãy viết đầy đủ dạng d = at + b với a = 0,017 và b = 0,5 (chấp nhận cả dấu phẩy và dấu chấm).';
+        setRobot('thinking', 'Gợi ý: Thay a = 0,017 và b = 0,5 vào dạng d = at + b, ta viết là: <span class="font-mono text-amber-300">d = 0,017t + 0,5</span>.');
+      }
+    }
+
+    function renderL3Task4(mc) {
+      const plotted = state.l3PlottedIndices || [];
+      const allPlotted = plotted.length === L3_DATA.length;
+
+      // SVG Coordinate System mapping: t in [0..3200], d in [0..55]
+      const W = 520, H = 250, padL = 52, padR = 24, padT = 18, padB = 38;
+      const mapX = t => padL + (t / 3200) * (W - padL - padR);
+      const mapY = d => H - padB - (d / 55) * (H - padT - padB);
+
+      let gridLines = '';
+      for (let t = 500; t <= 3000; t += 500) {
+        const x = mapX(t);
+        gridLines += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${H - padB}" stroke="#334155" stroke-dasharray="3 3"/>`;
+        gridLines += `<text x="${x}" y="${H - padB + 15}" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="JetBrains Mono">${t}</text>`;
+      }
+      for (let d = 10; d <= 50; d += 10) {
+        const y = mapY(d);
+        gridLines += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#334155" stroke-dasharray="3 3"/>`;
+        gridLines += `<text x="${padL - 8}" y="${y + 3}" text-anchor="end" fill="#94a3b8" font-size="10" font-family="JetBrains Mono">${d}</text>`;
+      }
+
+      // Line drawn once all 5 points are plotted
+      const lineSVG = allPlotted
+        ? `<line x1="${mapX(0)}" y1="${mapY(0.5)}" x2="${mapX(3000)}" y2="${mapY(51.5)}" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>`
+        : '';
+
+      // Clickable target points on graph
+      const pointsSVG = L3_DATA.map((p, idx) => {
+        const x = mapX(p.t), y = mapY(p.d);
+        const isDone = plotted.includes(idx);
+        return `
+          <g onclick="plotL3Point(${idx})" class="cursor-pointer">
+            <circle cx="${x}" cy="${y}" r="12" fill="transparent"/>
+            <circle cx="${x}" cy="${y}" r="${isDone ? 6 : 5}" fill="${isDone ? '#fbbf24' : 'rgba(56,189,248,0.22)'}" stroke="${isDone ? '#ffffff' : '#38bdf8'}" stroke-width="2" ${isDone ? '' : 'stroke-dasharray="2 2"'}/>
+            ${isDone ? `<text x="${x + 8}" y="${y - 7}" fill="#fde047" font-size="9.5" font-weight="bold" font-family="JetBrains Mono">(${p.t}; ${formatVN(p.d)})</text>` : ''}
+          </g>
+        `;
+      }).join('');
+
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-blue-500/30">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-extrabold uppercase text-blue-300">Nhiệm vụ 4/5 • Biểu diễn đồ thị hàm số (${plotted.length}/5 điểm)</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+          </div>
+          <div class="flex flex-wrap gap-1.5 mb-2.5">
+            ${L3_DATA.map((p, i) => `
+              <button onclick="plotL3Point(${i})" class="px-2.5 py-1 rounded-lg text-[11px] font-mono font-bold border transition ${plotted.includes(i) ? 'bg-amber-500 text-slate-950 border-amber-300' : 'bg-slate-950 text-cyan-300 border-cyan-500/40 hover:bg-cyan-500/20'}">
+                ${plotted.includes(i) ? '✓ ' : '+ '}(${p.t}; ${formatVN(p.d)})
+              </button>
+            `).join('')}
+          </div>
+          <div class="bg-slate-950 rounded-xl p-2 border border-cyan-500/25 overflow-x-auto">
+            <svg viewBox="0 0 ${W} ${H}" class="w-full min-w-[340px] max-h-[240px]">
+              ${gridLines}
+              <!-- Axes -->
+              <line x1="${padL}" y1="${H - padB}" x2="${W - padR + 8}" y2="${H - padB}" stroke="#e2e8f0" stroke-width="2"/>
+              <line x1="${padL}" y1="${H - padB}" x2="${padL}" y2="${padT - 6}" stroke="#e2e8f0" stroke-width="2"/>
+              <text x="${W - padR}" y="${H - 6}" text-anchor="end" fill="#38bdf8" font-size="11" font-weight="bold">t (µs)</text>
+              <text x="${padL + 6}" y="${padT + 4}" fill="#38bdf8" font-size="11" font-weight="bold">d (cm)</text>
+              ${lineSVG}
+              ${pointsSVG}
+            </svg>
+          </div>
+          ${allPlotted ? `
+            <div class="mt-3 p-2.5 rounded-xl bg-emerald-500/20 border border-emerald-400/50 flex flex-wrap items-center justify-between gap-2">
+              <span class="text-xs text-emerald-100 font-bold">✓ Tuyệt vời! 5 điểm thẳng hàng tạo thành đồ thị đường thẳng d = 0,017t + 0,5!</span>
+              <button onclick="goL3Step5()" class="game-btn px-4 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">SANG BƯỚC 5 (KIỂM CHỨNG) →</button>
+            </div>
+          ` : '<p class="text-[11px] text-slate-400 mt-2">Nhấn vào các nút cặp tọa độ hoặc trực tiếp chấm tròn trên đồ thị để đánh dấu đủ 5 điểm.</p>'}
+        </div>
+      `;
+    }
+
+    function plotL3Point(idx) {
+      if (!state.l3PlottedIndices.includes(idx)) {
+        SoundFX.click();
+        state.l3PlottedIndices.push(idx);
+        if (state.l3PlottedIndices.length === L3_DATA.length) {
+          SoundFX.correct();
+          awardTaskPoints('l3_4', 3, 4);
+          showToast('Đã vẽ thành công đường thẳng đồ thị! (+4 điểm)', 'success');
+        }
+        saveProgress();
+        renderL3Task4(document.getElementById('mission-container'));
+      }
+    }
+
+    function goL3Step5() {
+      SoundFX.click();
+      state.l3Step = 4;
+      saveProgress();
+      renderLevel3Step();
+    }
+
+    function renderL3Task5(mc) {
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-blue-500/30">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-extrabold uppercase text-blue-300">Nhiệm vụ 5/5 • Kiểm chứng công thức với dữ liệu mới</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-200 mb-3">
+            Sử dụng công thức <span class="font-mono text-cyan-300 font-bold">d = 0,017t + 0,5</span> vừa hiệu chỉnh.<br/>
+            Khi cảm biến đo được <strong class="text-amber-300 font-mono">t = 3 000 µs</strong>, khoảng cách tính được là bao nhiêu cm?
+          </p>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="l3-v-input" type="text" inputmode="decimal" placeholder="Nhập khoảng cách d (cm)..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-blue-500/40 focus:border-amber-400 focus:outline-none text-white font-mono font-bold" />
+            <button id="l3-v-btn" onclick="checkL3Task5()" class="game-btn px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-emerald-500 text-slate-950 font-black text-sm">KÍCH HOẠT CẢM BIẾN LÀN 2</button>
+          </div>
+          <div id="l3-fb" class="hidden mt-2.5 p-2.5 rounded-xl text-xs"></div>
+        </div>
+      `;
+    }
+
+    function checkL3Task5() {
+      const fb = document.getElementById('l3-fb');
+      const val = parseVNNumber(document.getElementById('l3-v-input').value);
+      if (isNaN(val)) return showToast('Vui lòng nhập số hợp lệ!', 'warning');
+
+      if (Math.abs(val - 51.5) <= 0.1) {
+        SoundFX.correct();
+        awardTaskPoints('l3_5', 3, 4);
+        document.getElementById('l3-v-btn').disabled = true;
+        document.getElementById('cc-d-calc').textContent = '51,5 cm';
+        SimEngine.sim.ledText = 'LÀN 2 KÍCH HOẠT • d = 0,017t + 0,5';
+        SimEngine.sim.ledColor = '#34d399';
+        setRobot('celebrate', 'Xuất sắc! Với t = 3 000 µs, d = 0,017 × 3 000 + 0,5 = <strong>51,5 cm</strong>. Cảm biến tại Làn 2 đã được kích hoạt thành công!');
+        SimEngine.openAndPass(1, () => {
+          state.safeCarsPassed += 1;
+          updateHUD();
+          completeLevel(3);
+        });
+      } else {
+        SoundFX.wrong();
+        recordMistake('l3_5', 3, 'Level 3 - Kiểm chứng t = 3 000 µs', 'Tính giá trị hàm số bậc nhất tại t = 3 000');
+        fb.className = 'mt-2.5 p-2.5 rounded-xl text-xs bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.textContent = 'Chưa chính xác! Hãy tính 0,017 × 3 000 + 0,5 rồi nhập lại nhé.';
+        setRobot('thinking', 'Gợi ý: 0,017 × 3 000 = 51. Sau đó cộng thêm 0,5 nữa sẽ ra kết quả chính xác!');
+      }
+    }
+
+    /* =========================================================================
+       13. LEVEL 4 – PHÁT HIỆN VÀ SỬA LỖI HỆ THỐNG (20 ĐIỂM)
+       ========================================================================= */
+    function startLevel4() {
+      if (state.l4Step > 4) state.l4Step = 0;
+      SimEngine.resetLane(2); // Làn 3
+      SimEngine.sim.alertMode = state.l4Step < 4;
+      SimEngine.sim.showRuler = true;
+      SimEngine.sim.rulerDistance = 17.5;
+      SimEngine.sim.ledText = state.l4Step < 4 ? 'CẢNH BÁO LỖI CÔNG THỨC LÀN 3!' : 'ĐÃ HIỆU CHỈNH • SẴN SÀNG KIỂM THỬ';
+      SimEngine.sim.ledColor = state.l4Step < 4 ? '#f87171' : '#34d399';
+      SimEngine.spawnVehicle({ lane: 2, startPos: 65, targetPos: 17.5, color: '#ef4444', type: 'sedan', speed: 38 });
+      renderLevel4Step();
+    }
+
+    function renderLevel4Step() {
+      const step = state.l4Step;
+      const isFixed = step === 4;
+      SimEngine.sim.alertMode = !isFixed;
+      document.getElementById('sim-status-badge').textContent = isFixed ? 'Làn 3 đã sửa lỗi' : 'CẢNH BÁO: Sai lệch Làn 3!';
+
+      setTelemetry({
+        formula: isFixed ? 'd = 0,017t + 0,5' : 'd = 0,020t + 0,5 (LỖI!)',
+        formulaNote: isFixed ? '* Hệ thống đã chuyển về công thức chuẩn xác.' : '* Bộ điều khiển đang dùng sai hệ số góc a!',
+        t: '1 000 µs',
+        ab: isFixed ? 'a = 0,017 | b = 0,5' : 'a = 0,020 | b = 0,5',
+        dCalc: step >= 1 ? (isFixed ? '17,5 cm' : '20,5 cm') : 'Chờ tính...',
+        dMeas: step >= 2 ? (isFixed ? '17,5 cm (Sai lệch 0)' : '17,5 cm (Lệch 3 cm)') : '17,5 cm (Đo thước)',
+        threshold: 'd ≤ 20 cm',
+        servo: 'ĐÓNG (0°)',
+        sensor: isFixed ? 'Đã hiệu chỉnh' : 'Cảnh báo sai lệch',
+        vehicle: 'Xe tại Làn 3 (17,5 cm)',
+        alertState: isFixed ? 'success' : 'error'
+      });
+
+      const mc = document.getElementById('mission-container');
+
+      if (step === 0) {
+        setRobot('warning', `“Cảnh báo! Hệ thống đang tính khoảng cách sai lệch. Hãy kiểm tra dữ liệu và sửa lỗi trước khi tiếp tục vận hành!”<br/><strong>Nhiệm vụ 1/5:</strong> Tính khoảng cách theo công thức <em>đang sử dụng</em> <span class="font-mono text-rose-300">d = 0,020t + 0,5</span> khi <span class="font-mono text-amber-300">t = 1 000 µs</span>.`);
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-rose-950/50 border border-rose-500/40">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-rose-300">Nhiệm vụ 1/5 • Tính khoảng cách theo công thức lỗi</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 mb-3">Công thức đang dùng: <strong class="font-mono text-rose-300">d = 0,020t + 0,5</strong> | Dữ liệu: <strong class="font-mono text-amber-300">t = 1 000 µs</strong> (Thực tế đo thước: 17,5 cm).</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="l4-in1" type="text" inputmode="decimal" placeholder="Nhập khoảng cách tính được (cm)..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-rose-500/40 text-white font-mono font-bold focus:outline-none focus:border-amber-400" />
+              <button onclick="checkL4Step1()" class="game-btn px-5 py-2.5 rounded-xl bg-rose-600 text-white font-black text-sm">KIỂM TRA</button>
+            </div>
+            <div id="l4-fb" class="hidden mt-2 text-xs"></div>
+          </div>
+        `;
+      } else if (step === 1) {
+        setRobot('warning', `<strong>Nhiệm vụ 2/5:</strong> Công thức lỗi tính ra <strong>20,5 cm</strong> trong khi đo bằng thước là <strong>17,5 cm</strong>. Hãy tính <em>độ sai lệch tuyệt đối</em> = |Khoảng cách tính được − Khoảng cách đo được|!`);
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-rose-950/50 border border-rose-500/40">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-rose-300">Nhiệm vụ 2/5 • Tính độ sai lệch tuyệt đối</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 mb-3">Sai lệch = <span class="font-mono text-amber-300">|20,5 − 17,5|</span> = ? (cm)</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input id="l4-in2" type="text" inputmode="decimal" placeholder="Nhập độ sai lệch (cm)..." class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border-2 border-rose-500/40 text-white font-mono font-bold focus:outline-none focus:border-amber-400" />
+              <button onclick="checkL4Step2()" class="game-btn px-5 py-2.5 rounded-xl bg-rose-600 text-white font-black text-sm">KIỂM TRA</button>
+            </div>
+            <div id="l4-fb" class="hidden mt-2 text-xs"></div>
+          </div>
+        `;
+      } else if (step === 2) {
+        setRobot('warning', `<strong>Nhiệm vụ 3/5:</strong> Ngưỡng mở cổng là <strong>20 cm</strong>. Xe thực tế ở <strong>17,5 cm</strong> nhưng thanh chắn lại KHÔNG MỞ! Hãy chỉ ra nguyên nhân chính xác.`);
+        const opts = [
+          { k: 'A', t: 'Vì xe có màu không phù hợp.' },
+          { k: 'B', t: 'Vì công thức tính khoảng cách cho kết quả lớn hơn ngưỡng mở.' },
+          { k: 'C', t: 'Vì thanh chắn quá dài.' },
+          { k: 'D', t: 'Vì xe đang đứng yên.' },
+        ];
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-rose-950/50 border border-rose-500/40">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-rose-300">Nhiệm vụ 3/5 • Phát hiện hậu quả của sai lệch</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+            </div>
+            <p class="text-xs sm:text-sm font-bold text-white mb-3">Vì sao thanh chắn không mở mặc dù xe thực tế (17,5 cm) đã nằm trong ngưỡng mở (20 cm)?</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${opts.map(o => `<button onclick="checkL4Step3('${o.k}')" class="game-btn text-left p-3 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-white/15 text-xs sm:text-sm text-slate-100"><strong class="text-amber-300">${o.k}.</strong> ${o.t}</button>`).join('')}
+            </div>
+            <div id="l4-fb" class="hidden mt-2 text-xs"></div>
+          </div>
+        `;
+      } else if (step === 3) {
+        setRobot('thinking', `<strong>Nhiệm vụ 4/5:</strong> Ta có hai cặp dữ liệu đo chuẩn: <strong>(1 000 µs; 17,5 cm)</strong> và <strong>(2 000 µs; 34,5 cm)</strong>. Em hãy chọn công thức hiệu chỉnh phù hợp với cả hai cặp dữ liệu!`);
+        const opts = [
+          { k: 'A', t: 'd = 0,020t + 0,5' },
+          { k: 'B', t: 'd = 0,017t + 0,5' },
+          { k: 'C', t: 'd = 0,017t − 0,5' },
+          { k: 'D', t: 'd = 0,010t + 0,5' },
+        ];
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-slate-900/80 border border-amber-500/40">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-amber-300">Nhiệm vụ 4/5 • Hiệu chỉnh công thức bộ điều khiển</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-200 mb-3">Dữ liệu kiểm tra: <span class="font-mono text-cyan-300">(t = 1 000 µs; d = 17,5 cm)</span> và <span class="font-mono text-cyan-300">(t = 2 000 µs; d = 34,5 cm)</span>.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${opts.map(o => `<button onclick="checkL4Step4('${o.k}')" class="game-btn text-left p-3 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-cyan-500/30 font-mono text-sm text-white"><strong class="text-amber-300">${o.k}.</strong> ${o.t}</button>`).join('')}
+            </div>
+            <div id="l4-fb" class="hidden mt-2 text-xs"></div>
+          </div>
+        `;
+      } else if (step === 4) {
+        SimEngine.sim.ledText = 'ĐÃ SỬA LỖI: d = 0,017t + 0,5';
+        SimEngine.sim.ledColor = '#34d399';
+        setRobot('celebrate', `<strong>Nhiệm vụ 5/5 – Kiểm thử lại hệ thống!</strong><br/>Màn hình đã chuyển sang màu xanh an toàn. Hãy xem bảng so sánh trước &amp; sau hiệu chỉnh và nhấn nút kiểm thử để cho xe đi qua nhé!`);
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-400/50">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-emerald-300">Nhiệm vụ 5/5 • So sánh &amp; Kiểm thử hệ thống</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+4 điểm</span>
+            </div>
+            <table class="w-full text-xs text-left border-collapse mb-3 bg-slate-950/70 rounded-xl overflow-hidden">
+              <thead>
+                <tr class="border-b border-white/15 text-cyan-300">
+                  <th class="p-2">Trạng thái</th>
+                  <th class="p-2">Công thức</th>
+                  <th class="p-2">Tại t = 1 000 µs</th>
+                  <th class="p-2">Kết quả cổng (≤ 20 cm)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/10">
+                <tr class="text-rose-300">
+                  <td class="p-2 font-bold">Trước sửa lỗi</td>
+                  <td class="p-2 font-mono">d = 0,020t + 0,5</td>
+                  <td class="p-2 font-mono">20,5 cm (Lệch 3 cm)</td>
+                  <td class="p-2">Không mở (Sai)</td>
+                </tr>
+                <tr class="text-emerald-300">
+                  <td class="p-2 font-bold">Sau hiệu chỉnh</td>
+                  <td class="p-2 font-mono">d = 0,017t + 0,5</td>
+                  <td class="p-2 font-mono">17,5 cm (Chính xác)</td>
+                  <td class="p-2 font-bold">MỞ CỔNG AN TOÀN ✓</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-[11px] text-slate-200 mb-3">💡 <strong>Bài học STEM:</strong> Chỉ cần sai lệch nhỏ ở hệ số góc <strong>a</strong> (0,020 thay vì 0,017) hoặc hệ số <strong>b</strong>, mô hình Toán học sẽ tính sai khoảng cách và làm hệ thống điều khiển vận hành sai!</p>
+            <button id="l4-test-btn" onclick="runL4FinalTest()" class="game-btn w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-black text-sm">
+              ▶ CHẠY KIỂM THỬ &amp; MỞ CỔNG LÀN 3
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function checkL4Step1() {
+      const val = parseVNNumber(document.getElementById('l4-in1').value);
+      if (Math.abs(val - 20.5) < 0.05) {
+        SoundFX.correct(); awardTaskPoints('l4_1', 4, 4);
+        showToast('Chính xác! Công thức lỗi tính ra 20,5 cm (+4 điểm)', 'success');
+        state.l4Step = 1; saveProgress(); renderLevel4Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l4_1', 4, 'Level 4 - Tính khoảng cách theo công thức lỗi', 'Thay t = 1 000 vào d = 0,020t + 0,5');
+        setRobot('thinking', 'Gợi ý: Thay t = 1 000 vào d = 0,020 × 1 000 + 0,5 = 20 + 0,5 = ?');
+      }
+    }
+
+    function checkL4Step2() {
+      const val = parseVNNumber(document.getElementById('l4-in2').value);
+      if (Math.abs(val - 3) < 0.05) {
+        SoundFX.correct(); awardTaskPoints('l4_2', 4, 4);
+        showToast('Chính xác! Độ sai lệch là 3 cm (+4 điểm)', 'success');
+        state.l4Step = 2; saveProgress(); renderLevel4Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l4_2', 4, 'Level 4 - Tính độ sai lệch tuyệt đối', 'Tính |d_tính − d_đo|');
+        setRobot('thinking', 'Gợi ý: Sai lệch tuyệt đối = |20,5 − 17,5|. Em tính lại xem bằng bao nhiêu cm nhé!');
+      }
+    }
+
+    function checkL4Step3(choice) {
+      if (choice === 'B') {
+        SoundFX.correct(); awardTaskPoints('l4_3', 4, 4);
+        showToast('Chính xác! 20,5 cm > 20 cm nên cổng không mở (+4 điểm)', 'success');
+        state.l4Step = 3; saveProgress(); renderLevel4Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l4_3', 4, 'Level 4 - Hậu quả của sai lệch', 'Phân tích mối liên hệ giữa sai số tính toán và điều kiện mở cổng');
+        setRobot('thinking', 'Gợi ý: Công thức lỗi tính ra 20,5 cm, trong khi ngưỡng mở cổng là 20 cm. Vì 20,5 > 20 nên bộ điều khiển tưởng xe vẫn còn ở xa!');
+      }
+    }
+
+    function checkL4Step4(choice) {
+      if (choice === 'B') {
+        SoundFX.correct(); awardTaskPoints('l4_4', 4, 4);
+        showToast('Đã nạp công thức chuẩn d = 0,017t + 0,5 (+4 điểm)', 'success');
+        state.l4Step = 4; saveProgress(); renderLevel4Step();
+      } else {
+        SoundFX.wrong();
+        recordMistake('l4_4', 4, 'Level 4 - Chọn công thức hiệu chỉnh', 'Kiểm tra cặp nghiệm (t; d) với công thức hàm số bậc nhất');
+        setRobot('thinking', 'Gợi ý: Hãy thử thay t = 1 000 vào từng đáp án để xem công thức nào ra đúng d = 17,5 và tại t = 2 000 ra đúng d = 34,5 nhé!');
+      }
+    }
+
+    function runL4FinalTest() {
+      document.getElementById('l4-test-btn').disabled = true;
+      SoundFX.correct();
+      awardTaskPoints('l4_5', 4, 4);
+      SimEngine.sim.ledText = '17,5 ≤ 20 cm → MỞ THANH CHẮN';
+      SimEngine.sim.ledColor = '#34d399';
+      SimEngine.openAndPass(2, () => {
+        state.safeCarsPassed += 1;
+        updateHUD();
+        completeLevel(4);
+      });
+    }
+
+    /* =========================================================================
+       14. LEVEL 5 – KỸ SƯ XỬ LÍ TÌNH HUỐNG (20 ĐIỂM + CÂU HỎI MỞ)
+       ========================================================================= */
+    const UPGRADE_CARDS = [
+      { id: 'rear_sensor', title: 'Cảm biến xác nhận xe đã đi qua', icon: '📡' },
+      { id: 'traffic_light', title: 'Đèn tín hiệu đỏ – xanh', icon: '🚦' },
+      { id: 'dist_display', title: 'Bộ hiển thị khoảng cách', icon: '📟' },
+      { id: 'wireless', title: 'Bộ truyền dữ liệu không dây', icon: '📶' },
+      { id: 'error_alarm', title: 'Hệ thống cảnh báo lỗi', icon: '🚨' },
+      { id: 'counter', title: 'Bộ đếm phương tiện', icon: '🔢' },
+    ];
+
+    function startLevel5() {
+      if (state.l5Step > 4) state.l5Step = 0;
+      SimEngine.resetLane(0);
+      renderLevel5Step();
+    }
+
+    function renderLevel5Step() {
+      const step = state.l5Step;
+      const mc = document.getElementById('mission-container');
+      SimEngine.resetLane(0);
+
+      if (step === 0) {
+        // Situation 1: Long truck passing barrier
+        SimEngine.sim.targetBarriers[0] = 1;
+        SimEngine.sim.barriers[0] = 1;
+        SimEngine.sim.lights[0] = 'green';
+        SimEngine.sim.rearSensorActive = true;
+        SimEngine.sim.rearSensorDetected = true;
+        SimEngine.sim.ledText = 'XE TẢI DÀI ĐANG ĐI QUA VÙNG CHẮN';
+        SimEngine.sim.ledColor = '#fbbf24';
+        SimEngine.spawnVehicle({ lane: 0, startPos: -10, targetPos: -10, color: '#f97316', type: 'longtruck', speed: 0 });
+        setTelemetry({
+          t: 'Ngoài vùng đầu xe', dCalc: 'Đầu xe đã qua', dMeas: 'Đuôi xe CHƯA qua',
+          servo: 'ĐANG MỞ (75°)', servoClass: 'text-emerald-300', sensor: 'Trước: Trống | Sau: CÓ XE', vehicle: 'Xe tải dài', alertState: 'normal'
+        });
+        setRobot('warning', `<strong>Tình huống 1/5 – Xe tải dài đang đi qua thanh chắn:</strong><br/>Cảm biến phía trước không còn phát hiện đầu xe, nhưng phần đuôi xe tải vẫn đang nằm dưới thanh chắn! Em xử lí thế nào?`);
+        const opts = [
+          { k: 'A', t: 'Đóng thanh chắn ngay.' },
+          { k: 'B', t: 'Giữ thanh chắn mở cho đến khi xác nhận toàn bộ xe đã đi qua.' },
+          { k: 'C', t: 'Tắt hệ thống.' },
+          { k: 'D', t: 'Hạ thanh chắn nhanh hơn.' }
+        ];
+        renderL5Choice(mc, 'Tình huống 1/5 • Xe tải dài đang đi qua thanh chắn', 5, opts, 'B', 'l5_1',
+          'Không thể chỉ dựa vào cảm biến phía trước để kết luận toàn bộ xe đã đi qua an toàn. Cần giữ thanh chắn mở đến khi xác nhận vùng chắn đã trống hoàn toàn!');
+      } else if (step === 1) {
+        // Situation 2: Sensor invalid signal
+        SimEngine.sim.sensorError = true;
+        SimEngine.sim.alertMode = true;
+        SimEngine.sim.ledText = 'LỖI: KHÔNG CÓ TÍN HIỆU CẢM BIẾN!';
+        SimEngine.sim.ledColor = '#f87171';
+        SimEngine.spawnVehicle({ lane: 0, startPos: 32, targetPos: 32, color: '#3b82f6', type: 'sedan', speed: 0 });
+        setTelemetry({
+          t: 'NULL / KHÔNG PHẢN HỒI', dCalc: 'KHÔNG HỢP LỆ', dMeas: '---',
+          servo: 'TẠM DỪNG AN TOÀN', servoClass: 'text-amber-300', sensor: 'MẤT TÍN HIỆU!', vehicle: 'Đang chờ xử lí', alertState: 'error'
+        });
+        setRobot('warning', `<strong>Tình huống 2/5 – Cảm biến không trả về dữ liệu hợp lệ:</strong><br/>Màn hình xuất hiện cảnh báo mất tín hiệu phản hồi từ cảm biến siêu âm. Hệ thống nên phản ứng ra sao?`);
+        const opts = [
+          { k: 'A', t: 'Coi khoảng cách bằng 0 và tự động mở cổng.' },
+          { k: 'B', t: 'Tự động đóng cổng.' },
+          { k: 'C', t: 'Tạm dừng chuyển động tự động, giữ trạng thái an toàn và phát cảnh báo kiểm tra hệ thống.' },
+          { k: 'D', t: 'Nhập một giá trị khoảng cách ngẫu nhiên.' }
+        ];
+        renderL5Choice(mc, 'Tình huống 2/5 • Cảm biến không trả về dữ liệu hợp lệ', 5, opts, 'C', 'l5_2',
+          'Khi thiếu dữ liệu hợp lệ, nguyên tắc an toàn công nghệ là tạm dừng tự động, giữ trạng thái an toàn và phát cảnh báo kiểm tra.');
+      } else if (step === 2) {
+        // Situation 3: Opens too early + Interactive Threshold Slider
+        SimEngine.sim.showThresholdLine = true;
+        SimEngine.sim.thresholdCm = state.l5SliderVal;
+        SimEngine.sim.targetBarriers[0] = state.l5SliderVal >= 30 ? 1 : 0;
+        SimEngine.sim.lights[0] = state.l5SliderVal >= 30 ? 'green' : 'red';
+        SimEngine.sim.ledText = `XE: 30 cm | NGƯỠNG HIỆN TẠI: ${state.l5SliderVal} cm`;
+        SimEngine.sim.ledColor = state.l5SliderVal === 20 ? '#34d399' : '#fbbf24';
+        SimEngine.spawnVehicle({ lane: 0, startPos: 30, targetPos: 30, color: '#14b8a6', type: 'sedan', speed: 0 });
+        setTelemetry({
+          t: '1 735 µs', dCalc: '30 cm', dMeas: 'Thiết kế yêu cầu: 20 cm',
+          threshold: `d ≤ ${state.l5SliderVal} cm`,
+          servo: state.l5SliderVal >= 30 ? 'MỞ QUÁ SỚM!' : 'ĐÓNG AN TOÀN',
+          servoClass: state.l5SliderVal >= 30 ? 'text-amber-300' : 'text-emerald-300',
+          sensor: 'Hoạt động tốt', vehicle: 'Xe ở 30 cm'
+        });
+        setRobot('thinking', `<strong>Tình huống 3/5 – Thanh chắn mở quá sớm:</strong><br/>Xe mới ở <strong>30 cm</strong> nhưng thanh chắn đã mở vì ngưỡng đang đặt là <strong>35 cm</strong> (yêu cầu thiết kế là <strong>20 cm</strong>). Hãy kéo thanh trượt điều chỉnh ngưỡng và chọn đáp án đúng!`);
+
+        const opts = [
+          { k: 'A', t: 'Tăng ngưỡng mở lên 50 cm.' },
+          { k: 'B', t: 'Điều chỉnh ngưỡng mở về 20 cm.' },
+          { k: 'C', t: 'Thay đổi màu sắc thanh chắn.' },
+          { k: 'D', t: 'Tăng hệ số b một cách ngẫu nhiên.' }
+        ];
+
+        mc.innerHTML = `
+          <div class="p-4 rounded-2xl bg-slate-900/75 border border-amber-500/35">
+            <div class="flex justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase text-amber-300">Tình huống 3/5 • Xe tiến đến nhưng thanh chắn mở quá sớm</span>
+              <span class="text-xs font-mono font-bold text-amber-300">+5 điểm</span>
+            </div>
+            <!-- Interactive Threshold Slider -->
+            <div class="p-3 rounded-xl bg-slate-950/80 border border-cyan-500/30 mb-3">
+              <div class="flex justify-between text-xs font-bold mb-1">
+                <span class="text-cyan-300">Thanh trượt điều chỉnh ngưỡng mở trực tiếp:</span>
+                <span id="l5-slider-label" class="font-mono text-amber-300">${state.l5SliderVal} cm</span>
+              </div>
+              <input id="l5-slider" type="range" min="10" max="50" step="5" value="${state.l5SliderVal}" oninput="onL5SliderChange(this.value)" class="w-full accent-amber-400 cursor-pointer" />
+              <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>10 cm</span><span>20 cm (Chuẩn)</span><span>35 cm</span><span>50 cm</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              ${opts.map(o => `<button onclick="checkL5Choice('${o.k}','B','l5_3','Điều chỉnh ngưỡng mở về đúng 20 cm giúp thanh chắn chỉ mở khi xe thực sự vào vùng an toàn!')" class="game-btn text-left p-3 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-white/15 text-xs sm:text-sm text-slate-100"><strong class="text-amber-300">${o.k}.</strong> ${o.t}</button>`).join('')}
+            </div>
+            <div id="l5-fb" class="hidden mt-2.5 p-2.5 rounded-xl text-xs"></div>
+          </div>
+        `;
+      } else if (step === 3) {
+        // Situation 4: Two cars tailgating closely
+        SimEngine.sim.targetBarriers[0] = 1;
+        SimEngine.sim.barriers[0] = 1;
+        SimEngine.sim.lights[0] = 'green';
+        SimEngine.sim.rearSensorActive = true;
+        SimEngine.sim.rearSensorDetected = true;
+        SimEngine.sim.ledText = 'PHÁT HIỆN 2 XE ĐI SÁT NHAU!';
+        SimEngine.sim.ledColor = '#fbbf24';
+        SimEngine.sim.vehicles = [
+          { lane: 0, pos: -4, targetPos: -4, color: '#f97316', type: 'sedan', speed: 0, mode: 'stopped' },
+          { lane: 0, pos: 22, targetPos: 22, color: '#3b82f6', type: 'sedan', speed: 0, mode: 'stopped' }
+        ];
+        setTelemetry({
+          t: '1 265 µs', dCalc: 'Xe 2: 22 cm', dMeas: 'Xe 1: Đang qua cổng',
+          servo: 'ĐANG MỞ (75°)', servoClass: 'text-amber-300', sensor: 'Cần kiểm soát từng lượt', vehicle: '2 xe nối đuôi sát nhau'
+        });
+        setRobot('warning', `<strong>Tình huống 4/5 – Hai xe đi sát nhau:</strong><br/>Xe thứ nhất đang đi qua thanh chắn, xe thứ hai đã tiến sát ngay phía sau. Giải pháp nào giúp hệ thống vận hành an toàn và kiểm soát từng lượt xe?`);
+        const opts = [
+          { k: 'A', t: 'Đóng thanh chắn giữa hai xe ngay lập tức.' },
+          { k: 'B', t: 'Cho tất cả xe đi qua mà không kiểm soát.' },
+          { k: 'C', t: 'Bổ sung cảm biến xác nhận vùng thanh chắn, quản lí từng lượt xe và chỉ đóng khi vùng chắn không còn phương tiện.' },
+          { k: 'D', t: 'Tăng tốc độ động cơ servo.' }
+        ];
+        renderL5Choice(mc, 'Tình huống 4/5 • Hai xe đi sát nhau', 5, opts, 'C', 'l5_4',
+          'Kết hợp cảm biến xác nhận vùng thanh chắn giúp đảm bảo không kẹt/va chạm và quản lí chặt chẽ từng lượt xe qua trạm.');
+      } else if (step === 4) {
+        // Situation 5: Open-ended Upgrade Proposal
+        SimEngine.sim.ledText = 'ĐỀ XUẤT NÂNG CẤP TRẠM THU PHÍ';
+        SimEngine.sim.ledColor = '#22d3ee';
+        SimEngine.spawnVehicle({ lane: 0, startPos: 25, targetPos: 25, color: '#06b6d4', type: 'sedan', speed: 0 });
+        setTelemetry({
+          t: '1 441 µs', dCalc: '25 cm', dMeas: 'Thiết kế mở rộng',
+          servo: 'SẴN SÀNG', servoClass: 'text-cyan-300', sensor: 'Chế độ Kỹ sư Sáng tạo', vehicle: 'Trạm thu phí TMath'
+        });
+        setRobot('happy', `<strong>Tình huống 5/5 – Nâng cấp trạm thu phí thông minh:</strong><br/>Hãy chọn từ <strong>1 đến 3 phương án nâng cấp</strong> bên cạnh và viết lời giải thích ngắn cho giáo viên nhận xét nhé! (Câu hỏi mở sáng tạo)`);
+        renderL5Upgrade(mc);
+      }
+    }
+
+    function onL5SliderChange(val) {
+      state.l5SliderVal = Number(val);
+      document.getElementById('l5-slider-label').textContent = `${val} cm`;
+      SimEngine.sim.thresholdCm = state.l5SliderVal;
+      SimEngine.sim.targetBarriers[0] = state.l5SliderVal >= 30 ? 1 : 0;
+      SimEngine.sim.lights[0] = state.l5SliderVal >= 30 ? 'green' : 'red';
+      SimEngine.sim.ledText = `XE: 30 cm | NGƯỠNG HIỆN TẠI: ${state.l5SliderVal} cm`;
+      SimEngine.sim.ledColor = state.l5SliderVal === 20 ? '#34d399' : '#fbbf24';
+      document.getElementById('cc-threshold').textContent = `d ≤ ${val} cm`;
+      updateTelemetryServo(state.l5SliderVal >= 30 ? 'MỞ QUÁ SỚM!' : 'ĐÓNG AN TOÀN', state.l5SliderVal >= 30 ? 'text-amber-300' : 'text-emerald-300');
+    }
+
+    function renderL5Choice(mc, title, pts, opts, correctKey, taskId, explain) {
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-amber-500/35">
+          <div class="flex justify-between mb-3">
+            <span class="text-xs font-extrabold uppercase text-amber-300">${title}</span>
+            <span class="text-xs font-mono font-bold text-amber-300">+${pts} điểm</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            ${opts.map(o => `<button onclick="checkL5Choice('${o.k}','${correctKey}','${taskId}','${explain.replace(/'/g, "\\'")}')" class="game-btn text-left p-3 rounded-xl bg-slate-950/90 hover:bg-slate-800 border border-white/15 text-xs sm:text-sm text-slate-100"><strong class="text-amber-300">${o.k}.</strong> ${o.t}</button>`).join('')}
+          </div>
+          <div id="l5-fb" class="hidden mt-3 p-3 rounded-xl text-xs sm:text-sm"></div>
+        </div>
+      `;
+    }
+
+    function checkL5Choice(choice, correctKey, taskId, explain) {
+      const fb = document.getElementById('l5-fb');
+      if (choice === correctKey) {
+        SoundFX.correct();
+        const gained = awardTaskPoints(taskId, 5, 5);
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-emerald-500/20 border border-emerald-400/50 text-emerald-100';
+        fb.innerHTML = `
+          <div class="font-bold text-emerald-300">✓ Xử lí xuất sắc! ${gained ? `(+${gained} điểm)` : ''}</div>
+          <div class="mt-1">${explain}</div>
+          <button onclick="nextL5Step()" class="game-btn mt-2.5 px-4 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-black text-xs">TIẾP TỤC TÌNH HUỐNG TIẾP THEO →</button>
+        `;
+        setRobot('celebrate', `Rất bản lĩnh! ${explain}`);
+      } else {
+        SoundFX.wrong();
+        recordMistake(taskId, 5, `Level 5 - Tình huống ${state.l5Step + 1}`, 'Tư duy an toàn và vận hành hệ thống tự động thực tiễn');
+        fb.className = 'mt-3 p-3 rounded-xl text-xs sm:text-sm bg-rose-500/20 border border-rose-400/50 text-rose-100';
+        fb.textContent = 'Phương án này chưa đảm bảo an toàn hoặc chưa đúng yêu cầu kỹ thuật. Em hãy suy nghĩ lại và chọn phương án tối ưu nhất nhé!';
+        setRobot('thinking', 'Hãy đặt tiêu chí AN TOÀN cho phương tiện và độ chính xác của hệ thống điều khiển lên hàng đầu nhé!');
+      }
+    }
+
+    function nextL5Step() {
+      SoundFX.click();
+      state.l5Step += 1;
+      saveProgress();
+      renderLevel5Step();
+    }
+
+    function renderL5Upgrade(mc) {
+      const selected = state.l5Upgrade.cards || [];
+      mc.innerHTML = `
+        <div class="p-4 rounded-2xl bg-slate-900/75 border border-cyan-500/35">
+          <div class="flex justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase text-cyan-300">Tình huống 5/5 • Đề xuất nâng cấp trạm thu phí (Chọn 1–3 linh kiện)</span>
+            <span class="text-xs font-bold text-teal-300">Đánh giá sáng tạo</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+            ${UPGRADE_CARDS.map(c => {
+              const active = selected.includes(c.id);
+              return `<button onclick="toggleUpgradeCard('${c.id}')" class="p-2.5 rounded-xl border text-left text-xs font-bold transition ${active ? 'bg-cyan-500/25 border-cyan-300 text-white' : 'bg-slate-950/75 border-white/10 text-slate-300 hover:border-cyan-500/40'}">
+                <div class="text-base mb-0.5">${c.icon}</div>
+                <div>${c.title}</div>
+              </button>`;
+            }).join('')}
+          </div>
+          <label class="block text-xs font-bold text-amber-300 mb-1">“Em lựa chọn phương án nào? Phương án đó giúp giải quyết hạn chế gì của mô hình hiện tại?”</label>
+          <textarea id="l5-upgrade-text" rows="2" placeholder="Nhập lời giải thích ngắn gọn của em..." class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-cyan-500/35 text-xs sm:text-sm text-white focus:border-amber-400 focus:outline-none">${state.l5Upgrade.explanation || ''}</textarea>
+          <button onclick="submitL5Upgrade()" class="game-btn mt-3 px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-sm">
+            🚀 HOÀN THÀNH NHIỆM VỤ KỸ SƯ
+          </button>
+        </div>
+      `;
+    }
+
+    function toggleUpgradeCard(id) {
+      SoundFX.click();
+      const arr = state.l5Upgrade.cards || [];
+      if (arr.includes(id)) {
+        state.l5Upgrade.cards = arr.filter(x => x !== id);
+      } else {
+        if (arr.length >= 3) {
+          showToast('Em chỉ được chọn tối đa 3 phương án nâng cấp nhé!', 'warning');
+          return;
+        }
+        arr.push(id);
+        state.l5Upgrade.cards = arr;
+      }
+      state.l5Upgrade.explanation = document.getElementById('l5-upgrade-text')?.value || state.l5Upgrade.explanation;
+      renderL5Upgrade(document.getElementById('mission-container'));
+    }
+
+    function submitL5Upgrade() {
+      const cards = state.l5Upgrade.cards || [];
+      const exp = document.getElementById('l5-upgrade-text').value.trim();
+      if (cards.length < 1) {
+        return showToast('Em hãy chọn ít nhất 1 thẻ linh kiện nâng cấp nhé!', 'warning');
+      }
+      if (exp.length < 6) {
+        return showToast('Em hãy viết vài dòng giải thích ngắn gọn cho phương án của mình nhé!', 'warning');
+      }
+      state.l5Upgrade.explanation = exp;
+      saveProgress();
+      completeLevel(5);
+    }
+
+    /* =========================================================================
+       15. VICTORY SCREEN, REPORT, PNG CERTIFICATE & CREATIVE CHALLENGE
+       ========================================================================= */
+    function getRank(score) {
+      if (score >= 90) return 'Kỹ sư trưởng TMath';
+      if (score >= 70) return 'Kỹ sư công nghệ tài năng';
+      if (score >= 50) return 'Kỹ sư triển vọng';
+      return 'Kỹ sư tập sự';
+    }
+
+    function formatDuration(ms) {
+      if (!ms || ms < 0) return '---';
+      const totalSec = Math.floor(ms / 1000);
+      const min = Math.floor(totalSec / 60);
+      const sec = totalSec % 60;
+      return `${min} phút ${sec} giây`;
+    }
+
+    function showVictoryScreen() {
+      showScreen('screen-victory');
+      launchConfetti(3200);
+      document.getElementById('victory-robot-slot').innerHTML = getRobotSVG('happy');
+
+      const rank = getRank(state.score);
+      const today = new Date().toLocaleDateString('vi-VN');
+
+      // Certificate fields
+      document.getElementById('cert-name').textContent = state.playerName || 'Kỹ sư TMath';
+      document.getElementById('cert-rank').textContent = `🏆 ${rank}`;
+      document.getElementById('cert-date').textContent = today;
+      document.getElementById('cert-levels').textContent = `${state.completedLevels.length}/5`;
+      document.getElementById('cert-cars').textContent = state.safeCarsPassed;
+      document.getElementById('cert-score').textContent = state.score;
+
+      // 5 Badges STEM Emblem
+      document.getElementById('victory-badges-grid').innerHTML = BADGES.map(b => `
+        <div class="flex flex-col items-center w-20 badge-pop">
+          <div class="w-14 h-14">${getBadgeSVG(b, state.earnedBadges.includes(b.id))}</div>
+          <span class="text-[10px] font-bold text-center text-slate-200 mt-1 leading-tight">${b.short}</span>
+        </div>
+      `).join('');
+
+      // Report Table
+      document.getElementById('rep-name').textContent = state.playerName || 'Kỹ sư TMath';
+      document.getElementById('rep-duration').textContent = formatDuration((state.completedAt || Date.now()) - (state.startedAt || Date.now()));
+
+      const levelTitles = [
+        ['Level 1: Tính toán chính xác', 'Tính khoảng cách d = 0,017t + 0,5'],
+        ['Level 2: Điều khiển rào chắn', 'Điều kiện ngưỡng d ≤ 20 cm'],
+        ['Level 3: Hiệu chỉnh cảm biến', 'Xác định hệ số a, b & vẽ đồ thị'],
+        ['Level 4: Phát hiện và sửa lỗi', 'Phân tích sai lệch & hiệu chỉnh công thức'],
+        ['Level 5: Kỹ sư xử lí tình huống', 'Giải quyết tình huống thực tiễn & nâng cấp']
+      ];
+      document.getElementById('rep-levels-body').innerHTML = levelTitles.map((info, i) => {
+        const lvl = i + 1;
+        return `
+          <tr>
+            <td class="py-2 px-3 font-bold text-white">${info[0]}</td>
+            <td class="py-2 px-3 text-slate-300">${info[1]}</td>
+            <td class="py-2 px-3 text-center font-mono font-bold text-amber-300">${state.levelScores[lvl]}/20</td>
+            <td class="py-2 px-3 text-center">${state.earnedBadges.includes(lvl) ? `🏅 ${BADGES[i].short}` : '---'}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Mistakes & Review suggestions
+      const mEl = document.getElementById('rep-mistakes');
+      const rEl = document.getElementById('rep-review');
+      if (state.mistakesLog.length === 0) {
+        mEl.innerHTML = '<div class="text-emerald-300 font-semibold">🎉 Xuất sắc! Em đã trả lời đúng ngay lần đầu ở tất cả các nhiệm vụ!</div>';
+        rEl.innerHTML = '<div class="text-cyan-200">Em đã nắm rất vững kiến thức Hàm số bậc nhất và tư duy điều khiển STEM. Hãy thử sức với Thử thách sáng tạo bên dưới nhé!</div>';
+      } else {
+        mEl.innerHTML = state.mistakesLog.map(m => `<div>• <strong>${m.title}</strong></div>`).join('');
+        const uniqueTopics = [...new Set(state.mistakesLog.map(m => m.topic))];
+        rEl.innerHTML = uniqueTopics.map(t => `<div>📌 ${t}</div>`).join('');
+      }
+
+      // Level 5 Upgrade summary
+      const chosenNames = (state.l5Upgrade.cards || []).map(id => UPGRADE_CARDS.find(c => c.id === id)?.title).filter(Boolean);
+      document.getElementById('rep-upgrade').innerHTML = `
+        <div><strong>Linh kiện đề xuất:</strong> ${chosenNames.length ? chosenNames.join(', ') : 'Chưa chọn'}</div>
+        <div class="mt-1"><strong>Giải thích của học sinh:</strong> ${state.l5Upgrade.explanation || 'Chưa nhập'}</div>
+      `;
+
+      // Creative Challenge Chips
+      const IDEAS = [
+        'Cổng trường tự động',
+        'Bãi giữ xe thông minh',
+        'Thiết bị hỗ trợ đỗ xe',
+        'Hệ thống cảnh báo vật cản',
+        'Thiết bị theo dõi mực nước',
+        'Thùng rác tự động'
+      ];
+      document.getElementById('creative-chips').innerHTML = IDEAS.map(idea => `
+        <button onclick="selectCreativeIdea('${idea}')" class="px-3 py-1.5 rounded-xl bg-slate-900/90 hover:bg-teal-500/25 border border-teal-400/35 text-xs font-bold text-teal-200 transition">
+          + ${idea}
+        </button>
+      `).join('');
+
+      // Populate saved creative challenge if any
+      if (state.creativeIdea && state.creativeIdea.name) {
+        document.getElementById('cr-name').value = state.creativeIdea.name;
+        document.getElementById('cr-problem').value = state.creativeIdea.problem;
+        document.getElementById('cr-measure').value = state.creativeIdea.measure;
+        document.getElementById('cr-math').value = state.creativeIdea.math;
+        document.getElementById('cr-design').value = state.creativeIdea.design;
+        renderCreativeReportSummary();
+      }
+    }
+
+    function selectCreativeIdea(name) {
+      SoundFX.click();
+      document.getElementById('cr-name').value = name;
+      document.getElementById('cr-problem').focus();
+    }
+
+    function saveCreativeChallenge() {
+      SoundFX.correct();
+      state.creativeIdea = {
+        name: document.getElementById('cr-name').value.trim(),
+        problem: document.getElementById('cr-problem').value.trim(),
+        measure: document.getElementById('cr-measure').value.trim(),
+        math: document.getElementById('cr-math').value.trim(),
+        design: document.getElementById('cr-design').value.trim(),
+      };
+      saveProgress();
+      renderCreativeReportSummary();
+      document.getElementById('cr-saved-msg').classList.remove('hidden');
+      showToast('Đã lưu ý tưởng Thử thách sáng tạo vào báo cáo!', 'success');
+    }
+
+    function renderCreativeReportSummary() {
+      const c = state.creativeIdea;
+      if (!c || !c.name) return;
+      document.getElementById('rep-creative-summary').classList.remove('hidden');
+      document.getElementById('rep-creative-content').innerHTML = `
+        <div><strong>1. Tên sản phẩm:</strong> ${c.name}</div>
+        <div><strong>2. Vấn đề thực tiễn:</strong> ${c.problem || '---'}</div>
+        <div><strong>3. Đại lượng cần đo:</strong> ${c.measure || '---'}</div>
+        <div><strong>4. Vai trò hàm số bậc nhất:</strong> ${c.math || '---'}</div>
+        <div><strong>5. Thiết kế / cải tiến:</strong> ${c.design || '---'}</div>
+      `;
+    }
+
+    function scrollToReport() {
+      SoundFX.click();
+      document.getElementById('print-report-area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    /* =========================================================================
+       16. HIGH-RES ELECTRONIC CERTIFICATE PNG GENERATOR
+       ========================================================================= */
+    function downloadCertificatePNG() {
+      SoundFX.click();
+      const canvas = document.createElement('canvas');
+      canvas.width = 1200;
+      canvas.height = 800;
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      const bg = ctx.createLinearGradient(0, 0, 1200, 800);
+      bg.addColorStop(0, '#071326');
+      bg.addColorStop(0.5, '#0f2952');
+      bg.addColorStop(1, '#071326');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, 1200, 800);
+
+      // Gold & Cyan Borders
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(28, 28, 1144, 744);
+      ctx.strokeStyle = '#22d3ee';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(42, 42, 1116, 716);
+
+      // Header
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 24px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('CHỨNG NHẬN ĐIỆN TỬ • STEM TOÁN 8', 600, 110);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = '900 46px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('TMATH SMART GATE', 600, 175);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 26px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('ĐIỀU HÀNH TRẠM THU PHÍ THÔNG MINH – KỸ SƯ LÀM CHỦ CÔNG NGHỆ', 600, 222);
+
+      // Recipient
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '22px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('Chứng nhận học sinh / nhóm kỹ sư:', 600, 295);
+
+      ctx.fillStyle = '#fde047';
+      ctx.font = '900 48px "Be Vietnam Pro", sans-serif';
+      ctx.fillText((state.playerName || 'KỸ SƯ TMATH').toUpperCase(), 600, 360);
+
+      // Stats Box
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.78)';
+      ctx.fillRect(140, 405, 920, 125);
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.5)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(140, 405, 920, 125);
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'bold 28px "Be Vietnam Pro", sans-serif';
+      ctx.fillText(`Tổng điểm: ${state.score}/100  •  Xếp hạng: ${getRank(state.score)}`, 600, 455);
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '20px "Be Vietnam Pro", sans-serif';
+      ctx.fillText(`Hoàn thành: ${state.completedLevels.length}/5 cấp độ  •  Huy hiệu: ${state.earnedBadges.length}/5  •  Ngày: ${new Date().toLocaleDateString('vi-VN')}`, 600, 502);
+
+      // 5 Badges row
+      BADGES.forEach((b, i) => {
+        const bx = 220 + i * 190;
+        const by = 605;
+        ctx.fillStyle = 'rgba(30, 58, 138, 0.7)';
+        ctx.beginPath(); ctx.arc(bx, by, 34, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = b.color; ctx.lineWidth = 3; ctx.stroke();
+        ctx.font = '28px sans-serif';
+        ctx.fillText(b.icon, bx, by + 10);
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = 'bold 14px "Be Vietnam Pro", sans-serif';
+        ctx.fillText(b.short, bx, by + 56);
+      });
+
+      // Slogan & Footer
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 18px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('TỪ KIẾN THỨC TOÁN HỌC ĐẾN GIẢI PHÁP CÔNG NGHỆ • HỌC TOÁN QUA TRẢI NGHIỆM – SÁNG TẠO VÌ CUỘC SỐNG', 600, 715);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '15px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('TMATH – HỌC TOÁN QUA TRẢI NGHIỆM | STEM TOÁN 8 | 2026', 600, 748);
+
+      const link = document.createElement('a');
+      link.download = `Chung_Nhan_TMath_Smart_Gate_${(state.playerName || 'KySu').replace(/\s+/g, '_')}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      showToast('Đã tải xuống chứng nhận điện tử PNG!', 'success');
+    }
+
+    /* =========================================================================
+       17. CONFETTI CELEBRATION EFFECT
+       ========================================================================= */
+    function launchConfetti(durationMs = 2000) {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.classList.remove('hidden');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      const colors = ['#22d3ee', '#fbbf24', '#f97316', '#34d399', '#60a5fa', '#ffffff'];
+      const pieces = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 200,
+        w: 6 + Math.random() * 6,
+        h: 4 + Math.random() * 5,
+        vy: 2.5 + Math.random() * 4,
+        vx: (Math.random() - 0.5) * 3,
+        rot: Math.random() * Math.PI,
+        vrot: (Math.random() - 0.5) * 0.2,
+        c: colors[Math.floor(Math.random() * colors.length)]
+      }));
+
+      const end = Date.now() + durationMs;
+      function frame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vrot;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+        else canvas.classList.add('hidden');
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* =========================================================================
+       18. INITIALIZATION ON WINDOW LOAD
+       ========================================================================= */
+    window.onload = function () {
+      // Inject Robot TMath SVG on intro screen
+      document.getElementById('intro-robot-slot').innerHTML = getRobotSVG('happy');
+
+      // Check for saved progress
+      const saved = loadSavedProgress();
+      if (saved && saved.playerName) {
+        document.getElementById('player-name-input').value = saved.playerName;
+        document.getElementById('btn-resume-saved').classList.remove('hidden');
+      }
+
+      // Start 3D Isometric Simulation Loop
+      SimEngine.start();
+    };
+  </script>
+</body>
+</html>
