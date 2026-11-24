@@ -599,7 +599,7 @@
   updateCards();
 
   const hashTarget = window.location.hash.replace("#", "");
-  if (hashTarget === "danh-sach-bai" || hashTarget === "toan6-chapter-1" || hashTarget === "toan7-chapter-1") {
+  if (hashTarget === "danh-sach-bai" || hashTarget === "toan6-chapter-1" || hashTarget === "toan7-chapter-1" || hashTarget === "toan8-stem") {
     if (chapterSelect && hashTarget !== "danh-sach-bai") {
       chapterSelect.value = hashTarget;
     }
