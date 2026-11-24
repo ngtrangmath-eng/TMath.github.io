@@ -168,7 +168,16 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col selection:bg-sky-200 selection:text-sky-900">
-  <nav aria-label="Điều hướng Smart Gate" style="position:relative;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:10px 16px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;color:#075985"><a href="../index.html#toan8-stem" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Về phần Toán 8</a><a href="tmath-smart-gate-chang2.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">← Chặng 2</a><a href="tmath-smart-gate-chang4.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Chặng 4 →</a></nav>
+  <nav id="tmath-stage-navigation" aria-label="Điều hướng Smart Gate" style="position:relative;z-index:45;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:10px 16px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;color:#075985"><a href="../index.html#toan8-stem" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Về phần Toán 8</a><a href="tmath-smart-gate-chang2.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">← Chặng 2</a><a href="tmath-smart-gate-chang4.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Chặng 4 →</a></nav>
+<style>#screen-intro { top: var(--tmath-stage-navigation-height, 65px); }</style>
+  <script>
+    (() => {
+      const navigation = document.getElementById('tmath-stage-navigation');
+      const updateNavigationHeight = () => document.documentElement.style.setProperty('--tmath-stage-navigation-height', navigation.getBoundingClientRect().height + 'px');
+      updateNavigationHeight();
+      new ResizeObserver(updateNavigationHeight).observe(navigation);
+    })();
+  </script>
 
 
   <!-- Confetti Canvas Overlay -->
