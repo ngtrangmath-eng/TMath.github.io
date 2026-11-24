@@ -1,0 +1,3201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TMATH SMART GATE – Phòng Thí Nghiệm Ảo | Chặng 3</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  <!-- Tone.js for procedural educational sound effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            tmath: {
+              blue: '#0284c7',
+              cyan: '#06b6d4',
+              teal: '#0d9488',
+              orange: '#f97316',
+              amber: '#f59e0b',
+              navy: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom PhET-inspired styling & animations */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #ecfeff 50%, #f8fafc 100%);
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(14, 165, 233, 0.18);
+      box-shadow: 0 10px 30px -10px rgba(2, 132, 199, 0.12);
+    }
+
+    .lab-panel {
+      background: #ffffff;
+      border: 2px solid #e0f2fe;
+      box-shadow: 0 8px 24px -6px rgba(15, 23, 42, 0.08);
+    }
+
+    /* Range slider styling */
+    input[type="range"].tmath-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0ea5e9 0%, #14b8a6 100%);
+      outline: none;
+    }
+    input[type="range"].tmath-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #f97316;
+      border: 3px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(249, 115, 22, 0.5);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    input[type="range"].tmath-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    /* Robot float animation */
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatSlow 3.2s ease-in-out infinite;
+    }
+
+    /* Row glow when recorded */
+    @keyframes rowGlow {
+      0% { background-color: #bbf7d0; }
+      100% { background-color: #ecfdf5; }
+    }
+    .row-recorded {
+      animation: rowGlow 0.9s ease-out forwards;
+    }
+
+    /* Badge unlock pop */
+    @keyframes badgePop {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .badge-pop {
+      animation: badgePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    /* Pulse LED */
+    @keyframes ledBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .led-blink {
+      animation: ledBlink 1.2s infinite;
+    }
+
+    /* Interactive car cursor */
+    .draggable-car {
+      cursor: grab;
+      touch-action: none;
+    }
+    .draggable-car:active {
+      cursor: grabbing;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+
+    /* Print styling for Research Sheet */
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #screen-complete {
+        position: static !important;
+        display: block !important;
+        background: #ffffff !important;
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+      .print-break-inside {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-200 selection:text-sky-900">
+  <nav aria-label="Điều hướng Smart Gate" style="position:relative;z-index:40;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:10px 16px;background:#f0f9ff;border-bottom:1px solid #bae6fd;font-family:system-ui,sans-serif;font-size:14px;font-weight:700;color:#075985"><a href="../index.html#toan8-stem" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Về phần Toán 8</a><a href="tmath-smart-gate-chang2.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">← Chặng 2</a><a href="tmath-smart-gate-chang4.html" style="padding:6px 12px;background:white;border:1px solid #bae6fd;border-radius:10px;color:#075985;text-decoration:none">Chặng 4 →</a></nav>
+
+
+  <!-- Confetti Canvas Overlay -->
+  <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm no-print"></div>
+
+  <!-- ========================================================= -->
+  <!-- MÀN HÌNH MỞ ĐẦU (INTRO SCREEN)                            -->
+  <!-- ========================================================= -->
+  <section id="screen-intro" class="fixed inset-0 z-40 overflow-y-auto bg-gradient-to-br from-sky-900 via-cyan-900 to-slate-900 text-white flex items-center justify-center p-4 md:p-8">
+    <div class="max-w-5xl w-full bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <!-- Left column: Title, Robot, Speech, Missions -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/20 border border-cyan-300/40 text-cyan-200 text-xs font-bold tracking-wider uppercase">
+            <span>🔬</span> STEM TOÁN 8 • CHẶNG 3 • HÀM SỐ BẬC NHẤT
+          </div>
+
+          <div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-200 to-amber-300 leading-tight">
+              TMATH SMART GATE
+            </h1>
+            <p class="text-lg sm:text-xl font-extrabold text-cyan-300 mt-1">
+              PHÒNG THÍ NGHIỆM ẢO – KHÁM PHÁ BÍ MẬT CỦA CẢM BIẾN
+            </p>
+          </div>
+
+          <!-- Robot TMath + Speech Bubble -->
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 bg-slate-900/50 border border-sky-400/30 rounded-2xl p-4">
+            <div class="shrink-0 animate-float" id="intro-robot-slot"></div>
+            <div class="text-sm sm:text-base text-sky-50 leading-relaxed">
+              <div class="font-bold text-amber-300 text-xs uppercase tracking-wider mb-1">Robot TMath nói:</div>
+              “Chào mừng các kỹ sư nhí đến với phòng thí nghiệm TMath! Chúng ta đã biết dạng công thức
+              <span class="font-mono font-bold text-cyan-300">d = at + b</span>, nhưng hai hệ số
+              <span class="font-mono font-bold text-amber-300">a</span> và
+              <span class="font-mono font-bold text-amber-300">b</span> vẫn còn là những ẩn số. Hãy cùng tiến hành thí nghiệm để khám phá bí mật này nhé!”
+            </div>
+          </div>
+
+          <!-- 5 Research Missions -->
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-sky-300 mb-2.5">5 Nhiệm vụ nghiên cứu:</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              <div class="flex items-center gap-2.5 bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+                <span class="w-6 h-6 rounded-full bg-sky-500 text-white font-bold flex items-center justify-center text-xs">1</span>
+                <span>Khám phá cảm biến</span>
+              </div>
+              <div class="flex items-center gap-2.5 bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+                <span class="w-6 h-6 rounded-full bg-cyan-500 text-white font-bold flex items-center justify-center text-xs">2</span>
+                <span>Thu thập dữ liệu</span>
+              </div>
+              <div class="flex items-center gap-2.5 bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+                <span class="w-6 h-6 rounded-full bg-teal-500 text-white font-bold flex items-center justify-center text-xs">3</span>
+                <span>Xây dựng hàm số</span>
+              </div>
+              <div class="flex items-center gap-2.5 bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+                <span class="w-6 h-6 rounded-full bg-amber-500 text-white font-bold flex items-center justify-center text-xs">4</span>
+                <span>Giải mã đồ thị</span>
+              </div>
+              <div class="flex items-center gap-2.5 bg-white/10 rounded-xl px-3 py-2 border border-white/10 sm:col-span-2">
+                <span class="w-6 h-6 rounded-full bg-orange-500 text-white font-bold flex items-center justify-center text-xs">5</span>
+                <span>Kiểm chứng công thức & Chuyển giao lập trình</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right column: Lab Desk Preview + Electronic Mystery Screen + Mode Buttons -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          <!-- Electronic Mystery Screen -->
+          <div class="bg-slate-950 border-2 border-cyan-400/60 rounded-2xl p-5 shadow-inner relative overflow-hidden">
+            <div class="absolute top-2 right-3 flex gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <div class="text-[11px] font-mono text-cyan-400 uppercase tracking-widest mb-2">Màn hình phân tích tín hiệu</div>
+            <div class="font-mono text-center py-3 bg-slate-900/90 rounded-xl border border-cyan-500/30">
+              <div class="text-2xl sm:text-3xl font-bold text-cyan-300 tracking-wide">d = a·t + b</div>
+              <div class="flex justify-center gap-6 mt-2 text-lg font-bold">
+                <span class="text-amber-400">a = ?</span>
+                <span class="text-orange-400">b = ?</span>
+              </div>
+            </div>
+
+            <!-- Mini SVG preview of Smart Gate on Lab Desk -->
+            <div class="mt-4 bg-gradient-to-b from-sky-950 to-slate-900 rounded-xl p-3 border border-white/10">
+              <svg viewBox="0 0 320 120" class="w-full h-auto">
+                <!-- Desk -->
+                <rect x="5" y="95" width="310" height="18" rx="4" fill="#78350f" />
+                <rect x="5" y="95" width="310" height="5" rx="2" fill="#b45309" />
+                <!-- Wooden base -->
+                <rect x="20" y="83" width="120" height="12" rx="2" fill="#d97706" />
+                <!-- Support -->
+                <polygon points="40,83 50,42 62,42 70,83" fill="#f59e0b" />
+                <!-- Barrier arm -->
+                <g transform="rotate(-12 56 48)">
+                  <rect x="54" y="43" width="105" height="9" rx="3" fill="#ef4444" />
+                  <rect x="70" y="43" width="12" height="9" fill="#ffffff" />
+                  <rect x="96" y="43" width="12" height="9" fill="#ffffff" />
+                  <rect x="122" y="43" width="12" height="9" fill="#ffffff" />
+                </g>
+                <circle cx="56" cy="48" r="5" fill="#1e293b" stroke="#cbd5e1" stroke-width="2" />
+                <!-- Sensor HC-SR04 -->
+                <rect x="120" y="64" width="14" height="19" rx="2" fill="#0284c7" />
+                <circle cx="134" cy="70" r="3" fill="#e2e8f0" />
+                <circle cx="134" cy="77" r="3" fill="#e2e8f0" />
+                <!-- Waves -->
+                <path d="M 145 68 Q 152 74 145 80" stroke="#38bdf8" stroke-width="2" fill="none" />
+                <path d="M 155 64 Q 165 74 155 84" stroke="#38bdf8" stroke-width="2" fill="none" opacity="0.7" />
+                <path d="M 175 66 Q 167 74 175 82" stroke="#fb923c" stroke-width="2" fill="none" />
+                <!-- Orange car -->
+                <rect x="205" y="68" width="56" height="20" rx="5" fill="#f97316" />
+                <path d="M 215 68 L 224 54 L 246 54 L 254 68 Z" fill="#fb923c" />
+                <rect x="226" y="57" width="17" height="9" rx="2" fill="#bae6fd" />
+                <circle cx="218" cy="89" r="6" fill="#0f172a" stroke="#94a3b8" stroke-width="2" />
+                <circle cx="248" cy="89" r="6" fill="#0f172a" stroke="#94a3b8" stroke-width="2" />
+                <!-- Mini ruler & coordinate badge -->
+                <rect x="135" y="89" width="160" height="6" rx="1" fill="#fef08a" />
+                <text x="138" y="87" font-size="7" fill="#38bdf8" font-family="monospace">0 cm</text>
+                <text x="275" y="87" font-size="7" fill="#38bdf8" font-family="monospace">60 cm</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col gap-2.5">
+            <button onclick="startLab('full')" class="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-amber-400 via-orange-500 to-orange-600 hover:from-amber-300 hover:to-orange-500 text-white font-extrabold text-lg shadow-lg shadow-orange-500/30 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+              <span>🚀</span> BẮT ĐẦU THÍ NGHIỆM (ĐẦY ĐỦ)
+            </button>
+
+            <button onclick="startLab('quick')" class="w-full py-3 px-5 rounded-2xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-300/50 text-cyan-100 font-bold text-sm transition flex items-center justify-center gap-2">
+              <span>⚡</span> KHÁM PHÁ NHANH – 5 PHÚT (DÀNH CHO LỚP HỌC)
+            </button>
+
+            <button onclick="startLab('real')" class="w-full py-3 px-5 rounded-2xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-300/50 text-emerald-100 font-bold text-sm transition flex items-center justify-center gap-2">
+              <span>🛠️</span> NHẬP DỮ LIỆU THỰC NGHIỆM CỦA NHÓM (THIẾT BỊ THẬT)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- GIAO DIỆN PHÒNG THÍ NGHIỆM CHÍNH (MAIN LAB)               -->
+  <!-- ========================================================= -->
+  <div id="screen-lab" class="hidden flex-1 flex flex-col min-h-screen">
+    <!-- TOP HEADER BAR -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-sky-200 shadow-sm no-print">
+      <div class="max-w-[1600px] mx-auto px-3 sm:px-5 py-2.5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Brand & Current Mode -->
+        <div class="flex items-center gap-3">
+          <button onclick="showIntro()" title="Về màn hình mở đầu" class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-teal-500 text-white font-black text-lg flex items-center justify-center shadow-md hover:scale-105 transition">
+            T
+          </button>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="font-extrabold text-slate-900 text-sm sm:text-base tracking-tight">TMATH SMART GATE</h1>
+              <span id="badge-study-mode" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-sky-100 text-sky-700">Nghiên cứu đầy đủ</span>
+            </div>
+            <p class="text-[11px] text-slate-500 hidden sm:block">Chặng 3 – Phòng thí nghiệm ảo khám phá bí mật cảm biến siêu âm</p>
+          </div>
+        </div>
+
+        <!-- Progress & Score & Badges -->
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5">
+            <span class="text-xs font-semibold text-slate-600">Tiến độ:</span>
+            <div class="w-20 sm:w-28 h-2.5 bg-slate-200 rounded-full overflow-hidden">
+              <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-sky-500 to-teal-500 transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <span id="progress-text" class="text-xs font-extrabold text-sky-700 font-mono">0/5</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-xl px-3 py-1.5">
+            <span class="text-sm">⭐</span>
+            <span id="score-text" class="text-xs sm:text-sm font-extrabold text-amber-700 font-mono">0/100</span>
+          </div>
+
+          <!-- 5 Mini Badge Icons -->
+          <div id="header-badges" class="hidden md:flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-xl px-2 py-1">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Utility Controls -->
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <!-- Mode Quick Switch -->
+          <select id="select-study-mode" onchange="switchStudyMode(this.value)" class="text-xs font-bold bg-sky-50 border border-sky-200 text-sky-800 rounded-xl px-2.5 py-2 outline-none focus:ring-2 focus:ring-sky-400">
+            <option value="full">🔬 Nghiên cứu đầy đủ</option>
+            <option value="quick">⚡ Khám phá nhanh 5 phút</option>
+            <option value="real">🛠️ Dữ liệu thiết bị thật</option>
+          </select>
+
+          <!-- Simulation Data Mode Toggle (Hidden in real mode) -->
+          <select id="select-sim-type" onchange="switchSimType(this.value)" class="text-xs font-bold bg-teal-50 border border-teal-200 text-teal-800 rounded-xl px-2.5 py-2 outline-none focus:ring-2 focus:ring-teal-400">
+            <option value="ideal">Chế độ 1: Dữ liệu lý tưởng</option>
+            <option value="noisy">Chế độ 2: Dữ liệu có sai số (±15 µs)</option>
+          </select>
+
+          <button id="btn-sound" onclick="toggleSound()" title="Bật/Tắt âm thanh" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm transition">
+            🔊
+          </button>
+          <button id="btn-pause" onclick="togglePauseAnim()" title="Tạm dừng/Tiếp tục hoạt ảnh" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm transition">
+            ⏸️
+          </button>
+          <button onclick="toggleFullscreen()" title="Toàn màn hình" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm transition">
+            ⛶
+          </button>
+          <button id="btn-teacher" onclick="openTeacherModal()" class="px-2.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-xs font-bold transition">
+            👩‍🏫 Giáo viên
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- SIMULATION DISCLAIMER / QUICK MODE BANNER -->
+    <div id="lab-banner" class="bg-gradient-to-r from-sky-600 via-cyan-600 to-teal-600 text-white text-xs font-semibold py-1.5 px-4 text-center no-print">
+      <span id="banner-text">⚠️ DỮ LIỆU MÔ PHỎNG DÙNG ĐỂ HỌC TẬP – KHÔNG PHẢI SỐ LIỆU ĐO TỪ THIẾT BỊ THỰC TẾ.</span>
+    </div>
+
+    <!-- MAIN 3-AREA WORKSPACE -->
+    <main class="flex-1 max-w-[1600px] w-full mx-auto p-3 sm:p-4 lg:p-5 grid grid-cols-1 xl:grid-cols-12 gap-4 lg:gap-5 items-start">
+
+      <!-- LEFT COLUMN (7/12): KHU VỰC 1 (MÔ HÌNH THÍ NGHIỆM) + KHU VỰC 2 (BẢNG ĐIỀU KHIỂN CẢM BIẾN) -->
+      <div class="xl:col-span-7 flex flex-col gap-4">
+
+        <!-- KHU VỰC 1: MÔ HÌNH THÍ NGHIỆM TMATH SMART GATE -->
+        <section class="lab-panel rounded-3xl p-4 sm:p-5 relative overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-extrabold">KHU VỰC 1</span>
+              <h2 class="font-extrabold text-slate-800 text-sm sm:text-base">Mô hình thí nghiệm TMath Smart Gate</h2>
+            </div>
+            <div class="text-[11px] font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
+              💡 Kéo thả xe ô tô màu cam hoặc dùng thanh trượt để đổi vị trí
+            </div>
+          </div>
+
+          <!-- Interactive SVG Stage -->
+          <div id="lab-svg-container" class="relative w-full rounded-2xl border-2 border-sky-100 bg-gradient-to-b from-sky-50 via-white to-slate-100 overflow-hidden select-none">
+            <svg id="smart-gate-svg" viewBox="0 0 860 360" class="w-full h-auto block">
+              <defs>
+                <!-- Wood grain gradient -->
+                <linearGradient id="woodBase" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e5a96b" />
+                  <stop offset="100%" stop-color="#b7793c" />
+                </linearGradient>
+                <linearGradient id="woodPillar" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#d99a5b" />
+                  <stop offset="50%" stop-color="#eab676" />
+                  <stop offset="100%" stop-color="#b47438" />
+                </linearGradient>
+                <!-- Road asphalt -->
+                <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#475569" />
+                  <stop offset="100%" stop-color="#1e293b" />
+                </linearGradient>
+                <!-- Car orange metallic -->
+                <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fb923c" />
+                  <stop offset="60%" stop-color="#f97316" />
+                  <stop offset="100%" stop-color="#c2410c" />
+                </linearGradient>
+                <!-- Lab wall grid pattern -->
+                <pattern id="labGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#e0f2fe" stroke-width="1" />
+                </pattern>
+                <!-- Arrow markers for waves -->
+                <marker id="arrowBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7" />
+                </marker>
+                <marker id="arrowOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#f97316" />
+                </marker>
+              </defs>
+
+              <!-- STEM Lab Background Grid -->
+              <rect x="0" y="0" width="860" height="275" fill="url(#labGrid)" />
+
+              <!-- Lab Desk / Bench Top -->
+              <rect x="0" y="268" width="860" height="92" fill="#e2e8f0" />
+              <line x1="0" y1="268" x2="860" y2="268" stroke="#cbd5e1" stroke-width="3" />
+
+              <!-- Road Lane (Làn đường) -->
+              <rect x="220" y="232" width="620" height="44" rx="4" fill="url(#roadGrad)" />
+              <!-- Road dashed lane markings -->
+              <line x1="235" y1="254" x2="825" y2="254" stroke="#f8fafc" stroke-width="3" stroke-dasharray="18 14" opacity="0.65" />
+
+              <!-- ================= SMART GATE HARDWARE MODEL ================= -->
+              <!-- Đế gỗ hình chữ nhật -->
+              <rect x="22" y="246" width="215" height="28" rx="4" fill="url(#woodBase)" stroke="#8c5423" stroke-width="2" />
+              <text x="128" y="265" text-anchor="middle" font-size="10" font-weight="700" fill="#451a03">ĐẾ GỖ TMATH SMART GATE</text>
+
+              <!-- Hai trụ đỡ gỗ hình thang (Trụ sau & Trụ trước) -->
+              <polygon points="56,246 70,118 96,118 110,246" fill="#a86a32" stroke="#7c471b" stroke-width="1.5" opacity="0.7" />
+              <polygon points="72,246 84,115 110,115 124,246" fill="url(#woodPillar)" stroke="#7c471b" stroke-width="2" />
+
+              <!-- Động cơ Servo (gắn trên trụ đỡ) -->
+              <rect x="78" y="138" width="38" height="24" rx="3" fill="#0369a1" stroke="#0c4a6e" stroke-width="1.5" />
+              <rect x="85" y="142" width="24" height="10" rx="1" fill="#38bdf8" opacity="0.4" />
+              <text x="97" y="159" text-anchor="middle" font-size="7" font-weight="700" fill="#e0f2fe">SERVO</text>
+
+              <!-- Thanh chắn dài màu đỏ - trắng (Barrier Arm - stays closed in Stage 3) -->
+              <g id="barrier-arm-group" transform="rotate(0 97 132)">
+                <rect x="86" y="124" width="210" height="15" rx="4" fill="#ef4444" stroke="#991b1b" stroke-width="1.5" />
+                <!-- White stripes -->
+                <rect x="115" y="124.5" width="18" height="14" fill="#ffffff" />
+                <rect x="155" y="124.5" width="18" height="14" fill="#ffffff" />
+                <rect x="195" y="124.5" width="18" height="14" fill="#ffffff" />
+                <rect x="235" y="124.5" width="18" height="14" fill="#ffffff" />
+                <rect x="272" y="124.5" width="14" height="14" fill="#ffffff" />
+              </g>
+              <!-- Trục quay (Pivot axle) -->
+              <circle cx="97" cy="132" r="9" fill="#334155" stroke="#e2e8f0" stroke-width="2.5" />
+              <circle cx="97" cy="132" r="3" fill="#f97316" />
+
+              <!-- Nguồn điện (Pin / Power pack) -->
+              <rect x="28" y="206" width="36" height="40" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+              <rect x="33" y="202" width="10" height="4" fill="#ef4444" />
+              <rect x="49" y="202" width="10" height="4" fill="#94a3b8" />
+              <text x="46" y="229" text-anchor="middle" font-size="8" font-weight="700" fill="#fbbf24">5V</text>
+
+              <!-- Bộ điều khiển (Microcontroller Board) -->
+              <rect x="128" y="202" width="66" height="44" rx="4" fill="#0f766e" stroke="#115e59" stroke-width="2" />
+              <rect x="136" y="210" width="30" height="16" rx="2" fill="#0f172a" />
+              <text id="mcu-screen-text" x="151" y="221" text-anchor="middle" font-size="7" font-family="monospace" fill="#38bdf8">MCU</text>
+              <!-- Đèn báo (Indicator LED) -->
+              <circle id="status-led" cx="182" cy="214" r="5" fill="#ef4444" stroke="#ffffff" stroke-width="1.5" />
+              <text x="161" y="239" text-anchor="middle" font-size="7" font-weight="700" fill="#ccfbf1">BỘ ĐIỀU KHIỂN</text>
+
+              <!-- Dây nối (Jumper wires) -->
+              <path d="M 38 202 C 38 182, 138 188, 138 202" fill="none" stroke="#ef4444" stroke-width="2.2" />
+              <path d="M 54 202 C 54 188, 146 192, 146 202" fill="none" stroke="#334155" stroke-width="2.2" />
+              <path d="M 116 152 C 138 152, 152 175, 152 202" fill="none" stroke="#f59e0b" stroke-width="2" />
+              <path d="M 194 218 C 206 218, 206 208, 212 208" fill="none" stroke="#0284c7" stroke-width="2" />
+              <path d="M 194 226 C 208 226, 208 216, 212 216" fill="none" stroke="#22c55e" stroke-width="2" />
+
+              <!-- Cảm biến siêu âm HC-SR04 (Front face strictly at x = 230) -->
+              <g id="sensor-hc-sr04">
+                <rect x="206" y="190" width="18" height="44" rx="3" fill="#0284c7" stroke="#075985" stroke-width="1.5" />
+                <!-- Two cylindrical ultrasonic transducers reaching x = 230 -->
+                <rect x="224" y="195" width="6" height="14" rx="1.5" fill="#cbd5e1" stroke="#64748b" stroke-width="1" />
+                <rect x="224" y="215" width="6" height="14" rx="1.5" fill="#cbd5e1" stroke="#64748b" stroke-width="1" />
+                <!-- Sensor label -->
+                <rect x="176" y="164" width="76" height="18" rx="4" fill="#0284c7" />
+                <text x="214" y="176" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">HC-SR04 (0 cm)</text>
+                <line x1="230" y1="182" x2="230" y2="288" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4 3" />
+              </g>
+
+              <!-- ================= RULER 0 to 60 cm (x = 230 to x = 770 => 9px per cm) ================= -->
+              <g id="ruler-group" transform="translate(0, 286)">
+                <rect x="226" y="0" width="554" height="42" rx="4" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.8" />
+                <!-- Ruler ticks generated via JS -->
+                <g id="ruler-ticks"></g>
+                <text x="792" y="25" font-size="11" font-weight="800" fill="#854d0e">cm</text>
+              </g>
+
+              <!-- ================= DISTANCE BRACKET (d = ... cm) ================= -->
+              <g id="distance-bracket">
+                <line id="dist-line" x1="230" y1="100" x2="410" y2="100" stroke="#0f766e" stroke-width="2" stroke-dasharray="5 3" />
+                <line x1="230" y1="92" x2="230" y2="108" stroke="#0f766e" stroke-width="2" />
+                <line id="dist-end-tick" x1="410" y1="92" x2="410" y2="108" stroke="#0f766e" stroke-width="2" />
+                <rect id="dist-label-bg" x="285" y="84" width="76" height="24" rx="12" fill="#0f766e" />
+                <text id="dist-label-text" x="323" y="100" text-anchor="middle" font-size="11" font-weight="800" fill="#ffffff" font-family="monospace">d = 20 cm</text>
+              </g>
+
+              <!-- ================= ULTRASONIC WAVE LAYER (Animated by JS) ================= -->
+              <g id="wave-layer" class="hidden">
+                <!-- Outgoing Blue Wave Arrow & Arcs -->
+                <g id="wave-outgoing" opacity="0">
+                  <line id="wave-out-arrow" x1="234" y1="202" x2="300" y2="202" stroke="#0284c7" stroke-width="3" marker-end="url(#arrowBlue)" />
+                  <g id="wave-out-arcs">
+                    <path d="M 0 -14 Q 10 0 0 14" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
+                    <path d="M -8 -10 Q 0 0 -8 10" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                  </g>
+                  <rect id="wave-out-badge" x="250" y="176" width="118" height="19" rx="9" fill="#0284c7" />
+                  <text id="wave-out-text" x="309" y="189" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">Sóng phát đi →</text>
+                </g>
+
+                <!-- Reflected Orange Wave Arrow & Arcs -->
+                <g id="wave-reflected" opacity="0">
+                  <line id="wave-ref-arrow" x1="350" y1="222" x2="240" y2="222" stroke="#f97316" stroke-width="3" marker-end="url(#arrowOrange)" />
+                  <g id="wave-ref-arcs">
+                    <path d="M 0 -14 Q -10 0 0 14" fill="none" stroke="#f97316" stroke-width="3" stroke-linecap="round" />
+                    <path d="M 8 -10 Q 0 0 8 10" fill="none" stroke="#fb923c" stroke-width="2.5" stroke-linecap="round" />
+                  </g>
+                  <rect id="wave-ref-badge" x="250" y="230" width="128" height="19" rx="9" fill="#f97316" />
+                  <text id="wave-ref-text" x="314" y="243" text-anchor="middle" font-size="9.5" font-weight="700" fill="#ffffff">← Sóng phản xạ về</text>
+                </g>
+              </g>
+
+              <!-- ================= ORANGE MODEL CAR (Front bumper at local x = 0) ================= -->
+              <g id="orange-car" class="draggable-car" transform="translate(410, 178)">
+                <!-- Drop shadow -->
+                <ellipse cx="48" cy="70" rx="48" ry="6" fill="#0f172a" opacity="0.28" />
+                <!-- Front alignment guide line to ruler -->
+                <line x1="0" y1="20" x2="0" y2="112" stroke="#f97316" stroke-width="1.8" stroke-dasharray="4 3" />
+                <!-- Car body -->
+                <path d="M 0 42 C 0 32, 10 28, 22 26 L 34 8 C 38 3, 44 2, 54 2 L 78 2 C 86 2, 92 10, 96 26 L 98 30 C 102 32, 104 38, 104 48 L 104 56 C 104 60, 100 62, 95 62 L 8 62 C 3 62, 0 58, 0 52 Z" fill="url(#carBody)" stroke="#9a3412" stroke-width="2" />
+                <!-- Windshield & side window -->
+                <path d="M 27 25 L 38 9 L 54 9 L 54 25 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="1.2" />
+                <path d="M 59 9 L 76 9 L 86 25 L 59 25 Z" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2" />
+                <!-- Headlight facing sensor -->
+                <rect x="1" y="34" width="6" height="10" rx="2" fill="#fef08a" stroke="#ca8a04" stroke-width="1" />
+                <!-- Stripe -->
+                <rect x="16" y="42" width="76" height="5" rx="2" fill="#ffedd5" opacity="0.8" />
+                <!-- Wheels -->
+                <circle cx="24" cy="62" r="12" fill="#1e293b" stroke="#64748b" stroke-width="2.5" />
+                <circle cx="24" cy="62" r="5" fill="#cbd5e1" />
+                <circle cx="80" cy="62" r="12" fill="#1e293b" stroke="#64748b" stroke-width="2.5" />
+                <circle cx="80" cy="62" r="5" fill="#cbd5e1" />
+                <!-- Drag handle badge -->
+                <rect x="26" y="-22" width="56" height="18" rx="9" fill="#ea580c" opacity="0.92" />
+                <text x="54" y="-10" text-anchor="middle" font-size="9" font-weight="700" fill="#ffffff">⇄ Kéo xe</text>
+              </g>
+
+              <!-- Slow motion physics note -->
+              <rect x="14" y="10" width="380" height="22" rx="11" fill="#ffffff" opacity="0.9" stroke="#bae6fd" />
+              <text x="24" y="24" font-size="10" font-weight="600" fill="#0369a1">ℹ️ Chuyển động sóng siêu âm được làm chậm để dễ quan sát (không phải tốc độ thực tế).</text>
+
+              <!-- Legend for waves -->
+              <g transform="translate(590, 10)">
+                <rect x="0" y="0" width="256" height="22" rx="11" fill="#ffffff" opacity="0.9" stroke="#e2e8f0" />
+                <circle cx="14" cy="11" r="4.5" fill="#0284c7" />
+                <text x="23" y="14.5" font-size="9.5" font-weight="700" fill="#0369a1">Sóng truyền đi</text>
+                <circle cx="122" cy="11" r="4.5" fill="#f97316" />
+                <text x="131" y="14.5" font-size="9.5" font-weight="700" fill="#c2410c">Sóng phản xạ trở về</text>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Slider & Quick Position Controls -->
+          <div class="mt-4 space-y-3">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 bg-sky-50/70 border border-sky-100 rounded-2xl p-3">
+              <label for="car-slider" class="text-xs font-bold text-sky-900 whitespace-nowrap">
+                Vị trí xe (cm): <span id="slider-val-badge" class="font-mono text-sm text-orange-600 bg-white px-2 py-0.5 rounded-lg border border-orange-200 ml-1">20 cm</span>
+              </label>
+              <input id="car-slider" type="range" min="5" max="60" step="1" value="20" class="tmath-slider flex-1" />
+            </div>
+
+            <!-- Quick preset buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-1.5">
+                <span class="text-xs font-bold text-slate-600 mr-1">Chọn nhanh:</span>
+                <button onclick="setCarDistance(10)" class="preset-btn px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition">10 cm</button>
+                <button onclick="setCarDistance(20)" class="preset-btn px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition">20 cm</button>
+                <button onclick="setCarDistance(30)" class="preset-btn px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition">30 cm</button>
+                <button onclick="setCarDistance(40)" class="preset-btn px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition">40 cm</button>
+                <button onclick="setCarDistance(50)" class="preset-btn px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-bold transition">50 cm</button>
+                <!-- Verification positions (shown/highlighted when on Mission 5) -->
+                <span id="verify-presets" class="hidden inline-flex items-center gap-1.5 ml-1 pl-2 border-l border-amber-300">
+                  <span class="text-[11px] font-bold text-amber-700">Kiểm chứng:</span>
+                  <button onclick="setCarDistance(15)" class="px-2 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-200 border border-amber-300 text-amber-800 text-xs font-bold transition">15 cm</button>
+                  <button onclick="setCarDistance(25)" class="px-2 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-200 border border-amber-300 text-amber-800 text-xs font-bold transition">25 cm</button>
+                  <button onclick="setCarDistance(35)" class="px-2 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-200 border border-amber-300 text-amber-800 text-xs font-bold transition">35 cm</button>
+                  <button onclick="setCarDistance(45)" class="px-2 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-200 border border-amber-300 text-amber-800 text-xs font-bold transition">45 cm</button>
+                </span>
+              </div>
+            </div>
+
+            <!-- Main Lab Action Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+              <button id="btn-measure" onclick="measureEchoTime()" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-500 to-cyan-600 hover:from-sky-400 hover:to-cyan-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-sky-500/25 transition active:scale-95 flex items-center justify-center gap-1.5">
+                <span>📡</span> ĐO THỜI GIAN PHẢN HỒI
+              </button>
+              <button id="btn-record" onclick="recordCurrentData()" disabled class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:from-slate-300 disabled:to-slate-300 disabled:cursor-not-allowed text-white font-extrabold text-xs sm:text-sm shadow-md transition active:scale-95 flex items-center justify-center gap-1.5">
+                <span>📝</span> GHI DỮ LIỆU
+              </button>
+              <button onclick="remeasureCurrent()" class="py-2.5 px-3 rounded-xl bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 font-bold text-xs sm:text-sm transition active:scale-95 flex items-center justify-center gap-1.5">
+                <span>🔄</span> ĐO LẠI
+              </button>
+              <button onclick="confirmResetExperiment()" class="py-2.5 px-3 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-bold text-xs sm:text-sm transition active:scale-95 flex items-center justify-center gap-1.5">
+                <span>🗑️</span> ĐẶT LẠI THÍ NGHIỆM
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- KHU VỰC 2: BẢNG ĐIỀU KHIỂN CẢM BIẾN -->
+        <section class="lab-panel rounded-3xl p-4 sm:p-5">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-teal-100 text-teal-800 text-xs font-extrabold">KHU VỰC 2</span>
+              <h2 class="font-extrabold text-slate-800 text-sm sm:text-base">Bảng điều khiển & Thông số cảm biến</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="sensor-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <span id="sensor-status-text" class="text-xs font-bold text-slate-600">Sẵn sàng đo</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <!-- Distance Readout -->
+            <div class="bg-slate-900 text-white rounded-2xl p-3 border border-slate-700">
+              <div class="text-[11px] font-semibold text-sky-300 uppercase">Khoảng cách thước (d)</div>
+              <div class="mt-1 flex items-baseline gap-1">
+                <span id="readout-d" class="font-mono text-2xl font-black text-white">20</span>
+                <span class="text-xs font-bold text-sky-400">cm</span>
+              </div>
+            </div>
+
+            <!-- Echo Time Readout -->
+            <div class="bg-slate-900 text-white rounded-2xl p-3 border border-cyan-500/50">
+              <div class="text-[11px] font-semibold text-amber-300 uppercase">Thời gian phản hồi (t)</div>
+              <div class="mt-1 flex items-baseline gap-1">
+                <span id="readout-t" class="font-mono text-2xl font-black text-amber-400">---</span>
+                <span class="text-xs font-bold text-amber-300">µs</span>
+              </div>
+            </div>
+
+            <!-- Data Collection Status -->
+            <div class="bg-sky-50 rounded-2xl p-3 border border-sky-200">
+              <div class="text-[11px] font-semibold text-sky-700 uppercase">Thu thập dữ liệu</div>
+              <div id="readout-collect-status" class="mt-1.5 text-sm font-extrabold text-sky-900">0 / 5 vị trí</div>
+              <div class="text-[10px] text-sky-600 mt-0.5">Vị trí chuẩn: 10–50 cm</div>
+            </div>
+
+            <!-- Measurement Count -->
+            <div class="bg-teal-50 rounded-2xl p-3 border border-teal-200">
+              <div class="text-[11px] font-semibold text-teal-700 uppercase">Tổng số lần đo</div>
+              <div id="readout-measure-count" class="mt-1.5 font-mono text-xl font-extrabold text-teal-900">0</div>
+              <div id="readout-noise-note" class="text-[10px] text-teal-700 mt-0.5">Chế độ dữ liệu lý tưởng</div>
+            </div>
+          </div>
+
+          <!-- Multi-trial panel for Noise Mode -->
+          <div id="noise-trials-box" class="hidden mt-3 bg-amber-50 border border-amber-200 rounded-2xl p-3 text-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-bold text-amber-900">📊 Chế độ có sai số (±15 µs): Đo tối đa 3 lần tại vị trí <span id="noise-curr-d" class="font-mono">20</span> cm để lấy trung bình</span>
+              <span id="noise-trials-list" class="font-mono font-bold text-amber-800">Chưa có lượt đo</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN (5/12): KHU VỰC 3 – SỔ TAY NGHIÊN CỨU -->
+      <aside class="xl:col-span-5 lab-panel rounded-3xl p-4 sm:p-5 flex flex-col">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-orange-100 text-orange-800 text-xs font-extrabold">KHU VỰC 3</span>
+            <h2 class="font-extrabold text-slate-800 text-sm sm:text-base">Sổ tay nghiên cứu</h2>
+          </div>
+          <button onclick="toggleMiniCalc()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1">
+            <span>🧮</span> Máy tính
+          </button>
+        </div>
+
+        <!-- Robot TMath Dynamic Guide Bar -->
+        <div class="flex items-center gap-3 bg-gradient-to-r from-sky-50 to-cyan-50 border border-sky-200 rounded-2xl p-3 mb-3">
+          <div id="lab-robot-slot" class="shrink-0"></div>
+          <div class="text-xs sm:text-sm text-slate-700 leading-snug">
+            <span class="font-extrabold text-sky-800">Robot TMath:</span>
+            <span id="robot-speech">Hãy nhấn nút ĐO THỜI GIAN PHẢN HỒI và quan sát chuyển động của sóng siêu âm để hoàn thành Nhiệm vụ 1 nhé!</span>
+          </div>
+        </div>
+
+        <!-- Mini Calculator Widget (Toggleable) -->
+        <div id="mini-calc" class="hidden mb-3 bg-slate-900 text-white rounded-2xl p-3 border border-slate-700 shadow-lg">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold text-cyan-300 uppercase">🧮 Máy tính hỗ trợ nhanh</span>
+            <button onclick="toggleMiniCalc()" class="text-slate-400 hover:text-white text-xs font-bold">✕ Đóng</button>
+          </div>
+          <div class="flex gap-2">
+            <input id="calc-input" type="text" placeholder="Ví dụ: (50-10)/(2913-560)" class="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-3 py-2 text-xs font-mono text-white outline-none focus:border-cyan-400" onkeydown="if(event.key==='Enter') runMiniCalc()" />
+            <button onclick="runMiniCalc()" class="px-3 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs">Tính =</button>
+          </div>
+          <div class="mt-2 flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-400">Kết quả:</span>
+            <span id="calc-result" class="text-amber-300 font-bold text-sm">---</span>
+          </div>
+        </div>
+
+        <!-- 5 Mission Navigation Tabs -->
+        <div class="grid grid-cols-5 gap-1.5 mb-4" id="mission-tabs">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- MISSION CONTENT PANELS -->
+        <div class="flex-1 space-y-4">
+
+          <!-- ==================== NHIỆM VỤ 1 ==================== -->
+          <div id="panel-m1" class="mission-panel space-y-4">
+            <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3.5 text-xs sm:text-sm text-sky-950 space-y-2">
+              <div class="font-extrabold text-sky-800 flex items-center gap-1.5">
+                <span>📡</span> Nhiệm vụ 1: Khám phá nguyên lí cảm biến siêu âm
+              </div>
+              <p>1. Đặt xe ở vị trí <strong>gần</strong> (ví dụ 10 cm) rồi nhấn <strong>ĐO THỜI GIAN PHẢN HỒI</strong>.</p>
+              <p>2. Di chuyển xe ra vị trí <strong>xa</strong> (ví dụ 50 cm) và đo lại để so sánh đường đi của sóng xanh (đi) và sóng cam (phản xạ).</p>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <button onclick="quickCompareM1(10)" class="px-3 py-1.5 rounded-xl bg-white hover:bg-sky-100 border border-sky-300 text-sky-800 text-xs font-bold">📍 Thử vị trí gần (10 cm)</button>
+                <button onclick="quickCompareM1(50)" class="px-3 py-1.5 rounded-xl bg-white hover:bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold">📍 Thử vị trí xa (50 cm)</button>
+              </div>
+              <div id="m1-compare-log" class="grid grid-cols-2 gap-2 pt-1 text-xs font-mono">
+                <div class="bg-white rounded-xl p-2 border border-sky-200">Gần: <span id="m1-near-val" class="font-bold text-sky-700">Chưa đo</span></div>
+                <div class="bg-white rounded-xl p-2 border border-orange-200">Xa: <span id="m1-far-val" class="font-bold text-orange-700">Chưa đo</span></div>
+              </div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+              <div class="text-xs sm:text-sm font-bold text-slate-800">
+                Câu hỏi 1: Khi xe di chuyển ra xa cảm biến, thời gian phản hồi của sóng siêu âm thay đổi như thế nào?
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <button onclick="answerM1(1, 'A', this)" class="m1-q1-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">A. Giảm.</button>
+                <button onclick="answerM1(1, 'B', this)" class="m1-q1-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">B. Tăng.</button>
+                <button onclick="answerM1(1, 'C', this)" class="m1-q1-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">C. Không thay đổi.</button>
+                <button onclick="answerM1(1, 'D', this)" class="m1-q1-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">D. Luôn bằng 0.</button>
+              </div>
+              <div id="m1-q1-feedback" class="text-xs font-semibold hidden"></div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+              <div class="text-xs sm:text-sm font-bold text-slate-800">
+                Câu hỏi 2: Nếu khoảng cách từ cảm biến đến xe là <span class="font-mono text-sky-700">d</span> thì tổng quãng đường sóng siêu âm truyền đi và phản xạ trở lại là bao nhiêu?
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                <button onclick="answerM1(2, 'A', this)" class="m1-q2-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">A. d/2</button>
+                <button onclick="answerM1(2, 'B', this)" class="m1-q2-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">B. d</button>
+                <button onclick="answerM1(2, 'C', this)" class="m1-q2-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">C. 2d</button>
+                <button onclick="answerM1(2, 'D', this)" class="m1-q2-btn p-2.5 rounded-xl border border-slate-200 hover:bg-sky-50 text-left transition">D. 3d</button>
+              </div>
+              <div id="m1-q2-feedback" class="text-xs font-semibold hidden"></div>
+              <!-- Visual 2d animation explanation (revealed after correct answer) -->
+              <div id="m1-2d-visual" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-xs text-emerald-900">
+                <div class="font-bold mb-1">✨ Minh họa hai lượt truyền sóng (Tổng quãng đường = d + d = 2d):</div>
+                <svg viewBox="0 0 320 56" class="w-full h-auto">
+                  <rect x="6" y="14" width="26" height="28" rx="4" fill="#0284c7" />
+                  <text x="19" y="31" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">CB</text>
+                  <rect x="276" y="14" width="38" height="28" rx="5" fill="#f97316" />
+                  <text x="295" y="31" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">XE</text>
+                  <line x1="36" y1="20" x2="268" y2="20" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrowBlue)" />
+                  <text x="152" y="14" text-anchor="middle" font-size="10" font-weight="700" fill="#0369a1">Lượt đi: d</text>
+                  <line x1="272" y1="36" x2="40" y2="36" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowOrange)" />
+                  <text x="152" y="50" text-anchor="middle" font-size="10" font-weight="700" fill="#c2410c">Lượt phản xạ về: d</text>
+                </svg>
+              </div>
+            </div>
+
+            <div id="m1-complete-banner" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-3.5 flex items-center justify-between gap-2">
+              <div class="text-xs sm:text-sm font-bold">🏅 Huy hiệu: NHÀ KHÁM PHÁ CẢM BIẾN (+20 điểm)</div>
+              <button onclick="selectMission(2)" class="px-3 py-1.5 rounded-xl bg-white text-teal-800 font-extrabold text-xs shrink-0">Sang Nhiệm vụ 2 →</button>
+            </div>
+          </div>
+
+          <!-- ==================== NHIỆM VỤ 2 ==================== -->
+          <div id="panel-m2" class="mission-panel hidden space-y-4">
+            <!-- Standard Simulation Data Table -->
+            <div id="m2-sim-section" class="space-y-3">
+              <div class="bg-cyan-50 border border-cyan-200 rounded-2xl p-3 text-xs text-cyan-950">
+                <div class="font-extrabold text-cyan-800 mb-1">📋 Bảng thu thập dữ liệu thực nghiệm mô phỏng</div>
+                <p>Đặt xe lần lượt tại <strong>10, 20, 30, 40, 50 cm</strong> → Nhấn <strong>ĐO THỜI GIAN PHẢN HỒI</strong> → Nhấn <strong>GHI DỮ LIỆU</strong>.</p>
+              </div>
+
+              <div class="overflow-x-auto rounded-2xl border border-slate-200">
+                <table class="w-full text-xs text-left">
+                  <thead class="bg-slate-100 text-slate-700 font-bold">
+                    <tr>
+                      <th class="py-2.5 px-3">Lần đo</th>
+                      <th class="py-2.5 px-3">Khoảng cách d (cm)</th>
+                      <th class="py-2.5 px-3">Thời gian phản hồi t (µs)</th>
+                      <th class="py-2.5 px-2 text-center">Trạng thái</th>
+                    </tr>
+                  </thead>
+                  <tbody id="m2-table-body" class="divide-y divide-slate-100 font-mono">
+                    <!-- Rendered by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Real-Device Data Entry Section (Only visible in 'real' mode) -->
+            <div id="m2-real-section" class="hidden space-y-3">
+              <div class="bg-emerald-50 border border-emerald-300 rounded-2xl p-3 text-xs text-emerald-950">
+                <div class="font-extrabold text-emerald-800 mb-1">🛠️ CHẾ ĐỘ NHẬP DỮ LIỆU THỰC NGHIỆM CỦA NHÓM</div>
+                <p>Nhập khoảng cách đo bằng thước và tối đa 3 lần đo thời gian phản hồi từ cảm biến HC-SR04 thật. Hệ thống tự tính trung bình <span class="font-mono font-bold">t</span> (cần ít nhất 3 hàng, khuyến khích 5 hàng).</p>
+              </div>
+
+              <div class="overflow-x-auto rounded-2xl border border-emerald-200">
+                <table class="w-full text-xs text-left">
+                  <thead class="bg-emerald-100/80 text-emerald-900 font-bold">
+                    <tr>
+                      <th class="py-2 px-2">d (cm)</th>
+                      <th class="py-2 px-2">t₁ (µs)</th>
+                      <th class="py-2 px-2">t₂ (µs)</th>
+                      <th class="py-2 px-2">t₃ (µs)</th>
+                      <th class="py-2 px-2">t TB (µs)</th>
+                      <th class="py-2 px-1 text-center">Xóa</th>
+                    </tr>
+                  </thead>
+                  <tbody id="m2-real-body" class="divide-y divide-emerald-100">
+                    <!-- Rendered by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                <button onclick="addRealDataRow()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs">+ Thêm hàng dữ liệu</button>
+                <button onclick="confirmRealDataReady()" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs">✓ Xác nhận bảng số liệu</button>
+              </div>
+            </div>
+
+            <!-- Reflection Questions after completing table -->
+            <div id="m2-questions-box" class="hidden space-y-3 border-t border-slate-200 pt-3">
+              <div class="text-xs font-extrabold text-teal-800 uppercase tracking-wide">🧠 Nhận xét bảng dữ liệu</div>
+
+              <!-- Q1 -->
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+                <div class="text-xs font-bold text-slate-800">1. Khi thời gian phản hồi t tăng thì khoảng cách d thay đổi như thế nào?</div>
+                <div class="flex gap-2 text-xs font-semibold">
+                  <button onclick="answerM2(1, 'tang', this)" class="m2-q1-btn flex-1 py-2 px-3 rounded-lg border bg-white hover:bg-sky-50">Tăng</button>
+                  <button onclick="answerM2(1, 'giam', this)" class="m2-q1-btn flex-1 py-2 px-3 rounded-lg border bg-white hover:bg-sky-50">Giảm</button>
+                  <button onclick="answerM2(1, 'khongdoi', this)" class="m2-q1-btn flex-1 py-2 px-3 rounded-lg border bg-white hover:bg-sky-50">Không đổi</button>
+                </div>
+                <div id="m2-q1-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+
+              <!-- Q2 -->
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+                <div class="text-xs font-bold text-slate-800">2. Khi khoảng cách tăng thêm những lượng bằng nhau thì thời gian phản hồi thay đổi như thế nào?</div>
+                <div class="flex flex-col gap-1.5 text-xs font-semibold">
+                  <button onclick="answerM2(2, 'deu', this)" class="m2-q2-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">Tăng thêm những lượng gần bằng nhau</button>
+                  <button onclick="answerM2(2, 'ngaunhien', this)" class="m2-q2-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">Thay đổi ngẫu nhiên không có quy luật</button>
+                  <button onclick="answerM2(2, 'giamdan', this)" class="m2-q2-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">Giảm dần về 0</button>
+                </div>
+                <div id="m2-q2-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+
+              <!-- Q3 -->
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 space-y-2">
+                <div class="text-xs font-bold text-slate-800">3. Có thể đề xuất dạng hàm số nào để mô tả mối liên hệ giữa t và d?</div>
+                <div class="grid grid-cols-2 gap-2 text-xs font-semibold font-mono">
+                  <button onclick="answerM2(3, 'A', this)" class="m2-q3-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">A. d = at + b</button>
+                  <button onclick="answerM2(3, 'B', this)" class="m2-q3-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">B. d = at² + b</button>
+                  <button onclick="answerM2(3, 'C', this)" class="m2-q3-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">C. d luôn không đổi</button>
+                  <button onclick="answerM2(3, 'D', this)" class="m2-q3-btn py-2 px-3 rounded-lg border bg-white hover:bg-sky-50 text-left">D. d = a/t</button>
+                </div>
+                <div id="m2-q3-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+            </div>
+
+            <div id="m2-complete-banner" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-3.5 flex items-center justify-between gap-2">
+              <div class="text-xs sm:text-sm font-bold">🏅 Huy hiệu: CHUYÊN GIA THU THẬP DỮ LIỆU (+20 điểm)</div>
+              <button onclick="selectMission(3)" class="px-3 py-1.5 rounded-xl bg-white text-teal-800 font-extrabold text-xs shrink-0">Sang Nhiệm vụ 3 →</button>
+            </div>
+          </div>
+
+          <!-- ==================== NHIỆM VỤ 3 ==================== -->
+          <div id="panel-m3" class="mission-panel hidden space-y-3.5">
+            <div class="bg-sky-900 text-white rounded-2xl p-3 flex items-center justify-between">
+              <div>
+                <div class="text-[11px] text-cyan-300 font-bold uppercase">Dạng hàm số bậc nhất</div>
+                <div class="font-mono text-lg font-extrabold">d = a·t + b <span class="text-xs font-normal text-sky-200">(với a ≠ 0)</span></div>
+              </div>
+              <span class="text-2xl">📐</span>
+            </div>
+
+            <!-- Bước 1: Ghép nối đại lượng -->
+            <div class="border border-slate-200 rounded-2xl p-3 space-y-2">
+              <div class="text-xs font-extrabold text-slate-800">Bước 1: Xác định biến độc lập và biến phụ thuộc</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                  <div class="font-bold text-sky-800 mb-1">Thời gian phản hồi <span class="font-mono">t (µs)</span> là:</div>
+                  <select id="m3-var-t" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 font-semibold">
+                    <option value="">-- Chọn loại biến --</option>
+                    <option value="indep">Biến độc lập (đơn vị µs)</option>
+                    <option value="dep">Biến phụ thuộc (đơn vị cm)</option>
+                  </select>
+                </div>
+                <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                  <div class="font-bold text-orange-700 mb-1">Khoảng cách <span class="font-mono">d (cm)</span> là:</div>
+                  <select id="m3-var-d" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 font-semibold">
+                    <option value="">-- Chọn loại biến --</option>
+                    <option value="indep">Biến độc lập (đơn vị µs)</option>
+                    <option value="dep">Biến phụ thuộc (đơn vị cm)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <button onclick="checkM3Step1()" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs">Kiểm tra Bước 1</button>
+                <span id="m3-s1-fb" class="text-xs font-bold"></span>
+              </div>
+            </div>
+
+            <!-- Bước 2: Chọn 2 cặp dữ liệu -->
+            <div id="m3-step2" class="border border-slate-200 rounded-2xl p-3 space-y-2 opacity-50 pointer-events-none">
+              <div class="text-xs font-extrabold text-slate-800">Bước 2: Chọn hai cặp dữ liệu từ bảng đã thu thập</div>
+              <p class="text-[11px] text-slate-500">💡 Gợi ý: Nên chọn hai điểm cách xa nhau (ví dụ lần 1 và lần 5) để giảm ảnh hưởng của sai số đo.</p>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <label class="font-bold text-slate-600 block mb-1">Điểm 1: (t₁; d₁)</label>
+                  <select id="m3-p1" onchange="onSelectM3Points()" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 font-mono text-xs"></select>
+                </div>
+                <div>
+                  <label class="font-bold text-slate-600 block mb-1">Điểm 2: (t₂; d₂)</label>
+                  <select id="m3-p2" onchange="onSelectM3Points()" class="w-full bg-white border border-slate-300 rounded-lg px-2 py-1.5 font-mono text-xs"></select>
+                </div>
+              </div>
+              <div id="m3-points-display" class="text-xs font-mono bg-sky-50 text-sky-900 rounded-xl p-2 border border-sky-200 hidden"></div>
+              <div id="m3-s2-fb" class="text-xs font-bold text-rose-600"></div>
+            </div>
+
+            <!-- Bước 3: Tính hệ số a -->
+            <div id="m3-step3" class="border border-slate-200 rounded-2xl p-3 space-y-2.5 opacity-50 pointer-events-none">
+              <div class="flex items-center justify-between">
+                <div class="text-xs font-extrabold text-slate-800">Bước 3: Tính hệ số góc a</div>
+                <span class="font-mono text-xs font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-lg">a = (d₂ − d₁) / (t₂ − t₁)</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-xs">
+                <div>
+                  <label class="text-[11px] font-bold text-slate-600">d₂ − d₁ (cm)</label>
+                  <input id="m3-dd" type="text" placeholder="vd: 40" class="w-full mt-1 border border-slate-300 rounded-lg px-2.5 py-1.5 font-mono" />
+                </div>
+                <div>
+                  <label class="text-[11px] font-bold text-slate-600">t₂ − t₁ (µs)</label>
+                  <input id="m3-dt" type="text" placeholder="vd: 2353" class="w-full mt-1 border border-slate-300 rounded-lg px-2.5 py-1.5 font-mono" />
+                </div>
+                <div>
+                  <label class="text-[11px] font-bold text-slate-600">Hệ số a</label>
+                  <input id="m3-a-input" type="text" placeholder="vd: 0,017" class="w-full mt-1 border border-sky-400 rounded-lg px-2.5 py-1.5 font-mono font-bold" />
+                </div>
+              </div>
+              <div class="flex items-center justify-between gap-2">
+                <button onclick="checkM3Step3()" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs">Kiểm tra hệ số a</button>
+                <span class="text-[11px] text-slate-400">Hỗ trợ dấu phẩy (,) hoặc chấm (.)</span>
+              </div>
+              <div id="m3-s3-fb" class="text-xs font-semibold hidden"></div>
+            </div>
+
+            <!-- Bước 4: Tính hệ số b -->
+            <div id="m3-step4" class="border border-slate-200 rounded-2xl p-3 space-y-2.5 opacity-50 pointer-events-none">
+              <div class="flex items-center justify-between">
+                <div class="text-xs font-extrabold text-slate-800">Bước 4: Tính hệ số tự do b</div>
+                <span class="font-mono text-xs font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-lg">b = d₁ − a·t₁</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+                <label class="font-semibold text-slate-600">Dùng điểm:</label>
+                <select id="m3-b-point-choice" class="border border-slate-300 rounded-lg px-2 py-1 font-mono text-xs">
+                  <option value="1">Điểm 1 (t₁; d₁)</option>
+                  <option value="2">Điểm 2 (t₂; d₂)</option>
+                </select>
+                <label class="font-semibold text-slate-600 ml-1">b =</label>
+                <input id="m3-b-input" type="text" placeholder="Nhập b..." class="w-28 border border-teal-400 rounded-lg px-2.5 py-1.5 font-mono font-bold" />
+                <button onclick="checkM3Step4()" class="px-3 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs">Kiểm tra b</button>
+              </div>
+              <div id="m3-s4-fb" class="text-xs font-semibold hidden"></div>
+            </div>
+
+            <!-- Bước 5: Xây dựng công thức -->
+            <div id="m3-step5" class="border-2 border-amber-300 bg-amber-50/60 rounded-2xl p-3 space-y-2.5 opacity-50 pointer-events-none">
+              <div class="text-xs font-extrabold text-amber-900">Bước 5: Xác lập công thức của nhóm</div>
+              <div class="flex flex-wrap items-center gap-2 font-mono text-sm font-bold text-slate-800">
+                <span>d =</span>
+                <input id="m3-final-a" type="text" placeholder="a" class="w-24 bg-white border border-amber-400 rounded-lg px-2 py-1 text-center" />
+                <span>· t +</span>
+                <input id="m3-final-b" type="text" placeholder="b" class="w-24 bg-white border border-amber-400 rounded-lg px-2 py-1 text-center" />
+                <button onclick="checkM3Step5()" class="px-3.5 py-1.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-white font-sans font-extrabold text-xs">Xác nhận công thức</button>
+              </div>
+              <div id="m3-formula-result" class="hidden bg-white border border-emerald-300 rounded-xl p-2.5 text-center font-mono text-base font-extrabold text-emerald-700"></div>
+            </div>
+
+            <div id="m3-complete-banner" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-3.5 flex items-center justify-between gap-2">
+              <div class="text-xs sm:text-sm font-bold">🏅 Huy hiệu: NHÀ TOÁN HỌC THỰC NGHIỆM (+20 điểm)</div>
+              <button onclick="selectMission(4)" class="px-3 py-1.5 rounded-xl bg-white text-teal-800 font-extrabold text-xs shrink-0">Sang Nhiệm vụ 4 →</button>
+            </div>
+          </div>
+
+          <!-- ==================== NHIỆM VỤ 4 ==================== -->
+          <div id="panel-m4" class="mission-panel hidden space-y-3.5">
+            <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3 text-xs text-sky-950 space-y-1.5">
+              <div class="font-extrabold text-sky-800">📈 Nhiệm vụ 4: Giải mã đồ thị trên hệ trục Otd</div>
+              <p>Chọn từng điểm dữ liệu bên dưới rồi <strong>nhấn vào vị trí tương ứng trên hệ trục tọa độ</strong> (hoặc nhập tọa độ thủ công để chấm điểm).</p>
+            </div>
+
+            <!-- Point Selector Chips -->
+            <div id="m4-point-chips" class="flex flex-wrap gap-1.5">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- Manual coordinate input alternative -->
+            <div class="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs">
+              <span class="font-bold text-slate-600">Hoặc nhập tọa độ điểm đang chọn:</span>
+              <input id="m4-manual-t" type="text" placeholder="t (µs)" class="w-20 bg-white border border-slate-300 rounded-lg px-2 py-1 font-mono" />
+              <input id="m4-manual-d" type="text" placeholder="d (cm)" class="w-16 bg-white border border-slate-300 rounded-lg px-2 py-1 font-mono" />
+              <button onclick="plotManualPoint()" class="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-500 text-white font-bold">Chấm điểm</button>
+            </div>
+
+            <!-- Interactive Coordinate Plane Canvas -->
+            <div class="relative rounded-2xl border-2 border-slate-200 bg-white p-2 overflow-hidden">
+              <canvas id="graph-canvas" class="w-full h-[300px] sm:h-[330px] cursor-crosshair block"></canvas>
+              <div id="m4-plot-hint" class="mt-1.5 text-xs font-semibold text-center text-slate-600">Chọn một hàng dữ liệu ở trên rồi nhấn vào lưới tọa độ.</div>
+            </div>
+
+            <!-- Legend & Draw Line Button -->
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-50 rounded-xl p-2.5 border border-slate-200 text-xs">
+              <div class="flex items-center gap-3">
+                <span class="flex items-center gap-1 font-bold text-emerald-700"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Dữ liệu thu thập</span>
+                <span class="flex items-center gap-1 font-bold text-orange-600"><span class="w-5 h-1 bg-orange-500 inline-block rounded"></span> Mô hình hàm số</span>
+              </div>
+              <button id="btn-draw-line" onclick="drawStudentLine()" disabled class="px-3.5 py-1.5 rounded-xl bg-orange-500 hover:bg-orange-400 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-extrabold text-xs transition">
+                ✏️ VẼ ĐỒ THỊ HÀM SỐ CỦA NHÓM
+              </button>
+            </div>
+
+            <div id="m4-noise-explain" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-xs text-amber-900">
+              ℹ️ <strong>Lưu ý về sai số:</strong> Trong chế độ có sai số (hoặc đo thiết bị thật), các điểm dữ liệu có thể không nằm chính xác trên cùng một đường thẳng. Hàm số bậc nhất là một mô hình gần đúng cần được kiểm chứng!
+            </div>
+
+            <!-- Graph Analysis Questions -->
+            <div id="m4-questions-box" class="hidden space-y-2.5 border-t border-slate-200 pt-3">
+              <div class="text-xs font-extrabold text-sky-800 uppercase">🧠 Giải mã đồ thị</div>
+
+              <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1.5">
+                <div class="text-xs font-bold">1. Các điểm dữ liệu có xu hướng nằm gần đường nào?</div>
+                <div class="grid grid-cols-2 gap-1.5 text-xs font-semibold">
+                  <button onclick="answerM4(1,'A',this)" class="m4-q1-btn py-1.5 px-2.5 rounded-lg border bg-white hover:bg-sky-50 text-left">A. Đường tròn</button>
+                  <button onclick="answerM4(1,'B',this)" class="m4-q1-btn py-1.5 px-2.5 rounded-lg border bg-white hover:bg-sky-50 text-left">B. Đường thẳng</button>
+                  <button onclick="answerM4(1,'C',this)" class="m4-q1-btn py-1.5 px-2.5 rounded-lg border bg-white hover:bg-sky-50 text-left">C. Đường parabol</button>
+                  <button onclick="answerM4(1,'D',this)" class="m4-q1-btn py-1.5 px-2.5 rounded-lg border bg-white hover:bg-sky-50 text-left">D. Không có quy luật</button>
+                </div>
+                <div id="m4-q1-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1.5">
+                <div class="text-xs font-bold">2. Hệ số a của mô hình mang dấu gì?</div>
+                <div class="flex gap-2 text-xs font-semibold">
+                  <button onclick="answerM4(2,'duong',this)" class="m4-q2-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Dương (a &gt; 0)</button>
+                  <button onclick="answerM4(2,'am',this)" class="m4-q2-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Âm (a &lt; 0)</button>
+                  <button onclick="answerM4(2,'khong',this)" class="m4-q2-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Bằng 0</button>
+                </div>
+                <div id="m4-q2-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+
+              <div class="bg-slate-50 rounded-xl p-2.5 border border-slate-200 space-y-1.5">
+                <div class="text-xs font-bold">3. Trong phạm vi khảo sát, khi thời gian phản hồi tăng thì khoảng cách thay đổi thế nào?</div>
+                <div class="flex gap-2 text-xs font-semibold">
+                  <button onclick="answerM4(3,'tang',this)" class="m4-q3-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Tăng</button>
+                  <button onclick="answerM4(3,'giam',this)" class="m4-q3-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Giảm</button>
+                  <button onclick="answerM4(3,'khongdoi',this)" class="m4-q3-btn flex-1 py-1.5 rounded-lg border bg-white hover:bg-sky-50">Không đổi</button>
+                </div>
+                <div id="m4-q3-fb" class="text-xs font-semibold hidden"></div>
+              </div>
+            </div>
+
+            <div id="m4-complete-banner" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl p-3.5 flex items-center justify-between gap-2">
+              <div class="text-xs sm:text-sm font-bold">🏅 Huy hiệu: CHUYÊN GIA ĐỒ THỊ (+20 điểm)</div>
+              <button onclick="selectMission(5)" class="px-3 py-1.5 rounded-xl bg-white text-teal-800 font-extrabold text-xs shrink-0">Sang Nhiệm vụ 5 →</button>
+            </div>
+          </div>
+
+          <!-- ==================== NHIỆM VỤ 5 ==================== -->
+          <div id="panel-m5" class="mission-panel hidden space-y-3.5">
+            <div class="bg-amber-50 border border-amber-300 rounded-2xl p-3 text-xs text-amber-950 space-y-1.5">
+              <div class="font-extrabold text-amber-900">🧪 Nhiệm vụ 5: Kiểm chứng công thức với dữ liệu mới</div>
+              <div class="font-mono font-bold text-sm text-sky-900 bg-white px-2.5 py-1 rounded-lg border border-amber-200 inline-block">
+                Công thức của nhóm: <span id="m5-group-formula">Chưa có</span>
+              </div>
+              <p>Chọn một vị trí <strong>mới</strong> chưa dùng khi lập công thức (<strong>15, 25, 35 hoặc 45 cm</strong>), đo thời gian phản hồi mới từ cảm biến, rồi dùng công thức của nhóm để dự đoán!</p>
+            </div>
+
+            <!-- Choose new test position (Simulation) or enter custom (Real mode) -->
+            <div id="m5-sim-picker" class="space-y-2">
+              <div class="text-xs font-bold text-slate-700">Bước 1: Chọn vị trí kiểm chứng mới & Đo cảm biến</div>
+              <div class="grid grid-cols-4 gap-2">
+                <button onclick="selectVerifyPos(15)" class="m5-pos-btn py-2 rounded-xl border border-amber-300 bg-white hover:bg-amber-100 font-extrabold text-xs text-amber-900">15 cm</button>
+                <button onclick="selectVerifyPos(25)" class="m5-pos-btn py-2 rounded-xl border border-amber-300 bg-white hover:bg-amber-100 font-extrabold text-xs text-amber-900">25 cm</button>
+                <button onclick="selectVerifyPos(35)" class="m5-pos-btn py-2 rounded-xl border border-amber-300 bg-white hover:bg-amber-100 font-extrabold text-xs text-amber-900">35 cm</button>
+                <button onclick="selectVerifyPos(45)" class="m5-pos-btn py-2 rounded-xl border border-amber-300 bg-white hover:bg-amber-100 font-extrabold text-xs text-amber-900">45 cm</button>
+              </div>
+              <div class="text-xs text-slate-600 flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                <span>Thời gian phản hồi mới đo được:</span>
+                <span id="m5-new-t-display" class="font-mono font-extrabold text-amber-700 text-sm">Chưa đo (Nhấn nút ĐO ở Khu vực 1)</span>
+              </div>
+            </div>
+
+            <!-- Real mode test input -->
+            <div id="m5-real-picker" class="hidden space-y-2 bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-xs">
+              <div class="font-bold text-emerald-900">Nhập dữ liệu kiểm chứng mới từ thiết bị thật:</div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="font-semibold">Khoảng cách đo thước d (cm)</label>
+                  <input id="m5-real-d" type="text" placeholder="vd: 25" class="w-full mt-1 bg-white border border-emerald-300 rounded-lg px-2 py-1.5 font-mono" />
+                </div>
+                <div>
+                  <label class="font-semibold">Thời gian phản hồi mới t (µs)</label>
+                  <input id="m5-real-t" type="text" placeholder="vd: 1445" class="w-full mt-1 bg-white border border-emerald-300 rounded-lg px-2 py-1.5 font-mono" />
+                </div>
+              </div>
+              <button onclick="applyRealVerifyData()" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold">Áp dụng dữ liệu kiểm chứng</button>
+            </div>
+
+            <!-- Step 2: Predict & Compute Error -->
+            <div class="border border-slate-200 rounded-2xl p-3 space-y-2.5">
+              <div class="text-xs font-bold text-slate-700">Bước 2: Tính khoảng cách dự đoán theo công thức của nhóm</div>
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+                <label class="font-semibold">Khoảng cách dự đoán (cm):</label>
+                <input id="m5-pred-input" type="text" placeholder="Nhập kết quả..." class="w-28 border border-sky-400 rounded-lg px-2.5 py-1.5 font-mono font-bold" />
+                <button onclick="checkVerification()" class="px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-extrabold text-xs">Kiểm chứng ngay</button>
+              </div>
+              <div id="m5-pred-fb" class="text-xs font-semibold hidden"></div>
+            </div>
+
+            <!-- Verification Results Table -->
+            <div id="m5-result-box" class="hidden space-y-2.5">
+              <div class="overflow-hidden rounded-2xl border border-slate-200">
+                <table class="w-full text-xs">
+                  <thead class="bg-slate-100 font-bold text-slate-700">
+                    <tr>
+                      <th class="py-2 px-3 text-left">Nội dung</th>
+                      <th class="py-2 px-3 text-right">Kết quả</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100 font-mono">
+                    <tr><td class="py-2 px-3 font-sans">Thời gian phản hồi mới</td><td id="v-tbl-t" class="py-2 px-3 text-right font-bold">---</td></tr>
+                    <tr><td class="py-2 px-3 font-sans">Khoảng cách tính theo công thức</td><td id="v-tbl-pred" class="py-2 px-3 text-right font-bold text-sky-700">---</td></tr>
+                    <tr><td class="py-2 px-3 font-sans">Khoảng cách đo bằng thước</td><td id="v-tbl-real" class="py-2 px-3 text-right font-bold text-emerald-700">---</td></tr>
+                    <tr class="bg-amber-50"><td class="py-2 px-3 font-sans font-bold">Sai lệch tuyệt đối |d_tính − d_đo|</td><td id="v-tbl-err" class="py-2 px-3 text-right font-extrabold text-orange-700">---</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div id="v-eval-badge" class="rounded-xl p-3 text-xs font-bold"></div>
+              <p class="text-[11px] text-slate-500 italic">* Lưu ý: Đây là tiêu chí luyện tập do trò chơi quy định (≤1 cm: phù hợp; 1–2 cm: cần kiểm tra thêm; &gt;2 cm: cần đo lại/điều chỉnh mô hình), không phải tiêu chuẩn kỹ thuật của hệ thống rào chắn thực tế.</p>
+
+              <!-- Option to re-measure/re-model if needed -->
+              <div class="flex flex-wrap gap-2">
+                <button onclick="selectMission(2)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">↺ Đo lại dữ liệu (NV2)</button>
+                <button onclick="selectMission(3)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">↺ Chọn cặp điểm khác (NV3)</button>
+              </div>
+
+              <!-- Open-ended Reflection -->
+              <div class="bg-sky-50 border border-sky-200 rounded-2xl p-3 space-y-2">
+                <label for="m5-reflection" class="block text-xs font-bold text-sky-900">
+                  💬 Câu hỏi mở: “Nhóm em có nhận xét gì về công thức đã xây dựng? Nếu kết quả chưa chính xác, em đề xuất cải tiến như thế nào?”
+                </label>
+                <textarea id="m5-reflection" rows="3" placeholder="Viết nhận xét và đề xuất cải tiến của nhóm em..." class="w-full rounded-xl border border-sky-300 p-2.5 text-xs bg-white outline-none focus:ring-2 focus:ring-sky-400"></textarea>
+                <button onclick="finishMission5()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-md transition">
+                  🏆 HOÀN THÀNH KIỂM CHỨNG & XEM BÁO CÁO
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 text-center py-3 px-4 text-xs font-semibold tracking-wide no-print">
+      TMATH – HỌC TOÁN QUA TRẢI NGHIỆM | STEM TOÁN 8 | 2026
+    </footer>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- MÀN HÌNH HOÀN THÀNH, BÁO CÁO & CHUYỂN GIAO TRÒ CHƠI 4     -->
+  <!-- ========================================================= -->
+  <section id="screen-complete" class="fixed inset-0 z-40 hidden overflow-y-auto bg-slate-900/85 backdrop-blur-md p-3 sm:p-6">
+    <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden border border-sky-200">
+      <!-- Celebration Header -->
+      <div class="bg-gradient-to-r from-sky-600 via-cyan-600 to-teal-600 text-white p-6 text-center relative">
+        <button onclick="closeCompleteScreen()" class="absolute top-4 right-4 px-3 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-xs font-bold no-print">✕ Quay lại phòng Lab</button>
+        <div class="text-xs font-extrabold uppercase tracking-widest text-amber-300">CHÚC MỪNG!</div>
+        <h2 class="text-2xl sm:text-3xl font-black mt-1">GIẢI MÃ THÀNH CÔNG BÍ MẬT CỦA CẢM BIẾN</h2>
+        <p class="text-sm sm:text-base font-bold text-cyan-100 mt-1">KỸ SƯ NGHIÊN CỨU TMATH SMART GATE</p>
+
+        <!-- 5 Collected Badges -->
+        <div id="complete-badges-row" class="flex flex-wrap justify-center gap-2 mt-4">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Pipeline Banner -->
+        <div class="mt-4 inline-block bg-slate-950/40 border border-white/20 rounded-full px-4 py-1.5 text-xs sm:text-sm font-extrabold tracking-wider text-amber-300">
+          DỮ LIỆU → HÀM SỐ → ĐỒ THỊ → KIỂM CHỨNG → ỨNG DỤNG
+        </div>
+      </div>
+
+      <div class="p-5 sm:p-7 space-y-6">
+        <!-- Robot TMath + Formula Transfer Animation -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center bg-sky-50 border border-sky-200 rounded-2xl p-4 print-break-inside">
+          <div class="md:col-span-7 flex items-start gap-3">
+            <div id="complete-robot-slot" class="shrink-0 animate-float"></div>
+            <div class="text-xs sm:text-sm text-slate-800 space-y-1.5">
+              <div class="font-extrabold text-sky-800">Robot TMath chúc mừng:</div>
+              <p>“Xuất sắc! Các em đã tự xây dựng và kiểm chứng được công thức tính khoảng cách. Bây giờ, chúng ta có thể sử dụng công thức này để lập trình điều khiển cổng thông minh!”</p>
+              <div class="inline-block bg-amber-100 border border-amber-300 text-amber-900 rounded-lg px-2.5 py-1 text-xs font-bold">
+                🔒 Lưu ý: Thanh chắn vẫn đang đóng vì chương trình điều khiển động cơ servo chưa được thiết lập hoàn chỉnh ở Chặng 4.
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Formula Transmission to Microcontroller -->
+          <div class="md:col-span-5 bg-slate-900 rounded-2xl p-3 text-white border border-cyan-500/40">
+            <div class="text-[10px] font-mono text-cyan-300 uppercase mb-1.5 text-center">Truyền công thức sang bộ điều khiển</div>
+            <svg viewBox="0 0 260 72" class="w-full h-auto">
+              <rect x="6" y="14" width="76" height="44" rx="6" fill="#0369a1" stroke="#38bdf8" />
+              <text x="44" y="33" text-anchor="middle" font-size="8" fill="#e0f2fe" font-weight="700">SỔ TAY</text>
+              <text id="svg-transfer-formula" x="44" y="47" text-anchor="middle" font-size="8" fill="#fde047" font-family="monospace">d=at+b</text>
+              <!-- Signal line -->
+              <line x1="86" y1="36" x2="168" y2="36" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 4" />
+              <circle r="4.5" fill="#fb923c">
+                <animate attributeName="cx" values="90;166" dur="1.5s" repeatCount="indefinite" />
+                <animate attributeName="cy" values="36;36" dur="1.5s" repeatCount="indefinite" />
+              </circle>
+              <!-- MCU -->
+              <rect x="174" y="14" width="80" height="44" rx="6" fill="#0f766e" stroke="#2dd4bf" />
+              <text x="214" y="31" text-anchor="middle" font-size="8" fill="#ccfbf1" font-weight="700">BỘ ĐIỀU KHIỂN</text>
+              <text x="214" y="46" text-anchor="middle" font-size="7.5" fill="#fca5a5" font-weight="700">RÀO CHẮN: ĐÓNG</text>
+              <circle cx="244" cy="22" r="3.5" fill="#ef4444" class="led-blink" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Research Report Section -->
+        <div class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+            <h3 class="text-lg font-extrabold text-slate-900">📄 BÁO CÁO NGHIÊN CỨU STEM – TMATH SMART GATE</h3>
+            <div class="flex items-center gap-2 no-print">
+              <label for="report-group-name" class="text-xs font-bold text-slate-600">Tên nhóm:</label>
+              <input id="report-group-name" type="text" placeholder="Ví dụ: Nhóm Kỹ Sư 8A1" class="border border-sky-300 rounded-xl px-3 py-1.5 text-xs font-bold outline-none focus:ring-2 focus:ring-sky-400" oninput="updateReportGroupName()" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Left: Metadata, Data Table, Calculation -->
+            <div class="space-y-3 print-break-inside">
+              <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 text-xs space-y-1">
+                <div><strong>Tên nhóm:</strong> <span id="rep-group-display" class="text-sky-800 font-bold">Chưa nhập tên nhóm</span></div>
+                <div><strong>Nguồn dữ liệu:</strong> <span id="rep-source" class="font-semibold"></span></div>
+                <div><strong>Hai cặp dữ liệu đã chọn:</strong> <span id="rep-chosen-pts" class="font-mono font-bold text-sky-700"></span></div>
+                <div><strong>Hệ số a:</strong> <span id="rep-a" class="font-mono font-bold"></span> &nbsp;|&nbsp; <strong>Hệ số b:</strong> <span id="rep-b" class="font-mono font-bold"></span></div>
+                <div class="pt-1">
+                  <strong>Công thức hàm số của nhóm:</strong>
+                  <span id="rep-formula" class="font-mono text-sm font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200 ml-1"></span>
+                </div>
+              </div>
+
+              <!-- Data Table Summary -->
+              <div class="rounded-2xl border border-slate-200 overflow-hidden">
+                <table class="w-full text-xs">
+                  <thead class="bg-slate-100 font-bold text-slate-700">
+                    <tr>
+                      <th class="py-2 px-3 text-left">Lần đo</th>
+                      <th class="py-2 px-3 text-right">Khoảng cách d (cm)</th>
+                      <th class="py-2 px-3 text-right">Thời gian t (µs)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rep-data-tbody" class="divide-y divide-slate-100 font-mono"></tbody>
+                </table>
+              </div>
+
+              <!-- Verification Summary -->
+              <div class="bg-amber-50 rounded-2xl p-3.5 border border-amber-200 text-xs space-y-1">
+                <div class="font-extrabold text-amber-900">Kết quả kiểm chứng:</div>
+                <div id="rep-verify-summary" class="font-mono text-slate-800"></div>
+                <div class="pt-1"><strong>Nhận xét & Đề xuất cải tiến:</strong> <span id="rep-reflection" class="italic text-slate-700"></span></div>
+              </div>
+            </div>
+
+            <!-- Right: Graph Snapshot -->
+            <div class="flex flex-col gap-3 print-break-inside">
+              <div class="bg-white rounded-2xl border border-slate-200 p-3 flex-1 flex flex-col items-center justify-center">
+                <div class="text-xs font-bold text-slate-600 mb-2">Hình ảnh đồ thị hàm số của nhóm trên hệ trục Otd</div>
+                <img id="rep-graph-img" alt="Đồ thị hàm số của nhóm" class="w-full h-auto rounded-xl border border-slate-100" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Export & Report Action Buttons -->
+          <div class="flex flex-wrap gap-2 pt-2 no-print">
+            <button onclick="downloadCSV()" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs flex items-center gap-1.5">📥 TẢI BẢNG DỮ LIỆU CSV</button>
+            <button onclick="downloadGraphPNG()" class="px-3.5 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs flex items-center gap-1.5">🖼️ TẢI ĐỒ THỊ PNG</button>
+            <button onclick="window.print()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center gap-1.5">🖨️ IN PHIẾU NGHIÊN CỨU</button>
+            <button onclick="saveFormulaToStorage()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5">💾 LƯU KẾT QUẢ</button>
+            <button onclick="confirmResetExperiment()" class="px-3.5 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold text-xs flex items-center gap-1.5">🔄 THỰC HIỆN LẠI THÍ NGHIỆM</button>
+          </div>
+        </div>
+
+        <!-- Transition to Game 4 -->
+        <div class="bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 text-white rounded-3xl p-5 sm:p-6 border border-cyan-500/40 no-print">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[11px] font-extrabold uppercase">NHIỆM VỤ TIẾP THEO • CHẶNG 4</span>
+              <h3 class="text-xl font-black text-cyan-300">LẬP TRÌNH VIÊN NHÍ – ĐÁNH THỨC CỔNG THÔNG MINH</h3>
+              <p class="text-xs text-sky-100">Sử dụng công thức vừa xây dựng để tiếp tục Chặng 4:</p>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-sky-200">
+                <li>✓ Tính khoảng cách từ thời gian phản hồi</li>
+                <li>✓ So sánh khoảng cách với ngưỡng mở</li>
+                <li>✓ Xây dựng thuật toán điều khiển</li>
+                <li>✓ Lập trình động cơ servo</li>
+                <li>✓ Kiểm thử trạng thái mở & đóng thanh chắn</li>
+              </ul>
+            </div>
+            <div class="flex flex-col gap-2 shrink-0">
+              <button onclick="saveFormulaToStorage()" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-extrabold text-sm shadow-lg transition">
+                💾 LƯU CÔNG THỨC CỦA NHÓM
+              </button>
+              <button onclick="copyFormulaForGame4()" class="px-5 py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs transition">
+                📋 SAO CHÉP CÔNG THỨC (NHẬP THỦ CÔNG)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- CHẾ ĐỘ GIÁO VIÊN (TEACHER MODE MODAL)                     -->
+  <!-- ========================================================= -->
+  <div id="modal-teacher" class="fixed inset-0 z-50 hidden bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[88vh] overflow-y-auto p-6 shadow-2xl border border-indigo-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <span class="px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-[11px] font-extrabold uppercase">Chế độ Giáo viên</span>
+          <h3 class="text-lg font-extrabold text-slate-900 mt-1">Hướng dẫn tổ chức dạy học & Đáp án chuẩn</h3>
+        </div>
+        <button onclick="closeTeacherModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-bold text-slate-600">✕</button>
+      </div>
+
+      <div class="text-xs sm:text-sm text-slate-700 space-y-3">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3.5">
+          <div class="font-extrabold text-indigo-900 mb-1">1. Mô hình tạo dữ liệu nội bộ (Ẩn với học sinh):</div>
+          <p>Công thức vật lí mô phỏng: <span class="font-mono font-bold text-indigo-800">d = 0,017t + 0,48</span> (với <span class="font-mono">t = round((d - 0,48) / 0,017)</span>).</p>
+          <p class="mt-1 font-mono text-xs bg-white p-2 rounded-xl border border-indigo-100">
+            10 cm → 560 µs | 20 cm → 1148 µs | 30 cm → 1737 µs | 40 cm → 2325 µs | 50 cm → 2913 µs<br/>
+            Kiểm chứng: 15 cm → 854 µs | 25 cm → 1442 µs | 35 cm → 2031 µs | 45 cm → 2619 µs
+          </p>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5">
+          <div class="font-extrabold text-slate-900">2. Đáp án nhanh các câu hỏi trắc nghiệm:</div>
+          <ul class="list-disc pl-5 space-y-1 text-xs">
+            <li><strong>NV1 – Câu 1:</strong> B (Tăng). <strong>Câu 2:</strong> C (2d).</li>
+            <li><strong>NV2 – Nhận xét:</strong> (1) Tăng; (2) Tăng thêm những lượng gần bằng nhau; (3) A (d = at + b).</li>
+            <li><strong>NV3 – Bước 1:</strong> t là biến độc lập (µs), d là biến phụ thuộc (cm). Nếu chọn điểm 1 & 5 lý tưởng: a ≈ 0,017; b ≈ 0,48.</li>
+            <li><strong>NV4 – Đồ thị:</strong> (1) B (Đường thẳng); (2) Dương; (3) Tăng.</li>
+          </ul>
+        </div>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 space-y-2">
+          <div class="font-extrabold text-amber-900">3. Công cụ điều khiển nhanh cho lớp học (Giáo viên):</div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="teacherUnlockAllMissions()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold">🔓 Mở khóa tất cả 5 nhiệm vụ</button>
+            <button onclick="switchStudyMode('quick'); closeTeacherModal();" class="px-3 py-1.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold">⚡ Chuyển Chế độ 5 phút</button>
+            <button onclick="switchSimType('noisy'); closeTeacherModal();" class="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold">📊 Bật Chế độ có sai số (±15 µs)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- CUSTOM CONFIRM / MESSAGE MODAL (NO alert/confirm!)        -->
+  <!-- ========================================================= -->
+  <div id="modal-confirm" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <h3 id="confirm-title" class="text-lg font-extrabold text-slate-900">Xác nhận</h3>
+      <p id="confirm-msg" class="text-sm text-slate-600"></p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeConfirmModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs">Hủy bỏ</button>
+        <button id="confirm-ok-btn" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs">Đồng ý</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- JAVASCRIPT APPLICATION LOGIC                              -->
+  <!-- ========================================================= -->
+  <script>
+    /* ============================================================
+       1. SOUND ENGINE (Tone.js - Procedural, No External Audio)
+       ============================================================ */
+    const Sound = {
+      enabled: true,
+      ready: false,
+      synth: null,
+      async init() {
+        if (this.ready || !window.Tone) return;
+        try {
+          await Tone.start();
+          this.synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'triangle' },
+            envelope: { attack: 0.01, decay: 0.12, sustain: 0.1, release: 0.25 }
+          }).toDestination();
+          this.synth.volume.value = -10;
+          this.ready = true;
+        } catch (e) { /* Ignore autoplay restrictions until user interacts */ }
+      },
+      playClick() {
+        if (!this.enabled) return;
+        this.init().then(() => {
+          if (this.synth) this.synth.triggerAttackRelease('C5', '32n');
+        });
+      },
+      playPing() {
+        if (!this.enabled) return;
+        this.init().then(() => {
+          if (this.synth) {
+            this.synth.triggerAttackRelease('G5', '16n');
+            setTimeout(() => this.synth && this.synth.triggerAttackRelease('C6', '16n'), 180);
+          }
+        });
+      },
+      playSuccess() {
+        if (!this.enabled) return;
+        this.init().then(() => {
+          if (this.synth) {
+            const now = Tone.now();
+            this.synth.triggerAttackRelease('C5', '16n', now);
+            this.synth.triggerAttackRelease('E5', '16n', now + 0.09);
+            this.synth.triggerAttackRelease('G5', '8n', now + 0.18);
+          }
+        });
+      },
+      playError() {
+        if (!this.enabled) return;
+        this.init().then(() => {
+          if (this.synth) this.synth.triggerAttackRelease('A2', '8n');
+        });
+      },
+      playFanfare() {
+        if (!this.enabled) return;
+        this.init().then(() => {
+          if (this.synth) {
+            const now = Tone.now();
+            ['C5', 'E5', 'G5', 'C6'].forEach((note, i) => {
+              this.synth.triggerAttackRelease(note, '8n', now + i * 0.12);
+            });
+          }
+        });
+      }
+    };
+
+    /* ============================================================
+       2. ROBOT TMATH INLINE SVG GENERATOR
+       ============================================================ */
+    function createRobotSVG(size = 64) {
+      return `
+        <svg width="${size}" height="${size}" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Antenna -->
+          <line x1="40" y1="6" x2="40" y2="16" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="40" cy="6" r="4" fill="#f97316"/>
+          <!-- Head -->
+          <rect x="18" y="15" width="44" height="28" rx="12" fill="#ffffff" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Visor -->
+          <rect x="24" y="21" width="32" height="15" rx="6" fill="#0f172a"/>
+          <!-- Glowing Eyes -->
+          <circle cx="33" cy="28.5" r="3.2" fill="#38bdf8"/>
+          <circle cx="47" cy="28.5" r="3.2" fill="#38bdf8"/>
+          <path d="M 36 33 Q 40 36 44 33" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <!-- Ears -->
+          <rect x="13" y="23" width="5" height="12" rx="2.5" fill="#0284c7"/>
+          <rect x="62" y="23" width="5" height="12" rx="2.5" fill="#0284c7"/>
+          <!-- Body -->
+          <rect x="22" y="45" width="36" height="28" rx="10" fill="#ffffff" stroke="#0284c7" stroke-width="2.5"/>
+          <!-- Chest emblem with letter T -->
+          <circle cx="40" cy="59" r="9.5" fill="#0284c7"/>
+          <text x="40" y="63.5" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ffffff">T</text>
+          <!-- Arms -->
+          <path d="M 22 52 Q 12 56 14 64" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+          <path d="M 58 52 Q 68 56 66 64" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+      `;
+    }
+
+    /* ============================================================
+       3. INDEPENDENT SENSOR PHYSICS MODEL (HIDDEN FROM STUDENTS)
+       ============================================================ */
+    const IDEAL_LOOKUP = {
+      10: 560,
+      20: 1148,
+      30: 1737,
+      40: 2325,
+      50: 2913
+    };
+
+    /**
+     * Computes simulated ultrasonic echo time t (µs) for distance d (cm).
+     * Completely independent of student's formula!
+     */
+    function simulateSensorTime(d, simType) {
+      let baseT;
+      if (IDEAL_LOOKUP[d] !== undefined) {
+        baseT = IDEAL_LOOKUP[d];
+      } else {
+        baseT = Math.round((d - 0.48) / 0.017);
+      }
+      if (simType === 'noisy') {
+        const noise = Math.floor(Math.random() * 31) - 15; // [-15, +15] µs
+        return Math.max(50, baseT + noise);
+      }
+      return baseT;
+    }
+
+    /**
+     * Parse Vietnamese decimal numbers (supports both ',' and '.')
+     */
+    function parseVNNumber(val) {
+      if (val === null || val === undefined) return NaN;
+      const cleaned = String(val).trim().replace(/\s+/g, '').replace(/,/g, '.');
+      if (cleaned === '') return NaN;
+      return Number(cleaned);
+    }
+
+    function fmtVN(num, decimals = 3) {
+      if (!isFinite(num)) return '---';
+      return Number(num.toFixed(decimals)).toString().replace('.', ',');
+    }
+
+    /* ============================================================
+       4. CENTRAL APPLICATION STATE
+       ============================================================ */
+    const BADGES = [
+      { id: 1, name: 'Nhà khám phá cảm biến', icon: '📡' },
+      { id: 2, name: 'Chuyên gia thu thập dữ liệu', icon: '📋' },
+      { id: 3, name: 'Nhà Toán học thực nghiệm', icon: '📐' },
+      { id: 4, name: 'Chuyên gia đồ thị', icon: '📈' },
+      { id: 5, name: 'Chuyên gia kiểm chứng', icon: '🧪' },
+    ];
+
+    const TARGET_DISTANCES = [10, 20, 30, 40, 50];
+
+    let state = {};
+
+    function createInitialState() {
+      return {
+        studyMode: 'full',       // 'full' | 'quick' | 'real'
+        simType: 'ideal',        // 'ideal' | 'noisy'
+        currentMission: 1,
+        unlockedMission: 1,
+        completedMissions: [false, false, false, false, false],
+        score: 0,
+        animPaused: false,
+        isMeasuring: false,
+
+        // Lab bench state
+        carD: 20,
+        lastMeasuredD: null,
+        lastMeasuredT: null,
+        totalMeasurements: 0,
+        noiseTrials: {},         // { [d]: [t1, t2, t3] }
+
+        // Mission 1
+        m1NearT: null,
+        m1FarT: null,
+        m1Q1Done: false,
+        m1Q2Done: false,
+
+        // Mission 2
+        simData: TARGET_DISTANCES.map(d => ({ d, t: null, trials: [] })),
+        realData: [
+          { d: '', t1: '', t2: '', t3: '', tAvg: null },
+          { d: '', t1: '', t2: '', t3: '', tAvg: null },
+          { d: '', t1: '', t2: '', t3: '', tAvg: null },
+          { d: '', t1: '', t2: '', t3: '', tAvg: null },
+          { d: '', t1: '', t2: '', t3: '', tAvg: null },
+        ],
+        m2Q1Done: false,
+        m2Q2Done: false,
+        m2Q3Done: false,
+
+        // Mission 3
+        m3Step1Done: false,
+        chosenIdx1: null,
+        chosenIdx2: null,
+        exactA: null,
+        exactB: null,
+        studentA: null,
+        studentB: null,
+        m3Step3Done: false,
+        m3Step4Done: false,
+        m3Step5Done: false,
+
+        // Mission 4
+        selectedPlotIdx: 0,
+        plottedIndices: [],
+        lineDrawn: false,
+        m4Q1Done: false,
+        m4Q2Done: false,
+        m4Q3Done: false,
+
+        // Mission 5
+        verifyD: null,
+        verifyT: null,
+        verifyPred: null,
+        verifyError: null,
+        reflectionText: '',
+        groupName: ''
+      };
+    }
+
+    function getActiveDataRows() {
+      if (state.studyMode === 'real') {
+        return state.realData
+          .filter(r => isFinite(parseVNNumber(r.d)) && isFinite(r.tAvg))
+          .map(r => ({ d: parseVNNumber(r.d), t: r.tAvg }));
+      }
+      return state.simData.filter(r => r.t !== null);
+    }
+
+    /* ============================================================
+       5. INITIALIZATION & UI HELPERS
+       ============================================================ */
+    function initApp() {
+      state = createInitialState();
+      // Inject Robot TMath SVGs
+      document.getElementById('intro-robot-slot').innerHTML = createRobotSVG(78);
+      document.getElementById('lab-robot-slot').innerHTML = createRobotSVG(50);
+      document.getElementById('complete-robot-slot').innerHTML = createRobotSVG(66);
+
+      buildRulerSVG();
+      setupCarDragAndSlider();
+      setupGraphCanvasEvents();
+      renderAllUI();
+    }
+
+    function showToast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const colors = {
+        info: 'bg-sky-700 text-white border-sky-400',
+        success: 'bg-emerald-600 text-white border-emerald-300',
+        warn: 'bg-amber-500 text-slate-950 border-amber-200',
+        error: 'bg-rose-600 text-white border-rose-300'
+      };
+      const el = document.createElement('div');
+      el.className = `px-4 py-2.5 rounded-2xl border shadow-xl text-xs sm:text-sm font-bold transition-all duration-300 ${colors[type] || colors.info}`;
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateX(20px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    }
+
+    function setRobotSpeech(text) {
+      document.getElementById('robot-speech').textContent = text;
+    }
+
+    function startLab(mode) {
+      Sound.playSuccess();
+      document.getElementById('screen-intro').classList.add('hidden');
+      document.getElementById('screen-lab').classList.remove('hidden');
+      switchStudyMode(mode);
+      // Ensure canvas resizes cleanly after becoming visible
+      setTimeout(resizeAndDrawGraph, 120);
+    }
+
+    function showIntro() {
+      Sound.playClick();
+      document.getElementById('screen-intro').classList.remove('hidden');
+    }
+
+    function switchStudyMode(mode) {
+      state.studyMode = mode;
+      document.getElementById('select-study-mode').value = mode;
+      const badge = document.getElementById('badge-study-mode');
+      const simSelect = document.getElementById('select-sim-type');
+      const bannerText = document.getElementById('banner-text');
+
+      if (mode === 'full') {
+        badge.textContent = '🔬 Nghiên cứu đầy đủ';
+        badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-sky-100 text-sky-700';
+        simSelect.classList.remove('hidden');
+        bannerText.textContent = '⚠️ DỮ LIỆU MÔ PHỎNG DÙNG ĐỂ HỌC TẬP – KHÔNG PHẢI SỐ LIỆU ĐO TỪ THIẾT BỊ THỰC TẾ.';
+        document.getElementById('m2-sim-section').classList.remove('hidden');
+        document.getElementById('m2-real-section').classList.add('hidden');
+        document.getElementById('m5-sim-picker').classList.remove('hidden');
+        document.getElementById('m5-real-picker').classList.add('hidden');
+      } else if (mode === 'quick') {
+        badge.textContent = '⚡ Khám phá nhanh 5 phút';
+        badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800';
+        simSelect.classList.remove('hidden');
+        bannerText.textContent = '⚡ CHẾ ĐỘ KHÁM PHÁ NHANH 5 PHÚT (LỚP HỌC) • DỮ LIỆU MÔ PHỎNG HỌC TẬP • Đã mở khóa nhanh máy tính & các chặng!';
+        state.unlockedMission = 5;
+        document.getElementById('m2-sim-section').classList.remove('hidden');
+        document.getElementById('m2-real-section').classList.add('hidden');
+        document.getElementById('m5-sim-picker').classList.remove('hidden');
+        document.getElementById('m5-real-picker').classList.add('hidden');
+      } else {
+        badge.textContent = '🛠️ Dữ liệu thiết bị thật';
+        badge.className = 'px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800';
+        simSelect.classList.add('hidden');
+        bannerText.textContent = '🛠️ CHẾ ĐỘ NHẬP DỮ LIỆU THỰC NGHIỆM CỦA NHÓM – Tự nhập khoảng cách thước & thời gian đo từ thiết bị thật.';
+        state.unlockedMission = Math.max(state.unlockedMission, 2);
+        document.getElementById('m2-sim-section').classList.add('hidden');
+        document.getElementById('m2-real-section').classList.remove('hidden');
+        document.getElementById('m5-sim-picker').classList.add('hidden');
+        document.getElementById('m5-real-picker').classList.remove('hidden');
+        if (state.currentMission === 1) state.currentMission = 2;
+      }
+
+      renderAllUI();
+    }
+
+    function switchSimType(type) {
+      state.simType = type;
+      document.getElementById('select-sim-type').value = type;
+      document.getElementById('readout-noise-note').textContent =
+        type === 'ideal' ? 'Chế độ dữ liệu lý tưởng' : 'Chế độ có sai số (±15 µs)';
+      document.getElementById('noise-trials-box').classList.toggle('hidden', type !== 'noisy');
+      document.getElementById('m4-noise-explain').classList.toggle('hidden', type !== 'noisy' && state.studyMode !== 'real');
+      updateNoiseTrialsUI();
+      showToast(type === 'ideal' ? 'Đã chuyển sang Chế độ 1: Dữ liệu lý tưởng' : 'Đã chuyển sang Chế độ 2: Dữ liệu có sai số (±15 µs)', 'info');
+    }
+
+    function toggleSound() {
+      Sound.enabled = !Sound.enabled;
+      document.getElementById('btn-sound').textContent = Sound.enabled ? '🔊' : '🔇';
+      if (Sound.enabled) Sound.playClick();
+    }
+
+    function togglePauseAnim() {
+      state.animPaused = !state.animPaused;
+      document.getElementById('btn-pause').textContent = state.animPaused ? '▶️' : '⏸️';
+      showToast(state.animPaused ? 'Đã tạm dừng hoạt ảnh sóng' : 'Đã tiếp tục hoạt ảnh sóng', 'info');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.().catch(() => {});
+      } else {
+        document.exitFullscreen?.().catch(() => {});
+      }
+    }
+
+    function toggleMiniCalc() {
+      Sound.playClick();
+      document.getElementById('mini-calc').classList.toggle('hidden');
+    }
+
+    function runMiniCalc() {
+      const raw = document.getElementById('calc-input').value.trim();
+      const resEl = document.getElementById('calc-result');
+      if (!raw) return;
+      try {
+        const sanitized = raw.replace(/,/g, '.').replace(/×/g, '*').replace(/÷/g, '/').replace(/:/g, '/');
+        if (!/^[0-9+\-*/().\s]+$/.test(sanitized)) {
+          resEl.textContent = 'Biểu thức không hợp lệ';
+          return;
+        }
+        const val = Function(`"use strict"; return (${sanitized})`)();
+        if (!isFinite(val)) {
+          resEl.textContent = 'Lỗi phép chia 0';
+        } else {
+          resEl.textContent = fmtVN(val, 6);
+        }
+      } catch (e) {
+        resEl.textContent = 'Lỗi cú pháp';
+      }
+    }
+
+    /* ============================================================
+       6. RULER, CAR DRAGGING & ULTRASONIC WAVE ANIMATION (KHU VỰC 1)
+       ============================================================ */
+    const SENSOR_X = 230;
+    const PX_PER_CM = 9; // 60 cm = 540 px -> x = 230..770
+
+    function buildRulerSVG() {
+      const group = document.getElementById('ruler-ticks');
+      let html = '';
+      for (let cm = 0; cm <= 60; cm++) {
+        const x = SENSOR_X + cm * PX_PER_CM;
+        const isMajor = cm % 10 === 0;
+        const isMid = cm % 5 === 0 && !isMajor;
+        const h = isMajor ? 18 : isMid ? 12 : 7;
+        html += `<line x1="${x}" y1="0" x2="${x}" y2="${h}" stroke="#713f12" stroke-width="${isMajor ? 1.8 : 1}" />`;
+        if (isMajor) {
+          html += `<text x="${x}" y="33" text-anchor="middle" font-size="10.5" font-weight="800" fill="#713f12" font-family="monospace">${cm}</text>`;
+        }
+      }
+      group.innerHTML = html;
+    }
+
+    function setCarDistance(cm) {
+      cm = Math.max(5, Math.min(60, Math.round(cm)));
+      state.carD = cm;
+      // Clear readout time when moving car so student must press Measure!
+      if (state.lastMeasuredD !== cm) {
+        state.lastMeasuredT = null;
+        document.getElementById('readout-t').textContent = '---';
+        document.getElementById('btn-record').disabled = true;
+      }
+
+      const carX = SENSOR_X + cm * PX_PER_CM;
+      document.getElementById('orange-car').setAttribute('transform', `translate(${carX}, 178)`);
+
+      // Update distance bracket
+      document.getElementById('dist-line').setAttribute('x2', carX);
+      document.getElementById('dist-end-tick').setAttribute('x1', carX);
+      document.getElementById('dist-end-tick').setAttribute('x2', carX);
+      const midX = (SENSOR_X + carX) / 2;
+      document.getElementById('dist-label-bg').setAttribute('x', midX - 38);
+      document.getElementById('dist-label-text').setAttribute('x', midX);
+      document.getElementById('dist-label-text').textContent = `d = ${cm} cm`;
+
+      // Update slider & readouts
+      document.getElementById('car-slider').value = cm;
+      document.getElementById('slider-val-badge').textContent = `${cm} cm`;
+      document.getElementById('readout-d').textContent = cm;
+      updateNoiseTrialsUI();
+    }
+
+    function setupCarDragAndSlider() {
+      const slider = document.getElementById('car-slider');
+      slider.addEventListener('input', (e) => setCarDistance(Number(e.target.value)));
+
+      const svg = document.getElementById('smart-gate-svg');
+      const car = document.getElementById('orange-car');
+      let dragging = false;
+      let dragOffsetX = 0;
+
+      function clientToSvgX(clientX) {
+        const pt = svg.createSVGPoint();
+        pt.x = clientX;
+        pt.y = 0;
+        return pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+      }
+
+      car.addEventListener('pointerdown', (e) => {
+        if (state.isMeasuring) return;
+        dragging = true;
+        car.setPointerCapture(e.pointerId);
+        const svgX = clientToSvgX(e.clientX);
+        const currentCarX = SENSOR_X + state.carD * PX_PER_CM;
+        dragOffsetX = svgX - currentCarX;
+      });
+
+      car.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const svgX = clientToSvgX(e.clientX) - dragOffsetX;
+        const cm = (svgX - SENSOR_X) / PX_PER_CM;
+        setCarDistance(cm);
+      });
+
+      car.addEventListener('pointerup', () => { dragging = false; });
+      car.addEventListener('pointercancel', () => { dragging = false; });
+
+      setCarDistance(20);
+    }
+
+    /**
+     * Animates outgoing (blue) and reflected (orange) ultrasonic waves
+     * with proportional travel time (slowed down for observation).
+     */
+    function measureEchoTime() {
+      if (state.isMeasuring) return;
+      state.isMeasuring = true;
+      Sound.playPing();
+
+      const d = state.carD;
+      const carX = SENSOR_X + d * PX_PER_CM;
+      const startX = SENSOR_X + 4;
+      const travelDistPx = Math.max(20, carX - startX);
+      // Visual duration proportional to distance (slowed down for observation)
+      const oneWayMs = 360 + d * 12;
+
+      const waveLayer = document.getElementById('wave-layer');
+      const waveOut = document.getElementById('wave-outgoing');
+      const waveRef = document.getElementById('wave-reflected');
+      const outArrow = document.getElementById('wave-out-arrow');
+      const outArcs = document.getElementById('wave-out-arcs');
+      const outBadge = document.getElementById('wave-out-badge');
+      const outText = document.getElementById('wave-out-text');
+
+      const refArrow = document.getElementById('wave-ref-arrow');
+      const refArcs = document.getElementById('wave-ref-arcs');
+      const refBadge = document.getElementById('wave-ref-badge');
+      const refText = document.getElementById('wave-ref-text');
+
+      waveLayer.classList.remove('hidden');
+      waveOut.setAttribute('opacity', '1');
+      waveRef.setAttribute('opacity', '0');
+
+      const midX = (startX + carX) / 2;
+      outBadge.setAttribute('x', Math.max(235, midX - 59));
+      outText.setAttribute('x', Math.max(294, midX));
+      refBadge.setAttribute('x', Math.max(235, midX - 64));
+      refText.setAttribute('x', Math.max(299, midX));
+
+      document.getElementById('sensor-status-dot').className = 'w-2.5 h-2.5 rounded-full bg-sky-500 led-blink';
+      document.getElementById('sensor-status-text').textContent = 'Đang phát sóng siêu âm...';
+      document.getElementById('readout-t').textContent = '...';
+      document.getElementById('btn-record').disabled = true;
+
+      let elapsed = 0;
+      let lastTs = performance.now();
+
+      function step(now) {
+        const dt = now - lastTs;
+        lastTs = now;
+        if (!state.animPaused) {
+          elapsed += dt;
+        }
+
+        if (elapsed <= oneWayMs) {
+          // Phase 1: Outgoing blue wave
+          const p = Math.min(1, elapsed / oneWayMs);
+          const currX = startX + travelDistPx * p;
+          outArrow.setAttribute('x1', startX);
+          outArrow.setAttribute('x2', currX);
+          outArcs.setAttribute('transform', `translate(${currX}, 202)`);
+          requestAnimationFrame(step);
+        } else if (elapsed <= oneWayMs * 2) {
+          // Phase 2: Reflected orange wave
+          if (waveRef.getAttribute('opacity') === '0') {
+            waveRef.setAttribute('opacity', '1');
+            document.getElementById('sensor-status-dot').className = 'w-2.5 h-2.5 rounded-full bg-orange-500 led-blink';
+            document.getElementById('sensor-status-text').textContent = 'Đang thu sóng phản xạ...';
+          }
+          const p = Math.min(1, (elapsed - oneWayMs) / oneWayMs);
+          const currX = carX - travelDistPx * p;
+          refArrow.setAttribute('x1', carX);
+          refArrow.setAttribute('x2', currX);
+          refArcs.setAttribute('transform', `translate(${currX}, 222)`);
+          requestAnimationFrame(step);
+        } else {
+          // Measurement complete
+          completeMeasurement(d);
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    function completeMeasurement(d) {
+      state.isMeasuring = false;
+      const tVal = simulateSensorTime(d, state.simType);
+      state.lastMeasuredD = d;
+      state.lastMeasuredT = tVal;
+      state.totalMeasurements += 1;
+
+      document.getElementById('readout-t').textContent = tVal.toLocaleString('vi-VN');
+      document.getElementById('readout-measure-count').textContent = state.totalMeasurements;
+      document.getElementById('sensor-status-dot').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+      document.getElementById('sensor-status-text').textContent = 'Hoàn tất đo';
+      document.getElementById('mcu-screen-text').textContent = `${tVal}µs`;
+      document.getElementById('btn-record').disabled = false;
+
+      // Update Mission 1 comparison log
+      if (d <= 20) {
+        state.m1NearT = { d, t: tVal };
+        document.getElementById('m1-near-val').textContent = `d=${d}cm → t=${tVal} µs`;
+      }
+      if (d >= 40) {
+        state.m1FarT = { d, t: tVal };
+        document.getElementById('m1-far-val').textContent = `d=${d}cm → t=${tVal} µs`;
+      }
+
+      // Noise mode multi-trial tracking
+      if (state.simType === 'noisy') {
+        if (!state.noiseTrials[d]) state.noiseTrials[d] = [];
+        if (state.noiseTrials[d].length < 3) {
+          state.noiseTrials[d].push(tVal);
+        } else {
+          state.noiseTrials[d] = [tVal];
+        }
+        updateNoiseTrialsUI();
+      }
+
+      // Mission 5 live capture if testing a verification position
+      if (state.currentMission === 5 && state.studyMode !== 'real' && [15, 25, 35, 45].includes(d)) {
+        state.verifyD = d;
+        state.verifyT = tVal;
+        document.getElementById('m5-new-t-display').textContent = `d = ${d} cm → t = ${tVal} µs`;
+        showToast(`Đã thu nhận thời gian phản hồi kiểm chứng tại ${d} cm: ${tVal} µs`, 'success');
+      }
+
+      setTimeout(() => {
+        if (!state.isMeasuring) {
+          document.getElementById('wave-layer').classList.add('hidden');
+        }
+      }, 1100);
+    }
+
+    function updateNoiseTrialsUI() {
+      const d = state.carD;
+      document.getElementById('noise-curr-d').textContent = d;
+      const list = state.noiseTrials[d] || [];
+      const el = document.getElementById('noise-trials-list');
+      if (list.length === 0) {
+        el.textContent = 'Chưa có lượt đo';
+      } else {
+        const avg = Math.round(list.reduce((a, b) => a + b, 0) / list.length);
+        el.textContent = `Các lần đo: [${list.join(', ')}] µs → TB = ${avg} µs`;
+      }
+    }
+
+    function remeasureCurrent() {
+      Sound.playClick();
+      state.lastMeasuredT = null;
+      document.getElementById('readout-t').textContent = '---';
+      document.getElementById('btn-record').disabled = true;
+      measureEchoTime();
+    }
+
+    function recordCurrentData() {
+      if (state.lastMeasuredT === null) {
+        showToast('Hãy nhấn ĐO THỜI GIAN PHẢN HỒI trước khi ghi dữ liệu!', 'warn');
+        return;
+      }
+      if (state.studyMode === 'real') {
+        showToast('Bạn đang ở chế độ Thiết bị thật, hãy nhập số liệu trực tiếp vào bảng Nhiệm vụ 2!', 'info');
+        return;
+      }
+
+      const d = state.lastMeasuredD;
+      const row = state.simData.find(r => r.d === d);
+      if (!row) {
+        showToast(`Vị trí ${d} cm không nằm trong 5 vị trí bảng chuẩn (10, 20, 30, 40, 50 cm). Hãy di chuyển xe đến đúng vạch!`, 'warn');
+        return;
+      }
+
+      let recordedT = state.lastMeasuredT;
+      if (state.simType === 'noisy' && state.noiseTrials[d] && state.noiseTrials[d].length > 0) {
+        const trials = state.noiseTrials[d];
+        recordedT = Math.round(trials.reduce((a, b) => a + b, 0) / trials.length);
+        row.trials = [...trials];
+      }
+      row.t = recordedT;
+      Sound.playSuccess();
+      showToast(`Đã ghi dữ liệu: d = ${d} cm, t = ${recordedT} µs`, 'success');
+
+      renderMission2Table(d);
+      updateHeaderAndProgress();
+      populateMission3PointSelectors();
+
+      // Check if all 5 rows collected
+      const count = state.simData.filter(r => r.t !== null).length;
+      if (count === 5) {
+        document.getElementById('m2-questions-box').classList.remove('hidden');
+        setRobotSpeech('Tuyệt vời! Em đã thu thập đủ 5 cặp dữ liệu. Hãy trả lời 3 câu hỏi nhận xét bên dưới bảng nhé!');
+        if (state.studyMode === 'quick') {
+          completeMission(2);
+        }
+      }
+    }
+
+    /* ============================================================
+       7. MISSION NAVIGATION & GAMIFICATION
+       ============================================================ */
+    function renderMissionTabs() {
+      const container = document.getElementById('mission-tabs');
+      container.innerHTML = BADGES.map(b => {
+        const isCurrent = state.currentMission === b.id;
+        const isDone = state.completedMissions[b.id - 1];
+        const isUnlocked = b.id <= state.unlockedMission;
+        let cls = 'py-2 px-1 rounded-xl text-center transition border text-[11px] font-extrabold flex flex-col items-center gap-0.5 ';
+        if (isCurrent) {
+          cls += 'bg-sky-600 text-white border-sky-700 shadow-md';
+        } else if (isDone) {
+          cls += 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100';
+        } else if (isUnlocked) {
+          cls += 'bg-white text-slate-700 border-slate-200 hover:bg-sky-50';
+        } else {
+          cls += 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed opacity-70';
+        }
+        return `
+          <button onclick="selectMission(${b.id})" ${!isUnlocked ? 'disabled' : ''} class="${cls}">
+            <span class="text-sm">${isDone ? '✅' : isUnlocked ? b.icon : '🔒'}</span>
+            <span>NV ${b.id}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectMission(id) {
+      if (id > state.unlockedMission) {
+        showToast('Hãy hoàn thành nhiệm vụ trước để mở khóa nhiệm vụ này!', 'warn');
+        return;
+      }
+      Sound.playClick();
+      state.currentMission = id;
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById(`panel-m${i}`).classList.toggle('hidden', i !== id);
+      }
+      document.getElementById('verify-presets').classList.toggle('hidden', id !== 5);
+      renderMissionTabs();
+
+      const speeches = {
+        1: 'Hãy đặt xe ở vị trí gần và xa, nhấn ĐO THỜI GIAN PHẢN HỒI để khám phá nguyên lí sóng siêu âm!',
+        2: 'Em hãy lần lượt đặt xe tại năm vị trí khác nhau (10, 20, 30, 40, 50 cm), đo thời gian phản hồi và ghi kết quả vào sổ tay nghiên cứu.',
+        3: 'Các em đã có dữ liệu. Bây giờ, hãy vận dụng kiến thức Toán học để tìm công thức của hệ thống!',
+        4: 'Hãy biểu diễn 5 điểm dữ liệu lên hệ trục tọa độ Otd rồi vẽ đường thẳng hàm số bậc nhất của nhóm nhé!',
+        5: 'Các em đã xây dựng được công thức của nhóm. Nhưng liệu công thức đó có phù hợp với dữ liệu mới không? Hãy kiểm chứng trước khi đưa vào chương trình điều khiển!'
+      };
+      setRobotSpeech(speeches[id]);
+
+      if (id === 3) populateMission3PointSelectors();
+      if (id === 4) {
+        renderMission4Chips();
+        document.getElementById('m4-noise-explain').classList.toggle('hidden', state.simType !== 'noisy' && state.studyMode !== 'real');
+        setTimeout(resizeAndDrawGraph, 80);
+      }
+      if (id === 5) {
+        updateMission5Header();
+      }
+    }
+
+    function completeMission(id) {
+      const idx = id - 1;
+      if (!state.completedMissions[idx]) {
+        state.completedMissions[idx] = true;
+        state.score += 20;
+        Sound.playSuccess();
+        showToast(`🏅 Mở khóa huy hiệu: ${BADGES[idx].name} (+20 điểm)!`, 'success');
+      }
+      if (id < 5) {
+        state.unlockedMission = Math.max(state.unlockedMission, id + 1);
+      }
+      const banner = document.getElementById(`m${id}-complete-banner`);
+      if (banner) banner.classList.remove('hidden');
+      updateHeaderAndProgress();
+      renderMissionTabs();
+    }
+
+    function updateHeaderAndProgress() {
+      const doneCount = state.completedMissions.filter(Boolean).length;
+      document.getElementById('progress-bar-fill').style.width = `${(doneCount / 5) * 100}%`;
+      document.getElementById('progress-text').textContent = `${doneCount}/5`;
+      document.getElementById('score-text').textContent = `${state.score}/100`;
+
+      const collected = getActiveDataRows().length;
+      document.getElementById('readout-collect-status').textContent = `${collected} / 5 vị trí`;
+
+      const badgesEl = document.getElementById('header-badges');
+      badgesEl.innerHTML = BADGES.map((b, i) => {
+        const unlocked = state.completedMissions[i];
+        return `<span title="${b.name}" class="w-7 h-7 rounded-lg flex items-center justify-center text-sm ${unlocked ? 'bg-amber-100 border border-amber-300 badge-pop' : 'bg-slate-100 opacity-35 grayscale'}">${b.icon}</span>`;
+      }).join('');
+    }
+
+    /* ============================================================
+       8. NHIỆM VỤ 1 LOGIC
+       ============================================================ */
+    function quickCompareM1(dist) {
+      setCarDistance(dist);
+      measureEchoTime();
+    }
+
+    function answerM1(qNum, choice, btn) {
+      const fb = document.getElementById(`m1-q${qNum}-feedback`);
+      fb.classList.remove('hidden');
+
+      if (qNum === 1) {
+        if (choice === 'B') {
+          state.m1Q1Done = true;
+          Sound.playSuccess();
+          btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+          fb.className = 'text-xs font-bold text-emerald-700';
+          fb.textContent = '✓ Chính xác! Khi xe càng xa cảm biến, sóng phải truyền đi quãng đường dài hơn nên thời gian phản hồi tăng.';
+        } else {
+          Sound.playError();
+          btn.classList.add('bg-rose-50', 'border-rose-300');
+          fb.className = 'text-xs font-semibold text-rose-600';
+          fb.textContent = '✗ Chưa chính xác. Gợi ý: Hãy so sánh thời gian phản hồi khi xe ở 10 cm và khi xe ở 50 cm nhé!';
+        }
+      } else if (qNum === 2) {
+        if (choice === 'C') {
+          state.m1Q2Done = true;
+          Sound.playSuccess();
+          btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+          fb.className = 'text-xs font-bold text-emerald-700';
+          fb.textContent = '✓ Tuyệt vời! Sóng đi từ cảm biến đến xe (quãng đường d) rồi phản xạ ngược về cảm biến (thêm d), tổng cộng là 2d.';
+          document.getElementById('m1-2d-visual').classList.remove('hidden');
+        } else {
+          Sound.playError();
+          btn.classList.add('bg-rose-50', 'border-rose-300');
+          fb.className = 'text-xs font-semibold text-rose-600';
+          fb.textContent = '✗ Chưa đúng. Gợi ý: Quan sát mũi tên xanh (đi) và mũi tên cam (phản xạ về) — sóng đi qua khoảng cách d mấy lần?';
+        }
+      }
+
+      if (state.m1Q1Done && state.m1Q2Done) {
+        completeMission(1);
+      }
+    }
+
+    /* ============================================================
+       9. NHIỆM VỤ 2 LOGIC (SIMULATION & REAL DATA MODE)
+       ============================================================ */
+    function renderMission2Table(highlightD = null) {
+      const tbody = document.getElementById('m2-table-body');
+      tbody.innerHTML = state.simData.map((row, idx) => {
+        const isDone = row.t !== null;
+        const glow = highlightD === row.d ? 'row-recorded' : isDone ? 'bg-emerald-50/70' : 'bg-white';
+        const trialNote = row.trials && row.trials.length > 1 ? `<span class="text-[10px] text-amber-700 block font-sans">(TB ${row.trials.length} lần)</span>` : '';
+        return `
+          <tr class="${glow} transition">
+            <td class="py-2.5 px-3 font-bold text-slate-600">${idx + 1}</td>
+            <td class="py-2.5 px-3 font-extrabold text-sky-900">${row.d}</td>
+            <td class="py-2.5 px-3 font-extrabold ${isDone ? 'text-emerald-700' : 'text-slate-400 font-sans italic'}">
+              ${isDone ? row.t.toLocaleString('vi-VN') : 'Chưa đo'}${trialNote}
+            </td>
+            <td class="py-2.5 px-2 text-center">
+              ${isDone
+                ? '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-sans font-bold">Đã ghi</span>'
+                : `<button onclick="setCarDistance(${row.d})" class="px-2 py-0.5 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-800 text-[10px] font-sans font-bold">Đặt xe</button>`
+              }
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderRealDataTable() {
+      const tbody = document.getElementById('m2-real-body');
+      tbody.innerHTML = state.realData.map((row, i) => `
+        <tr class="bg-white">
+          <td class="p-1.5"><input type="text" value="${row.d}" oninput="updateRealCell(${i},'d',this.value)" placeholder="cm" class="w-14 border border-slate-300 rounded-lg px-1.5 py-1 font-mono text-xs" /></td>
+          <td class="p-1.5"><input type="text" value="${row.t1}" oninput="updateRealCell(${i},'t1',this.value)" placeholder="µs" class="w-16 border border-slate-300 rounded-lg px-1.5 py-1 font-mono text-xs" /></td>
+          <td class="p-1.5"><input type="text" value="${row.t2}" oninput="updateRealCell(${i},'t2',this.value)" placeholder="µs" class="w-16 border border-slate-300 rounded-lg px-1.5 py-1 font-mono text-xs" /></td>
+          <td class="p-1.5"><input type="text" value="${row.t3}" oninput="updateRealCell(${i},'t3',this.value)" placeholder="µs" class="w-16 border border-slate-300 rounded-lg px-1.5 py-1 font-mono text-xs" /></td>
+          <td class="p-1.5 font-mono font-bold text-emerald-700">${row.tAvg !== null ? fmtVN(row.tAvg, 1) : '---'}</td>
+          <td class="p-1.5 text-center"><button onclick="deleteRealRow(${i})" class="text-rose-500 hover:text-rose-700 font-bold">✕</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function updateRealCell(idx, field, val) {
+      state.realData[idx][field] = val;
+      const r = state.realData[idx];
+      const ts = [parseVNNumber(r.t1), parseVNNumber(r.t2), parseVNNumber(r.t3)].filter(v => isFinite(v) && v > 0);
+      r.tAvg = ts.length > 0 ? ts.reduce((a, b) => a + b, 0) / ts.length : null;
+      // Update average cell without losing input focus
+      const tbody = document.getElementById('m2-real-body');
+      if (tbody.rows[idx]) {
+        tbody.rows[idx].cells[4].textContent = r.tAvg !== null ? fmtVN(r.tAvg, 1) : '---';
+      }
+      updateHeaderAndProgress();
+    }
+
+    function addRealDataRow() {
+      state.realData.push({ d: '', t1: '', t2: '', t3: '', tAvg: null });
+      renderRealDataTable();
+    }
+
+    function deleteRealRow(idx) {
+      if (state.realData.length <= 2) {
+        showToast('Cần giữ lại ít nhất 2 hàng dữ liệu!', 'warn');
+        return;
+      }
+      state.realData.splice(idx, 1);
+      renderRealDataTable();
+    }
+
+    function confirmRealDataReady() {
+      const valid = getActiveDataRows();
+      if (valid.length < 3) {
+        showToast('Hãy nhập ít nhất 3 cặp dữ liệu hợp lệ (d và ít nhất 1 lần đo t)!', 'warn');
+        return;
+      }
+      Sound.playSuccess();
+      document.getElementById('m2-questions-box').classList.remove('hidden');
+      populateMission3PointSelectors();
+      showToast(`Đã xác nhận ${valid.length} cặp dữ liệu thực nghiệm của nhóm!`, 'success');
+    }
+
+    function answerM2(qNum, choice, btn) {
+      const fb = document.getElementById(`m2-q${qNum}-fb`);
+      fb.classList.remove('hidden');
+      const answers = { 1: 'tang', 2: 'deu', 3: 'A' };
+      const hints = {
+        1: 'Gợi ý: Nhìn cột d và cột t từ trên xuống dưới, khi t lớn hơn thì d thế nào?',
+        2: 'Gợi ý: Tính hiệu thời gian giữa hai hàng liên tiếp (vd 20 cm và 10 cm, 30 cm và 20 cm) rồi so sánh!',
+        3: 'Gợi ý: Khi d tăng đều theo t, mối liên hệ giữa hai đại lượng được mô tả bởi hàm số bậc nhất!'
+      };
+      if (choice === answers[qNum]) {
+        Sound.playSuccess();
+        state[`m2Q${qNum}Done`] = true;
+        btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+        fb.className = 'text-xs font-bold text-emerald-700';
+        fb.textContent = '✓ Chính xác!';
+      } else {
+        Sound.playError();
+        btn.classList.add('bg-rose-50', 'border-rose-300');
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = `✗ Chưa đúng. ${hints[qNum]}`;
+      }
+      if (state.m2Q1Done && state.m2Q2Done && state.m2Q3Done) {
+        completeMission(2);
+      }
+    }
+
+    /* ============================================================
+       10. NHIỆM VỤ 3 LOGIC (XÂY DỰNG HÀM SỐ BẬC NHẤT)
+       ============================================================ */
+    function checkM3Step1() {
+      const vt = document.getElementById('m3-var-t').value;
+      const vd = document.getElementById('m3-var-d').value;
+      const fb = document.getElementById('m3-s1-fb');
+      if (vt === 'indep' && vd === 'dep') {
+        state.m3Step1Done = true;
+        Sound.playSuccess();
+        fb.className = 'text-xs font-bold text-emerald-700';
+        fb.textContent = '✓ Chính xác! t là biến độc lập, d là biến phụ thuộc.';
+        document.getElementById('m3-step2').classList.remove('opacity-50', 'pointer-events-none');
+        populateMission3PointSelectors();
+      } else {
+        Sound.playError();
+        fb.className = 'text-xs font-bold text-rose-600';
+        fb.textContent = '✗ Chưa đúng! Trong d = at + b, đại lượng nào đứng vai trò biến x (độc lập), đại lượng nào đóng vai trò y (phụ thuộc)?';
+      }
+    }
+
+    function populateMission3PointSelectors() {
+      const rows = getActiveDataRows();
+      const s1 = document.getElementById('m3-p1');
+      const s2 = document.getElementById('m3-p2');
+      if (rows.length < 2) {
+        s1.innerHTML = '<option value="">Chưa đủ dữ liệu</option>';
+        s2.innerHTML = '<option value="">Chưa đủ dữ liệu</option>';
+        return;
+      }
+      const opts = rows.map((r, i) => `<option value="${i}">Lần ${i + 1}: (${fmtVN(r.t, 1)}; ${fmtVN(r.d, 1)})</option>`).join('');
+      const prev1 = s1.value;
+      const prev2 = s2.value;
+      s1.innerHTML = '<option value="">-- Chọn điểm 1 --</option>' + opts;
+      s2.innerHTML = '<option value="">-- Chọn điểm 2 --</option>' + opts;
+      if (prev1 !== '' && Number(prev1) < rows.length) s1.value = prev1;
+      if (prev2 !== '' && Number(prev2) < rows.length) s2.value = prev2;
+    }
+
+    function onSelectM3Points() {
+      const rows = getActiveDataRows();
+      const i1 = document.getElementById('m3-p1').value;
+      const i2 = document.getElementById('m3-p2').value;
+      const fb = document.getElementById('m3-s2-fb');
+      const disp = document.getElementById('m3-points-display');
+
+      if (i1 === '' || i2 === '') return;
+      const p1 = rows[Number(i1)];
+      const p2 = rows[Number(i2)];
+
+      if (p1.t === p2.t) {
+        Sound.playError();
+        fb.textContent = '✗ Không được chọn hai điểm có cùng thời gian phản hồi t (sẽ làm mẫu số t₂ − t₁ = 0)!';
+        disp.classList.add('hidden');
+        document.getElementById('m3-step3').classList.add('opacity-50', 'pointer-events-none');
+        return;
+      }
+
+      fb.textContent = '';
+      state.chosenIdx1 = Number(i1);
+      state.chosenIdx2 = Number(i2);
+      // Compute exact unrounded a & b internally from student's selected pair
+      state.exactA = (p2.d - p1.d) / (p2.t - p1.t);
+      state.exactB = p1.d - state.exactA * p1.t;
+
+      disp.classList.remove('hidden');
+      disp.innerHTML = `Điểm 1: (t₁; d₁) = <strong>(${fmtVN(p1.t, 1)}; ${fmtVN(p1.d, 1)})</strong> &nbsp;|&nbsp; Điểm 2: (t₂; d₂) = <strong>(${fmtVN(p2.t, 1)}; ${fmtVN(p2.d, 1)})</strong>`;
+      document.getElementById('m3-step3').classList.remove('opacity-50', 'pointer-events-none');
+    }
+
+    function checkM3Step3() {
+      const rows = getActiveDataRows();
+      const p1 = rows[state.chosenIdx1];
+      const p2 = rows[state.chosenIdx2];
+      const ddIn = parseVNNumber(document.getElementById('m3-dd').value);
+      const dtIn = parseVNNumber(document.getElementById('m3-dt').value);
+      const aIn = parseVNNumber(document.getElementById('m3-a-input').value);
+      const fb = document.getElementById('m3-s3-fb');
+      fb.classList.remove('hidden');
+
+      const trueDD = p2.d - p1.d;
+      const trueDT = p2.t - p1.t;
+      const trueA = state.exactA;
+
+      if (!isFinite(ddIn) || !isFinite(dtIn) || !isFinite(aIn)) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = '✗ Hãy nhập đầy đủ hiệu khoảng cách, hiệu thời gian và giá trị hệ số a!';
+        return;
+      }
+
+      const ddOk = Math.abs(ddIn - trueDD) <= 0.15;
+      const dtOk = Math.abs(dtIn - trueDT) <= 1.5;
+      const aTol = Math.max(0.0006, Math.abs(trueA) * 0.03);
+      const aOk = Math.abs(aIn - trueA) <= aTol;
+
+      if (!ddOk) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = `✗ Hiệu hai khoảng cách (d₂ − d₁) chưa đúng. Hãy kiểm tra lại: ${fmtVN(p2.d,1)} − ${fmtVN(p1.d,1)}.`;
+        return;
+      }
+      if (!dtOk) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = `✗ Hiệu hai thời gian (t₂ − t₁) chưa đúng. Hãy kiểm tra lại: ${fmtVN(p2.t,1)} − ${fmtVN(p1.t,1)}.`;
+        return;
+      }
+      if (!aOk) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = '✗ Giá trị hệ số a chưa chính xác. Gợi ý: Lấy (d₂ − d₁) chia cho (t₂ − t₁), giữ ít nhất 3 chữ số thập phân (dùng nút Máy tính nếu cần)!';
+        return;
+      }
+
+      state.studentA = aIn;
+      state.m3Step3Done = true;
+      Sound.playSuccess();
+      fb.className = 'text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded-xl border border-emerald-200';
+      fb.textContent = `✓ Chính xác! Hệ số a cho biết khoảng cách thay đổi bao nhiêu centimet khi thời gian phản hồi tăng thêm 1 micro giây theo mô hình toán học.`;
+      document.getElementById('m3-step4').classList.remove('opacity-50', 'pointer-events-none');
+    }
+
+    function checkM3Step4() {
+      const rows = getActiveDataRows();
+      const choice = document.getElementById('m3-b-point-choice').value;
+      const pt = choice === '1' ? rows[state.chosenIdx1] : rows[state.chosenIdx2];
+      const bIn = parseVNNumber(document.getElementById('m3-b-input').value);
+      const fb = document.getElementById('m3-s4-fb');
+      fb.classList.remove('hidden');
+
+      if (!isFinite(bIn)) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = '✗ Hãy nhập giá trị số cho hệ số b!';
+        return;
+      }
+
+      // Accept b computed using either exact unrounded a or student's entered a
+      const bFromExactA = pt.d - state.exactA * pt.t;
+      const bFromStudentA = pt.d - state.studentA * pt.t;
+      const ok = Math.abs(bIn - bFromExactA) <= 0.25 || Math.abs(bIn - bFromStudentA) <= 0.25;
+
+      if (!ok) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = `✗ Kết quả b chưa chính xác. Gợi ý: Thay điểm (${fmtVN(pt.t,1)}; ${fmtVN(pt.d,1)}) vào công thức b = d − a·t.`;
+        return;
+      }
+
+      state.studentB = bIn;
+      state.m3Step4Done = true;
+      Sound.playSuccess();
+      fb.className = 'text-xs font-semibold text-emerald-700 bg-emerald-50 p-2 rounded-xl border border-emerald-200';
+      fb.textContent = '✓ Chính xác! Hệ số b là hệ số tự do của mô hình thực nghiệm, có thể phản ánh độ lệch hệ thống hoặc ảnh hưởng của việc hiệu chỉnh dữ liệu. Không mặc nhiên kết luận b là một khoảng cách vật lí có ý nghĩa tại t = 0.';
+      document.getElementById('m3-step5').classList.remove('opacity-50', 'pointer-events-none');
+    }
+
+    function checkM3Step5() {
+      const aFin = parseVNNumber(document.getElementById('m3-final-a').value);
+      const bFin = parseVNNumber(document.getElementById('m3-final-b').value);
+      const resEl = document.getElementById('m3-formula-result');
+
+      if (!isFinite(aFin) || !isFinite(bFin)) {
+        Sound.playError();
+        showToast('Hãy nhập đầy đủ hệ số a và b vào công thức!', 'warn');
+        return;
+      }
+
+      const aTol = Math.max(0.0006, Math.abs(state.exactA) * 0.03);
+      const bFromFinA = getActiveDataRows()[state.chosenIdx1].d - aFin * getActiveDataRows()[state.chosenIdx1].t;
+      const okA = Math.abs(aFin - state.exactA) <= aTol;
+      const okB = Math.abs(bFin - state.exactB) <= 0.25 || Math.abs(bFin - bFromFinA) <= 0.25;
+
+      if (!okA || !okB) {
+        Sound.playError();
+        showToast('Hệ số a hoặc b chưa khớp với kết quả vừa tính từ hai điểm đã chọn!', 'error');
+        return;
+      }
+
+      state.studentA = aFin;
+      state.studentB = bFin;
+      state.m3Step5Done = true;
+
+      const signB = bFin >= 0 ? `+ ${fmtVN(bFin, 2)}` : `− ${fmtVN(Math.abs(bFin), 2)}`;
+      resEl.textContent = `Công thức của nhóm: d = ${fmtVN(aFin, 4)}·t ${signB}`;
+      resEl.classList.remove('hidden');
+
+      completeMission(3);
+    }
+
+    function getFormulaString() {
+      if (state.studentA === null || state.studentB === null) return 'Chưa xác lập';
+      const signB = state.studentB >= 0 ? `+ ${fmtVN(state.studentB, 2)}` : `− ${fmtVN(Math.abs(state.studentB), 2)}`;
+      return `d = ${fmtVN(state.studentA, 4)}·t ${signB}`;
+    }
+
+    /* ============================================================
+       11. NHIỆM VỤ 4 LOGIC (INTERACTIVE COORDINATE PLANE Otd)
+       ============================================================ */
+    const GRAPH_CFG = {
+      padL: 52, padR: 20, padT: 20, padB: 42,
+      maxT: 3600, maxD: 65
+    };
+
+    function renderMission4Chips() {
+      const rows = getActiveDataRows();
+      const container = document.getElementById('m4-point-chips');
+      container.innerHTML = rows.map((r, i) => {
+        const plotted = state.plottedIndices.includes(i);
+        const active = state.selectedPlotIdx === i;
+        let cls = 'px-2.5 py-1.5 rounded-xl text-xs font-mono font-bold border transition ';
+        if (plotted) {
+          cls += 'bg-emerald-100 border-emerald-400 text-emerald-800';
+        } else if (active) {
+          cls += 'bg-sky-600 border-sky-700 text-white shadow';
+        } else {
+          cls += 'bg-white border-slate-300 text-slate-700 hover:bg-sky-50';
+        }
+        return `<button onclick="selectPlotRow(${i})" class="${cls}">${plotted ? '✓ ' : ''}Điểm ${i + 1}: (${fmtVN(r.t, 0)}; ${fmtVN(r.d, 0)})</button>`;
+      }).join('');
+
+      const allPlotted = rows.length > 0 && state.plottedIndices.length >= rows.length;
+      document.getElementById('btn-draw-line').disabled = !allPlotted;
+    }
+
+    function selectPlotRow(idx) {
+      Sound.playClick();
+      state.selectedPlotIdx = idx;
+      renderMission4Chips();
+      const r = getActiveDataRows()[idx];
+      if (r) {
+        document.getElementById('m4-plot-hint').textContent = `Đang chọn Điểm ${idx + 1}: t = ${fmtVN(r.t, 0)} µs, d = ${fmtVN(r.d, 0)} cm. Nhấn vào vị trí tương ứng trên đồ thị!`;
+      }
+    }
+
+    function setupGraphCanvasEvents() {
+      const canvas = document.getElementById('graph-canvas');
+      canvas.addEventListener('click', (e) => {
+        const rows = getActiveDataRows();
+        if (rows.length === 0) return;
+        const idx = state.selectedPlotIdx;
+        if (idx === null || idx >= rows.length || state.plottedIndices.includes(idx)) {
+          // Auto-pick next unplotted
+          const next = rows.findIndex((_, i) => !state.plottedIndices.includes(i));
+          if (next === -1) return;
+          state.selectedPlotIdx = next;
+        }
+
+        const rect = canvas.getBoundingClientRect();
+        const cx = e.clientX - rect.left;
+        const cy = e.clientY - rect.top;
+        const w = rect.width;
+        const h = rect.height;
+
+        const target = rows[state.selectedPlotIdx];
+        const tx = GRAPH_CFG.padL + (target.t / GRAPH_CFG.maxT) * (w - GRAPH_CFG.padL - GRAPH_CFG.padR);
+        const ty = (h - GRAPH_CFG.padB) - (target.d / GRAPH_CFG.maxD) * (h - GRAPH_CFG.padT - GRAPH_CFG.padB);
+
+        const distPx = Math.hypot(cx - tx, cy - ty);
+        const hint = document.getElementById('m4-plot-hint');
+
+        if (distPx <= 24) {
+          acceptPlottedPoint(state.selectedPlotIdx);
+        } else {
+          Sound.playError();
+          hint.className = 'mt-1.5 text-xs font-bold text-center text-rose-600';
+          hint.textContent = `Chưa chính xác! Hãy dóng thẳng trục hoành t = ${fmtVN(target.t, 0)} µs và trục tung d = ${fmtVN(target.d, 0)} cm rồi nhấn lại nhé.`;
+        }
+      });
+
+      window.addEventListener('resize', resizeAndDrawGraph);
+    }
+
+    function plotManualPoint() {
+      const rows = getActiveDataRows();
+      const idx = state.selectedPlotIdx;
+      if (idx === null || !rows[idx]) return;
+      const target = rows[idx];
+      const tIn = parseVNNumber(document.getElementById('m4-manual-t').value);
+      const dIn = parseVNNumber(document.getElementById('m4-manual-d').value);
+
+      if (Math.abs(tIn - target.t) <= 5 && Math.abs(dIn - target.d) <= 0.5) {
+        document.getElementById('m4-manual-t').value = '';
+        document.getElementById('m4-manual-d').value = '';
+        acceptPlottedPoint(idx);
+      } else {
+        Sound.playError();
+        showToast(`Tọa độ chưa khớp Điểm ${idx + 1}! Hãy đọc lại giá trị (t; d) trong bảng.`, 'error');
+      }
+    }
+
+    function acceptPlottedPoint(idx) {
+      if (!state.plottedIndices.includes(idx)) {
+        state.plottedIndices.push(idx);
+      }
+      Sound.playSuccess();
+      const rows = getActiveDataRows();
+      const next = rows.findIndex((_, i) => !state.plottedIndices.includes(i));
+      const hint = document.getElementById('m4-plot-hint');
+      if (next !== -1) {
+        state.selectedPlotIdx = next;
+        hint.className = 'mt-1.5 text-xs font-bold text-center text-emerald-700';
+        hint.textContent = `✓ Đã chấm Điểm ${idx + 1}! Tiếp tục chọn và chấm Điểm ${next + 1}.`;
+      } else {
+        hint.className = 'mt-1.5 text-xs font-bold text-center text-emerald-700';
+        hint.textContent = '🎉 Đã biểu diễn đủ tất cả các điểm dữ liệu! Hãy nhấn nút VẼ ĐỒ THỊ HÀM SỐ CỦA NHÓM.';
+      }
+      renderMission4Chips();
+      resizeAndDrawGraph();
+    }
+
+    function drawStudentLine() {
+      if (state.exactA === null && state.studentA === null) {
+        showToast('Hãy hoàn thành Nhiệm vụ 3 để có công thức của nhóm trước khi vẽ đường thẳng!', 'warn');
+        return;
+      }
+      state.lineDrawn = true;
+      Sound.playSuccess();
+      resizeAndDrawGraph();
+      document.getElementById('m4-questions-box').classList.remove('hidden');
+      showToast('Đã vẽ đồ thị hàm số bậc nhất dựa trên các hệ số của nhóm!', 'success');
+      if (state.studyMode === 'quick') {
+        completeMission(4);
+      }
+    }
+
+    function resizeAndDrawGraph() {
+      const canvas = document.getElementById('graph-canvas');
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+      const { padL, padR, padT, padB, maxT, maxD } = GRAPH_CFG;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      const toX = (t) => padL + (t / maxT) * plotW;
+      const toY = (d) => (h - padB) - (d / maxD) * plotH;
+
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, h);
+
+      // Grid lines
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let t = 0; t <= maxT; t += 600) {
+        const x = toX(t);
+        ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, h - padB); ctx.stroke();
+      }
+      for (let d = 0; d <= maxD; d += 10) {
+        const y = toY(d);
+        ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(w - padR, y); ctx.stroke();
+      }
+
+      // Axes
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(padL, padT);
+      ctx.lineTo(padL, h - padB);
+      ctx.lineTo(w - padR, h - padB);
+      ctx.stroke();
+
+      // Axis ticks & labels
+      ctx.fillStyle = '#334155';
+      ctx.font = '600 10px JetBrains Mono, monospace';
+      ctx.textAlign = 'center';
+      for (let t = 0; t <= maxT; t += 600) {
+        ctx.fillText(t.toString(), toX(t), h - padB + 15);
+      }
+      ctx.textAlign = 'right';
+      for (let d = 0; d <= maxD; d += 10) {
+        ctx.fillText(d.toString(), padL - 7, toY(d) + 3.5);
+      }
+
+      // Axis titles
+      ctx.fillStyle = '#0369a1';
+      ctx.font = '700 11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Thời gian phản hồi t (µs)', padL + plotW / 2, h - 7);
+
+      ctx.save();
+      ctx.translate(14, padT + plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('Khoảng cách d (cm)', 0, 0);
+      ctx.restore();
+
+      // Draw student's linear model line if triggered
+      if (state.lineDrawn && state.studentA !== null && state.studentB !== null) {
+        // Use unrounded internal values when consistent with student's chosen points, else studentA/studentB
+        const a = state.exactA !== null ? state.exactA : state.studentA;
+        const b = state.exactB !== null ? state.exactB : state.studentB;
+
+        const tStart = 0;
+        const dStart = a * tStart + b;
+        const tEnd = maxT;
+        const dEnd = a * tEnd + b;
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(padL, padT, plotW, plotH);
+        ctx.clip();
+
+        ctx.strokeStyle = '#f97316';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(toX(tStart), toY(dStart));
+        ctx.lineTo(toX(tEnd), toY(dEnd));
+        ctx.stroke();
+        ctx.restore();
+
+        // Formula badge on graph
+        ctx.fillStyle = '#fff7ed';
+        ctx.strokeStyle = '#fb923c';
+        ctx.lineWidth = 1.2;
+        const label = getFormulaString();
+        ctx.fillRect(padL + 10, padT + 8, 175, 22);
+        ctx.strokeRect(padL + 10, padT + 8, 175, 22);
+        ctx.fillStyle = '#c2410c';
+        ctx.font = '700 11px JetBrains Mono, monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(label, padL + 16, padT + 23);
+      }
+
+      // Draw plotted green data points
+      const rows = getActiveDataRows();
+      state.plottedIndices.forEach(idx => {
+        const r = rows[idx];
+        if (!r) return;
+        const x = toX(r.t);
+        const y = toY(r.d);
+        ctx.fillStyle = '#10b981';
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(x, y, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#065f46';
+        ctx.font = '700 9.5px JetBrains Mono, monospace';
+        ctx.textAlign = 'left';
+        ctx.fillText(`(${Math.round(r.t)}; ${Math.round(r.d)})`, x + 7, y - 5);
+      });
+    }
+
+    function answerM4(qNum, choice, btn) {
+      const fb = document.getElementById(`m4-q${qNum}-fb`);
+      fb.classList.remove('hidden');
+      const ans = { 1: 'B', 2: 'duong', 3: 'tang' };
+      if (choice === ans[qNum]) {
+        Sound.playSuccess();
+        state[`m4Q${qNum}Done`] = true;
+        btn.classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+        fb.className = 'text-xs font-bold text-emerald-700';
+        fb.textContent = '✓ Chính xác!';
+      } else {
+        Sound.playError();
+        btn.classList.add('bg-rose-50', 'border-rose-300');
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = '✗ Chưa chính xác. Hãy quan sát chiều đi lên của đường thẳng trên đồ thị nhé!';
+      }
+      if (state.m4Q1Done && state.m4Q2Done && state.m4Q3Done) {
+        completeMission(4);
+      }
+    }
+
+    /* ============================================================
+       12. NHIỆM VỤ 5 LOGIC (KIỂM CHỨNG CÔNG THỨC)
+       ============================================================ */
+    function updateMission5Header() {
+      document.getElementById('m5-group-formula').textContent = getFormulaString();
+    }
+
+    function selectVerifyPos(cm) {
+      Sound.playClick();
+      setCarDistance(cm);
+      state.verifyD = cm;
+      state.verifyT = null;
+      document.getElementById('m5-new-t-display').textContent = `Đã đặt xe tại ${cm} cm → Nhấn nút ĐO THỜI GIAN PHẢN HỒI!`;
+      measureEchoTime();
+    }
+
+    function applyRealVerifyData() {
+      const d = parseVNNumber(document.getElementById('m5-real-d').value);
+      const t = parseVNNumber(document.getElementById('m5-real-t').value);
+      if (!isFinite(d) || !isFinite(t) || d <= 0 || t <= 0) {
+        showToast('Hãy nhập khoảng cách và thời gian kiểm chứng hợp lệ!', 'warn');
+        return;
+      }
+      state.verifyD = d;
+      state.verifyT = t;
+      Sound.playSuccess();
+      showToast(`Đã áp dụng dữ liệu kiểm chứng: d = ${d} cm, t = ${t} µs`, 'success');
+    }
+
+    function checkVerification() {
+      if (state.verifyD === null || state.verifyT === null) {
+        showToast('Hãy chọn vị trí kiểm chứng mới (15, 25, 35 hoặc 45 cm) và đo thời gian phản hồi trước!', 'warn');
+        return;
+      }
+      if (state.studentA === null || state.studentB === null) {
+        showToast('Nhóm chưa hoàn thành công thức ở Nhiệm vụ 3!', 'warn');
+        return;
+      }
+
+      const predIn = parseVNNumber(document.getElementById('m5-pred-input').value);
+      const fb = document.getElementById('m5-pred-fb');
+      fb.classList.remove('hidden');
+
+      if (!isFinite(predIn)) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = '✗ Hãy nhập giá trị khoảng cách dự đoán tính theo công thức của nhóm!';
+        return;
+      }
+
+      // Check student's calculation against their own formula (allow either exact or displayed a, b)
+      const expectedExact = (state.exactA ?? state.studentA) * state.verifyT + (state.exactB ?? state.studentB);
+      const expectedStudent = state.studentA * state.verifyT + state.studentB;
+      const calcOk = Math.abs(predIn - expectedExact) <= 0.35 || Math.abs(predIn - expectedStudent) <= 0.35;
+
+      if (!calcOk) {
+        Sound.playError();
+        fb.className = 'text-xs font-semibold text-rose-600';
+        fb.textContent = `✗ Phép tính thay t = ${state.verifyT} vào công thức ${getFormulaString()} chưa chính xác. Hãy tính lại (dùng nút Máy tính hỗ trợ)!`;
+        return;
+      }
+
+      Sound.playSuccess();
+      fb.className = 'text-xs font-bold text-emerald-700';
+      fb.textContent = '✓ Phép tính dự đoán chính xác! Hãy xem bảng đánh giá sai lệch bên dưới.';
+
+      const absErr = Math.abs(predIn - state.verifyD);
+      state.verifyPred = predIn;
+      state.verifyError = absErr;
+
+      document.getElementById('v-tbl-t').textContent = `${fmtVN(state.verifyT, 1)} µs`;
+      document.getElementById('v-tbl-pred').textContent = `${fmtVN(predIn, 2)} cm`;
+      document.getElementById('v-tbl-real').textContent = `${fmtVN(state.verifyD, 2)} cm`;
+      document.getElementById('v-tbl-err').textContent = `${fmtVN(absErr, 2)} cm`;
+
+      const evalBadge = document.getElementById('v-eval-badge');
+      if (absErr <= 1) {
+        evalBadge.className = 'rounded-xl p-3 text-xs font-bold bg-emerald-100 border border-emerald-400 text-emerald-900';
+        evalBadge.textContent = '✅ Đánh giá: Sai lệch không quá 1 cm → Công thức phù hợp với tiêu chí kiểm thử!';
+      } else if (absErr <= 2) {
+        evalBadge.className = 'rounded-xl p-3 text-xs font-bold bg-amber-100 border border-amber-400 text-amber-900';
+        evalBadge.textContent = '⚠️ Đánh giá: Sai lệch từ 1 cm đến 2 cm → Cần xem xét và kiểm tra thêm (có thể do sai số đo).';
+      } else {
+        evalBadge.className = 'rounded-xl p-3 text-xs font-bold bg-rose-100 border border-rose-400 text-rose-900';
+        evalBadge.textContent = '❌ Đánh giá: Sai lệch trên 2 cm → Cần đo lại hoặc chọn cặp điểm khác để điều chỉnh mô hình.';
+      }
+
+      document.getElementById('m5-result-box').classList.remove('hidden');
+    }
+
+    function finishMission5() {
+      const refl = document.getElementById('m5-reflection').value.trim();
+      if (refl.length < 5 && state.studyMode === 'full') {
+        showToast('Hãy viết vài dòng nhận xét và đề xuất cải tiến của nhóm trước khi hoàn thành nhé!', 'warn');
+        return;
+      }
+      state.reflectionText = refl || 'Công thức phù hợp với dữ liệu kiểm chứng.';
+      completeMission(5);
+      openCompleteScreen();
+    }
+
+    /* ============================================================
+       13. COMPLETION SCREEN, REPORT EXPORT & GAME 4 TRANSFER
+       ============================================================ */
+    function openCompleteScreen() {
+      Sound.playFanfare();
+      launchConfetti();
+
+      // Render 5 badges
+      document.getElementById('complete-badges-row').innerHTML = BADGES.map((b, i) => `
+        <div class="px-3 py-1.5 rounded-2xl bg-white/15 border border-white/30 text-xs font-bold flex items-center gap-1.5">
+          <span>${b.icon}</span><span>${b.name}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('svg-transfer-formula').textContent = `a=${fmtVN(state.studentA,3)}`;
+
+      // Populate Report
+      const sourceMap = {
+        full: state.simType === 'ideal' ? 'Mô phỏng (Chế độ 1: Dữ liệu lý tưởng)' : 'Mô phỏng (Chế độ 2: Dữ liệu có sai số ±15 µs)',
+        quick: 'Mô phỏng – Chế độ Khám phá nhanh 5 phút',
+        real: 'Dữ liệu thực nghiệm đo từ thiết bị thật của nhóm'
+      };
+      document.getElementById('rep-source').textContent = sourceMap[state.studyMode];
+
+      const rows = getActiveDataRows();
+      const p1 = rows[state.chosenIdx1];
+      const p2 = rows[state.chosenIdx2];
+      document.getElementById('rep-chosen-pts').textContent = p1 && p2
+        ? `(${fmtVN(p1.t,1)}; ${fmtVN(p1.d,1)}) và (${fmtVN(p2.t,1)}; ${fmtVN(p2.d,1)})`
+        : '---';
+      document.getElementById('rep-a').textContent = fmtVN(state.studentA, 4);
+      document.getElementById('rep-b').textContent = fmtVN(state.studentB, 2);
+      document.getElementById('rep-formula').textContent = getFormulaString();
+
+      document.getElementById('rep-data-tbody').innerHTML = rows.map((r, i) => `
+        <tr>
+          <td class="py-1.5 px-3 font-sans">${i + 1}</td>
+          <td class="py-1.5 px-3 text-right">${fmtVN(r.d, 1)}</td>
+          <td class="py-1.5 px-3 text-right">${fmtVN(r.t, 1)}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('rep-verify-summary').innerHTML =
+        `t_mới = ${fmtVN(state.verifyT,1)} µs | d_tính = ${fmtVN(state.verifyPred,2)} cm | d_đo = ${fmtVN(state.verifyD,2)} cm | Sai lệch = <strong>${fmtVN(state.verifyError,2)} cm</strong>`;
+      document.getElementById('rep-reflection').textContent = state.reflectionText;
+
+      // Capture graph canvas image
+      resizeAndDrawGraph();
+      const graphCanvas = document.getElementById('graph-canvas');
+      document.getElementById('rep-graph-img').src = graphCanvas.toDataURL('image/png');
+
+      document.getElementById('screen-complete').classList.remove('hidden');
+    }
+
+    function closeCompleteScreen() {
+      document.getElementById('screen-complete').classList.add('hidden');
+    }
+
+    function updateReportGroupName() {
+      state.groupName = document.getElementById('report-group-name').value.trim();
+      document.getElementById('rep-group-display').textContent = state.groupName || 'Chưa nhập tên nhóm';
+    }
+
+    function saveFormulaToStorage() {
+      const payload = {
+        groupName: state.groupName || 'Nhóm TMath',
+        a: state.studentA,
+        b: state.studentB,
+        exactA: state.exactA,
+        exactB: state.exactB,
+        formula: getFormulaString(),
+        studyMode: state.studyMode,
+        simType: state.simType,
+        verification: {
+          dReal: state.verifyD,
+          tNew: state.verifyT,
+          dPred: state.verifyPred,
+          absError: state.verifyError
+        },
+        savedAt: new Date().toISOString()
+      };
+      try {
+        localStorage.setItem('tmath_smart_gate_stage3_formula', JSON.stringify(payload));
+        Sound.playSuccess();
+        showToast('💾 Đã lưu công thức của nhóm vào bộ nhớ trình duyệt (sẵn sàng cho Trò chơi 4)!', 'success');
+      } catch (e) {
+        showToast('Không thể truy cập localStorage trong khung trình duyệt này. Hãy dùng nút Sao chép công thức!', 'warn');
+      }
+    }
+
+    function copyFormulaForGame4() {
+      const text = `TMATH SMART GATE – CÔNG THỨC NHÓM ${state.groupName || ''}\nCông thức: ${getFormulaString()}\na = ${state.studentA}\nb = ${state.studentB}`;
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        Sound.playSuccess();
+        showToast('📋 Đã sao chép công thức để nhập sang Trò chơi 4!', 'success');
+      } catch (e) {
+        showToast('Không thể tự sao chép, vui lòng ghi lại hệ số a và b!', 'warn');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function downloadCSV() {
+      const rows = getActiveDataRows();
+      let csv = '\uFEFFLan do,Khoang cach d (cm),Thoi gian phan hoi t (us)\n';
+      rows.forEach((r, i) => {
+        csv += `${i + 1},${r.d},${r.t}\n`;
+      });
+      csv += `\nHe so a,${state.studentA}\nHe so b,${state.studentB}\nCong thuc,"${getFormulaString()}"\n`;
+      csv += `Kiem chung d_do,${state.verifyD}\nKiem chung t_moi,${state.verifyT}\nKiem chung d_tinh,${state.verifyPred}\nSai lech tuyet doi,${state.verifyError}\n`;
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `TMATH_SmartGate_DuLieu_${(state.groupName || 'Nhom').replace(/\s+/g, '_')}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('📥 Đã tải xuống bảng dữ liệu CSV!', 'success');
+    }
+
+    function downloadGraphPNG() {
+      const canvas = document.getElementById('graph-canvas');
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = `TMATH_SmartGate_DoThi_${(state.groupName || 'Nhom').replace(/\s+/g, '_')}.png`;
+      a.click();
+      showToast('🖼️ Đã tải xuống hình ảnh đồ thị PNG!', 'success');
+    }
+
+    /* ============================================================
+       14. TEACHER MODE, RESET & CONFETTI
+       ============================================================ */
+    function openTeacherModal() {
+      Sound.playClick();
+      document.getElementById('modal-teacher').classList.remove('hidden');
+    }
+    function closeTeacherModal() {
+      document.getElementById('modal-teacher').classList.add('hidden');
+    }
+    function teacherUnlockAllMissions() {
+      state.unlockedMission = 5;
+      renderMissionTabs();
+      closeTeacherModal();
+      showToast('👩‍🏫 Chế độ Giáo viên: Đã mở khóa tất cả 5 nhiệm vụ!', 'info');
+    }
+
+    function confirmResetExperiment() {
+      document.getElementById('confirm-title').textContent = 'Đặt lại toàn bộ thí nghiệm?';
+      document.getElementById('confirm-msg').textContent = 'Tất cả số liệu đã đo, công thức, điểm số và huy hiệu hiện tại sẽ được làm mới để thực hiện lại từ đầu.';
+      document.getElementById('confirm-ok-btn').onclick = () => {
+        closeConfirmModal();
+        resetExperiment();
+      };
+      document.getElementById('modal-confirm').classList.remove('hidden');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('modal-confirm').classList.add('hidden');
+    }
+
+    function resetExperiment() {
+      const prevMode = state.studyMode;
+      const prevSim = state.simType;
+      state = createInitialState();
+      state.studyMode = prevMode;
+      state.simType = prevSim;
+      if (prevMode === 'quick') state.unlockedMission = 5;
+
+      // Reset UI elements
+      document.getElementById('screen-complete').classList.add('hidden');
+      document.getElementById('readout-t').textContent = '---';
+      document.getElementById('readout-measure-count').textContent = '0';
+      document.getElementById('m1-near-val').textContent = 'Chưa đo';
+      document.getElementById('m1-far-val').textContent = 'Chưa đo';
+      document.getElementById('m1-2d-visual').classList.add('hidden');
+      document.getElementById('m2-questions-box').classList.add('hidden');
+      document.getElementById('m4-questions-box').classList.add('hidden');
+      document.getElementById('m5-result-box').classList.add('hidden');
+      document.getElementById('m3-formula-result').classList.add('hidden');
+      document.getElementById('m5-reflection').value = '';
+
+      ['m1', 'm2', 'm3', 'm4'].forEach(m => {
+        const b = document.getElementById(`${m}-complete-banner`);
+        if (b) b.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.m1-q1-btn,.m1-q2-btn,.m2-q1-btn,.m2-q2-btn,.m2-q3-btn,.m4-q1-btn,.m4-q2-btn,.m4-q3-btn')
+        .forEach(btn => btn.classList.remove('bg-emerald-100', 'border-emerald-500', 'text-emerald-900', 'bg-rose-50', 'border-rose-300'));
+
+      ['m1-q1-feedback', 'm1-q2-feedback', 'm2-q1-fb', 'm2-q2-fb', 'm2-q3-fb', 'm3-s3-fb', 'm3-s4-fb', 'm4-q1-fb', 'm4-q2-fb', 'm4-q3-fb', 'm5-pred-fb']
+        .forEach(id => document.getElementById(id)?.classList.add('hidden'));
+
+      ['m3-dd', 'm3-dt', 'm3-a-input', 'm3-b-input', 'm3-final-a', 'm3-final-b', 'm5-pred-input']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+
+      ['m3-step2', 'm3-step3', 'm3-step4', 'm3-step5'].forEach(id => {
+        document.getElementById(id).classList.add('opacity-50', 'pointer-events-none');
+      });
+
+      setCarDistance(20);
+      renderAllUI();
+      selectMission(prevMode === 'real' ? 2 : 1);
+      showToast('Đã đặt lại phòng thí nghiệm!', 'info');
+    }
+
+    function renderAllUI() {
+      renderMissionTabs();
+      renderMission2Table();
+      renderRealDataTable();
+      updateHeaderAndProgress();
+      populateMission3PointSelectors();
+      renderMission4Chips();
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti-canvas');
+      canvas.classList.remove('hidden');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const ctx = canvas.getContext('2d');
+      const colors = ['#0284c7', '#14b8a6', '#f97316', '#facc15', '#ec4899', '#22c55e'];
+      const pieces = Array.from({ length: 110 }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height * 0.5,
+        r: Math.random() * 6 + 4,
+        c: colors[Math.floor(Math.random() * colors.length)],
+        vx: (Math.random() - 0.5) * 4,
+        vy: Math.random() * 4 + 2.5,
+        rot: Math.random() * 360
+      }));
+      let frames = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += 5;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rot * Math.PI) / 180);
+          ctx.fillStyle = p.c;
+          ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.4);
+          ctx.restore();
+        });
+        frames++;
+        if (frames < 170) requestAnimationFrame(draw);
+        else canvas.classList.add('hidden');
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.onload = initApp;
+  </script>
+</body>
+</html>
